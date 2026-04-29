@@ -98,10 +98,41 @@ export default async function BuildDetailPage({ params }: { params: { id: string
             </p>
           </div>
 
-          {build.artifactUrl && build.status === "SUCCESS" && (
-            <a href={build.artifactUrl} className="btn btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}>
-              <Download size={16} /> Download Artifact
-            </a>
+          {build.status === "SUCCESS" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", alignItems: "flex-end" }}>
+              {/* Python or fallback single artifact */}
+              {build.artifactUrl && !build.artifactUrlLinux && !build.artifactUrlWin && (
+                <a href={build.artifactUrl} className="btn btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}>
+                  <Download size={16} /> Download Artifact
+                </a>
+              )}
+              {/* C++ multi-platform downloads */}
+              {build.artifactUrlLinux && (
+                <a href={build.artifactUrlLinux} className="btn btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}>
+                  <Download size={16} /> 🐧 Linux (.so)
+                </a>
+              )}
+              {build.artifactUrlWin && (
+                <a href={build.artifactUrlWin} className="btn btn-secondary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}>
+                  <Download size={16} /> 🪟 Windows (.dll)
+                </a>
+              )}
+            </div>
+          )}
+          {/* C++ build in progress indicators */}
+          {build.status === "RUNNING" && (build.winBuildStatus || build.linuxBuildStatus) && (
+            <div style={{ display: "flex", flexDirection: "column", gap: "4px", alignItems: "flex-end", fontSize: "0.75rem" }}>
+              {build.linuxBuildStatus && (
+                <span style={{ color: build.linuxBuildStatus === "SUCCESS" ? "var(--status-success)" : build.linuxBuildStatus === "FAILED" ? "var(--status-error)" : "var(--accent-cyan)" }}>
+                  🐧 Linux: {build.linuxBuildStatus === "PENDING" ? "⏳ Pending" : build.linuxBuildStatus === "RUNNING" ? "🔄 Building..." : build.linuxBuildStatus}
+                </span>
+              )}
+              {build.winBuildStatus && (
+                <span style={{ color: build.winBuildStatus === "SUCCESS" ? "var(--status-success)" : build.winBuildStatus === "FAILED" ? "var(--status-error)" : "var(--accent-cyan)" }}>
+                  🪟 Windows: {build.winBuildStatus === "PENDING" ? "⏳ Pending" : build.winBuildStatus === "RUNNING" ? "🔄 Building..." : build.winBuildStatus}
+                </span>
+              )}
+            </div>
           )}
         </div>
 
