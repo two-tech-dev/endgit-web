@@ -11,13 +11,14 @@ import { fetchApi } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Link from "next/link";
 
 async function getPlugin(slug: string) {
   const { data } = await fetchApi(`/api/v1/plugins/${slug}`);
   return data?.data || null;
 }
 
-export default async function PluginDetailPage({ params }: { params: { slug: string } }) {
+export default async function PluginDetailPage({ params, searchParams }: { params: { slug: string }, searchParams: { v?: string } }) {
   const session = await getServerSession(authOptions);
   const plugin = await getPlugin(params.slug);
 
@@ -25,7 +26,12 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
 
   const safeScore = plugin.trustScore || 0;
   const scoreClass = safeScore >= 90 ? 'var(--status-success)' : safeScore >= 60 ? 'var(--status-warning)' : 'var(--status-error)';
-  const latestVersion = plugin.versions?.[0];
+  
+  // Determine active version from URL param or default to latest
+  const activeVersion = searchParams.v 
+    ? plugin.versions?.find((v: any) => v.id === searchParams.v) || plugin.versions?.[0]
+    : plugin.versions?.[0];
+  
   const isAuthor = session?.user?.id === plugin.authorId;
 
   const getRoleStyle = (role: string) => {
@@ -38,14 +44,17 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
     }
   };
 
+  // Use version-specific longDescription if available, fallback to plugin's
+  const displayDescription = activeVersion?.longDescription || plugin.longDescription || plugin.description;
+
   return (
     <div className="container" style={{ padding: "var(--space-8) 0" }}>
       {/* Header Section */}
-      <div className="card" style={{ padding: "var(--space-8)", marginBottom: "var(--space-6)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "var(--space-6)" }}>
-          <div style={{ display: "flex", gap: "var(--space-6)" }}>
+      <div className="card" style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "var(--space-4)" }}>
+          <div style={{ display: "flex", gap: "var(--space-4)", minWidth: 0, flex: "1 1 auto" }}>
             <div style={{
-              width: "100px", height: "100px", borderRadius: "var(--radius-lg)",
+              width: "72px", height: "72px", borderRadius: "var(--radius-lg)",
               background: "var(--bg-secondary)", display: "flex", alignItems: "center", justifyContent: "center",
               border: "1px solid var(--border-color)", flexShrink: 0, overflow: "hidden"
             }}>
@@ -61,7 +70,14 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
                 )}
               </div>
               <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
-                by {plugin.author?.displayName || plugin.author?.username || "Unknown"}
+                by{" "}
+                {plugin.author ? (
+                  <Link href={`/plugins/by/${plugin.author.username}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                    {plugin.author.displayName || plugin.author.username}
+                  </Link>
+                ) : (
+                  "Unknown"
+                )}
               </p>
               <p style={{ color: "var(--text-secondary)", marginTop: "var(--space-2)", maxWidth: "600px", lineHeight: 1.6 }}>
                 {plugin.description}
@@ -70,11 +86,11 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
           </div>
 
           {/* Download Button & Version Selector */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", alignItems: "flex-end" }}>
-            <VersionSelector slug={plugin.slug} versions={plugin.versions} />
+          <div className="plugin-header-actions" style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+            <VersionSelector slug={plugin.slug} pluginType={plugin.pluginType} versions={plugin.versions} />
             <div style={{ display: "flex", gap: "var(--space-6)", marginTop: "var(--space-2)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
-                <Star size={16} color="var(--status-warning)" /> {(plugin.stars || 0).toLocaleString()}
+                <Star size={16} color="var(--status-warning)" /> {(plugin.averageRating || 0).toLocaleString()}
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
                 <Download size={16} color="var(--text-muted)" /> {(plugin.downloads || 0).toLocaleString()}
@@ -85,9 +101,9 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
       </div>
 
       {/* Two Column Layout */}
-      <div style={{ display: "flex", gap: "var(--space-6)", flexWrap: "wrap" }}>
+      <div className="plugin-layout" style={{ display: "flex", gap: "var(--space-6)", flexWrap: "wrap" }}>
         {/* Main Content */}
-        <div style={{ flex: "1 1 0%", minWidth: "0", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+        <div className="plugin-main-content" style={{ flex: "1 1 min(400px, 100%)", minWidth: "0", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
 
           {/* Quick Install */}
           <div className="card" style={{ padding: "var(--space-5)" }}>
@@ -104,32 +120,34 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
             </div>
           </div>
 
-          {/* What's New */}
-          {latestVersion && latestVersion.changelog && (
+          {/* What's New — based on active version */}
+          {activeVersion && activeVersion.changelog && (
             <div className="card" style={{ padding: "var(--space-5)" }}>
               <h3 style={{ fontWeight: 600, marginBottom: "var(--space-3)", fontSize: "1rem" }}>
-                What's New in v{latestVersion.version}
+                What's New in v{activeVersion.version}
               </h3>
               <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", whiteSpace: "pre-wrap", margin: 0, fontFamily: "var(--font-mono)" }}>
-                {latestVersion.changelog}
+                {activeVersion.changelog}
               </p>
             </div>
           )}
 
-          {/* About */}
+          {/* About — based on active version */}
           <div className="card" style={{ padding: "0", border: "none", background: "transparent" }}>
-            <MarkdownTabs markdown={plugin.longDescription || plugin.description} />
+            <MarkdownTabs markdown={displayDescription} />
           </div>
 
           {/* Analytics Chart */}
           <PluginAnalyticsChart slug={plugin.slug} />
 
           {/* Ratings & Reviews */}
-          <PluginRatings slug={plugin.slug} />
+          <div className="plugin-ratings" style={{ width: "100%" }}>
+            <PluginRatings slug={plugin.slug} />
+          </div>
         </div>
 
         {/* Right Sidebar */}
-        <aside style={{ flex: "0 0 320px", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+        <aside className="plugin-sidebar" style={{ flex: "0 0 100%", maxWidth: "320px", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
 
           {/* Safe Score Card */}
           <div className="card" style={{ padding: "var(--space-5)", background: "var(--bg-secondary)", borderColor: "var(--border-highlight)" }}>
@@ -153,14 +171,14 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
             </p>
           </div>
 
-          {/* Producers */}
-          {latestVersion && latestVersion.producers && latestVersion.producers.length > 0 && (
+          {/* Producers — based on active version */}
+          {activeVersion && activeVersion.producers && activeVersion.producers.length > 0 && (
             <div className="card" style={{ padding: "var(--space-5)" }}>
               <h3 style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "var(--space-3)", display: "flex", alignItems: "center", gap: "6px" }}>
-                Producers
+                Producers <span style={{ fontSize: "0.6875rem", color: "var(--text-muted)", fontWeight: 400 }}>(v{activeVersion.version})</span>
               </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                {latestVersion.producers.map((producer: any) => (
+                {activeVersion.producers.map((producer: any) => (
                   <div key={producer.githubUser} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <img 
                       src={`https://github.com/${producer.githubUser}.png?size=40`} 
@@ -203,10 +221,10 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
                 <span style={{ color: "var(--text-muted)" }}>License</span>
                 <span style={{ fontWeight: 600 }}>{plugin.license || "—"}</span>
               </div>
-              {latestVersion && latestVersion.supportedApis && latestVersion.supportedApis.length > 0 && (
+              {activeVersion && activeVersion.supportedApis && activeVersion.supportedApis.length > 0 && (
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.875rem" }}>
                   <span style={{ color: "var(--text-muted)" }}>Endstone API</span>
-                  <span style={{ fontWeight: 600 }}>{latestVersion.supportedApis.join(", ")}</span>
+                  <span style={{ fontWeight: 600 }}>{activeVersion.supportedApis.join(", ")}</span>
                 </div>
               )}
               {plugin.repoUrl && (
@@ -232,14 +250,6 @@ export default async function PluginDetailPage({ params }: { params: { slug: str
                 </div>
               </div>
             )}
-
-            {/* Review Status */}
-            <div style={{ marginTop: "var(--space-4)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--border-color)" }}>
-              <h4 style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "var(--space-2)" }}>Review Status</h4>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", color: plugin.status === "APPROVED" ? "var(--status-success)" : "var(--status-warning)", fontSize: "0.875rem" }}>
-                <CheckCircle size={16} /> {plugin.status === "APPROVED" ? "Approved" : plugin.status}
-              </div>
-            </div>
           </div>
 
           {/* Compatibility Checker */}

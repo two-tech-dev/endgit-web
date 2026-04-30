@@ -76,7 +76,7 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
       </Link>
 
       <div style={{ marginBottom: "var(--space-6)" }}>
-        <h1 style={{ fontSize: "2rem", fontWeight: 700, margin: 0 }}>{plugin.displayName} CI Builds</h1>
+        <h1 style={{ fontSize: "clamp(1.5rem, 5vw, 2rem)", fontWeight: 700, margin: 0, wordBreak: "break-word" }}>{plugin.displayName} CI Builds</h1>
         <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>View build history and logs for this plugin.</p>
       </div>
 
@@ -88,70 +88,72 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
             <p style={{ fontSize: "0.875rem", marginTop: "4px" }}>Push to your repository to trigger the first build.</p>
           </div>
         ) : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
-                <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Build</th>
-                <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Commit</th>
-                <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Status</th>
-                <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Time</th>
-                <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600, textAlign: "right" }}>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {builds.map((build: any) => (
-                <tr key={build.id} style={{ borderBottom: "1px solid var(--border-color)" }}>
-                  <td style={{ padding: "var(--space-4)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <span style={{ fontWeight: 600, fontFamily: "var(--font-mono)" }}>#{build.buildNumber}</span>
-                      {build.triggerType === "WEBHOOK" && <span className="badge" style={{ fontSize: "0.625rem" }}>AUTO</span>}
-                    </div>
-                  </td>
-                  <td style={{ padding: "var(--space-4)" }}>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                      <span style={{ fontSize: "0.875rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                        {build.commitMessage || "No message"}
-                        {plugin.reviewBuildId === build.id && plugin.status === "PENDING_REVIEW" && (
-                          <span className="badge badge-warning" style={{ fontSize: "0.625rem", background: "rgba(245, 158, 11, 0.2)", color: "var(--status-warning)" }}>PENDING REVIEW</span>
-                        )}
-                        {plugin.reviewBuildId === build.id && plugin.status === "APPROVED" && (
-                          <span className="badge badge-success" style={{ fontSize: "0.625rem", background: "rgba(16, 185, 129, 0.2)", color: "var(--status-success)" }}>APPROVED</span>
-                        )}
-                      </span>
-                      <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                        <GitBranch size={12} /> {build.branch}
-                        {build.commitHash && (
-                          <>
-                            <span style={{ opacity: 0.5 }}>•</span>
-                            <span style={{ fontFamily: "var(--font-mono)" }}>{build.commitHash.slice(0, 7)}</span>
-                          </>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
+                  <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Build</th>
+                  <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Commit</th>
+                  <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Status</th>
+                  <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600 }}>Time</th>
+                  <th style={{ padding: "0 var(--space-4) var(--space-3)", color: "var(--text-muted)", fontSize: "0.8125rem", fontWeight: 600, textAlign: "right" }}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {builds.map((build: any) => (
+                  <tr key={build.id} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                    <td style={{ padding: "var(--space-4)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontWeight: 600, fontFamily: "var(--font-mono)" }}>#{build.buildNumber}</span>
+                        {build.triggerType === "WEBHOOK" && <span className="badge" style={{ fontSize: "0.625rem" }}>AUTO</span>}
+                      </div>
+                    </td>
+                    <td style={{ padding: "var(--space-4)" }}>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                        <span style={{ fontSize: "0.875rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                          {build.commitMessage || "No message"}
+                          {plugin.reviewBuildId === build.id && plugin.status === "PENDING_REVIEW" && (
+                            <span className="badge badge-warning" style={{ fontSize: "0.625rem", background: "rgba(245, 158, 11, 0.2)", color: "var(--status-warning)" }}>PENDING REVIEW</span>
+                          )}
+                          {plugin.reviewBuildId === build.id && plugin.status === "APPROVED" && (
+                            <span className="badge badge-success" style={{ fontSize: "0.625rem", background: "rgba(16, 185, 129, 0.2)", color: "var(--status-success)" }}>APPROVED</span>
+                          )}
+                        </span>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.75rem", color: "var(--text-muted)" }}>
+                          <GitBranch size={12} /> {build.branch}
+                          {build.commitHash && (
+                            <>
+                              <span style={{ opacity: 0.5 }}>•</span>
+                              <span style={{ fontFamily: "var(--font-mono)" }}>{build.commitHash.slice(0, 7)}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{ padding: "var(--space-4)" }}>
+                      <StatusBadge status={build.status} />
+                    </td>
+                    <td style={{ padding: "var(--space-4)", fontSize: "0.875rem", color: "var(--text-muted)" }}>
+                      {timeAgo(build.createdAt)}
+                      {build.duration && <div style={{ fontSize: "0.75rem", marginTop: "2px" }}>in {build.duration}s</div>}
+                    </td>
+                    <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
+                      <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
+                        <Link href={`/builds/${build.id}`} className="btn btn-secondary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem", whiteSpace: "nowrap" }}>
+                          View Logs
+                        </Link>
+                        {build.status === "SUCCESS" && Number(build.buildNumber) > Number(reviewedBuildNumber) && plugin.status !== "PENDING_REVIEW" && (
+                          <Link href={`/builds/${build.id}/submit`} className="btn btn-primary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem", gap: "4px", whiteSpace: "nowrap" }}>
+                            <Send size={14} /> Submit
+                          </Link>
                         )}
                       </div>
-                    </div>
-                  </td>
-                  <td style={{ padding: "var(--space-4)" }}>
-                    <StatusBadge status={build.status} />
-                  </td>
-                  <td style={{ padding: "var(--space-4)", fontSize: "0.875rem", color: "var(--text-muted)" }}>
-                    {timeAgo(build.createdAt)}
-                    {build.duration && <div style={{ fontSize: "0.75rem", marginTop: "2px" }}>in {build.duration}s</div>}
-                  </td>
-                  <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
-                    <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
-                      <Link href={`/builds/${build.id}`} className="btn btn-secondary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem" }}>
-                        View Logs
-                      </Link>
-                      {build.status === "SUCCESS" && Number(build.buildNumber) > Number(reviewedBuildNumber) && plugin.status !== "PENDING_REVIEW" && (
-                        <Link href={`/builds/${build.id}/submit`} className="btn btn-primary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem", gap: "4px" }}>
-                          <Send size={14} /> Submit
-                        </Link>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

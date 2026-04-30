@@ -9,7 +9,7 @@ interface RatingData {
   score: number;
   comment: string | null;
   createdAt: string;
-  user: { username: string; displayName: string | null; avatarUrl: string | null };
+  user: { username: string; displayName: string | null; avatarUrl: string | null; trustLevel?: string };
 }
 
 interface RatingSummary {
@@ -67,12 +67,8 @@ export default function PluginRatings({ slug }: { slug: string }) {
     finally { setSubmitting(false); }
   };
 
-  const timeAgo = (d: string) => {
-    const s = Math.floor((Date.now() - new Date(d).getTime()) / 1000);
-    if (s < 3600) return `${Math.floor(s / 60)}m ago`;
-    if (s < 86400) return `${Math.floor(s / 3600)}h ago`;
-    if (s < 2592000) return `${Math.floor(s / 86400)}d ago`;
-    return new Date(d).toLocaleDateString();
+  const formatDate = (d: string) => {
+    return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "2-digit" });
   };
 
   const StarDisplay = ({ score, size = 14 }: { score: number; size?: number }) => (
@@ -85,53 +81,36 @@ export default function PluginRatings({ slug }: { slug: string }) {
 
   return (
     <div className="card" style={{ padding: "var(--space-6)" }}>
-      <h3 style={{ fontSize: "1.125rem", fontWeight: 600, marginBottom: "var(--space-5)", display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-        <Star size={20} color="#f59e0b" fill="#f59e0b" /> Ratings & Reviews
-      </h3>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--space-5)", flexWrap: "wrap", gap: "var(--space-3)" }}>
+        <h3 style={{ fontSize: "1.125rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "var(--space-2)", margin: 0 }}>
+          <Star size={20} color="#f59e0b" fill="#f59e0b" /> Ratings & Reviews
+        </h3>
 
-      {/* Summary */}
-      <div style={{ display: "flex", gap: "var(--space-6)", marginBottom: "var(--space-6)", padding: "var(--space-5)", background: "var(--bg-secondary)", borderRadius: "var(--radius-md)" }}>
-        <div style={{ textAlign: "center", minWidth: "100px" }}>
-          <div style={{ fontSize: "2.5rem", fontWeight: 700, color: "var(--text-primary)", lineHeight: 1 }}>{summary.average}</div>
-          <StarDisplay score={Math.round(summary.average)} size={16} />
-          <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px" }}>{summary.total} reviews</div>
-        </div>
-
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "4px", justifyContent: "center" }}>
-          {summary.distribution.map(d => (
-            <div key={d.star} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", fontSize: "0.75rem" }}>
-              <span style={{ width: "12px", textAlign: "right", color: "var(--text-muted)" }}>{d.star}</span>
-              <Star size={10} fill="#f59e0b" color="#f59e0b" />
-              <div style={{ flex: 1, height: "6px", background: "var(--border-color)", borderRadius: "3px", overflow: "hidden" }}>
-                <div style={{ width: `${d.percentage}%`, height: "100%", background: "#f59e0b", borderRadius: "3px", transition: "width 300ms" }} />
-              </div>
-              <span style={{ width: "28px", textAlign: "right", color: "var(--text-muted)" }}>{d.count}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Write Review (only if logged in) */}
-      {session && (
-        <div style={{ marginBottom: "var(--space-6)", padding: "var(--space-5)", border: "1px solid var(--border-color)", borderRadius: "var(--radius-md)" }}>
-          <h4 style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "var(--space-3)" }}>Write a Review</h4>
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)" }}>
+        {/* Star Selector in Header */}
+        {session && (
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
             <span style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>Your rating:</span>
             <div style={{ display: "flex", gap: "2px" }}>
               {[1, 2, 3, 4, 5].map(i => (
                 <button key={i} onClick={() => setMyScore(i)} onMouseEnter={() => setHoverScore(i)} onMouseLeave={() => setHoverScore(0)}
-                  style={{ background: "transparent", border: "none", cursor: "pointer", padding: "2px" }}>
-                  <Star size={22} fill={i <= (hoverScore || myScore) ? "#f59e0b" : "transparent"} color={i <= (hoverScore || myScore) ? "#f59e0b" : "#d1d5db"} />
+                  style={{ background: "transparent", border: "none", cursor: "pointer", padding: "2px", display: "flex", alignItems: "center" }}>
+                  <Star size={18} fill={i <= (hoverScore || myScore) ? "#f59e0b" : "transparent"} color={i <= (hoverScore || myScore) ? "#f59e0b" : "#d1d5db"} />
                 </button>
               ))}
             </div>
-            {myScore > 0 && <span style={{ fontSize: "0.8125rem", color: "#f59e0b", fontWeight: 600 }}>{myScore}/5</span>}
+            {myScore > 0 && <span style={{ fontSize: "0.8125rem", color: "#f59e0b", fontWeight: 600, width: "24px", textAlign: "right" }}>{myScore}/5</span>}
           </div>
+        )}
+      </div>
+
+      {/* Write Review Comment Form */}
+      {session && myScore > 0 && (
+        <div style={{ marginBottom: "var(--space-6)" }}>
           <textarea value={myComment} onChange={e => setMyComment(e.target.value)} placeholder="Share your experience... (optional)" rows={3}
             style={{ width: "100%", padding: "0.75rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", fontSize: "0.875rem", resize: "vertical", fontFamily: "inherit", outline: "none", minHeight: "80px" }} />
           <div style={{ marginTop: "var(--space-3)", display: "flex", justifyContent: "flex-end" }}>
             <button onClick={handleSubmit} disabled={myScore === 0 || submitting}
-              style={{ display: "flex", alignItems: "center", gap: "6px", padding: "0.5rem 1.25rem", borderRadius: "var(--radius-md)", background: myScore > 0 ? "var(--text-primary)" : "var(--bg-secondary)", color: myScore > 0 ? "white" : "var(--text-muted)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: myScore > 0 ? "pointer" : "not-allowed", opacity: submitting ? 0.6 : 1 }}>
+              style={{ display: "flex", alignItems: "center", gap: "6px", padding: "0.5rem 1.25rem", borderRadius: "var(--radius-md)", background: myScore > 0 ? "var(--accent-purple)" : "var(--bg-secondary)", color: myScore > 0 ? "white" : "var(--text-muted)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: myScore > 0 ? "pointer" : "not-allowed", opacity: submitting ? 0.6 : 1, transition: "all 150ms" }}>
               <Send size={14} /> {submitting ? "Submitting..." : "Submit Review"}
             </button>
           </div>
@@ -146,37 +125,63 @@ export default function PluginRatings({ slug }: { slug: string }) {
         </div>
       )}
 
-      {/* Reviews List */}
+      {/* Reviews List — Poggit-inspired clean style */}
       {!loading && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {ratings.length === 0 && (
             <p style={{ color: "var(--text-muted)", textAlign: "center", padding: "var(--space-6)", fontSize: "0.875rem" }}>
               No reviews yet. Be the first to review this plugin!
             </p>
           )}
           {ratings.map(rating => (
-            <div key={rating.id} style={{ padding: "var(--space-4)", borderBottom: "1px solid var(--border-color)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
-                <div style={{
-                  width: "32px", height: "32px", borderRadius: "50%",
-                  background: "linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "white", fontSize: "0.75rem", fontWeight: 700, flexShrink: 0, overflow: "hidden"
-                }}>
-                  {rating.user.avatarUrl ? <img src={rating.user.avatarUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : rating.user.username.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: "0.875rem" }}>{rating.user.displayName || rating.user.username}</div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                    <StarDisplay score={rating.score} size={12} />
-                    <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{timeAgo(rating.createdAt)}</span>
+            <div key={rating.id} style={{ 
+              padding: "var(--space-4) 0",
+              borderBottom: "1px solid var(--border-color)"
+            }}>
+              {/* Top row: avatar + username + stars + version badge + date */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                  <div style={{
+                    width: "28px", height: "28px", borderRadius: "4px",
+                    background: "linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "white", fontSize: "0.6875rem", fontWeight: 700, flexShrink: 0, overflow: "hidden"
+                  }}>
+                    {rating.user.avatarUrl 
+                      ? <img src={rating.user.avatarUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> 
+                      : rating.user.username.charAt(0).toUpperCase()
+                    }
                   </div>
+                  <a href={`https://github.com/${rating.user.username}`} target="_blank" rel="noopener noreferrer"
+                    style={{ fontWeight: 600, fontSize: "0.875rem", color: "var(--accent-cyan)", textDecoration: "none", display: "flex", alignItems: "center", gap: "6px" }}>
+                    {rating.user.displayName || rating.user.username}
+                    {rating.user.trustLevel === "ADMIN" && (
+                      <span style={{ fontSize: "0.625rem", padding: "1px 6px", borderRadius: "4px", background: "rgba(16, 185, 129, 0.15)", color: "var(--status-success)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                        Staff
+                      </span>
+                    )}
+                  </a>
+                  <StarDisplay score={rating.score} size={12} />
                 </div>
+                <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+                  {formatDate(rating.createdAt)}
+                </span>
               </div>
+              {/* Comment block — indented like Poggit */}
               {rating.comment && (
-                <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6, margin: 0, paddingLeft: "44px" }}>
+                <div style={{ 
+                  marginTop: "var(--space-2)", 
+                  marginLeft: "40px",
+                  padding: "var(--space-3)",
+                  background: "var(--bg-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)",
+                  fontSize: "0.875rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.6
+                }}>
                   {rating.comment}
-                </p>
+                </div>
               )}
             </div>
           ))}

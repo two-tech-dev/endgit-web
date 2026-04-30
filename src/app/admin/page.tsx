@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import PluginImage from "@/components/PluginImage";
 import {
@@ -94,6 +94,28 @@ export default function AdminPage() {
       const json = await res.json();
       if (json.success) {
         setQueue(prev => prev.filter(p => p.slug !== slug));
+      }
+    } catch { /* noop */ }
+  };
+
+  const changeVersionStatus = async (pluginId: string, versionId: string, newStatus: string) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/v1/admin/versions/${versionId}/status`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+      const json = await res.json();
+      if (json.success) {
+        setPlugins(prev => prev.map(p => {
+          if (p.id === pluginId) {
+            return {
+              ...p,
+              versions: p.versions.map((v: any) => v.id === versionId ? { ...v, status: newStatus } : v)
+            };
+          }
+          return p;
+        }));
       }
     } catch { /* noop */ }
   };
@@ -241,9 +263,9 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Review Queue Tab */}
+      {/* Review Queue Tab — shows pending PLUGINS */}
       {!loading && tab === "queue" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "var(--space-6)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))", gap: "var(--space-6)" }}>
           {queue.length === 0 ? (
             <div className="card" style={{ padding: "var(--space-12)", textAlign: "center", gridColumn: "1 / -1" }}>
               <CheckCircle size={40} color="var(--status-success)" style={{ margin: "0 auto var(--space-3)" }} />
@@ -252,11 +274,10 @@ export default function AdminPage() {
             </div>
           ) : (
             queue.map((plugin: any) => (
-              <a href={`/plugins/${plugin.slug}`} key={plugin.id} className="card" style={{ 
+              <div key={plugin.id} className="card" style={{ 
                 padding: "0", 
                 display: "flex", 
                 flexDirection: "column", 
-                textDecoration: "none",
                 overflow: "hidden",
                 borderTop: "4px solid var(--status-warning)"
               }}>
@@ -274,47 +295,40 @@ export default function AdminPage() {
                         <h3 className="heading-3" style={{ fontSize: "1.125rem", margin: 0, color: "var(--text-primary)" }}>
                           {plugin.displayName}
                         </h3>
-                        <p style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>@{plugin.author.username}</p>
+                        <p style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>@{plugin.author?.username}</p>
                       </div>
                     </div>
                     <span className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}>{plugin.pluginType}</span>
                   </div>
 
                   <p style={{ 
-                    color: "var(--text-secondary)", fontSize: "0.875rem", lineHeight: 1.5,
+                    color: "var(--text-secondary)", fontSize: "0.8125rem", lineHeight: 1.5,
                     display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden"
                   }}>
                     {plugin.description}
                   </p>
 
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "var(--space-2)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", fontSize: "0.8125rem", color: "var(--text-muted)" }}>
-                      <AlertTriangle size={14} color="var(--status-warning)" />
-                      Pending v{plugin.versions?.[0]?.version || "unknown"}
-                    </div>
-                    <span style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>
-                      {new Date(plugin.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-
                   <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)", paddingTop: "var(--space-3)", borderTop: "1px solid var(--border-color)" }}>
-                    <button onClick={(e) => { e.preventDefault(); reviewPlugin(plugin.slug, "APPROVED"); }} style={{
+                    <button onClick={() => reviewPlugin(plugin.slug, "APPROVED")} style={{
                       flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
                       padding: "0.5rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 600,
                       background: "var(--status-success)", color: "white", border: "none", cursor: "pointer"
                     }}>
-                      <CheckCircle size={16} /> Approve
+                      <CheckCircle size={16} /> Approve Plugin
                     </button>
-                    <button onClick={(e) => { e.preventDefault(); reviewPlugin(plugin.slug, "REJECTED"); }} style={{
+                    <button onClick={() => reviewPlugin(plugin.slug, "REJECTED")} style={{
                       flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
                       padding: "0.5rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 600,
                       background: "rgba(239,68,68,0.1)", color: "var(--status-error)", border: "1px solid rgba(239,68,68,0.2)", cursor: "pointer"
                     }}>
-                      <XCircle size={16} /> Reject
+                      <XCircle size={16} /> Reject Plugin
                     </button>
                   </div>
+                  <a href={`/plugins/${plugin.slug}`} style={{ fontSize: "0.75rem", color: "var(--accent-cyan)", textAlign: "center" }}>
+                    View Plugin →
+                  </a>
                 </div>
-              </a>
+              </div>
             ))
           )}
         </div>
@@ -350,44 +364,76 @@ export default function AdminPage() {
             </thead>
             <tbody>
               {plugins.map((plugin: any) => (
-                <tr key={plugin.id} style={{ borderBottom: "1px solid var(--border-color)" }}>
-                  <td style={{ padding: "var(--space-4)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                      <div style={{ fontWeight: 600 }}>{plugin.displayName}</div>
-                      <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{plugin.slug}</div>
-                    </div>
-                  </td>
-                  <td style={{ padding: "var(--space-4)", fontSize: "0.875rem" }}>
-                    {plugin.author?.displayName || plugin.author?.username}
-                  </td>
-                  <td style={{ padding: "var(--space-4)" }}>
-                    <select
-                      value={plugin.status}
-                      onChange={(e) => changePluginStatus(plugin.id, e.target.value)}
-                      style={{
-                        padding: "0.25rem 0.5rem",
-                        borderRadius: "var(--radius-sm)",
-                        background: "var(--bg-secondary)",
-                        border: "1px solid var(--border-color)",
-                        color: "var(--text-primary)",
-                        fontSize: "0.8125rem",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <option value="DRAFT">DRAFT</option>
-                      <option value="PENDING_REVIEW">PENDING_REVIEW</option>
-                      <option value="APPROVED">APPROVED</option>
-                      <option value="REJECTED">REJECTED</option>
-                      <option value="SUSPENDED">SUSPENDED</option>
-                      <option value="FLAGGED">FLAGGED</option>
-                    </select>
-                  </td>
-                  <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
-                    <a href={`/plugins/${plugin.slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ padding: "0.25rem 0.5rem", fontSize: "0.75rem" }}>
-                      View
-                    </a>
-                  </td>
-                </tr>
+                <React.Fragment key={plugin.id}>
+                  <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
+                    <td style={{ padding: "var(--space-4)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                        <div style={{ fontWeight: 600 }}>{plugin.displayName}</div>
+                        <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", fontFamily: "var(--font-mono)" }}>{plugin.slug}</div>
+                      </div>
+                    </td>
+                    <td style={{ padding: "var(--space-4)", fontSize: "0.875rem" }}>
+                      {plugin.author?.displayName || plugin.author?.username}
+                    </td>
+                    <td style={{ padding: "var(--space-4)" }}>
+                      <select
+                        value={plugin.status}
+                        onChange={(e) => changePluginStatus(plugin.id, e.target.value)}
+                        style={{
+                          padding: "0.25rem 0.5rem",
+                          borderRadius: "var(--radius-sm)",
+                          background: "var(--bg-secondary)",
+                          border: "1px solid var(--border-color)",
+                          color: "var(--text-primary)",
+                          fontSize: "0.8125rem",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <option value="DRAFT">DRAFT</option>
+                        <option value="PENDING_REVIEW">PENDING_REVIEW</option>
+                        <option value="APPROVED">APPROVED</option>
+                        <option value="REJECTED">REJECTED</option>
+                        <option value="SUSPENDED">SUSPENDED</option>
+                        <option value="FLAGGED">FLAGGED</option>
+                      </select>
+                    </td>
+                    <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
+                      <a href={`/plugins/${plugin.slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ padding: "0.25rem 0.5rem", fontSize: "0.75rem" }}>
+                        View
+                      </a>
+                    </td>
+                  </tr>
+                  {plugin.versions && plugin.versions.length > 0 && (
+                    <tr style={{ borderBottom: "1px solid var(--border-color)", background: "rgba(0,0,0,0.1)" }}>
+                      <td colSpan={4} style={{ padding: "0 var(--space-4) var(--space-4) var(--space-8)" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
+                          {plugin.versions.map((v: any) => (
+                            <div key={v.id} style={{ display: "flex", alignItems: "center", gap: "8px", background: "var(--bg-card)", padding: "4px 8px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>
+                              <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>v{v.version}</span>
+                              <select
+                                value={v.status}
+                                onChange={(e) => changeVersionStatus(plugin.id, v.id, e.target.value)}
+                                style={{
+                                  padding: "2px 4px",
+                                  borderRadius: "4px",
+                                  background: "var(--bg-secondary)",
+                                  border: "none",
+                                  color: "var(--text-primary)",
+                                  fontSize: "0.6875rem",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                <option value="PENDING">PENDING</option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="REJECTED">REJECTED</option>
+                              </select>
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
               {plugins.length === 0 && (
                 <tr>

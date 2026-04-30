@@ -42,34 +42,24 @@ export default function RootLayout({
   );
 }
 
-import NavbarClient from "@/components/NavbarClient";
-import ThemeToggle from "@/components/ThemeToggle";
+import NavbarMobile from "@/components/NavbarMobile";
 
 function Navbar() {
   return (
-      <header style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: "var(--bg-card)",
-        borderBottom: "1px solid var(--border-color)",
-        padding: "1rem 0"
-      }}>
-      <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <a href="/" style={{ fontSize: "1.5rem", fontWeight: "bold", display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+    <header style={{
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      background: "var(--bg-card)",
+      borderBottom: "1px solid var(--border-color)",
+      padding: "1rem 0"
+    }}>
+      <div className="container navbar-container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative" }}>
+        <a href="/" className="navbar-logo" style={{ fontSize: "1.5rem", fontWeight: "bold", display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none", flexShrink: 0 }}>
           <img src="/logo.png" alt="EndGit Logo" style={{ width: 36, height: 36, objectFit: "contain" }} />
           <span className="text-gradient">EndGit</span>
         </a>
-        <nav style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-          <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>Plugins</a>
-          <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.375rem" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--status-success)", display: "inline-block" }} />
-            Live Builds
-          </a>
-          <a href="/docs" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>Docs</a>
-          <ThemeToggle />
-          <NavbarClient />
-        </nav>
+        <NavbarMobile />
       </div>
     </header>
   );

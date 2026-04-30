@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Download } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Version {
   id: string;
@@ -13,11 +14,15 @@ interface Version {
 
 interface Props {
   slug: string;
+  pluginType?: string;
   versions: Version[];
 }
 
-export default function VersionSelector({ slug, versions }: Props) {
-  const [selectedVersionId, setSelectedVersionId] = useState(versions[0]?.id);
+export default function VersionSelector({ slug, pluginType = "PYTHON", versions }: Props) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeVersionId = searchParams.get("v");
+  const [selectedVersionId, setSelectedVersionId] = useState(activeVersionId || versions[0]?.id);
 
   if (!versions || versions.length === 0) {
     return (
@@ -31,21 +36,29 @@ export default function VersionSelector({ slug, versions }: Props) {
 
   const selectedVersion = versions.find(v => v.id === selectedVersionId) || versions[0];
 
+  const handleVersionChange = (newId: string) => {
+    setSelectedVersionId(newId);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("v", newId);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", alignItems: "flex-end" }}>
-      <div style={{ display: "flex", alignItems: "stretch", gap: "8px" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", width: "100%" }}>
+      <div style={{ display: "flex", alignItems: "stretch", gap: "10px", flexWrap: "wrap" }}>
         <select 
           value={selectedVersion.id}
-          onChange={(e) => setSelectedVersionId(e.target.value)}
+          onChange={(e) => handleVersionChange(e.target.value)}
           style={{
-            padding: "0 12px",
+            padding: "0.625rem 1rem",
             borderRadius: "var(--radius-md)",
             border: "1px solid var(--border-color)",
             background: "var(--bg-secondary)",
             color: "var(--text-primary)",
-            fontWeight: 500,
+            fontSize: "0.9375rem",
             cursor: "pointer",
-            outline: "none"
+            outline: "none",
+            minWidth: "140px"
           }}
         >
           {versions.map(v => (
@@ -54,9 +67,35 @@ export default function VersionSelector({ slug, versions }: Props) {
             </option>
           ))}
         </select>
-        <a href={`/api/v1/download/${slug}/${selectedVersion.version}`} className="btn btn-primary" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "1rem" }}>
-          <Download size={18} /> Download
-        </a>
+        {pluginType === "CPP" ? (
+          <div style={{ display: "flex", gap: "8px" }}>
+            <a href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`} className="btn btn-primary" style={{ 
+              display: "flex", alignItems: "center", gap: "8px", 
+              fontSize: "0.9375rem", padding: "0.625rem 1.25rem",
+              background: "#1e293b", border: "1px solid #475569",
+              borderRadius: "var(--radius-md)", fontWeight: 600,
+              color: "white", textDecoration: "none"
+            }}>
+              <Download size={16} /> Linux (.so)
+            </a>
+            <a href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=windows`} className="btn btn-primary" style={{ 
+              display: "flex", alignItems: "center", gap: "8px", 
+              fontSize: "0.9375rem", padding: "0.625rem 1.25rem",
+              borderRadius: "var(--radius-md)", fontWeight: 600,
+              textDecoration: "none"
+            }}>
+              <Download size={16} /> Windows (.dll)
+            </a>
+          </div>
+        ) : (
+          <a href={`/api/v1/download/${slug}/${selectedVersion.version}`} className="btn btn-primary" style={{ 
+            display: "flex", alignItems: "center", gap: "8px", 
+            fontSize: "1rem", padding: "0.625rem 1.5rem",
+            fontWeight: 600, textDecoration: "none"
+          }}>
+            <Download size={18} /> Download
+          </a>
+        )}
       </div>
       <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "right" }}>
         <span>Size: {selectedVersion.fileSize ? `${(selectedVersion.fileSize / 1024).toFixed(0)} KB` : "—"}</span>

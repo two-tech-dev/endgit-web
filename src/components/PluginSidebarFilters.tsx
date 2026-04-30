@@ -27,11 +27,11 @@ export default function PluginSidebarFilters() {
   ];
 
   return (
-    <aside style={{ width: "250px", flexShrink: 0, display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+    <aside className="sidebar-filters" style={{ width: "250px", flexShrink: 0, display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div className="card" style={{ padding: "var(--space-4)" }}>
         <h3 style={{ fontWeight: 600, marginBottom: "var(--space-3)", color: "var(--text-primary)" }}>Categories</h3>
-        <select 
-          className="input" 
+        <select
+          className="input"
           value={currentCategory}
           onChange={(e) => updateFilter("category", e.target.value)}
           style={{ width: "100%", padding: "0.5rem", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", cursor: "pointer" }}
@@ -47,12 +47,12 @@ export default function PluginSidebarFilters() {
         <h3 style={{ fontWeight: 600, marginBottom: "var(--space-3)", color: "var(--text-primary)" }}>Sort By</h3>
         <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", listStyle: "none", padding: 0, margin: 0 }}>
           {sortOptions.map(opt => (
-            <li 
+            <li
               key={opt.value}
               onClick={() => updateFilter("sort", opt.value)}
-              style={{ 
-                color: currentSort === opt.value ? "var(--accent-purple)" : "var(--text-secondary)", 
-                cursor: "pointer", 
+              style={{
+                color: currentSort === opt.value ? "var(--accent-purple)" : "var(--text-secondary)",
+                cursor: "pointer",
                 fontWeight: currentSort === opt.value ? 600 : 400,
                 transition: "color 0.2s"
               }}
@@ -62,15 +62,15 @@ export default function PluginSidebarFilters() {
           ))}
         </ul>
       </div>
-      
+
       <div className="card" style={{ padding: "var(--space-4)" }}>
         <h3 style={{ fontWeight: 600, marginBottom: "var(--space-3)", color: "var(--text-primary)" }}>Type</h3>
         <ul style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", listStyle: "none", padding: 0, margin: 0 }}>
           <li style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", color: "var(--text-secondary)" }}>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="type"
-              id="type-all" 
+              id="type-all"
               checked={currentType === ""}
               onChange={() => updateFilter("type", "")}
               style={{ accentColor: "var(--accent-purple)" }}
@@ -78,10 +78,10 @@ export default function PluginSidebarFilters() {
             <label htmlFor="type-all" style={{ cursor: "pointer" }}>All Types</label>
           </li>
           <li style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", color: "var(--text-secondary)" }}>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="type"
-              id="type-python" 
+              id="type-python"
               checked={currentType === "PYTHON"}
               onChange={() => updateFilter("type", "PYTHON")}
               style={{ accentColor: "var(--accent-purple)" }}
@@ -89,10 +89,10 @@ export default function PluginSidebarFilters() {
             <label htmlFor="type-python" style={{ cursor: "pointer" }}>Python (.whl)</label>
           </li>
           <li style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", color: "var(--text-secondary)" }}>
-            <input 
-              type="radio" 
+            <input
+              type="radio"
               name="type"
-              id="type-cpp" 
+              id="type-cpp"
               checked={currentType === "CPP"}
               onChange={() => updateFilter("type", "CPP")}
               style={{ accentColor: "var(--accent-purple)" }}

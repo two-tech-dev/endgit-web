@@ -85,7 +85,7 @@ export default async function BuildsPage() {
           <p className="text-muted">Builds will appear here when developers push code to their repositories.</p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "var(--space-4)" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))", gap: "var(--space-4)" }}>
           {builds.map((build: any) => (
             <a
               key={build.id}

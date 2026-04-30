@@ -1,48 +1,44 @@
-import { Star, Download, ShieldCheck, Search, Tag, Zap, Activity } from "lucide-react";
+import { Search } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import PluginSearch from "@/components/PluginSearch";
-import PluginSidebarFilters from "@/components/PluginSidebarFilters";
 import { fetchApi } from "@/lib/api";
+import Link from "next/link";
 
-import MobileFiltersWrapper from "@/components/MobileFiltersWrapper";
-
-export default async function PluginsPage({
-  searchParams,
+export default async function AuthorPluginsPage({
+  params,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: { username: string };
 }) {
-  const query = new URLSearchParams();
-  if (searchParams.q) query.set("q", searchParams.q as string);
-  if (searchParams.category) query.set("category", searchParams.category as string);
-  if (searchParams.sort) query.set("sort", searchParams.sort as string);
-  if (searchParams.type) query.set("type", searchParams.type as string);
-
-  const { data: responseData } = await fetchApi(`/api/v1/plugins?${query.toString()}`);
+  const { username } = params;
+  
+  // Fetch plugins by this author
+  const { data: responseData } = await fetchApi(`/api/v1/plugins?author=${username}`);
   const realPlugins = responseData?.data?.plugins || [];
 
   return (
     <div className="container" style={{ padding: "var(--space-8) 0" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--space-8)", flexWrap: "wrap", gap: "var(--space-4)" }}>
-        <h1 className="heading-2">Plugins</h1>
-        <div className="desktop-only">
-          <PluginSearch />
-        </div>
+      <div style={{ marginBottom: "var(--space-8)" }}>
+        <h1 className="heading-2" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+          Plugins by <span style={{ color: "var(--accent-cyan)" }}>{username}</span>
+        </h1>
+        <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
+          Viewing all {realPlugins.length} plugins created by this author.
+        </p>
       </div>
 
-      <div className="plugins-layout" style={{ display: "flex", gap: "var(--space-8)" }}>
-        {/* Sidebar Filters */}
-        <MobileFiltersWrapper searchComponent={<PluginSearch />}>
-          <PluginSidebarFilters />
-        </MobileFiltersWrapper>
-
-        {/* Plugin Grid */}
-        <div style={{ flex: 1, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(340px, 100%), 1fr))", gap: "var(--space-6)", alignContent: "start" }}>
+      {realPlugins.length === 0 ? (
+        <div className="card" style={{ padding: "var(--space-8)", textAlign: "center" }}>
+          <Search size={32} color="var(--text-muted)" style={{ margin: "0 auto var(--space-4)", opacity: 0.5 }} />
+          <h3 style={{ fontSize: "1.125rem", fontWeight: 600 }}>No plugins found</h3>
+          <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>This author has not published any plugins yet.</p>
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(340px, 100%), 1fr))", gap: "var(--space-6)" }}>
           {realPlugins.map((plugin: any) => {
-            const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0; // stars is 0-100 scale
+            const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0;
             const isFeatured = plugin.downloads >= 100;
 
             return (
-              <a href={`/plugins/${plugin.slug}`} key={plugin.id} className="card" style={{
+              <Link href={`/plugins/${plugin.slug}`} key={plugin.id} className="card" style={{
                 padding: "0",
                 display: "flex",
                 flexDirection: "column",
@@ -86,7 +82,7 @@ export default async function PluginsPage({
                   </div>
                 </div>
 
-                {/* Bottom: Featured Banner (only show if featured/trending) */}
+                {/* Bottom: Featured Banner */}
                 {isFeatured && (
                   <div style={{
                     width: "100%",
@@ -102,11 +98,11 @@ export default async function PluginsPage({
                     ⚡ Featured
                   </div>
                 )}
-              </a>
+              </Link>
             );
           })}
         </div>
-      </div>
+      )}
     </div>
   );
 }

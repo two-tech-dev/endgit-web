@@ -21,6 +21,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
   
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const isFirstVersion = !plugin?.versions || plugin.versions.length === 0;
   
   // Form State — auto-increment version from latest
   const getNextVersion = () => {
@@ -338,14 +339,16 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
             </p>
           </div>
 
-          <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>What's New (Changelog)</label>
-            <textarea 
-              value={changelog} onChange={e => setChangelog(e.target.value)} rows={4}
-              placeholder="Describe what changed in this version. This will be visible to users on the plugin's page..."
-              style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical" }}
-            />
-          </div>
+          {!isFirstVersion && (
+            <div>
+              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>What's New (Changelog)</label>
+              <textarea 
+                value={changelog} onChange={e => setChangelog(e.target.value)} rows={4}
+                placeholder="Describe what changed in this version. This will be visible to users on the plugin's page..."
+                style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical" }}
+              />
+            </div>
+          )}
 
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>

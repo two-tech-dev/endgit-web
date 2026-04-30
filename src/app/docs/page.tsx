@@ -83,7 +83,7 @@ export default function DocsPage() {
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
               {section.links.map((link, lIdx) => (
                 <li key={lIdx}>
-                  <Link href={link.href} style={{
+                  <Link href={link.href} className="docs-link" style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
@@ -91,10 +91,7 @@ export default function DocsPage() {
                     color: "var(--text-secondary)",
                     fontWeight: 500,
                     transition: "color 0.2s"
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
-                  >
+                  }}>
                     {link.name}
                     <ChevronRight className="w-4 h-4" />
                   </Link>
