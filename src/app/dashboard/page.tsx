@@ -1,4 +1,4 @@
-import { PackagePlus, Settings, Activity, Upload, AlertCircle } from "lucide-react";
+import { PackagePlus, Settings, Activity, Upload, AlertCircle, ExternalLink, ArrowRight } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
 import { fetchApi } from "@/lib/api";
@@ -14,11 +14,39 @@ export default async function DashboardPage() {
   }
 
   // Fetch real data from backend
-  const [pluginsRes, statsRes] = await Promise.all([
+  const [pluginsRes, statsRes, statusRes] = await Promise.all([
     fetchApi("/api/v1/dashboard/plugins"),
-    fetchApi("/api/v1/dashboard/stats")
+    fetchApi("/api/v1/dashboard/stats"),
+    fetchApi("/api/v1/dashboard/status")
   ]);
   
+  const hasAppInstalled = statusRes.data?.data?.hasAppInstalled || false;
+  const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-local-dev/installations/new";
+
+  if (!hasAppInstalled) {
+    return (
+      <div className="container" style={{ padding: "var(--space-12) 0", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="card" style={{ maxWidth: "600px", padding: "var(--space-10)", textAlign: "center", border: "1px solid var(--border-highlight)", boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}>
+          <div style={{ width: "80px", height: "80px", background: "rgba(124, 58, 237, 0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto var(--space-6)" }}>
+            <PackagePlus size={40} color="var(--accent-purple)" />
+          </div>
+          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>Welcome to EndGit!</h1>
+          <p className="text-secondary" style={{ fontSize: "1.125rem", lineHeight: 1.6, marginBottom: "var(--space-8)" }}>
+            To get started with the Developer Dashboard, you need to install the EndGit GitHub App on your repositories. 
+            The app will automatically detect your Bedrock plugins, build them using our CI/CD pipeline, and publish them to the marketplace.
+          </p>
+          <a 
+            href={installUrl} 
+            className="btn btn-primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "1.125rem", padding: "0.75rem 2rem" }}
+          >
+            <ExternalLink size={20} /> Install GitHub App <ArrowRight size={20} />
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   const stats = statsRes.data?.data || {
     totalPlugins: 0,
     totalDownloads: 0,
@@ -30,14 +58,21 @@ export default async function DashboardPage() {
 
   return (
     <div className="container" style={{ padding: "var(--space-8) 0" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "var(--space-8)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "var(--space-8)", flexWrap: "wrap", gap: "var(--space-4)" }}>
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
           <p className="text-muted">Manage your plugins and track performance.</p>
         </div>
-        <a href="/dashboard/upload" className="btn btn-primary">
-          <Upload size={18} /> Publish New Plugin
-        </a>
+        <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}>
+          <a 
+            href={installUrl} 
+            target="_blank" 
+            className="btn btn-secondary"
+            style={{ display: "flex", alignItems: "center", gap: "8px" }}
+          >
+            <Settings size={18} /> Manage App Installation
+          </a>
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -92,7 +127,7 @@ export default async function DashboardPage() {
                     <PluginImage iconUrl={plugin.iconUrl} repoUrl={plugin.repoUrl} alt={`${plugin.displayName} icon`} />
                   </div>
                   <div>
-                    <a href={`/plugins/${plugin.name}`} className="heading-3" style={{ fontSize: "1.25rem", color: "var(--text-primary)", display: "block", marginBottom: "var(--space-1)" }}>
+                    <a href={`/plugins/${plugin.slug}`} className="heading-3" style={{ fontSize: "1.25rem", color: "var(--text-primary)", display: "block", marginBottom: "var(--space-1)" }}>
                       {plugin.displayName}
                     </a>
                     <span style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>v{plugin.latestVersion || "0.0.0"}</span>
@@ -139,7 +174,6 @@ export default async function DashboardPage() {
           </div>
         ))}
         
-
       </div>
     </div>
   );

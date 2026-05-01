@@ -21,8 +21,8 @@ interface Props {
 export default function VersionSelector({ slug, pluginType = "PYTHON", versions }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const activeVersionId = searchParams.get("v");
-  const [selectedVersionId, setSelectedVersionId] = useState(activeVersionId || versions[0]?.id);
+  const activeVersionStr = searchParams.get("v");
+  const [selectedVersionStr, setSelectedVersionStr] = useState(activeVersionStr || versions[0]?.version);
 
   if (!versions || versions.length === 0) {
     return (
@@ -34,12 +34,12 @@ export default function VersionSelector({ slug, pluginType = "PYTHON", versions 
     );
   }
 
-  const selectedVersion = versions.find(v => v.id === selectedVersionId) || versions[0];
+  const selectedVersion = versions.find(v => v.version === selectedVersionStr) || versions[0];
 
-  const handleVersionChange = (newId: string) => {
-    setSelectedVersionId(newId);
+  const handleVersionChange = (newVersionStr: string) => {
+    setSelectedVersionStr(newVersionStr);
     const params = new URLSearchParams(searchParams.toString());
-    params.set("v", newId);
+    params.set("v", newVersionStr);
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
@@ -47,7 +47,7 @@ export default function VersionSelector({ slug, pluginType = "PYTHON", versions 
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", width: "100%" }}>
       <div style={{ display: "flex", alignItems: "stretch", gap: "10px", flexWrap: "wrap" }}>
         <select 
-          value={selectedVersion.id}
+          value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
           style={{
             padding: "0.625rem 1rem",
@@ -62,7 +62,7 @@ export default function VersionSelector({ slug, pluginType = "PYTHON", versions 
           }}
         >
           {versions.map(v => (
-            <option key={v.id} value={v.id}>
+            <option key={v.version} value={v.version}>
               v{v.version} {v.isLatest ? "(Latest)" : ""}
             </option>
           ))}

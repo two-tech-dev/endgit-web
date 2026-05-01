@@ -1,15 +1,26 @@
 import { GitBranch, Clock, AlertTriangle, CheckCircle, XCircle, Loader2, Package } from "lucide-react";
 
-async function getRecentBuilds() {
+async function getTodayBuilds() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   try {
-    const res = await fetch(`${apiUrl}/api/v1/builds/recent?limit=30`, { cache: "no-store" });
-    if (!res.ok) return { builds: [], pagination: null };
+    const res = await fetch(`${apiUrl}/api/v1/builds/recent?limit=50`, { cache: "no-store" });
+    if (!res.ok) return [];
     const json = await res.json();
-    return { builds: json.data || [], pagination: json.pagination };
+    return json.data || [];
   } catch {
-    return { builds: [], pagination: null };
+    return [];
   }
+}
+
+/** Get UTC date string like "2026-04-30" */
+function utcDateStr(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toISOString().slice(0, 10);
+}
+
+/** Get today's UTC date string */
+function todayUTC(): string {
+  return new Date().toISOString().slice(0, 10);
 }
 
 function timeAgo(dateStr: string) {
@@ -43,18 +54,27 @@ function statusColor(status: string) {
 }
 
 export default async function BuildsPage() {
-  const { builds } = await getRecentBuilds();
+  const allBuilds = await getTodayBuilds();
+  const today = todayUTC();
+  const builds = allBuilds.filter((b: any) => utcDateStr(b.createdAt) === today);
 
   return (
     <div className="container" style={{ paddingTop: "var(--space-10)", paddingBottom: "var(--space-16)" }}>
       {/* Header */}
       <div style={{ marginBottom: "var(--space-8)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
-          <div style={{ width: "10px", height: "10px", borderRadius: "var(--radius-full)", background: "var(--status-success)", boxShadow: "0 0 8px var(--status-success)", animation: "pulse 2s infinite" }} />
-          <h1 className="heading-2">Live Builds</h1>
+          <h1 className="heading-2">Dev Builds</h1>
+          <span style={{
+            fontSize: "0.75rem", fontWeight: 600,
+            padding: "2px 10px", borderRadius: "var(--radius-full)",
+            background: "rgba(6, 182, 212, 0.1)", color: "var(--accent-cyan)",
+            border: "1px solid rgba(6, 182, 212, 0.2)"
+          }}>
+            Today ({today})
+          </span>
         </div>
         <p className="text-muted" style={{ maxWidth: "600px" }}>
-          Real-time CI builds from developer pushes. These are development builds and may contain unstable or untested code.
+          CI builds from developer pushes today (UTC). These are development builds and may contain unstable or untested code.
         </p>
       </div>
 
@@ -81,7 +101,7 @@ export default async function BuildsPage() {
       {builds.length === 0 ? (
         <div className="card" style={{ padding: "var(--space-12)", textAlign: "center" }}>
           <Package size={48} color="var(--text-muted)" style={{ margin: "0 auto var(--space-4)" }} />
-          <p style={{ fontSize: "1.125rem", fontWeight: 500, color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>No builds yet</p>
+          <p style={{ fontSize: "1.125rem", fontWeight: 500, color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>No builds today</p>
           <p className="text-muted">Builds will appear here when developers push code to their repositories.</p>
         </div>
       ) : (
@@ -143,7 +163,6 @@ export default async function BuildsPage() {
       {/* CSS Animation */}
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
       `}</style>
     </div>
   );

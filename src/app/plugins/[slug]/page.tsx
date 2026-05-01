@@ -18,6 +18,36 @@ async function getPlugin(slug: string) {
   return data?.data || null;
 }
 
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const plugin = await getPlugin(params.slug);
+  if (!plugin) {
+    return { title: "Plugin Not Found - EndGit" };
+  }
+
+  const title = `${plugin.displayName} - Endstone Plugin | EndGit`;
+  const description = plugin.description || `Download ${plugin.displayName} for Endstone.`;
+  const keywords = plugin.keywords && plugin.keywords.length > 0 
+    ? plugin.keywords.join(", ") 
+    : `${plugin.name}, endstone plugin, minecraft bedrock`;
+
+  return {
+    title,
+    description,
+    keywords,
+    openGraph: {
+      title,
+      description,
+      images: [plugin.iconUrl || "/og-image.png"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [plugin.iconUrl || "/og-image.png"],
+    }
+  };
+}
+
 export default async function PluginDetailPage({ params, searchParams }: { params: { slug: string }, searchParams: { v?: string } }) {
   const session = await getServerSession(authOptions);
   const plugin = await getPlugin(params.slug);
@@ -29,7 +59,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
   
   // Determine active version from URL param or default to latest
   const activeVersion = searchParams.v 
-    ? plugin.versions?.find((v: any) => v.id === searchParams.v) || plugin.versions?.[0]
+    ? plugin.versions?.find((v: any) => v.version === searchParams.v) || plugin.versions?.[0]
     : plugin.versions?.[0];
   
   const isAuthor = session?.user?.id === plugin.authorId;
@@ -92,8 +122,13 @@ export default async function PluginDetailPage({ params, searchParams }: { param
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
                 <Star size={16} color="var(--status-warning)" /> {(plugin.averageRating || 0).toLocaleString()}
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }} title="Total Downloads">
                 <Download size={16} color="var(--text-muted)" /> {(plugin.downloads || 0).toLocaleString()}
+                {activeVersion && (
+                  <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginLeft: "4px", fontWeight: 400 }}>
+                    ({(activeVersion.downloads || 0).toLocaleString()} this version)
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -250,6 +285,40 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Badges for Markdown */}
+          <div className="card" style={{ padding: "var(--space-5)" }}>
+            <h3 style={{ fontWeight: 600, marginBottom: "var(--space-4)", fontSize: "0.875rem" }}>Markdown Badges</h3>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "var(--space-3)" }}>
+              Show off your plugin stats in your README.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                <img src={`https://endgit.com/shield.dl.total/${plugin.slug}`} alt="Downloads Badge" />
+              </div>
+              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                [![Downloads](https://endgit.com/shield.dl.total/{plugin.slug})](https://endgit.com/plugins/{plugin.slug})
+              </div>
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                <img src={`https://endgit.com/shield.version/${plugin.slug}`} alt="Version Badge" />
+              </div>
+              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                [![Version](https://endgit.com/shield.version/{plugin.slug})](https://endgit.com/plugins/{plugin.slug})
+              </div>
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                <img src={`https://endgit.com/shield.rating/${plugin.slug}`} alt="Rating Badge" />
+              </div>
+              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                [![Rating](https://endgit.com/shield.rating/{plugin.slug})](https://endgit.com/plugins/{plugin.slug})
+              </div>
+            </div>
           </div>
 
           {/* Compatibility Checker */}

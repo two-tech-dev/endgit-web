@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import { User, LogIn, ChevronDown, LogOut, LayoutDashboard, Package, Shield } from "lucide-react";
+import { User, LogIn, ChevronDown, LogOut, LayoutDashboard, Package, Shield, Search, Trophy } from "lucide-react";
 import { useState } from "react";
 
 export default function NavbarClient() {
@@ -34,7 +34,7 @@ export default function NavbarClient() {
         style={{
           display: "flex", alignItems: "center", gap: "0.5rem",
           padding: "0.375rem 0.75rem", borderRadius: "var(--radius-full)",
-          border: "1px solid var(--border-color)", background: "var(--bg-secondary)",
+          border: "1px solid #27272a", background: "#121212",
           cursor: "pointer", transition: "all 150ms"
         }}
       >
@@ -50,17 +50,17 @@ export default function NavbarClient() {
             {initials}
           </div>
         )}
-        <span style={{ fontWeight: 500, fontSize: "0.875rem", color: "var(--text-primary)", maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <span style={{ fontWeight: 500, fontSize: "0.875rem", color: "#f8fafc", maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {user?.name || user?.email}
         </span>
-        <ChevronDown size={14} color="var(--text-muted)" style={{ transition: "transform 200ms", transform: dropdownOpen ? "rotate(180deg)" : "none" }} />
+        <ChevronDown size={14} color="#94a3b8" style={{ transition: "transform 200ms", transform: dropdownOpen ? "rotate(180deg)" : "none" }} />
       </button>
 
       {dropdownOpen && (
         <>
           {/* Backdrop */}
           <div onClick={() => setDropdownOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 40 }} />
-          
+
           {/* Dropdown Menu */}
           <div style={{
             position: "absolute", right: 0, top: "calc(100% + 8px)", zIndex: 50,
@@ -81,8 +81,8 @@ export default function NavbarClient() {
                 borderRadius: "var(--radius-sm)", fontSize: "0.875rem", color: "var(--text-secondary)",
                 transition: "background 100ms"
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-secondary)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-secondary)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
                 <LayoutDashboard size={16} /> Dev Dashboard
               </a>
@@ -91,21 +91,23 @@ export default function NavbarClient() {
                 borderRadius: "var(--radius-sm)", fontSize: "0.875rem", color: "var(--text-secondary)",
                 transition: "background 100ms"
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-secondary)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                onMouseEnter={e => (e.currentTarget.style.background = "var(--bg-secondary)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
                 <Package size={16} /> My Plugins
               </a>
-              <a href="/admin" onClick={() => setDropdownOpen(false)} style={{
-                display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.75rem",
-                borderRadius: "var(--radius-sm)", fontSize: "0.875rem", color: "#8b5cf6",
-                transition: "background 100ms"
-              }}
-              onMouseEnter={e => (e.currentTarget.style.background = "rgba(139,92,246,0.05)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
-              >
-                <Shield size={16} /> Admin Panel
-              </a>
+              {(session?.user as any)?.trustLevel === "ADMIN" || (session?.user as any)?.trustLevel === "TRUSTED" ? (
+                <a href="/admin" onClick={() => setDropdownOpen(false)} style={{
+                  display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.75rem",
+                  borderRadius: "var(--radius-sm)", fontSize: "0.875rem", color: "#8b5cf6",
+                  transition: "background 100ms"
+                }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(139,92,246,0.05)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                >
+                  <Shield size={16} /> Admin Panel
+                </a>
+              ) : null}
             </div>
 
             {/* Logout */}
@@ -115,8 +117,8 @@ export default function NavbarClient() {
                 borderRadius: "var(--radius-sm)", fontSize: "0.875rem", color: "var(--status-error)",
                 width: "100%", textAlign: "left", transition: "background 100ms"
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = "rgba(239, 68, 68, 0.05)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(239, 68, 68, 0.05)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
               >
                 <LogOut size={16} /> Sign Out
               </button>

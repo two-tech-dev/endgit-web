@@ -40,9 +40,10 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
   const [longDescription, setLongDescription] = useState(plugin?.longDescription || "");
   const [license, setLicense] = useState(plugin?.license || "");
   const [iconPath, setIconPath] = useState("");
+  const [keywords, setKeywords] = useState(plugin?.keywords ? plugin.keywords.join(", ") : "");
   const [notes, setNotes] = useState("");
   const [changelog, setChangelog] = useState("");
-  const [supportedApis, setSupportedApis] = useState<string[]>([]);
+  const [supportedApis, setSupportedApis] = useState<string[]>(plugin?.versions?.[0]?.supportedApis || []);
   const [isFetchingLicense, setIsFetchingLicense] = useState(false);
   const [isFetchingReadme, setIsFetchingReadme] = useState(false);
   
@@ -163,6 +164,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           description, 
           longDescription, 
           tags: selectedCategories.join(","), // backend expects string or array, it handles comma split
+          keywords,
           license, 
           iconPath,
           notes,
@@ -195,21 +197,29 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
 
       <div className="card" style={{ padding: "var(--space-6)" }}>
         <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>Publish Plugin</h1>
-        <p className="text-muted" style={{ marginBottom: "var(--space-6)" }}>
-          Submit Build #{buildNumber} for review to publish it on the marketplace.
-        </p>
+        <div style={{ marginBottom: "var(--space-6)", padding: "var(--space-4)", background: "rgba(139, 92, 246, 0.05)", borderRadius: "var(--radius-md)", borderLeft: "4px solid var(--accent-purple)" }}>
+          <p className="text-primary" style={{ fontWeight: 500, marginBottom: "var(--space-2)" }}>
+            Submit Build #{buildNumber} for Review
+          </p>
+          <p className="text-muted" style={{ fontSize: "0.875rem", lineHeight: 1.6 }}>
+            Before submitting, please ensure your plugin complies with the <a href="/rules" target="_blank" style={{ color: "var(--accent-cyan)", textDecoration: "underline" }}>EndGit Plugin Submission Rules</a>. 
+            All submissions are manually reviewed by our moderation team. Your submission should be complete, well-documented, and functional.
+          </p>
+        </div>
         
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Display Name</label>
+              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Display Name</label>
+              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>The clean name shown on the marketplace (Rule B7).</p>
               <input 
                 type="text" required value={displayName} onChange={e => setDisplayName(e.target.value)}
                 className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Version</label>
+              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Version</label>
+              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Follow Semantic Versioning (e.g., 1.0.0).</p>
               <input 
                 type="text" required value={version} onChange={e => setVersion(e.target.value)} placeholder="e.g. 1.0.0"
                 className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
@@ -218,7 +228,8 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Short Description</label>
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Short Description</label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>A catchy, one-sentence summary shown in search results and plugin cards (Max 100 chars).</p>
             <input 
               type="text" required value={description} onChange={e => setDescription(e.target.value)} maxLength={100}
               placeholder="A brief summary of what your plugin does..."
@@ -227,7 +238,17 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Keywords</label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Comma-separated keywords to help users find your plugin in search.</p>
+            <input 
+              type="text" value={keywords} onChange={e => setKeywords(e.target.value)}
+              placeholder="e.g. economy, shops, gui"
+              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+            />
+          </div>
+
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "2px" }}>
               <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500 }}>Long Description (Markdown)</label>
               {plugin?.repoUrl && (
                 <button 
@@ -246,9 +267,10 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
                 </button>
               )}
             </div>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Explain features, configuration, commands, and permissions. Screenshots and code blocks are highly recommended (Rules D1, D3, D4).</p>
             <textarea 
-              required value={longDescription} onChange={e => setLongDescription(e.target.value)} rows={8}
-              placeholder="Detailed features, commands, permissions, and configuration instructions..."
+              required value={longDescription} onChange={e => setLongDescription(e.target.value)} rows={12}
+              placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
               style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical", fontFamily: "var(--font-mono)", fontSize: "0.875rem" }}
             />
           </div>
@@ -277,9 +299,10 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>
               License {isFetchingLicense && <span style={{ opacity: 0.5, fontSize: "0.75rem" }}>(Fetching from GitHub...)</span>}
             </label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>All plugins must have an OSI-approved open source license (Rule D6).</p>
             <div style={{ position: "relative" }}>
               <select 
                 value={license} onChange={e => setLicense(e.target.value)}
@@ -298,9 +321,10 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "8px" }}>
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>
               Supported APIs (Endstone Versions)
             </label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Select the stable Endstone API versions this build is verified to work with (Rule B1).</p>
             <div style={{ 
               display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: "8px",
               background: "var(--bg-secondary)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)"
@@ -341,11 +365,12 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
 
           {!isFirstVersion && (
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>What's New (Changelog)</label>
+              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>What's New (Changelog)</label>
+              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Provide a human-readable list of changes, bug fixes, and new features (Rule D5).</p>
               <textarea 
                 value={changelog} onChange={e => setChangelog(e.target.value)} rows={4}
-                placeholder="Describe what changed in this version. This will be visible to users on the plugin's page..."
-                style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical" }}
+                placeholder="- Added new command /example&#10;- Fixed issue with config loading"
+                style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical", fontFamily: "var(--font-mono)", fontSize: "0.875rem" }}
               />
             </div>
           )}
@@ -409,16 +434,20 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
                 </div>
               ))}
             </div>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px" }}>
-              Add all contributors who helped create this version. There must be at least one Collaborator.
-            </p>
+            <div style={{ padding: "var(--space-3)", background: "rgba(14, 165, 233, 0.05)", borderRadius: "var(--radius-md)", border: "1px solid rgba(14, 165, 233, 0.15)", marginTop: "8px" }}>
+              <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: 0 }}>
+                <strong>Rule A7:</strong> You must only submit work you have authored. Add all GitHub contributors who helped create this version. 
+                There must be at least one <strong>Collaborator</strong>.
+              </p>
+            </div>
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Notes to Reviewer (Optional)</label>
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Notes to Reviewer (Optional)</label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Provide context for the moderator reviewing your plugin (e.g., test server IPs, known limitations).</p>
             <textarea 
               value={notes} onChange={e => setNotes(e.target.value)} rows={3}
-              placeholder="Any specific features, permissions required, or testing instructions..."
+              placeholder="Any specific features to test, or explanations for unusual code patterns..."
               style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical" }}
             />
           </div>

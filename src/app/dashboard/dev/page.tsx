@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { 
   GitBranch, Activity, Search, Settings,
   ToggleLeft, ToggleRight, ExternalLink, Lock, Globe, 
-  Code, Loader2
+  Code, Loader2, PackagePlus, ArrowRight
 } from "lucide-react";
 
 interface Repo {
@@ -31,33 +31,73 @@ export default function DevDashboardPage() {
   const [filter, setFilter] = useState<"all" | "enabled" | "disabled">("all");
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [hasAppInstalled, setHasAppInstalled] = useState<boolean | null>(null);
   const [error, setError] = useState("");
   const [toggling, setToggling] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [quota, setQuota] = useState<{used: number, limit: number, resetsAt: string} | null>(null);
 
   useEffect(() => {
     if (sessionStatus !== "authenticated") return;
-    fetchRepos();
+    fetchRepos(1);
   }, [sessionStatus]);
 
-  const fetchRepos = async () => {
-    setLoading(true);
+  const fetchRepos = async (pageNumber: number = 1) => {
+    if (pageNumber === 1) setLoading(true);
+    else setIsFetchingMore(true);
+    
     setError("");
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const token = (session?.user as any)?.apiToken;
-      const res = await fetch(`${apiUrl}/api/v1/github/repos`, {
+
+      if (pageNumber === 1 && hasAppInstalled === null) {
+        const statusRes = await fetch(`${apiUrl}/api/v1/dashboard/status`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {}
+        });
+        const statusJson = await statusRes.json();
+        
+        if (!statusJson.success) {
+          setError(statusJson.error || "Failed to check installation status.");
+          setLoading(false);
+          setIsFetchingMore(false);
+          return;
+        }
+
+        if (!statusJson.data.hasAppInstalled) {
+          setHasAppInstalled(false);
+          setLoading(false);
+          setIsFetchingMore(false);
+          return;
+        }
+        setHasAppInstalled(true);
+        if (statusJson.data.quota) {
+          setQuota(statusJson.data.quota);
+        }
+      }
+
+      const res = await fetch(`${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=30`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
       const json = await res.json();
       if (json.success) {
-        setRepos(json.data);
+        if (pageNumber === 1) {
+          setRepos(json.data);
+        } else {
+          setRepos(prev => [...prev, ...json.data]);
+        }
+        setHasMore(json.pagination?.hasMore || false);
+        setPage(pageNumber);
       } else {
         setError(json.error || "Failed to fetch repos");
       }
     } catch (err) {
       setError("Failed to connect to API. Make sure you're signed in with GitHub.");
     } finally {
-      setLoading(false);
+      if (pageNumber === 1) setLoading(false);
+      else setIsFetchingMore(false);
     }
   };
 
@@ -84,8 +124,8 @@ export default function DevDashboardPage() {
           })
         });
       }
-      // Refresh
-      await fetchRepos();
+      // Refresh current repos by reloading page 1
+      await fetchRepos(1);
     } catch {
       // noop
     } finally {
@@ -149,6 +189,31 @@ export default function DevDashboardPage() {
     );
   }
 
+  if (hasAppInstalled === false) {
+    const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-local-dev/installations/new";
+    return (
+      <div className="container" style={{ padding: "var(--space-12) 0", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="card" style={{ maxWidth: "600px", padding: "var(--space-10)", textAlign: "center", border: "1px solid var(--border-highlight)", boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}>
+          <div style={{ width: "80px", height: "80px", background: "rgba(124, 58, 237, 0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto var(--space-6)" }}>
+            <PackagePlus size={40} color="var(--accent-purple)" />
+          </div>
+          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>Welcome to EndGit!</h1>
+          <p className="text-secondary" style={{ fontSize: "1.125rem", lineHeight: 1.6, marginBottom: "var(--space-8)" }}>
+            To enable CI/CD pipelines, you must install the EndGit GitHub App on your repositories. 
+            The app will automatically detect your Bedrock plugins, build them, and publish them to the marketplace.
+          </p>
+          <a 
+            href={installUrl} 
+            className="btn btn-primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "1.125rem", padding: "0.75rem 2rem" }}
+          >
+            <ExternalLink size={20} /> Install GitHub App <ArrowRight size={20} />
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container" style={{ padding: "var(--space-8) 0", maxWidth: "1100px" }}>
       {/* Header */}
@@ -178,6 +243,37 @@ export default function DevDashboardPage() {
           <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--text-muted)" }}>{disabledCount}</div>
         </div>
       </div>
+
+      {/* Build Quota */}
+      {quota && (
+        <div className="card" style={{ padding: "var(--space-4) var(--space-5)", marginBottom: "var(--space-6)", display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" }}>
+          <div style={{ flex: "0 0 auto" }}>
+            <div style={{ fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", marginBottom: "2px" }}>Weekly Builds</div>
+            <div style={{ fontSize: "1.125rem", fontWeight: 700, color: quota.used >= quota.limit ? "var(--status-error)" : "var(--text-primary)" }}>
+              {quota.used}/{quota.limit}
+            </div>
+          </div>
+          <div style={{ flex: 1, minWidth: "120px" }}>
+            <div style={{ height: "8px", background: "var(--bg-secondary)", borderRadius: "4px", overflow: "hidden" }}>
+              <div style={{
+                width: `${Math.min(100, (quota.used / quota.limit) * 100)}%`,
+                height: "100%",
+                borderRadius: "4px",
+                background: quota.used >= quota.limit ? "var(--status-error)" : quota.used >= quota.limit * 0.8 ? "var(--status-warning)" : "var(--accent-cyan)",
+                transition: "width 300ms"
+              }} />
+            </div>
+          </div>
+          <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+            Resets {new Date(quota.resetsAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short" })}
+          </div>
+          {quota.used >= quota.limit && (
+            <div style={{ width: "100%", padding: "var(--space-3)", background: "rgba(239,68,68,0.06)", borderRadius: "var(--radius-sm)", fontSize: "0.8125rem", color: "var(--status-error)" }}>
+              ⚠️ Build quota exceeded. New pushes will not trigger builds until the quota resets. Contact an admin to increase your limit.
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Search + Filter */}
       <div style={{ display: "flex", gap: "var(--space-3)", marginBottom: "var(--space-5)", alignItems: "center" }}>
@@ -296,6 +392,19 @@ export default function DevDashboardPage() {
               </div>
             );
           })}
+
+          {filteredRepos.length > 0 && hasMore && (
+            <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
+              <button 
+                className="btn btn-secondary" 
+                onClick={() => fetchRepos(page + 1)}
+                disabled={isFetchingMore}
+                style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center" }}
+              >
+                {isFetchingMore ? <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} /> : "Load More Repositories"}
+              </button>
+            </div>
+          )}
 
           {filteredRepos.length === 0 && !loading && (
             <div style={{ textAlign: "center", padding: "var(--space-12)", color: "var(--text-muted)" }}>

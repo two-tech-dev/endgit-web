@@ -53,17 +53,12 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
 
   if (!plugin) return notFound();
 
-  // Find the currently reviewed build if any
-  const reviewedBuild = plugin.reviewBuildId ? builds.find((b: any) => b.id === plugin.reviewBuildId) : null;
-  let reviewedBuildNumber = reviewedBuild ? reviewedBuild.buildNumber : -1;
+  // Find the highest build number that has been submitted (has a versionStatus)
+  const versionedBuilds = builds.filter((b: any) => b.versionStatus !== null);
+  const reviewedBuildNumber = versionedBuilds.length > 0 ? Math.max(...versionedBuilds.map((b: any) => Number(b.buildNumber))) : -1;
 
-  // If the reviewed build is older than the current page, fetch it directly
-  if (plugin.reviewBuildId && reviewedBuildNumber === -1) {
-    const res = await fetchApi(`/api/v1/builds/${plugin.reviewBuildId}`);
-    if (res?.data?.data) {
-      reviewedBuildNumber = Number(res.data.data.buildNumber);
-    }
-  }
+  // Check if any build is currently pending review
+  const hasPendingVersion = builds.some((b: any) => b.versionStatus === "PENDING") || plugin.status === "PENDING_REVIEW";
 
   return (
     <div className="container" style={{ padding: "var(--space-8) 0" }}>
@@ -112,11 +107,14 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
                       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                         <span style={{ fontSize: "0.875rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
                           {build.commitMessage || "No message"}
-                          {plugin.reviewBuildId === build.id && plugin.status === "PENDING_REVIEW" && (
+                          {build.versionStatus === "PENDING" && (
                             <span className="badge badge-warning" style={{ fontSize: "0.625rem", background: "rgba(245, 158, 11, 0.2)", color: "var(--status-warning)" }}>PENDING REVIEW</span>
                           )}
-                          {plugin.reviewBuildId === build.id && plugin.status === "APPROVED" && (
+                          {build.versionStatus === "APPROVED" && (
                             <span className="badge badge-success" style={{ fontSize: "0.625rem", background: "rgba(16, 185, 129, 0.2)", color: "var(--status-success)" }}>APPROVED</span>
+                          )}
+                          {build.versionStatus === "REJECTED" && (
+                            <span className="badge badge-error" style={{ fontSize: "0.625rem", background: "rgba(239, 68, 68, 0.2)", color: "var(--status-error)" }}>REJECTED</span>
                           )}
                         </span>
                         <div style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.75rem", color: "var(--text-muted)" }}>
@@ -142,7 +140,7 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
                         <Link href={`/builds/${build.id}`} className="btn btn-secondary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem", whiteSpace: "nowrap" }}>
                           View Logs
                         </Link>
-                        {build.status === "SUCCESS" && Number(build.buildNumber) > Number(reviewedBuildNumber) && plugin.status !== "PENDING_REVIEW" && (
+                        {build.status === "SUCCESS" && Number(build.buildNumber) > Number(reviewedBuildNumber) && !hasPendingVersion && (
                           <Link href={`/builds/${build.id}/submit`} className="btn btn-primary" style={{ padding: "0.375rem 0.75rem", fontSize: "0.8125rem", gap: "4px", whiteSpace: "nowrap" }}>
                             <Send size={14} /> Submit
                           </Link>

@@ -84,18 +84,41 @@ export default function AdminPage() {
     } catch { /* noop */ }
   };
 
-  const reviewPlugin = async (slug: string, decision: string) => {
+  const changeQuota = async (userId: string, newQuota: number) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/v1/admin/users/${userId}/quota`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ weeklyBuildQuota: newQuota })
+      });
+      const json = await res.json();
+      if (json.success) {
+        setUsers(prev => prev.map(u => u.id === userId ? { ...u, weeklyBuildQuota: newQuota } : u));
+      }
+    } catch { /* noop */ }
+  };
+
+  const [rejectModal, setRejectModal] = useState<{ slug: string; name: string } | null>(null);
+  const [rejectReason, setRejectReason] = useState("");
+  const [reviewLoading, setReviewLoading] = useState(false);
+
+  const reviewPlugin = async (slug: string, decision: string, comment?: string) => {
+    setReviewLoading(true);
     try {
       const res = await fetch(`${apiUrl}/api/v1/reviews/${slug}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ decision, comment: `${decision} by admin` })
+        body: JSON.stringify({ decision, comment: comment || `${decision} by admin` })
       });
       const json = await res.json();
       if (json.success) {
         setQueue(prev => prev.filter(p => p.slug !== slug));
+        setRejectModal(null);
+        setRejectReason("");
       }
-    } catch { /* noop */ }
+    } catch { /* noop */ } finally {
+      setReviewLoading(false);
+    }
   };
 
   const changeVersionStatus = async (pluginId: string, versionId: string, newStatus: string) => {
@@ -221,7 +244,7 @@ export default function AdminPage() {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ background: "var(--bg-secondary)", borderBottom: "1px solid var(--border-color)" }}>
-                    {["User", "Trust Level", "Plugins", "Reviews", "Joined", "Actions"].map(h => (
+                    {["User", "Trust Level", "Quota", "Plugins", "Joined", "Actions"].map(h => (
                       <th key={h} style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.6875rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--text-muted)", fontWeight: 600 }}>{h}</th>
                     ))}
                   </tr>
@@ -245,8 +268,20 @@ export default function AdminPage() {
                           {user.trustLevel}
                         </span>
                       </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <span style={{ fontSize: "0.8125rem", color: user.weeklyBuildCount >= user.weeklyBuildQuota ? "var(--status-error)" : "var(--text-secondary)" }}>
+                            {user.weeklyBuildCount || 0}/{user.weeklyBuildQuota || 50}
+                          </span>
+                          <input
+                            type="number" min="1" max="10000" defaultValue={user.weeklyBuildQuota || 50}
+                            onBlur={e => { const v = parseInt(e.target.value); if (v && v !== user.weeklyBuildQuota) changeQuota(user.id, v); }}
+                            onKeyDown={e => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
+                            style={{ width: "60px", padding: "2px 6px", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", fontSize: "0.75rem", textAlign: "center" }}
+                          />
+                        </div>
+                      </td>
                       <td style={{ padding: "0.75rem 1rem", fontSize: "0.875rem", color: "var(--text-secondary)" }}>{user._count?.plugins || 0}</td>
-                      <td style={{ padding: "0.75rem 1rem", fontSize: "0.875rem", color: "var(--text-secondary)" }}>{user._count?.reviews || 0}</td>
                       <td style={{ padding: "0.75rem 1rem", fontSize: "0.8125rem", color: "var(--text-muted)" }}>{new Date(user.createdAt).toLocaleDateString()}</td>
                       <td style={{ padding: "0.75rem 1rem" }}>
                         <select value={user.trustLevel} onChange={e => changeTrustLevel(user.id, e.target.value)}
@@ -316,7 +351,7 @@ export default function AdminPage() {
                     }}>
                       <CheckCircle size={16} /> Approve Plugin
                     </button>
-                    <button onClick={() => reviewPlugin(plugin.slug, "REJECTED")} style={{
+                    <button onClick={() => setRejectModal({ slug: plugin.slug, name: plugin.displayName })} style={{
                       flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "6px",
                       padding: "0.5rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 600,
                       background: "rgba(239,68,68,0.1)", color: "var(--status-error)", border: "1px solid rgba(239,68,68,0.2)", cursor: "pointer"
@@ -330,6 +365,71 @@ export default function AdminPage() {
                 </div>
               </div>
             ))
+          )}
+
+          {/* Reject Reason Modal */}
+          {rejectModal && (
+            <div style={{
+              position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
+              display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000,
+              padding: "var(--space-4)"
+            }} onClick={() => { setRejectModal(null); setRejectReason(""); }}>
+              <div className="card" style={{
+                width: "100%", maxWidth: "560px", padding: "0", overflow: "hidden",
+                borderTop: "4px solid var(--status-error)"
+              }} onClick={e => e.stopPropagation()}>
+                <div style={{ padding: "var(--space-6)" }}>
+                  <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 var(--space-1)" }}>
+                    Reject Plugin
+                  </h3>
+                  <p style={{ color: "var(--text-muted)", fontSize: "0.875rem", margin: "0 0 var(--space-5)" }}>
+                    Rejecting <strong style={{ color: "var(--text-primary)" }}>{rejectModal.name}</strong>. The author will be notified via email with your reason.
+                  </p>
+
+                  <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
+                    Reason for Rejection *
+                  </label>
+                  <textarea
+                    value={rejectReason}
+                    onChange={e => setRejectReason(e.target.value)}
+                    placeholder={"Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."}
+                    rows={8}
+                    style={{
+                      width: "100%", padding: "var(--space-3)", borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)", background: "var(--bg-secondary)",
+                      color: "var(--text-primary)", fontSize: "0.875rem", lineHeight: 1.6,
+                      resize: "vertical", outline: "none", fontFamily: "inherit",
+                      minHeight: "140px"
+                    }}
+                  />
+                  <p style={{ color: "var(--text-muted)", fontSize: "0.75rem", marginTop: "var(--space-1)" }}>
+                    Supports **bold** and {">"} blockquote formatting in the email.
+                  </p>
+
+                  <div style={{ display: "flex", gap: "var(--space-3)", marginTop: "var(--space-5)", justifyContent: "flex-end" }}>
+                    <button onClick={() => { setRejectModal(null); setRejectReason(""); }} style={{
+                      padding: "0.625rem 1.25rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 500,
+                      background: "var(--bg-secondary)", color: "var(--text-secondary)", border: "1px solid var(--border-color)", cursor: "pointer"
+                    }}>
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => rejectReason.trim() && reviewPlugin(rejectModal.slug, "REJECTED", rejectReason.trim())}
+                      disabled={!rejectReason.trim() || reviewLoading}
+                      style={{
+                        padding: "0.625rem 1.25rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 600,
+                        background: rejectReason.trim() ? "var(--status-error)" : "rgba(239,68,68,0.3)",
+                        color: "white", border: "none", cursor: rejectReason.trim() ? "pointer" : "not-allowed",
+                        display: "flex", alignItems: "center", gap: "6px", opacity: reviewLoading ? 0.7 : 1
+                      }}
+                    >
+                      {reviewLoading && <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />}
+                      <XCircle size={14} /> Reject & Notify Author
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       )}

@@ -12,12 +12,12 @@ export default function NavbarMobile() {
     <div style={{ display: "flex", alignItems: "center" }}>
       {/* Desktop nav */}
       <nav className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-        <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>Plugins</a>
-        <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.375rem" }}>
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--status-success)", display: "inline-block" }} />
-          Live Builds
+        <a href="/plugins" style={{ color: "#cbd5e1", fontWeight: 500 }}>Releases</a>
+        <a href="/plugins/top" style={{ color: "#cbd5e1", fontWeight: 500 }}>Top Plugins</a>
+        <a href="/builds" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+          Dev Builds
         </a>
-        <a href="/docs" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>Docs</a>
+        <a href="/faq" style={{ color: "#cbd5e1", fontWeight: 500 }}>FAQ</a>
         <ThemeToggle />
         <NavbarClient />
       </nav>
@@ -31,6 +31,7 @@ export default function NavbarMobile() {
           className="mobile-menu-btn"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
+          style={{ color: "#f8fafc" }}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -42,12 +43,12 @@ export default function NavbarMobile() {
           className="nav-links open"
           onClick={() => setOpen(false)}
         >
-          <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Plugins</a>
-          <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem", display: "flex", alignItems: "center", gap: "0.375rem" }}>
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--status-success)", display: "inline-block" }} />
-            Live Builds
+          <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Releases</a>
+          <a href="/plugins/top" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Top Plugins</a>
+          <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>
+            Dev Builds
           </a>
-          <a href="/docs" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Docs</a>
+          <a href="/faq" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>FAQ</a>
           <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "var(--space-3)" }}>
             <NavbarClient />
           </div>
