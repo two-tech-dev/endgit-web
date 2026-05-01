@@ -190,7 +190,7 @@ export default function DevDashboardPage() {
   }
 
   if (hasAppInstalled === false) {
-    const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-local-dev/installations/new";
+    const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-app/installations/new";
     return (
       <div className="container" style={{ padding: "var(--space-12) 0", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div className="card" style={{ maxWidth: "600px", padding: "var(--space-10)", textAlign: "center", border: "1px solid var(--border-highlight)", boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}>

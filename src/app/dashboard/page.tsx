@@ -21,7 +21,7 @@ export default async function DashboardPage() {
   ]);
   
   const hasAppInstalled = statusRes.data?.data?.hasAppInstalled || false;
-  const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-local-dev/installations/new";
+  const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-app/installations/new";
 
   if (!hasAppInstalled) {
     return (
