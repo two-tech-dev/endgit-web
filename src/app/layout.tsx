@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "EndGit — Endstone Plugin Marketplace",
     description: "Discover, download, and publish Endstone plugins automatically from GitHub.",
-    url: "https://endgit.com",
+    url: "https://endgit.dev",
     siteName: "EndGit",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
