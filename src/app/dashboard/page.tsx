@@ -1,5 +1,6 @@
 import { PackagePlus, Settings, Activity, Upload, AlertCircle, ExternalLink, ArrowRight } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
+import CopyTokenButton from "@/components/CopyTokenButton";
 
 import { fetchApi } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
@@ -98,6 +99,11 @@ export default async function DashboardPage() {
           </a>
         </div>
       </div>
+
+      {/* CLI Token Banner */}
+      {session.user && (session.user as any).apiToken && (
+        <CopyTokenButton token={(session.user as any).apiToken} />
+      )}
 
       {/* Stats Grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "var(--space-6)", marginBottom: "var(--space-10)" }}>
