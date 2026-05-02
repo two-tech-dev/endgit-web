@@ -8,8 +8,11 @@ interface RatingData {
   id: string;
   score: number;
   comment: string | null;
+  ownerReply: string | null;
+  repliedAt: string | null;
   createdAt: string;
-  user: { username: string; displayName: string | null; avatarUrl: string | null; trustLevel?: string };
+  updatedAt: string;
+  user: { id: string; username: string; displayName: string | null; avatarUrl: string | null; trustLevel?: string };
 }
 
 interface RatingSummary {
@@ -18,7 +21,7 @@ interface RatingSummary {
   distribution: { star: number; count: number; percentage: number }[];
 }
 
-export default function PluginRatings({ slug }: { slug: string }) {
+export default function PluginRatings({ slug, authorId }: { slug: string; authorId?: string }) {
   const { data: session } = useSession();
   const [ratings, setRatings] = useState<RatingData[]>([]);
   const [summary, setSummary] = useState<RatingSummary>({ average: 0, total: 0, distribution: [5,4,3,2,1].map(s => ({ star: s, count: 0, percentage: 0 })) });
@@ -27,10 +30,26 @@ export default function PluginRatings({ slug }: { slug: string }) {
   const [myComment, setMyComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [replying, setReplying] = useState(false);
+  const [hasExistingRating, setHasExistingRating] = useState(false);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
   useEffect(() => { fetchData(); }, [slug]);
+
+  useEffect(() => {
+    if (session?.user && ratings.length > 0) {
+      const myRating = ratings.find(r => r.user.id === (session.user as any).id);
+      if (myRating) {
+        setMyScore(myRating.score);
+        setMyComment(myRating.comment || "");
+        setHasExistingRating(true);
+      }
+    }
+  }, [ratings, session]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -59,12 +78,31 @@ export default function PluginRatings({ slug }: { slug: string }) {
       });
       const json = await res.json();
       if (json.success) {
-        setMyScore(0);
-        setMyComment("");
+        setHasExistingRating(true);
         await fetchData(); // Refresh
       }
     } catch { /* noop */ }
     finally { setSubmitting(false); }
+  };
+
+  const handleReplySubmit = async (ratingId: string) => {
+    if (!replyText.trim()) return;
+    setReplying(true);
+    try {
+      const token = (session?.user as any)?.apiToken;
+      const res = await fetch(`${apiUrl}/api/v1/ratings/${slug}/${ratingId}/reply`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ reply: replyText })
+      });
+      const json = await res.json();
+      if (json.success) {
+        setReplyingTo(null);
+        setReplyText("");
+        await fetchData(); // Refresh
+      }
+    } catch { /* noop */ }
+    finally { setReplying(false); }
   };
 
   const formatDate = (d: string) => {
@@ -111,7 +149,7 @@ export default function PluginRatings({ slug }: { slug: string }) {
           <div style={{ marginTop: "var(--space-3)", display: "flex", justifyContent: "flex-end" }}>
             <button onClick={handleSubmit} disabled={myScore === 0 || submitting}
               style={{ display: "flex", alignItems: "center", gap: "6px", padding: "0.5rem 1.25rem", borderRadius: "var(--radius-md)", background: myScore > 0 ? "var(--accent-purple)" : "var(--bg-secondary)", color: myScore > 0 ? "white" : "var(--text-muted)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: myScore > 0 ? "pointer" : "not-allowed", opacity: submitting ? 0.6 : 1, transition: "all 150ms" }}>
-              <Send size={14} /> {submitting ? "Submitting..." : "Submit Review"}
+              <Send size={14} /> {submitting ? "Submitting..." : (hasExistingRating ? "Update Review" : "Submit Review")}
             </button>
           </div>
         </div>
@@ -181,6 +219,56 @@ export default function PluginRatings({ slug }: { slug: string }) {
                   lineHeight: 1.6
                 }}>
                   {rating.comment}
+                </div>
+              )}
+
+              {/* Owner Reply */}
+              {rating.ownerReply && (
+                <div style={{
+                  marginTop: "var(--space-2)", 
+                  marginLeft: "56px",
+                  padding: "var(--space-3)",
+                  background: "rgba(16, 185, 129, 0.05)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid rgba(16, 185, 129, 0.2)",
+                  borderLeft: "3px solid var(--status-success)",
+                  fontSize: "0.875rem",
+                  color: "var(--text-secondary)",
+                  lineHeight: 1.6
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+                    <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--status-success)", textTransform: "uppercase" }}>Author Reply</span>
+                    <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{formatDate(rating.repliedAt || rating.updatedAt)}</span>
+                  </div>
+                  {rating.ownerReply}
+                </div>
+              )}
+
+              {/* Reply Button for Author */}
+              {!rating.ownerReply && session?.user && (session.user as any).id === authorId && (
+                <div style={{ marginLeft: "40px", marginTop: "var(--space-2)" }}>
+                  {replyingTo === rating.id ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                      <textarea 
+                        value={replyText} onChange={e => setReplyText(e.target.value)} 
+                        placeholder="Write your reply..." rows={2}
+                        style={{ width: "100%", padding: "0.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", fontSize: "0.875rem", resize: "vertical", outline: "none", fontFamily: "inherit" }} 
+                      />
+                      <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
+                        <button onClick={() => { setReplyingTo(null); setReplyText(""); }} style={{ background: "transparent", border: "1px solid var(--border-color)", color: "var(--text-primary)", borderRadius: "var(--radius-sm)", padding: "4px 8px", fontSize: "0.75rem", cursor: "pointer" }}>Cancel</button>
+                        <button onClick={() => handleReplySubmit(rating.id)} disabled={replying} style={{ background: "var(--accent-purple)", border: "none", color: "white", borderRadius: "var(--radius-sm)", padding: "4px 8px", fontSize: "0.75rem", cursor: replying ? "not-allowed" : "pointer", opacity: replying ? 0.6 : 1 }}>
+                           {replying ? "Submitting..." : "Submit Reply"}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button 
+                      onClick={() => { setReplyingTo(rating.id); setReplyText(""); }}
+                      style={{ background: "transparent", border: "none", color: "var(--accent-cyan)", cursor: "pointer", fontSize: "0.75rem", fontWeight: 600, padding: 0 }}
+                    >
+                      Reply to this review
+                    </button>
+                  )}
                 </div>
               )}
             </div>

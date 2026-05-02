@@ -177,7 +177,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
 
           {/* Ratings & Reviews */}
           <div className="plugin-ratings" style={{ width: "100%" }}>
-            <PluginRatings slug={plugin.slug} />
+            <PluginRatings slug={plugin.slug} authorId={plugin.authorId} />
           </div>
         </div>
 
