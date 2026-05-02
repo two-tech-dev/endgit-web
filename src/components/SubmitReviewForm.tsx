@@ -76,13 +76,17 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       const match = plugin.repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (match) {
         const [, owner, repo] = match;
-        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/license`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const token = (session?.user as any)?.apiToken;
+        const res = await fetch(`${apiUrl}/api/v1/github/repo-license?owner=${owner}&repo=${repo}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         if (res.ok) {
-          const data = await res.json();
-          if (data.license?.spdx_id) {
-            setLicense(data.license.spdx_id);
-          } else if (data.license?.name) {
-            setLicense(data.license.name);
+          const json = await res.json();
+          if (json.data?.spdx_id) {
+            setLicense(json.data.spdx_id);
+          } else if (json.data?.name) {
+            setLicense(json.data.name);
           }
         }
       }
@@ -101,12 +105,14 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       const match = plugin.repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (match) {
         const [, owner, repo] = match;
-        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
-          headers: { Accept: "application/vnd.github.v3.raw" }
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const token = (session?.user as any)?.apiToken;
+        const res = await fetch(`${apiUrl}/api/v1/github/repo-readme?owner=${owner}&repo=${repo}`, {
+          headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {
-          const text = await res.text();
-          setLongDescription(text);
+          const json = await res.json();
+          setLongDescription(json.data);
         } else {
           setError("README not found in repository");
         }
