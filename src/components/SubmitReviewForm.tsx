@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { PLUGIN_CATEGORIES } from "@/lib/constants";
 
 const COMMON_LICENSES = ["MIT", "GPL-3.0", "GPL-2.0", "Apache-2.0", "BSD-3-Clause", "BSD-2-Clause", "MPL-2.0", "AGPL-3.0", "Unlicense", "Proprietary", "Other"];
-const ENDSTONE_APIS = ["0.5", "0.4", "0.3"];
+const ENDSTONE_APIS = ["0.11.x", "0.10.x", "0.9.x", "0.8.x", "0.7.x"];
 
 interface Props {
   buildId: string;
