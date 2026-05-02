@@ -130,9 +130,9 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
                       <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "6px", wordBreak: "break-word" }}>
                           {build.commitHash && (
-                            <span style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)" }}>
+                            <a href={`${plugin.repoUrl}/commit/${build.commitHash}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-blue)", fontFamily: "var(--font-mono)", textDecoration: "none" }}>
                               {build.commitHash.slice(0, 7)}
-                            </span>
+                            </a>
                           )}
                           <span style={{ color: "var(--text-primary)" }}>
                             {build.commitMessage || "No commit message"}
@@ -152,9 +152,9 @@ export default async function PluginBuildsPage({ params }: { params: { slug: str
                       </div>
                     </td>
                     <td style={{ padding: "var(--space-4)", borderRight: "1px solid var(--border-color)", verticalAlign: "top" }}>
-                      <span style={{ color: "var(--accent-blue)", display: "flex", alignItems: "center", gap: "4px" }}>
+                      <a href={`${plugin.repoUrl}/tree/${build.branch || "master"}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-blue)", display: "flex", alignItems: "center", gap: "4px", textDecoration: "none" }}>
                         {build.branch || "master"}
-                      </span>
+                      </a>
                     </td>
                     <td style={{ padding: "var(--space-4)", textAlign: "right", verticalAlign: "top" }}>
                       <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
