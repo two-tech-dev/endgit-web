@@ -21,7 +21,31 @@ export default async function DashboardPage() {
   ]);
   
   const hasAppInstalled = statusRes.data?.data?.hasAppInstalled || false;
+  const githubTokenExpired = statusRes.data?.data?.githubTokenExpired || false;
   const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-app/installations/new";
+
+  if (githubTokenExpired) {
+    return (
+      <div className="container" style={{ padding: "var(--space-12) 0", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="card" style={{ maxWidth: "600px", padding: "var(--space-10)", textAlign: "center", border: "1px solid var(--border-highlight)", boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}>
+          <div style={{ width: "80px", height: "80px", background: "rgba(255, 170, 0, 0.1)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto var(--space-6)" }}>
+            <AlertCircle size={40} color="var(--accent-orange)" />
+          </div>
+          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>GitHub Session Expired</h1>
+          <p className="text-secondary" style={{ fontSize: "1.125rem", lineHeight: 1.6, marginBottom: "var(--space-8)" }}>
+            For security reasons, your connection to GitHub has expired. Please re-authenticate to sync your App installation status and continue using the Developer Dashboard.
+          </p>
+          <a 
+            href="/api/auth/signin?callbackUrl=/dashboard" 
+            className="btn btn-primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "1.125rem", padding: "0.75rem 2rem" }}
+          >
+            Re-authenticate with GitHub
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   if (!hasAppInstalled) {
     return (
