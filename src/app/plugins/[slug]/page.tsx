@@ -106,9 +106,9 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                   const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
                   if (repoOwner) {
                     return (
-                      <a href={`https://github.com/${repoOwner}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                      <Link href={`/plugins/by/${repoOwner}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
                         {repoOwner}
-                      </a>
+                      </Link>
                     );
                   }
                   return plugin.author ? (
