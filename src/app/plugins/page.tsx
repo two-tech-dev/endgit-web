@@ -108,7 +108,7 @@ export default async function PluginsPage({
                       </h3>
                       <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)", display: "flex", flexDirection: "column", gap: "2px" }}>
                         <span>v{plugin.latestVersion || "1.0.0"}</span>
-                        <span>{plugin.author?.displayName || plugin.author?.username}</span>
+                        <span>{plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] || plugin.author?.displayName || plugin.author?.username}</span>
                       </div>
                     </div>
 
