@@ -101,13 +101,22 @@ export default async function PluginDetailPage({ params, searchParams }: { param
               </div>
               <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
                 by{" "}
-                {plugin.author ? (
-                  <Link href={`/plugins/by/${plugin.author.username}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
-                    {plugin.author.displayName || plugin.author.username}
-                  </Link>
-                ) : (
-                  "Unknown"
-                )}
+                {(() => {
+                  // Extract owner from repoUrl (e.g., github.com/OrgName/Repo → OrgName)
+                  const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+                  if (repoOwner) {
+                    return (
+                      <a href={`https://github.com/${repoOwner}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                        {repoOwner}
+                      </a>
+                    );
+                  }
+                  return plugin.author ? (
+                    <Link href={`/plugins/by/${plugin.author.username}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                      {plugin.author.displayName || plugin.author.username}
+                    </Link>
+                  ) : "Unknown";
+                })()}
               </p>
               <p style={{ color: "var(--text-secondary)", marginTop: "var(--space-2)", maxWidth: "600px", lineHeight: 1.6 }}>
                 {plugin.description}
