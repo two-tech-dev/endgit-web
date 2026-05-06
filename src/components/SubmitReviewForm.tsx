@@ -59,6 +59,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
     if (username && producers.length === 1 && producers[0].githubUser === "") {
       setProducers([{ githubUser: username, role: "COLLABORATOR" }]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, plugin]);
   
   // Categories State
@@ -67,6 +68,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
 
   useEffect(() => {
     if (!license) fetchLicense();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchLicense = async () => {
@@ -371,7 +373,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
 
           {!isFirstVersion && (
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>What's New (Changelog)</label>
+              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>What&apos;s New (Changelog)</label>
               <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Provide a human-readable list of changes, bug fixes, and new features (Rule D5).</p>
               <textarea 
                 value={changelog} onChange={e => setChangelog(e.target.value)} rows={4}

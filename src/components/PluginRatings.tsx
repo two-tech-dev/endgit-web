@@ -38,6 +38,7 @@ export default function PluginRatings({ slug, authorId }: { slug: string; author
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchData(); }, [slug]);
 
   useEffect(() => {
@@ -186,6 +187,7 @@ export default function PluginRatings({ slug, authorId }: { slug: string; author
                     color: "white", fontSize: "0.6875rem", fontWeight: 700, flexShrink: 0, overflow: "hidden"
                   }}>
                     {rating.user.avatarUrl 
+                      // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={rating.user.avatarUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} /> 
                       : rating.user.username.charAt(0).toUpperCase()
                     }
