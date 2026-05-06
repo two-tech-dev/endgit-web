@@ -109,6 +109,7 @@ function Footer() {
             <h4 style={{ fontWeight: 600, fontSize: "0.8125rem", color: "var(--text-primary)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.75rem" }}>Community</h4>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               <a href="https://discord.gg/9eZhP9y26Q" target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>Discord</a>
+              <a href="https://github.com/two-tech-dev/endgit-web" target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>Source code</a>
               <a href="https://github.com/apps/endgit-local-dev" target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>GitHub App</a>
               <a href="/faq" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>FAQ</a>
             </div>
