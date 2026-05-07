@@ -107,15 +107,16 @@ export default function DevDashboardPage() {
     const token = (session?.user as any)?.apiToken;
 
     try {
+      let res;
       if (repo.ciEnabled && repo.pluginId) {
         // Disable CI
-        await fetch(`${apiUrl}/api/v1/github/repos/${repo.pluginId}/disable`, {
+        res = await fetch(`${apiUrl}/api/v1/github/repos/${repo.pluginId}/disable`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
         });
       } else {
         // Enable CI
-        await fetch(`${apiUrl}/api/v1/github/repos/${repo.id}/enable`, {
+        res = await fetch(`${apiUrl}/api/v1/github/repos/${repo.id}/enable`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -124,10 +125,18 @@ export default function DevDashboardPage() {
           })
         });
       }
+      
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json.success === false) {
+        alert(`Failed to ${repo.ciEnabled ? 'disable' : 'enable'} CI:\n${json.error || "Unknown error"}`);
+        setToggling(null);
+        return;
+      }
+
       // Refresh current repos by reloading page 1
       await fetchRepos(1);
-    } catch {
-      // noop
+    } catch (err: any) {
+      alert(`An error occurred while toggling CI: ${err.message}`);
     } finally {
       setToggling(null);
     }
