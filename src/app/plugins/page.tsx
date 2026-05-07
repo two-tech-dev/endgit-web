@@ -78,7 +78,7 @@ export default async function PluginsPage({
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(340px, 100%), 1fr))", gap: "var(--space-6)", alignContent: "start" }}>
             {realPlugins.map((plugin: any) => {
               const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0; // stars is 0-100 scale
-              const isFeatured = plugin.downloads >= 100;
+              const isFeatured = plugin.isFeatured;
 
               return (
                 <a href={`/plugins/${plugin.slug}`} key={plugin.id} className="card" style={{

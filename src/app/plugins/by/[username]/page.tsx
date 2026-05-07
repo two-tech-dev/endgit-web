@@ -35,7 +35,7 @@ export default async function AuthorPluginsPage({
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(340px, 100%), 1fr))", gap: "var(--space-6)" }}>
           {realPlugins.map((plugin: any) => {
             const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0;
-            const isFeatured = plugin.downloads >= 100;
+            const isFeatured = plugin.isFeatured;
 
             return (
               <Link href={`/plugins/${plugin.slug}`} key={plugin.id} className="card" style={{
