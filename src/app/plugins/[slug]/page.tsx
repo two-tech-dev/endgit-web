@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const title = `${plugin.displayName} - Endstone Plugin | EndGit`;
   const description = plugin.description || `Download ${plugin.displayName} for Endstone.`;
-  const keywords = plugin.keywords && plugin.keywords.length > 0 
-    ? plugin.keywords.join(", ") 
+  const keywords = plugin.keywords && plugin.keywords.length > 0
+    ? plugin.keywords.join(", ")
     : `${plugin.name}, endstone plugin, minecraft bedrock`;
 
   return {
@@ -56,16 +56,16 @@ export default async function PluginDetailPage({ params, searchParams }: { param
 
   const safeScore = plugin.trustScore || 0;
   const scoreClass = safeScore >= 90 ? 'var(--status-success)' : safeScore >= 60 ? 'var(--status-warning)' : 'var(--status-error)';
-  
+
   // Determine active version from URL param or default to latest
-  const activeVersion = searchParams.v 
+  const activeVersion = searchParams.v
     ? plugin.versions?.find((v: any) => v.version === searchParams.v) || plugin.versions?.[0]
     : plugin.versions?.[0];
-  
+
   const isAuthor = session?.user?.id === plugin.authorId;
 
   const getRoleStyle = (role: string) => {
-    switch(role) {
+    switch (role) {
       case "COLLABORATOR": return { background: "rgba(16, 185, 129, 0.1)", color: "var(--status-success)", border: "1px solid rgba(16, 185, 129, 0.2)" };
       case "CONTRIBUTOR": return { background: "rgba(14, 165, 233, 0.1)", color: "var(--accent-cyan)", border: "1px solid rgba(14, 165, 233, 0.2)" };
       case "TRANSLATOR": return { background: "rgba(168, 85, 247, 0.1)", color: "var(--accent-purple)", border: "1px solid rgba(168, 85, 247, 0.2)" };
@@ -235,17 +235,17 @@ export default async function PluginDetailPage({ params, searchParams }: { param
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                 {activeVersion.producers.map((producer: any) => (
                   <div key={producer.githubUser} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <img 
-                      src={`https://github.com/${producer.githubUser}.png?size=40`} 
-                      alt={producer.githubUser} 
-                      style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", background: "var(--bg-secondary)" }} 
+                    <img
+                      src={`https://github.com/${producer.githubUser}.png?size=40`}
+                      alt={producer.githubUser}
+                      style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", background: "var(--bg-secondary)" }}
                     />
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <a href={`https://github.com/${producer.githubUser}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)", textDecoration: "none" }}>
                         @{producer.githubUser}
                       </a>
-                      <span style={{ 
-                        fontSize: "0.625rem", 
+                      <span style={{
+                        fontSize: "0.625rem",
                         textTransform: "uppercase",
                         fontWeight: 600,
                         padding: "2px 6px",
@@ -321,7 +321,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 [![Downloads](https://endgit.dev/shield.dl.total/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
               </div>
             </div>
-            
+
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
                 <img src={`https://endgit.dev/shield.version/${plugin.slug}`} alt="Version Badge" />
@@ -330,7 +330,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 [![Version](https://endgit.dev/shield.version/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
               </div>
             </div>
-            
+
             <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
                 <img src={`https://endgit.dev/shield.rating/${plugin.slug}`} alt="Rating Badge" />
