@@ -300,7 +300,16 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 <h4 style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "var(--space-2)" }}>Tags</h4>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-2)" }}>
                   {plugin.tags.map((tag: string) => (
-                    <span key={tag} className="badge badge-outline" style={{ fontSize: "0.75rem" }}>
+                    <span
+                      key={tag}
+                      className="badge badge-outline"
+                      style={{
+                        fontSize: "0.75rem",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                    >
                       <Tag size={10} /> {tag}
                     </span>
                   ))}
