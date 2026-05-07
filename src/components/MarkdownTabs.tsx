@@ -3,11 +3,51 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 
 interface Tab {
   title: string;
   content: string;
 }
+
+const markdownSchema = {
+  ...defaultSchema,
+  tagNames: [
+    ...(defaultSchema.tagNames || []),
+    "img",
+    "details",
+    "summary",
+    "kbd",
+    "br",
+    "hr",
+    "sup",
+    "sub",
+  ],
+  attributes: {
+    ...defaultSchema.attributes,
+
+    a: [
+      ...(defaultSchema.attributes?.a || []),
+      "href",
+      "target",
+      "rel",
+    ],
+
+    img: [
+      "src",
+      "alt",
+      "title",
+      "width",
+      "height",
+    ],
+
+    "*": [
+      "title",
+      "align",
+    ],
+  },
+};
 
 function parseMarkdownTabs(markdown: string): Tab[] {
   // Split by H2 (## ) at the start of a line
@@ -47,7 +87,7 @@ export default function MarkdownTabs({ markdown }: { markdown: string }) {
   if (tabs.length === 1) {
     return (
       <div className="markdown-body" style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}>
           {tabs[0].content}
         </ReactMarkdown>
       </div>
@@ -109,7 +149,7 @@ export default function MarkdownTabs({ markdown }: { markdown: string }) {
         lineHeight: 1.7,
         background: "var(--bg-card)"
       }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}>
           {currentTab.content}
         </ReactMarkdown>
       </div>
