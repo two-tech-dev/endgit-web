@@ -1,4 +1,4 @@
-import { Download, ShieldCheck, Star, CheckCircle, Tag, GitBranch, Terminal, Activity, Copy, Shield, Zap } from "lucide-react";
+import { Download, ShieldCheck, Star, CheckCircle, Tag, GitBranch, Terminal, Activity, Copy, Shield, Zap, Pencil } from "lucide-react";
 import MarkdownTabs from "@/components/MarkdownTabs";
 import PluginAnalyticsChart from "@/components/PluginAnalyticsChart";
 import DependencyGraph from "@/components/DependencyGraph";
@@ -97,6 +97,17 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                   <span className="badge badge-cyan" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <ShieldCheck size={14} /> VERIFIED
                   </span>
+                )}
+                {isAuthor && (
+                  <Link href={`/plugins/${plugin.slug}/edit`} style={{
+                    display: "inline-flex", alignItems: "center", gap: "6px",
+                    padding: "4px 12px", borderRadius: "var(--radius-md)",
+                    fontSize: "0.8125rem", fontWeight: 500, textDecoration: "none",
+                    background: "rgba(139, 92, 246, 0.08)", color: "var(--accent-purple)",
+                    border: "1px solid rgba(139, 92, 246, 0.2)", transition: "all 200ms"
+                  }}>
+                    <Pencil size={14} /> Edit
+                  </Link>
                 )}
               </div>
               <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
