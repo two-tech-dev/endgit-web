@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import PluginImage from "@/components/PluginImage";
 import {
   Users, Shield, BarChart3, AlertTriangle, CheckCircle, XCircle,
-  Search, Eye, Clock, Package, Activity, Loader2
+  Search, Eye, Clock, Package, Activity, Loader2, Star
 } from "lucide-react";
 
 const TRUST_LEVELS = ["NEW", "TRUSTED", "FLAGGED", "ADMIN"];
@@ -153,6 +153,19 @@ export default function AdminPage() {
       const json = await res.json();
       if (json.success) {
         setPlugins(prev => prev.map(p => p.id === pluginId ? { ...p, status: newStatus } : p));
+      }
+    } catch { /* noop */ }
+  };
+
+  const toggleFeatured = async (pluginId: string) => {
+    try {
+      const res = await fetch(`${apiUrl}/api/v1/admin/plugins/${pluginId}/featured`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
+      });
+      const json = await res.json();
+      if (json.success) {
+        setPlugins(prev => prev.map(p => p.id === pluginId ? { ...p, isFeatured: json.data.isFeatured } : p));
       }
     } catch { /* noop */ }
   };
@@ -498,9 +511,24 @@ export default function AdminPage() {
                       </select>
                     </td>
                     <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
-                      <a href={`/plugins/${plugin.slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ padding: "0.25rem 0.5rem", fontSize: "0.75rem" }}>
-                        View
-                      </a>
+                      <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end", alignItems: "center" }}>
+                        <button
+                          onClick={() => toggleFeatured(plugin.id)}
+                          title={plugin.isFeatured ? "Remove Featured" : "Mark as Featured"}
+                          style={{
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            width: "32px", height: "32px", borderRadius: "var(--radius-sm)",
+                            border: plugin.isFeatured ? "1px solid #fbbf24" : "1px solid var(--border-color)",
+                            background: plugin.isFeatured ? "rgba(251, 191, 36, 0.15)" : "var(--bg-secondary)",
+                            cursor: "pointer", transition: "all 150ms"
+                          }}
+                        >
+                          <Star size={16} color={plugin.isFeatured ? "#fbbf24" : "var(--text-muted)"} fill={plugin.isFeatured ? "#fbbf24" : "none"} />
+                        </button>
+                        <a href={`/plugins/${plugin.slug}`} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ padding: "0.25rem 0.5rem", fontSize: "0.75rem" }}>
+                          View
+                        </a>
+                      </div>
                     </td>
                   </tr>
                   {plugin.versions && plugin.versions.length > 0 && (
