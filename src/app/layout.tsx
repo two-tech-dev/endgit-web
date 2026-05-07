@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "EndGit — CI/CD & Plugin Marketplace for Endstone",
     description: "Discover, download, and publish Endstone plugins automatically from GitHub.",
     images: ["/og-image.png"],
@@ -32,6 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <meta name="theme-color" content="#38BDF8" />
       <head>
         <script dangerouslySetInnerHTML={{
           __html: `

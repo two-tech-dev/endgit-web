@@ -34,13 +34,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title,
     description,
     keywords,
+
     openGraph: {
       title,
       description,
       images: [plugin.iconUrl || "/og-image.png"],
+      type: "website",
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title,
       description,
       images: [plugin.iconUrl || "/og-image.png"],
