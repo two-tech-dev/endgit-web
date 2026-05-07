@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { 
+import {
   GitBranch, Activity, Search, Settings,
-  ToggleLeft, ToggleRight, ExternalLink, Lock, Globe, 
+  ToggleLeft, ToggleRight, ExternalLink, Lock, Globe,
   Code, Loader2, PackagePlus, ArrowRight
 } from "lucide-react";
 
@@ -37,7 +37,7 @@ export default function DevDashboardPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
-  const [quota, setQuota] = useState<{used: number, limit: number, resetsAt: string} | null>(null);
+  const [quota, setQuota] = useState<{ used: number, limit: number, resetsAt: string } | null>(null);
 
   useEffect(() => {
     if (sessionStatus !== "authenticated") return;
@@ -47,7 +47,7 @@ export default function DevDashboardPage() {
   const fetchRepos = async (pageNumber: number = 1) => {
     if (pageNumber === 1) setLoading(true);
     else setIsFetchingMore(true);
-    
+
     setError("");
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -58,7 +58,7 @@ export default function DevDashboardPage() {
           headers: token ? { Authorization: `Bearer ${token}` } : {}
         });
         const statusJson = await statusRes.json();
-        
+
         if (!statusJson.success) {
           setError(statusJson.error || "Failed to check installation status.");
           setLoading(false);
@@ -125,9 +125,15 @@ export default function DevDashboardPage() {
           })
         });
       }
-      
+
       const json = await res.json().catch(() => ({}));
       if (!res.ok || json.success === false) {
+        if (json.error && json.error.includes("EndGit GitHub App is installed on the organization")) {
+          const installUrl = process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL || "https://github.com/apps/endgit-local-dev/installations/new";
+          window.location.href = installUrl;
+          return;
+        }
+
         alert(`Failed to ${repo.ciEnabled ? 'disable' : 'enable'} CI:\n${json.error || "Unknown error"}`);
         setToggling(null);
         return;
@@ -208,11 +214,11 @@ export default function DevDashboardPage() {
           </div>
           <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>Welcome to EndGit!</h1>
           <p className="text-secondary" style={{ fontSize: "1.125rem", lineHeight: 1.6, marginBottom: "var(--space-8)" }}>
-            To enable CI/CD pipelines, you must install the EndGit GitHub App on your repositories. 
+            To enable CI/CD pipelines, you must install the EndGit GitHub App on your repositories.
             The app will automatically detect your Bedrock plugins, build them, and publish them to the marketplace.
           </p>
-          <a 
-            href={installUrl} 
+          <a
+            href={installUrl}
             className="btn btn-primary"
             style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "1.125rem", padding: "0.75rem 2rem" }}
           >
@@ -404,8 +410,8 @@ export default function DevDashboardPage() {
 
           {filteredRepos.length > 0 && hasMore && (
             <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
-              <button 
-                className="btn btn-secondary" 
+              <button
+                className="btn btn-secondary"
                 onClick={() => fetchRepos(page + 1)}
                 disabled={isFetchingMore}
                 style={{ minWidth: "150px", display: "inline-flex", justifyContent: "center" }}
