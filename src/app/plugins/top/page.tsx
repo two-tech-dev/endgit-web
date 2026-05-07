@@ -69,11 +69,7 @@ export default async function TopPluginsPage() {
                   background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
                   display: "flex", alignItems: "center", justifyContent: "center"
                 }}>
-                  {plugin.iconUrl ? (
-                    <PluginImage src={plugin.iconUrl} alt={plugin.displayName} size={64} />
-                  ) : (
-                    <div style={{ width: "32px", height: "32px", borderRadius: "4px", background: "var(--border-color)" }} />
-                  )}
+                  <PluginImage iconUrl={plugin.iconUrl} repoUrl={plugin.repoUrl} alt={`${plugin.displayName} icon`} />
                 </div>
                 <div style={{ flex: 1, minWidth: "200px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "4px" }}>
@@ -96,7 +92,10 @@ export default async function TopPluginsPage() {
                     <Download size={14} /> {plugin.downloads}
                   </span>
                 </div>
-                <span>By {plugin.author?.displayName || plugin.author?.username || "Unknown"}</span>
+                <span>By {(() => {
+                  const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+                  return repoOwner || plugin.author?.displayName || plugin.author?.username || "Unknown";
+                })()}</span>
               </div>
             </a>
           );
