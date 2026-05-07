@@ -22,7 +22,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
   const [iconUrl, setIconUrl] = useState(plugin?.iconUrl || "");
   const [repoUrl, setRepoUrl] = useState(plugin?.repoUrl || "");
   const [selectedCategories, setSelectedCategories] = useState<string[]>(plugin?.tags || []);
-  
+
   const [isFetchingLicense, setIsFetchingLicense] = useState(false);
   const [isFetchingReadme, setIsFetchingReadme] = useState(false);
 
@@ -150,16 +150,16 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             Updating {plugin.name}
           </p>
           <p className="text-muted" style={{ fontSize: "0.875rem", lineHeight: 1.6 }}>
-            You are editing the general information for this plugin. 
+            You are editing the general information for this plugin.
             Note that changing versions, supported APIs, or producers requires submitting a new version build.
           </p>
         </div>
-        
+
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
           <div>
             <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Display Name</label>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>The clean name shown on the marketplace (Rule B7).</p>
-            <input 
+            <input
               type="text" required value={displayName} onChange={e => setDisplayName(e.target.value)}
               className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
             />
@@ -168,7 +168,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           <div>
             <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Short Description</label>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>A catchy, one-sentence summary shown in search results and plugin cards (Max 100 chars).</p>
-            <input 
+            <input
               type="text" required value={description} onChange={e => setDescription(e.target.value)} maxLength={100}
               placeholder="A brief summary of what your plugin does..."
               className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
@@ -179,14 +179,14 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "2px" }}>
               <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500 }}>Long Description (Markdown)</label>
               {repoUrl && (
-                <button 
-                  type="button" 
-                  onClick={fetchReadme} 
+                <button
+                  type="button"
+                  onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  style={{ 
-                    display: "flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", 
-                    background: "rgba(14, 165, 233, 0.1)", color: "var(--accent-cyan)", 
-                    border: "1px solid rgba(14, 165, 233, 0.2)", borderRadius: "var(--radius-sm)", 
+                  style={{
+                    display: "flex", alignItems: "center", gap: "4px", fontSize: "0.75rem",
+                    background: "rgba(14, 165, 233, 0.1)", color: "var(--accent-cyan)",
+                    border: "1px solid rgba(14, 165, 233, 0.2)", borderRadius: "var(--radius-sm)",
                     padding: "4px 8px", cursor: "pointer", fontWeight: 500,
                     opacity: isFetchingReadme ? 0.6 : 1
                   }}
@@ -196,7 +196,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               )}
             </div>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Explain features, configuration, commands, and permissions. Screenshots and code blocks are highly recommended (Rules D1, D3, D4).</p>
-            <textarea 
+            <textarea
               required value={longDescription} onChange={e => setLongDescription(e.target.value)} rows={12}
               placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
               style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical", fontFamily: "var(--font-mono)", fontSize: "0.875rem" }}
@@ -208,13 +208,13 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               <span>Categories <span style={{ color: "var(--text-muted)", fontWeight: "normal" }}>(Max 5)</span></span>
               <span style={{ fontSize: "0.75rem", color: selectedCategories.length > 5 ? "var(--status-error)" : "var(--text-muted)" }}>{selectedCategories.length}/5</span>
             </label>
-            <div style={{ 
+            <div style={{
               display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "8px",
               background: "var(--bg-secondary)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)"
             }}>
               {PLUGIN_CATEGORIES.map(cat => (
                 <label key={cat} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.875rem" }}>
-                  <input 
+                  <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
                     onChange={() => toggleCategory(cat)}
@@ -232,7 +232,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             </label>
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>All plugins must have an OSI-approved open source license (Rule D6).</p>
             <div style={{ position: "relative" }}>
-              <select 
+              <select
                 value={license} onChange={e => setLicense(e.target.value)}
                 style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", paddingRight: "40px", appearance: "auto" }}
               >
@@ -250,22 +250,22 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
 
           <div>
             <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Icon URL (Optional)</label>
-            <input 
-              type="text" value={iconUrl} onChange={e => setIconUrl(e.target.value)} 
+            <input
+              type="text" value={iconUrl} onChange={e => setIconUrl(e.target.value)}
               placeholder="https://..."
               className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
             />
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Repository URL (Optional)</label>
-            <input 
-              type="text" value={repoUrl} onChange={e => setRepoUrl(e.target.value)} 
-              placeholder="https://github.com/..."
-              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>Repository URL</label>
+            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>This field cannot be changed after creation.</p>
+            <input
+              type="text" value={repoUrl} disabled
+              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "rgba(0,0,0,0.2)", color: "var(--text-muted)", cursor: "not-allowed", opacity: 0.7 }}
             />
           </div>
-          
+
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-3)", marginTop: "var(--space-2)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--border-color)" }}>
             <button type="submit" disabled={submitting} className="btn btn-primary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
               <CheckCircle size={18} /> {submitting ? "Saving..." : "Save Changes"}
