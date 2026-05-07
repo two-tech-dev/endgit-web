@@ -84,18 +84,19 @@ export default async function AuthorPluginsPage({
 
                 {/* Bottom: Featured Banner */}
                 {isFeatured && (
-                  <div style={{
-                    width: "100%",
-                    padding: "5px 0",
-                    textAlign: "center",
-                    background: "linear-gradient(90deg, #059669, #0d9488)",
-                    color: "white",
-                    fontSize: "0.6875rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.08em"
-                  }}>
-                    ⚡ Featured
+                  <div style={{ padding: "0 var(--space-4) var(--space-4)", display: "flex", justifyContent: "center" }}>
+                    <div style={{
+                      width: "100%",
+                      padding: "6px 0",
+                      textAlign: "center",
+                      background: "#008000",
+                      color: "white",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      borderRadius: "var(--radius-sm)",
+                    }}>
+                      Featured
+                    </div>
                   </div>
                 )}
               </Link>
