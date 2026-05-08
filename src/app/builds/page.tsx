@@ -31,10 +31,6 @@ export default async function BuildsPage() {
   const allBuilds = await getTodayBuilds();
   const today = todayUTC();
 
-  const builds = allBuilds.filter(
-    (b: any) => utcDateStr(b.createdAt) === today
-  );
-
   return (
     <div
       className="container"
@@ -43,7 +39,7 @@ export default async function BuildsPage() {
         paddingBottom: "var(--space-16)",
       }}
     >
-      <BuildsList builds={builds} today={today} />
+      <BuildsList builds={allBuilds} today={today} />
     </div>
   );
 }

@@ -85,13 +85,21 @@ export default function BuildsList({
         build.plugin?.name ||
         "";
 
-      return (
+      const matchesSearch =
         plugin.toLowerCase().includes(q) ||
         build.branch?.toLowerCase().includes(q) ||
-        build.status?.toLowerCase().includes(q)
-      );
+        build.status?.toLowerCase().includes(q);
+        
+      if (!q) {
+        // If no search query, only show today's builds
+        const isToday = new Date(build.createdAt).toISOString().slice(0, 10) === today;
+        return isToday && matchesSearch;
+      }
+      
+      // If there is a search query, show any matching build regardless of date
+      return matchesSearch;
     });
-  }, [builds, query]);
+  }, [builds, query, today]);
 
   return (
     <>
