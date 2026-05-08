@@ -115,6 +115,12 @@ function Footer() {
               <a href="/faq" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>FAQ</a>
             </div>
           </div>
+          <div>
+            <h4 style={{ fontWeight: 600, fontSize: "0.8125rem", color: "var(--text-primary)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.75rem" }}>Legal</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              <a href="/terms" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "none" }}>Terms of Service</a>
+            </div>
+          </div>
         </div>
       </div>
 
