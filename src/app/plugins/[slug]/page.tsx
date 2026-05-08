@@ -100,15 +100,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                     <ShieldCheck size={14} /> VERIFIED
                   </span>
                 )}
-                <div style={{ display: "flex", borderRadius: "4px", overflow: "hidden", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.05em", color: "white", alignItems: "stretch" }}>
-                  <div style={{ background: "#555", padding: "4px 8px", display: "flex", alignItems: "center" }}>STATUS</div>
-                  <div style={{ 
-                    background: plugin.status === "APPROVED" ? "#10b981" : plugin.status === "PENDING" ? "#f59e0b" : "#ef4444", 
-                    padding: "4px 8px", display: "flex", alignItems: "center" 
-                  }}>
-                    {plugin.status || "UNKNOWN"}
-                  </div>
-                </div>
+
                 {isAuthor && (
                   <Link href={`/plugins/${plugin.slug}/edit`} style={{
                     display: "inline-flex", alignItems: "center", gap: "6px",
