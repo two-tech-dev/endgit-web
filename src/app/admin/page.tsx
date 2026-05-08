@@ -322,18 +322,18 @@ export default function AdminPage() {
             </div>
           ) : (
             queue.map((plugin: any) => (
-              <div key={plugin.id} className="card" style={{ 
-                padding: "0", 
-                display: "flex", 
-                flexDirection: "column", 
+              <div key={plugin.id} className="card" style={{
+                padding: "0",
+                display: "flex",
+                flexDirection: "column",
                 overflow: "hidden",
                 borderTop: "4px solid var(--status-warning)"
               }}>
                 <div style={{ padding: "var(--space-5)", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
-                      <div style={{ 
-                        width: "48px", height: "48px", borderRadius: "var(--radius-md)", 
+                      <div style={{
+                        width: "48px", height: "48px", borderRadius: "var(--radius-md)",
                         background: "var(--bg-secondary)", display: "flex", alignItems: "center", justifyContent: "center",
                         border: "1px solid var(--border-color)", flexShrink: 0, overflow: "hidden"
                       }}>
@@ -349,7 +349,7 @@ export default function AdminPage() {
                     <span className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}>{plugin.pluginType}</span>
                   </div>
 
-                  <p style={{ 
+                  <p style={{
                     color: "var(--text-secondary)", fontSize: "0.8125rem", lineHeight: 1.5,
                     display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden"
                   }}>
@@ -372,9 +372,20 @@ export default function AdminPage() {
                       <XCircle size={16} /> Reject Plugin
                     </button>
                   </div>
-                  <a href={`/plugins/${plugin.slug}`} style={{ fontSize: "0.75rem", color: "var(--accent-cyan)", textAlign: "center" }}>
-                    View Plugin →
-                  </a>
+                  <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "center" }}>
+                    <a href={`/plugins/${plugin.slug}`} style={{ fontSize: "0.75rem", color: "var(--accent-cyan)", textAlign: "center" }}>
+                      View Plugin →
+                    </a>
+                    {plugin.repoUrl && plugin.versions?.[0]?.fileHash && (
+                      <a
+                        href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
+                        target="_blank" rel="noopener noreferrer"
+                        style={{ fontSize: "0.75rem", color: "var(--text-muted)", textAlign: "center" }}
+                      >
+                        View Commit →
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ))

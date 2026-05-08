@@ -39,18 +39,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
     if (plugin?.slug) fetchStatus();
   }, [plugin?.slug]);
   
-  // Form State — auto-increment version from latest
-  const getNextVersion = () => {
-    const latestVersion = plugin?.versions?.[0]?.version;
-    if (!latestVersion) return "1.0.0";
-    const parts = latestVersion.split(".").map(Number);
-    if (parts.length === 3 && parts.every((n: number) => !isNaN(n))) {
-      parts[2] += 1; // bump patch
-      return parts.join(".");
-    }
-    return latestVersion;
-  };
-  const [version, setVersion] = useState(getNextVersion());
+  const [version, setVersion] = useState("");
   const [displayName, setDisplayName] = useState(plugin?.displayName || plugin?.name || "");
   const [description, setDescription] = useState(plugin?.description || "");
   const [longDescription, setLongDescription] = useState(plugin?.longDescription || "");
