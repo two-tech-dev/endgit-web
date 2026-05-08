@@ -21,7 +21,23 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
   
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(plugin?.status === "PENDING_REVIEW");
   const isFirstVersion = !plugin?.versions || plugin.versions.length === 0;
+  
+  // Fetch fresh review status on mount
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const res = await fetch(`${apiUrl}/api/v1/submit/status/${plugin?.slug}`);
+        if (res.ok) {
+          const json = await res.json();
+          setIsPending(json.data?.status === "PENDING_REVIEW");
+        }
+      } catch {}
+    };
+    if (plugin?.slug) fetchStatus();
+  }, [plugin?.slug]);
   
   // Form State — auto-increment version from latest
   const getNextVersion = () => {
@@ -184,6 +200,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       });
       const data = await res.json();
       if (data.success) {
+        if (isDraft) setIsPending(false);
         router.push(`/plugins/${plugin.slug}/builds`);
         router.refresh();
       } else {
@@ -462,7 +479,7 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
           
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-3)", marginTop: "var(--space-2)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--border-color)" }}>
-            {(plugin?.status === "PENDING_REVIEW") && (
+            {isPending && (
               <button type="button" onClick={(e) => handleSubmit(e as any, true)} disabled={submitting} className="btn btn-secondary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
                 Save Draft
               </button>
