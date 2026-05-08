@@ -161,8 +161,14 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>The clean name shown on the marketplace (Rule B7).</p>
             <input
               type="text" required value={displayName} onChange={e => setDisplayName(e.target.value)}
-              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              disabled={plugin.status === "APPROVED" && (session?.user as any)?.trustLevel !== "ADMIN"}
+              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", opacity: plugin.status === "APPROVED" && (session?.user as any)?.trustLevel !== "ADMIN" ? 0.6 : 1, cursor: plugin.status === "APPROVED" && (session?.user as any)?.trustLevel !== "ADMIN" ? "not-allowed" : "text" }}
             />
+            {plugin.status === "APPROVED" && (session?.user as any)?.trustLevel !== "ADMIN" && (
+              <p style={{ fontSize: "0.75rem", color: "var(--status-warning)", marginTop: "4px", display: "flex", alignItems: "center", gap: "4px" }}>
+                <AlertTriangle size={12} /> Display name cannot be changed for approved plugins.
+              </p>
+            )}
           </div>
 
           <div>
