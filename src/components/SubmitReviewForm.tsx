@@ -462,9 +462,11 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
           
           <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-3)", marginTop: "var(--space-2)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--border-color)" }}>
-            <button type="button" onClick={(e) => handleSubmit(e as any, true)} disabled={submitting} className="btn btn-secondary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
-              Save Draft
-            </button>
+            {(plugin?.status === "PENDING_REVIEW") && (
+              <button type="button" onClick={(e) => handleSubmit(e as any, true)} disabled={submitting} className="btn btn-secondary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
+                Save Draft
+              </button>
+            )}
             <button type="button" onClick={(e) => handleSubmit(e as any, false)} disabled={submitting} className="btn btn-primary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
               <CheckCircle size={18} /> {submitting ? "Submitting..." : "Submit Plugin for Review"}
             </button>
