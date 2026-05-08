@@ -360,47 +360,49 @@ export default async function PluginDetailPage({ params, searchParams }: { param
           </div>
 
           {/* Badges for Markdown */}
-          <div className="card" style={{ padding: "var(--space-5)" }}>
-            <h3 style={{ fontWeight: 600, marginBottom: "var(--space-4)", fontSize: "0.875rem" }}>Markdown Badges</h3>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "var(--space-3)" }}>
-              Show off your plugin stats in your README.
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                <img src={`https://endgit.dev/shield.dl.total/${plugin.slug}`} alt="Downloads Badge" />
+          {isAuthor && (
+            <div className="card" style={{ padding: "var(--space-5)" }}>
+              <h3 style={{ fontWeight: 600, marginBottom: "var(--space-4)", fontSize: "0.875rem" }}>Markdown Badges</h3>
+              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "var(--space-3)" }}>
+                Show off your plugin stats in your README.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                  <img src={`https://endgit.dev/shield.dl.total/${plugin.slug}`} alt="Downloads Badge" />
+                </div>
+                <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                  [![Downloads](https://endgit.dev/shield.dl.total/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+                </div>
               </div>
-              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
-                [![Downloads](https://endgit.dev/shield.dl.total/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
-              </div>
-            </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                <img src={`https://endgit.dev/shield.state/${plugin.slug}`} alt="Status Badge" />
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                  <img src={`https://endgit.dev/shield.state/${plugin.slug}`} alt="Status Badge" />
+                </div>
+                <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                  [![Status](https://endgit.dev/shield.state/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+                </div>
               </div>
-              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
-                [![Status](https://endgit.dev/shield.state/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
-              </div>
-            </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                <img src={`https://endgit.dev/shield.version/${plugin.slug}`} alt="Version Badge" />
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                  <img src={`https://endgit.dev/shield.version/${plugin.slug}`} alt="Version Badge" />
+                </div>
+                <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                  [![Version](https://endgit.dev/shield.version/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+                </div>
               </div>
-              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
-                [![Version](https://endgit.dev/shield.version/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
-              </div>
-            </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                <img src={`https://endgit.dev/shield.rating/${plugin.slug}`} alt="Rating Badge" />
-              </div>
-              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
-                [![Rating](https://endgit.dev/shield.rating/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                  <img src={`https://endgit.dev/shield.rating/${plugin.slug}`} alt="Rating Badge" />
+                </div>
+                <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                  [![Rating](https://endgit.dev/shield.rating/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Compatibility Checker */}
           <CompatibilityChecker slug={plugin.slug} />
