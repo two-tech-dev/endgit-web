@@ -100,6 +100,15 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                     <ShieldCheck size={14} /> VERIFIED
                   </span>
                 )}
+                <div style={{ display: "flex", borderRadius: "4px", overflow: "hidden", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.05em", color: "white", alignItems: "stretch" }}>
+                  <div style={{ background: "#555", padding: "4px 8px", display: "flex", alignItems: "center" }}>STATUS</div>
+                  <div style={{ 
+                    background: plugin.status === "APPROVED" ? "#10b981" : plugin.status === "PENDING" ? "#f59e0b" : "#ef4444", 
+                    padding: "4px 8px", display: "flex", alignItems: "center" 
+                  }}>
+                    {plugin.status || "UNKNOWN"}
+                  </div>
+                </div>
                 {isAuthor && (
                   <Link href={`/plugins/${plugin.slug}/edit`} style={{
                     display: "inline-flex", alignItems: "center", gap: "6px",
@@ -362,6 +371,15 @@ export default async function PluginDetailPage({ params, searchParams }: { param
               </div>
               <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
                 [![Downloads](https://endgit.dev/shield.dl.total/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
+              </div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", marginTop: "var(--space-4)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                <img src={`https://endgit.dev/shield.state/${plugin.slug}`} alt="Status Badge" />
+              </div>
+              <div style={{ background: "var(--bg-secondary)", padding: "var(--space-2)", borderRadius: "var(--radius-sm)", fontSize: "0.6875rem", fontFamily: "var(--font-mono)", color: "var(--text-muted)", overflowX: "auto", whiteSpace: "nowrap" }}>
+                [![Status](https://endgit.dev/shield.state/{plugin.slug})](https://endgit.dev/plugins/{plugin.slug})
               </div>
             </div>
 

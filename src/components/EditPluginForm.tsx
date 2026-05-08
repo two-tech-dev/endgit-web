@@ -146,9 +146,18 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
       <div className="card" style={{ padding: "var(--space-6)" }}>
         <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>Edit Plugin Details</h1>
         <div style={{ marginBottom: "var(--space-6)", padding: "var(--space-4)", background: "rgba(139, 92, 246, 0.05)", borderRadius: "var(--radius-md)", borderLeft: "4px solid var(--accent-purple)" }}>
-          <p className="text-primary" style={{ fontWeight: 500, marginBottom: "var(--space-2)" }}>
+          <div className="text-primary" style={{ fontWeight: 500, marginBottom: "var(--space-2)", display: "flex", alignItems: "center", gap: "8px" }}>
             Updating {plugin.name}
-          </p>
+            <div style={{ display: "flex", borderRadius: "4px", overflow: "hidden", fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.05em", color: "white", alignItems: "stretch" }}>
+              <div style={{ background: "#555", padding: "2px 6px", display: "flex", alignItems: "center" }}>STATUS</div>
+              <div style={{ 
+                background: plugin.status === "APPROVED" ? "#10b981" : plugin.status === "PENDING" ? "#f59e0b" : "#ef4444", 
+                padding: "2px 6px", display: "flex", alignItems: "center" 
+              }}>
+                {plugin.status || "UNKNOWN"}
+              </div>
+            </div>
+          </div>
           <p className="text-muted" style={{ fontSize: "0.875rem", lineHeight: 1.6 }}>
             You are editing the general information for this plugin.
             Note that changing versions, supported APIs, or producers requires submitting a new version build.
