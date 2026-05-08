@@ -97,24 +97,18 @@ export default function MarkdownTabs({ markdown }: { markdown: string }) {
   const currentTab = tabs[activeTab];
 
   return (
-    <div style={{
-      border: "1px solid var(--border-color)",
-      borderRadius: "var(--radius-md)",
-      overflow: "hidden",
-      background: "var(--bg-secondary)"
-    }}>
+    <div>
       {/* Tabs Header */}
       <div style={{
         display: "flex",
         flexWrap: "wrap",
-        background: "var(--bg-secondary)", // Use theme secondary background
+        background: "transparent",
         borderBottom: "1px solid var(--border-color)",
         padding: "8px 8px 0 8px",
         gap: "4px"
       }}>
         {tabs.map((tab, idx) => {
           const isActive = activeTab === idx;
-          // Truncate long tab titles
           const displayTitle = tab.title.length > 30 ? tab.title.substring(0, 30) + "..." : tab.title;
           
           return (
@@ -123,18 +117,19 @@ export default function MarkdownTabs({ markdown }: { markdown: string }) {
               onClick={() => setActiveTab(idx)}
               style={{
                 padding: "8px 16px",
-                background: isActive ? "var(--bg-card)" : "transparent",
-                color: isActive ? "var(--text-primary)" : "var(--text-muted)",
+                background: isActive ? "#007bff" : "var(--bg-card)",
+                color: isActive ? "white" : "var(--text-primary)",
                 border: "1px solid",
-                borderColor: isActive ? "var(--border-color) var(--border-color) transparent var(--border-color)" : "transparent",
+                borderColor: isActive ? "#007bff" : "var(--border-color)",
+                borderBottomColor: isActive ? "#007bff" : "var(--border-color)",
                 borderRadius: "4px 4px 0 0",
                 fontSize: "0.875rem",
-                fontWeight: isActive ? 600 : 400,
+                fontWeight: 500,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
                 transition: "all 0.2s"
               }}
-              title={tab.title} // Show full title on hover
+              title={tab.title}
             >
               {displayTitle}
             </button>

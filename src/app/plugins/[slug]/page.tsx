@@ -189,9 +189,41 @@ export default async function PluginDetailPage({ params, searchParams }: { param
             </div>
           )}
 
-          {/* About — based on active version */}
-          <div className="card" style={{ padding: "0", border: "none", background: "transparent" }}>
-            <MarkdownTabs markdown={displayDescription} />
+          {/* About — Plugin Description Panel */}
+          <div style={{
+            border: "1px solid var(--border-color)",
+            borderRadius: "var(--radius-md)",
+            background: "var(--bg-secondary)",
+            overflow: "hidden"
+          }}>
+            {/* Header */}
+            <div style={{
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "10px 16px",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{ fontSize: "0.875rem", color: "var(--text-primary)" }}>Plugin Description</span>
+                <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--status-success)" }}></div>
+              </div>
+              <a href={plugin.repoUrl ? `${plugin.repoUrl}/issues` : "#"} target="_blank" rel="noopener noreferrer" style={{
+                background: "var(--bg-card)", border: "1px solid var(--border-color)", borderRadius: "4px",
+                padding: "4px 16px", fontSize: "0.8125rem", color: "var(--text-primary)", textDecoration: "none", fontWeight: 500
+              }}>
+                Bugs
+              </a>
+            </div>
+            
+            {/* Body */}
+            <div style={{ padding: "0 12px 12px 12px" }}>
+              <div style={{ 
+                background: "var(--bg-card)", 
+                border: "1px solid var(--border-color)", 
+                borderRadius: "4px",
+                overflow: "hidden"
+              }}>
+                <MarkdownTabs markdown={displayDescription} />
+              </div>
+            </div>
           </div>
 
           {/* Analytics Chart */}
