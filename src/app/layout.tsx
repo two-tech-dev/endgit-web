@@ -128,6 +128,13 @@ function Footer() {
       <div className="container" style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border-color)", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
         <p style={{ color: "var(--text-muted)", fontSize: "0.75rem", margin: 0 }}>
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
+          {process.env.VERCEL_GIT_COMMIT_SHA && (
+            <span style={{ marginLeft: "8px", opacity: 0.7, fontFamily: "var(--font-mono)", fontSize: "0.6875rem" }}>
+              <a href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
+                ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
+              </a>
+            </span>
+          )}
         </p>
         <p style={{ color: "var(--text-muted)", fontSize: "0.75rem", margin: 0 }}>
           Powered by <a href="https://discord.gg/9eZhP9y26Q" target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", textDecoration: "none", fontWeight: 600 }}>2Tech</a>
