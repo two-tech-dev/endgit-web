@@ -4,10 +4,9 @@ import PluginImage from "@/components/PluginImage";
 async function getStats() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const res = await fetch(`${apiUrl}/api/v1/plugins?pageSize=1`, { cache: "no-store" });
+    const res = await fetch(`${apiUrl}/api/v1/plugins/stats/global`, { cache: "no-store" });
     const json = await res.json();
-    const total = json?.pagination?.total || 0;
-    return { plugins: total, downloads: "—", builds: "—" };
+    return json?.data || { plugins: 0, downloads: "—", builds: "—" };
   } catch {
     return { plugins: 0, downloads: "—", builds: "—" };
   }
