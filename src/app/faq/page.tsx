@@ -30,7 +30,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "How do I use the CLI?",
-    a: "Install the CLI with:\n\n  npm install -g endgit-cli\n\nThen you can use commands like:\n  endgit install <plugin>  — Install a plugin\n  endgit search <query>    — Search for plugins\n  endgit list              — List installed plugins\n  endgit update            — Update all plugins"
+    a: "Install the CLI with:\n\nWindows:\n  irm https://endgit.dev/installer.ps1 | iex\n\nLinux:\n  curl -sSL https://endgit.dev/installer.sh | bash\n\nThen you can use commands like:\n  endgit install <plugin>  — Install a plugin\n  endgit search <query>    — Search for plugins\n  endgit list              — List installed plugins\n  endgit update            — Update all plugins"
   },
   {
     q: "What languages/frameworks are supported?",
