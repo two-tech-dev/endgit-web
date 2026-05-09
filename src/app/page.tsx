@@ -1,5 +1,6 @@
 import { ArrowRight, Zap, Terminal, Activity, ShieldCheck, GitBranch, BookOpen } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
+import TypewriterHeading from "@/components/TypewriterHeading";
 
 async function getStats() {
   try {
@@ -53,13 +54,7 @@ export default async function Home() {
             <Zap size={11} fill="currentColor" /> Public Beta
           </span>
 
-          <h1 className="heading-1" style={{
-            maxWidth: "720px", lineHeight: 1.08, letterSpacing: "-0.025em",
-            fontSize: "clamp(2.25rem, 5vw, 3.75rem)"
-          }}>
-            The plugin registry for{" "}
-            <span style={{ color: "var(--accent-cyan)" }}>Endstone</span>
-          </h1>
+          <TypewriterHeading />
 
           <p className="text-muted" style={{
             fontSize: "clamp(1rem, 2.5vw, 1.1875rem)", maxWidth: "540px", lineHeight: 1.65
