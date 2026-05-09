@@ -64,7 +64,7 @@ export default async function Home() {
           <p className="text-muted" style={{
             fontSize: "clamp(1rem, 2.5vw, 1.1875rem)", maxWidth: "540px", lineHeight: 1.65
           }}>
-            Discover, build, and deploy C++ &amp; Python plugins for Bedrock Dedicated Server — powered by GitHub CI/CD.
+            Discover, build, and deploy C++ &amp; Python plugins for Endstone — powered by GitHub CI/CD.
           </p>
 
           <div style={{ display: "flex", gap: "var(--space-3)", marginTop: "var(--space-3)", flexWrap: "wrap", justifyContent: "center" }}>
