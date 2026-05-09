@@ -85,6 +85,11 @@ export default async function Home() {
             </div>
           </div>
         </div>
+        <div style={{ textAlign: "center", marginTop: "var(--space-3)" }}>
+          <a href="https://github.com/two-tech-dev/endgit-cli#installation" target="_blank" rel="noopener noreferrer" className="text-muted" style={{ fontSize: "0.75rem", opacity: 0.6, textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            Install the Endgit CLI
+          </a>
+        </div>
       </section>
 
       {/* ── Stats ── */}
