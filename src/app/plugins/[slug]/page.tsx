@@ -101,12 +101,10 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                       href={activeVersion?.fileHash ? `${plugin.repoUrl}/tree/${activeVersion.fileHash}` : plugin.repoUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      style={{ color: "var(--text-primary)", display: "flex", alignItems: "center", opacity: 0.8 }} 
+                      style={{ display: "flex", alignItems: "center", opacity: 0.7 }} 
                       title={activeVersion?.fileHash ? `View source for v${activeVersion.version} on GitHub` : "View repository on GitHub"}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-6.5a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 5 3 6.2 6 6.5a4.8 4.8 0 0 0-1 3.2v4"></path>
-                      </svg>
+                      <img src="/github-svgrepo-com.svg" alt="GitHub" width={28} height={28} />
                     </a>
                   )}
                 </h1>
@@ -128,22 +126,32 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                   </Link>
                 )}
               </div>
-              <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
+              <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)", display: "flex", alignItems: "center", gap: "6px" }}>
                 by{" "}
                 {(() => {
                   // Extract owner from repoUrl (e.g., github.com/OrgName/Repo → OrgName)
                   const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
                   if (repoOwner) {
                     return (
-                      <Link href={`/plugins/by/${repoOwner}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
-                        {repoOwner}
-                      </Link>
+                      <>
+                        <Link href={`/plugins/by/${repoOwner}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                          {repoOwner}
+                        </Link>
+                        <a href={`https://github.com/${repoOwner}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", opacity: 0.6 }} title={`View ${repoOwner} on GitHub`}>
+                          <img src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
+                        </a>
+                      </>
                     );
                   }
                   return plugin.author ? (
-                    <Link href={`/plugins/by/${plugin.author.username}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
-                      {plugin.author.displayName || plugin.author.username}
-                    </Link>
+                    <>
+                      <Link href={`/plugins/by/${plugin.author.username}`} style={{ color: "var(--accent-cyan)", textDecoration: "none" }}>
+                        {plugin.author.displayName || plugin.author.username}
+                      </Link>
+                      <a href={`https://github.com/${plugin.author.username}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", opacity: 0.6 }} title={`View ${plugin.author.username} on GitHub`}>
+                        <img src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
+                      </a>
+                    </>
                   ) : "Unknown";
                 })()}
               </p>
