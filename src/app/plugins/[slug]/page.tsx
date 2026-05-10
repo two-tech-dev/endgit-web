@@ -1,4 +1,4 @@
-import { Download, ShieldCheck, Star, CheckCircle, Tag, GitBranch, Terminal, Activity, Copy, Shield, Zap, Pencil } from "lucide-react";
+import { Download, ShieldCheck, Star, CheckCircle, Tag, GitBranch, Terminal, Activity, Copy, Shield, Zap, Pencil, Github } from "lucide-react";
 import MarkdownTabs from "@/components/MarkdownTabs";
 import PluginAnalyticsChart from "@/components/PluginAnalyticsChart";
 import DependencyGraph from "@/components/DependencyGraph";
@@ -94,7 +94,22 @@ export default async function PluginDetailPage({ params, searchParams }: { param
             </div>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
-                <h1 className="heading-2" style={{ margin: 0 }}>{plugin.displayName}</h1>
+                <h1 className="heading-2" style={{ margin: 0, display: "flex", alignItems: "center", gap: "12px" }}>
+                  {plugin.displayName}
+                  {plugin.repoUrl && activeVersion?.fileHash && (
+                    <a 
+                      href={`${plugin.repoUrl}/tree/${activeVersion.fileHash}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ color: "var(--text-primary)", display: "flex", alignItems: "center", opacity: 0.8, transition: "opacity 0.2s" }} 
+                      onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} 
+                      onMouseLeave={(e) => e.currentTarget.style.opacity = "0.8"} 
+                      title={`View source for v${activeVersion.version} on GitHub`}
+                    >
+                      <Github size={26} strokeWidth={2.5} />
+                    </a>
+                  )}
+                </h1>
                 {plugin.qualityBadge === "VERIFIED" && (
                   <span className="badge badge-cyan" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <ShieldCheck size={14} /> VERIFIED
