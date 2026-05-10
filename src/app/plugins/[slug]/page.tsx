@@ -101,10 +101,10 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                       href={activeVersion?.fileHash ? `${plugin.repoUrl}/tree/${activeVersion.fileHash}` : plugin.repoUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      style={{ display: "flex", alignItems: "center", opacity: 0.7 }} 
+                      style={{ display: "inline-flex", alignItems: "center", verticalAlign: "super", opacity: 0.6, marginLeft: "-4px" }} 
                       title={activeVersion?.fileHash ? `View source for v${activeVersion.version} on GitHub` : "View repository on GitHub"}
                     >
-                      <img src="/github-svgrepo-com.svg" alt="GitHub" width={28} height={28} />
+                      <img className="github-icon" src="/github-svgrepo-com.svg" alt="GitHub" width={18} height={18} />
                     </a>
                   )}
                 </h1>
@@ -138,7 +138,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                           {repoOwner}
                         </Link>
                         <a href={`https://github.com/${repoOwner}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", opacity: 0.6 }} title={`View ${repoOwner} on GitHub`}>
-                          <img src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
+                          <img className="github-icon" src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
                         </a>
                       </>
                     );
@@ -149,7 +149,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                         {plugin.author.displayName || plugin.author.username}
                       </Link>
                       <a href={`https://github.com/${plugin.author.username}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", opacity: 0.6 }} title={`View ${plugin.author.username} on GitHub`}>
-                        <img src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
+                        <img className="github-icon" src="/github-svgrepo-com.svg" alt="GitHub" width={16} height={16} />
                       </a>
                     </>
                   ) : "Unknown";
