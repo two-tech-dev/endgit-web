@@ -96,6 +96,40 @@
   filter: invert(1);
 }
 
+.markdown-body {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.markdown-body pre {
+  overflow-x: auto;
+  max-width: 100%;
+  white-space: pre;
+}
+
+.markdown-body code {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.markdown-body pre code {
+  white-space: pre;
+  word-break: normal;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-body table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
