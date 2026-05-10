@@ -96,15 +96,15 @@ export default async function PluginDetailPage({ params, searchParams }: { param
               <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
                 <h1 className="heading-2" style={{ margin: 0, display: "flex", alignItems: "center", gap: "12px" }}>
                   {plugin.displayName}
-                  {plugin.repoUrl && activeVersion?.fileHash && (
+                  {plugin.repoUrl && (
                     <a 
-                      href={`${plugin.repoUrl}/tree/${activeVersion.fileHash}`} 
+                      href={activeVersion?.fileHash ? `${plugin.repoUrl}/tree/${activeVersion.fileHash}` : plugin.repoUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       style={{ color: "var(--text-primary)", display: "flex", alignItems: "center", opacity: 0.8, transition: "opacity 0.2s" }} 
                       onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} 
                       onMouseLeave={(e) => e.currentTarget.style.opacity = "0.8"} 
-                      title={`View source for v${activeVersion.version} on GitHub`}
+                      title={activeVersion?.fileHash ? `View source for v${activeVersion.version} on GitHub` : "View repository on GitHub"}
                     >
                       <Github size={26} strokeWidth={2.5} />
                     </a>
