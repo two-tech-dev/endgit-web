@@ -49,6 +49,39 @@ const markdownSchema = {
   },
 };
 
+/**
+ * Rewrite relative image/link URLs in markdown to absolute GitHub raw URLs.
+ * Handles:
+ *   - ![alt](assets/foo.png) → ![alt](https://raw.githubusercontent.com/owner/repo/main/assets/foo.png)
+ *   - <img src="assets/foo.png"> → <img src="https://raw.githubusercontent.com/...">
+ *   - Skips URLs that are already absolute (http/https/data:)
+ */
+function rewriteRelativeUrls(markdown: string, repoUrl?: string, commitHash?: string): string {
+  if (!repoUrl || !markdown) return markdown;
+
+  const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
+  if (!match) return markdown;
+
+  const owner = match[1];
+  const repo = match[2].replace(/\.git$/, "");
+  const ref = commitHash || "main";
+  const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}`;
+
+  // Rewrite markdown image syntax: ![alt](relative/path)
+  let result = markdown.replace(
+    /!\[([^\]]*)\]\((?!https?:\/\/|data:)([^)]+)\)/g,
+    (_, alt, path) => `![${alt}](${rawBase}/${path.replace(/^\.\//, "")})`
+  );
+
+  // Rewrite HTML img src: <img src="relative/path">
+  result = result.replace(
+    /(<img\s[^>]*src=["'])(?!https?:\/\/|data:)([^"']+)(["'])/gi,
+    (_, prefix, path, suffix) => `${prefix}${rawBase}/${path.replace(/^\.\//, "")}${suffix}`
+  );
+
+  return result;
+}
+
 function parseMarkdownTabs(markdown: string): Tab[] {
   // Split by H2 (## ) at the start of a line
   const parts = markdown.split(/^##\s+(.*)$/gm);
@@ -70,8 +103,9 @@ function parseMarkdownTabs(markdown: string): Tab[] {
   return tabs;
 }
 
-export default function MarkdownTabs({ markdown }: { markdown: string }) {
-  const tabs = parseMarkdownTabs(markdown || "");
+export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdown: string; repoUrl?: string; commitHash?: string }) {
+  const processedMarkdown = rewriteRelativeUrls(markdown || "", repoUrl, commitHash);
+  const tabs = parseMarkdownTabs(processedMarkdown);
   const [activeTab, setActiveTab] = useState(0);
 
   // Fallback if no content

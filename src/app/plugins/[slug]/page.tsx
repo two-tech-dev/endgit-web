@@ -245,7 +245,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 borderRadius: "4px",
                 overflow: "hidden"
               }}>
-                <MarkdownTabs markdown={displayDescription} />
+                <MarkdownTabs markdown={displayDescription} repoUrl={plugin.repoUrl} commitHash={activeVersion?.fileHash} />
               </div>
             </div>
           </div>
