@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 interface AnimatedNumberProps {
   value: string | number;
@@ -12,83 +12,81 @@ interface AnimatedNumberProps {
  * If the value is non-numeric (e.g., "—"), it displays it as-is.
  */
 export default function AnimatedNumber({ value, duration = 1500 }: AnimatedNumberProps) {
-  const [displayValue, setDisplayValue] = useState<string | number>("0");
-  const countRef = useRef<number>(0);
+  const [displayValue, setDisplayValue] = useState<string>("0");
   const elementRef = useRef<HTMLSpanElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  
+  const hasAnimated = useRef(false);
+
   // Parse numeric value, removing commas if it's a string
-  const targetValue = typeof value === "string" 
-    ? parseFloat(value.replace(/,/g, "")) 
+  const targetValue = typeof value === "string"
+    ? parseFloat(value.replace(/,/g, ""))
     : value;
-    
-  const isNumeric = !isNaN(targetValue as number) && targetValue !== null && typeof targetValue === "number";
+
+  const isNumeric = typeof targetValue === "number" && !isNaN(targetValue);
+  const isInt = isNumeric && Number.isInteger(targetValue);
+
+  const formatValue = useCallback((n: number) => {
+    if (isInt) return Math.floor(n).toLocaleString();
+    return n.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  }, [isInt]);
+
+  const formatFinal = useCallback((n: number) => {
+    return n.toLocaleString(undefined, {
+      minimumFractionDigits: isInt ? 0 : 1,
+      maximumFractionDigits: isInt ? 0 : 1,
+    });
+  }, [isInt]);
 
   useEffect(() => {
+    // Non-numeric: show as-is immediately
     if (!isNumeric) {
-      setDisplayValue(value);
+      setDisplayValue(String(value));
       return;
     }
 
+    const el = elementRef.current;
+    if (!el) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
           observer.disconnect();
+          runAnimation();
         }
       },
       { threshold: 0.1 }
     );
 
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
+    observer.observe(el);
     return () => observer.disconnect();
-  }, [isNumeric, value]);
 
-  useEffect(() => {
-    if (!isVisible || !isNumeric) return;
+    function runAnimation() {
+      const endValue = targetValue as number;
+      let startTime: number | null = null;
+      let rafId: number;
 
-    let startTime: number | null = null;
-    const endValue = targetValue as number;
-    const startValue = 0;
+      const tick = (now: number) => {
+        if (!startTime) startTime = now;
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
 
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const elapsedTime = currentTime - startTime;
-      const progress = Math.min(elapsedTime / duration, 1);
-      
-      // Easing: easeOutExpo (fast start, slow end)
-      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      
-      const currentCount = easeProgress * (endValue - startValue) + startValue;
-      const isInt = Number.isInteger(endValue);
-      
-      const formatted = isInt 
-        ? Math.floor(currentCount).toLocaleString()
-        : currentCount.toLocaleString(undefined, { 
-            minimumFractionDigits: 1, 
-            maximumFractionDigits: 1 
-          });
+        // easeOutExpo
+        const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const current = ease * endValue;
 
-      if (formatted !== displayValue) {
-        setDisplayValue(formatted);
-      }
+        setDisplayValue(formatValue(current));
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setDisplayValue(endValue.toLocaleString(undefined, {
-          minimumFractionDigits: isInt ? 0 : 1,
-          maximumFractionDigits: isInt ? 0 : 1
-        }));
-      }
-    };
+        if (progress < 1) {
+          rafId = requestAnimationFrame(tick);
+        } else {
+          setDisplayValue(formatFinal(endValue));
+        }
+      };
 
-    const animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isVisible, isNumeric, targetValue, duration, displayValue]);
+      rafId = requestAnimationFrame(tick);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, isNumeric, duration, formatValue, formatFinal, targetValue]);
 
   return <span ref={elementRef}>{displayValue}</span>;
 }
