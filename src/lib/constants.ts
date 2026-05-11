@@ -15,5 +15,5 @@ export const PLUGIN_CATEGORIES = [
   "Educational",
   "Miscellaneous",
   "API plugins",
-  "Vanilla Mechanics"
+  "Vanilla Mechanics",
 ];

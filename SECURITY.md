@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Currently, only the `main` branch is actively supported with security updates. 
+Currently, only the `main` branch is actively supported with security updates.
 
 ## Reporting a Vulnerability
 

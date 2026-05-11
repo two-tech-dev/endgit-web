@@ -9,7 +9,7 @@ The web frontend for [EndGit](https://endgit.dev) — providing a modern dashboa
 
 ## Features
 
-- 🎨 **Dark/Light Mode** — Modern UI with theme toggle  
+- 🎨 **Dark/Light Mode** — Modern UI with theme toggle
 - 📦 **Plugin Marketplace** — Browse, search, and filter plugins
 - ⭐ **Ratings & Reviews** — Community feedback system
 - 📊 **Analytics Dashboard** — Download stats

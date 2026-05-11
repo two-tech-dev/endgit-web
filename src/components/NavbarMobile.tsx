@@ -11,19 +11,30 @@ export default function NavbarMobile() {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       {/* Desktop nav */}
-      <nav className="nav-links" style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-        <a href="/plugins" style={{ color: "#cbd5e1", fontWeight: 500 }}>Releases</a>
-        <a href="/plugins/top" style={{ color: "#cbd5e1", fontWeight: 500 }}>Top Plugins</a>
+      <nav
+        className="nav-links"
+        style={{ display: "flex", gap: "2rem", alignItems: "center" }}
+      >
+        <a href="/plugins" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+          Releases
+        </a>
+        <a href="/plugins/top" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+          Top Plugins
+        </a>
         <a href="/builds" style={{ color: "#cbd5e1", fontWeight: 500 }}>
           Dev Builds
         </a>
-        <a href="/faq" style={{ color: "#cbd5e1", fontWeight: 500 }}>FAQ</a>
+        <a href="/faq" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+          FAQ
+        </a>
         <ThemeToggle />
         <NavbarClient />
       </nav>
 
       {/* Mobile hamburger button */}
-      <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
+      >
         <div className="mobile-menu-btn" style={{ display: "none" }}>
           <ThemeToggle />
         </div>
@@ -39,17 +50,53 @@ export default function NavbarMobile() {
 
       {/* Mobile dropdown */}
       {open && (
-        <nav
-          className="nav-links open"
-          onClick={() => setOpen(false)}
-        >
-          <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Releases</a>
-          <a href="/plugins/top" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>Top Plugins</a>
-          <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>
+        <nav className="nav-links open" onClick={() => setOpen(false)}>
+          <a
+            href="/plugins"
+            style={{
+              color: "var(--text-secondary)",
+              fontWeight: 500,
+              fontSize: "1rem",
+            }}
+          >
+            Releases
+          </a>
+          <a
+            href="/plugins/top"
+            style={{
+              color: "var(--text-secondary)",
+              fontWeight: 500,
+              fontSize: "1rem",
+            }}
+          >
+            Top Plugins
+          </a>
+          <a
+            href="/builds"
+            style={{
+              color: "var(--text-secondary)",
+              fontWeight: 500,
+              fontSize: "1rem",
+            }}
+          >
             Dev Builds
           </a>
-          <a href="/faq" style={{ color: "var(--text-secondary)", fontWeight: 500, fontSize: "1rem" }}>FAQ</a>
-          <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "var(--space-3)" }}>
+          <a
+            href="/faq"
+            style={{
+              color: "var(--text-secondary)",
+              fontWeight: 500,
+              fontSize: "1rem",
+            }}
+          >
+            FAQ
+          </a>
+          <div
+            style={{
+              borderTop: "1px solid var(--border-color)",
+              paddingTop: "var(--space-3)",
+            }}
+          >
             <NavbarClient />
           </div>
         </nav>

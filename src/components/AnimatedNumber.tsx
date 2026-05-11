@@ -11,30 +11,41 @@ interface AnimatedNumberProps {
  * A component that animates a numeric value from 0 to the target value.
  * If the value is non-numeric (e.g., "—"), it displays it as-is.
  */
-export default function AnimatedNumber({ value, duration = 1500 }: AnimatedNumberProps) {
+export default function AnimatedNumber({
+  value,
+  duration = 1500,
+}: AnimatedNumberProps) {
   const [displayValue, setDisplayValue] = useState<string>("0");
   const elementRef = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
   // Parse numeric value, removing commas if it's a string
-  const targetValue = typeof value === "string"
-    ? parseFloat(value.replace(/,/g, ""))
-    : value;
+  const targetValue =
+    typeof value === "string" ? parseFloat(value.replace(/,/g, "")) : value;
 
   const isNumeric = typeof targetValue === "number" && !isNaN(targetValue);
   const isInt = isNumeric && Number.isInteger(targetValue);
 
-  const formatValue = useCallback((n: number) => {
-    if (isInt) return Math.floor(n).toLocaleString();
-    return n.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  }, [isInt]);
+  const formatValue = useCallback(
+    (n: number) => {
+      if (isInt) return Math.floor(n).toLocaleString();
+      return n.toLocaleString(undefined, {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      });
+    },
+    [isInt],
+  );
 
-  const formatFinal = useCallback((n: number) => {
-    return n.toLocaleString(undefined, {
-      minimumFractionDigits: isInt ? 0 : 1,
-      maximumFractionDigits: isInt ? 0 : 1,
-    });
-  }, [isInt]);
+  const formatFinal = useCallback(
+    (n: number) => {
+      return n.toLocaleString(undefined, {
+        minimumFractionDigits: isInt ? 0 : 1,
+        maximumFractionDigits: isInt ? 0 : 1,
+      });
+    },
+    [isInt],
+  );
 
   useEffect(() => {
     // Non-numeric: show as-is immediately
@@ -54,7 +65,7 @@ export default function AnimatedNumber({ value, duration = 1500 }: AnimatedNumbe
           runAnimation();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(el);

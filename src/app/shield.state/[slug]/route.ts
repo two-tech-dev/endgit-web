@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 function createBadgeSvg(label: string, message: string, color: string): string {
   // A simple flat badge SVG generator
@@ -28,23 +28,29 @@ function createBadgeSvg(label: string, message: string, color: string): string {
   </svg>`;
 }
 
-export async function GET(request: Request, { params }: { params: { slug: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { slug: string } },
+) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
     const res = await fetch(`${apiUrl}/api/v1/plugins/${params.slug}`);
-    
+
     if (!res.ok) {
-      return new NextResponse(createBadgeSvg("status", "not found", "#e05d44"), {
-        headers: { 'Content-Type': 'image/svg+xml' }
-      });
+      return new NextResponse(
+        createBadgeSvg("status", "not found", "#e05d44"),
+        {
+          headers: { "Content-Type": "image/svg+xml" },
+        },
+      );
     }
 
     const { data: plugin } = await res.json();
     const status = plugin?.status || "unknown";
-    
+
     let color = "#9ca3af"; // gray for unknown
     let message = status.toLowerCase();
-    
+
     if (status === "APPROVED") {
       color = "#10b981"; // green
     } else if (status === "PENDING") {
@@ -54,14 +60,14 @@ export async function GET(request: Request, { params }: { params: { slug: string
     }
 
     return new NextResponse(createBadgeSvg("status", message, color), {
-      headers: { 
-        'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=3600'
-      }
+      headers: {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=3600",
+      },
     });
   } catch (error) {
     return new NextResponse(createBadgeSvg("status", "error", "#e05d44"), {
-      headers: { 'Content-Type': 'image/svg+xml' }
+      headers: { "Content-Type": "image/svg+xml" },
     });
   }
 }

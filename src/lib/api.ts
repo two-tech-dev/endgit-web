@@ -16,7 +16,7 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   // For simplicity, we'll try to get it, and if it fails, we proceed without auth.
   let token = null;
   try {
-    const session = await getServerSession(authOptions) as any;
+    const session = (await getServerSession(authOptions)) as any;
     if (session && session.user && session.user.apiToken) {
       token = session.user.apiToken;
     }
@@ -25,7 +25,7 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   }
 
   const headers = new Headers(options.headers || {});
-  
+
   // Set default Content-Type to JSON if not uploading a file (FormData)
   if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
     headers.set("Content-Type", "application/json");

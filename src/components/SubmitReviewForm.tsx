@@ -2,11 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { CheckCircle, XCircle, AlertTriangle, Download, ArrowLeft, Plus, Trash2 } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Download,
+  ArrowLeft,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { PLUGIN_CATEGORIES } from "@/lib/constants";
 
-const COMMON_LICENSES = ["MIT", "GPL-3.0", "GPL-2.0", "Apache-2.0", "BSD-3-Clause", "BSD-2-Clause", "MPL-2.0", "AGPL-3.0", "Unlicense", "Proprietary", "Other"];
+const COMMON_LICENSES = [
+  "MIT",
+  "GPL-3.0",
+  "GPL-2.0",
+  "Apache-2.0",
+  "BSD-3-Clause",
+  "BSD-2-Clause",
+  "MPL-2.0",
+  "AGPL-3.0",
+  "Unlicense",
+  "Proprietary",
+  "Other",
+];
 const ENDSTONE_APIS = ["0.11.x", "0.10.x", "0.9.x", "0.8.x", "0.7.x"];
 
 interface Props {
@@ -15,21 +35,30 @@ interface Props {
   plugin: any;
 }
 
-export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props) {
+export default function SubmitReviewForm({
+  buildId,
+  buildNumber,
+  plugin,
+}: Props) {
   const { data: session } = useSession();
   const router = useRouter();
-  
+
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [isPending, setIsPending] = useState(plugin?.status === "PENDING_REVIEW");
+  const [isPending, setIsPending] = useState(
+    plugin?.status === "PENDING_REVIEW",
+  );
   const isFirstVersion = !plugin?.versions || plugin.versions.length === 0;
-  
+
   // Fetch fresh review status on mount
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-        const res = await fetch(`${apiUrl}/api/v1/submit/status/${plugin?.slug}`);
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const res = await fetch(
+          `${apiUrl}/api/v1/submit/status/${plugin?.slug}`,
+        );
         if (res.ok) {
           const json = await res.json();
           setIsPending(json.data?.status === "PENDING_REVIEW");
@@ -38,38 +67,50 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
     };
     if (plugin?.slug) fetchStatus();
   }, [plugin?.slug]);
-  
+
   const [version, setVersion] = useState("");
-  const [displayName, setDisplayName] = useState(plugin?.displayName || plugin?.name || "");
+  const [displayName, setDisplayName] = useState(
+    plugin?.displayName || plugin?.name || "",
+  );
   const [description, setDescription] = useState(plugin?.description || "");
-  const [longDescription, setLongDescription] = useState(plugin?.longDescription || "");
+  const [longDescription, setLongDescription] = useState(
+    plugin?.longDescription || "",
+  );
   const [license, setLicense] = useState(plugin?.license || "");
   const [iconPath, setIconPath] = useState("");
-  const [keywords, setKeywords] = useState(plugin?.keywords ? plugin.keywords.join(", ") : "");
+  const [keywords, setKeywords] = useState(
+    plugin?.keywords ? plugin.keywords.join(", ") : "",
+  );
   const [notes, setNotes] = useState("");
   const [changelog, setChangelog] = useState("");
-  const [supportedApis, setSupportedApis] = useState<string[]>(plugin?.versions?.[0]?.supportedApis || []);
+  const [supportedApis, setSupportedApis] = useState<string[]>(
+    plugin?.versions?.[0]?.supportedApis || [],
+  );
   const [isFetchingLicense, setIsFetchingLicense] = useState(false);
   const [isFetchingReadme, setIsFetchingReadme] = useState(false);
-  
+
   // Producers State
-  const [producers, setProducers] = useState<{githubUser: string, role: string}[]>([
-    { githubUser: "", role: "COLLABORATOR" }
-  ]);
-  
+  const [producers, setProducers] = useState<
+    { githubUser: string; role: string }[]
+  >([{ githubUser: "", role: "COLLABORATOR" }]);
+
   // Update producer if session loads after initial render
   useEffect(() => {
     // Priority: NextAuth session username -> Plugin author username -> Display name without spaces
-    const username = (session?.user as any)?.username || plugin?.author?.username || (session?.user as any)?.name?.replace(/ /g, "");
+    const username =
+      (session?.user as any)?.username ||
+      plugin?.author?.username ||
+      (session?.user as any)?.name?.replace(/ /g, "");
     if (username && producers.length === 1 && producers[0].githubUser === "") {
       setProducers([{ githubUser: username, role: "COLLABORATOR" }]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session, plugin]);
-  
+
   // Categories State
   const initialTags = plugin?.tags || [];
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(initialTags);
+  const [selectedCategories, setSelectedCategories] =
+    useState<string[]>(initialTags);
 
   useEffect(() => {
     if (!license) fetchLicense();
@@ -83,11 +124,15 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       const match = plugin.repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (match) {
         const [, owner, repo] = match;
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
         const token = (session?.user as any)?.apiToken;
-        const res = await fetch(`${apiUrl}/api/v1/github/repo-license?owner=${owner}&repo=${repo}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await fetch(
+          `${apiUrl}/api/v1/github/repo-license?owner=${owner}&repo=${repo}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         if (res.ok) {
           const json = await res.json();
           if (json.data?.spdx_id) {
@@ -112,11 +157,15 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       const match = plugin.repoUrl.match(/github\.com\/([^\/]+)\/([^\/]+)/);
       if (match) {
         const [, owner, repo] = match;
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
         const token = (session?.user as any)?.apiToken;
-        const res = await fetch(`${apiUrl}/api/v1/github/repo-readme?owner=${owner}&repo=${repo}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await fetch(
+          `${apiUrl}/api/v1/github/repo-readme?owner=${owner}&repo=${repo}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
         if (res.ok) {
           const json = await res.json();
           setLongDescription(json.data);
@@ -134,14 +183,14 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
 
   const toggleCategory = (cat: string) => {
     if (selectedCategories.includes(cat)) {
-      setSelectedCategories(prev => prev.filter(c => c !== cat));
+      setSelectedCategories((prev) => prev.filter((c) => c !== cat));
     } else {
       if (selectedCategories.length >= 5) {
         setError("You can only select up to 5 categories.");
         return;
       }
       setError("");
-      setSelectedCategories(prev => [...prev, cat]);
+      setSelectedCategories((prev) => [...prev, cat]);
     }
   };
 
@@ -151,14 +200,14 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
       setError("Please select at least one category.");
       return;
     }
-    
+
     // Validate Producers
-    const emptyProducers = producers.filter(p => !p.githubUser.trim());
+    const emptyProducers = producers.filter((p) => !p.githubUser.trim());
     if (emptyProducers.length > 0) {
       setError("Producer GitHub usernames cannot be empty.");
       return;
     }
-    const hasCollaborator = producers.some(p => p.role === "COLLABORATOR");
+    const hasCollaborator = producers.some((p) => p.role === "COLLABORATOR");
     if (!hasCollaborator) {
       setError("There must be at least one COLLABORATOR.");
       return;
@@ -168,25 +217,31 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
     setError("");
     try {
       const apiToken = (session?.user as any)?.apiToken;
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/v1/submit/${buildId}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${apiToken}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          version, 
-          displayName, 
-          description, 
-          longDescription, 
-          tags: selectedCategories.join(","), // backend expects string or array, it handles comma split
-          keywords,
-          license, 
-          iconPath,
-          notes,
-          changelog,
-          supportedApis,
-          producers,
-          isDraft
-        })
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/v1/submit/${buildId}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            version,
+            displayName,
+            description,
+            longDescription,
+            tags: selectedCategories.join(","), // backend expects string or array, it handles comma split
+            keywords,
+            license,
+            iconPath,
+            notes,
+            changelog,
+            supportedApis,
+            producers,
+            isDraft,
+          }),
+        },
+      );
       const data = await res.json();
       if (data.success) {
         if (isDraft) setIsPending(false);
@@ -202,110 +257,369 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
     }
   };
 
-  if (!session) return <div className="card" style={{ padding: "var(--space-6)", textAlign: "center" }}>Please sign in.</div>;
+  if (!session)
+    return (
+      <div
+        className="card"
+        style={{ padding: "var(--space-6)", textAlign: "center" }}
+      >
+        Please sign in.
+      </div>
+    );
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-      <button onClick={() => router.back()} className="btn btn-secondary" style={{ marginBottom: "var(--space-6)" }}>
+      <button
+        onClick={() => router.back()}
+        className="btn btn-secondary"
+        style={{ marginBottom: "var(--space-6)" }}
+      >
         <ArrowLeft size={16} /> Back to Build
       </button>
 
       <div className="card" style={{ padding: "var(--space-6)" }}>
-        <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>Publish Plugin</h1>
-        <div style={{ marginBottom: "var(--space-6)", padding: "var(--space-4)", background: "rgba(139, 92, 246, 0.05)", borderRadius: "var(--radius-md)", borderLeft: "4px solid var(--accent-purple)" }}>
-          <p className="text-primary" style={{ fontWeight: 500, marginBottom: "var(--space-2)" }}>
+        <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>
+          Publish Plugin
+        </h1>
+        <div
+          style={{
+            marginBottom: "var(--space-6)",
+            padding: "var(--space-4)",
+            background: "rgba(139, 92, 246, 0.05)",
+            borderRadius: "var(--radius-md)",
+            borderLeft: "4px solid var(--accent-purple)",
+          }}
+        >
+          <p
+            className="text-primary"
+            style={{ fontWeight: 500, marginBottom: "var(--space-2)" }}
+          >
             Submit Build #{buildNumber} for Review
           </p>
-          <p className="text-muted" style={{ fontSize: "0.875rem", lineHeight: 1.6 }}>
-            Before submitting, please ensure your plugin complies with the <a href="/rules" target="_blank" style={{ color: "var(--accent-cyan)", textDecoration: "underline" }}>EndGit Plugin Submission Rules</a>. 
-            All submissions are manually reviewed by our moderation team. Your submission should be complete, well-documented, and functional.
+          <p
+            className="text-muted"
+            style={{ fontSize: "0.875rem", lineHeight: 1.6 }}
+          >
+            Before submitting, please ensure your plugin complies with the{" "}
+            <a
+              href="/rules"
+              target="_blank"
+              style={{
+                color: "var(--accent-cyan)",
+                textDecoration: "underline",
+              }}
+            >
+              EndGit Plugin Submission Rules
+            </a>
+            . All submissions are manually reviewed by our moderation team. Your
+            submission should be complete, well-documented, and functional.
           </p>
         </div>
-        
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--space-5)",
+          }}
+        >
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "var(--space-4)",
+            }}
+          >
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Display Name</label>
-              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>The clean name shown on the marketplace (Rule B7).</p>
-              <input 
-                type="text" required value={displayName} onChange={e => setDisplayName(e.target.value)}
-                className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  marginBottom: "2px",
+                }}
+              >
+                Display Name
+              </label>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                }}
+              >
+                The clean name shown on the marketplace (Rule B7).
+              </p>
+              <input
+                type="text"
+                required
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="input"
+                style={{
+                  width: "100%",
+                  padding: "0.625rem",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)",
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                }}
               />
             </div>
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Version</label>
-              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Follow Semantic Versioning (e.g., 1.0.0).</p>
-              <input 
-                type="text" required value={version} onChange={e => setVersion(e.target.value)} placeholder="e.g. 1.0.0"
-                className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  marginBottom: "2px",
+                }}
+              >
+                Version
+              </label>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                }}
+              >
+                Follow Semantic Versioning (e.g., 1.0.0).
+              </p>
+              <input
+                type="text"
+                required
+                value={version}
+                onChange={(e) => setVersion(e.target.value)}
+                placeholder="e.g. 1.0.0"
+                className="input"
+                style={{
+                  width: "100%",
+                  padding: "0.625rem",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)",
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                }}
               />
             </div>
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Short Description</label>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>A catchy, one-sentence summary shown in search results and plugin cards (Max 100 chars).</p>
-            <input 
-              type="text" required value={description} onChange={e => setDescription(e.target.value)} maxLength={100}
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              Short Description
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              A catchy, one-sentence summary shown in search results and plugin
+              cards (Max 100 chars).
+            </p>
+            <input
+              type="text"
+              required
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              maxLength={100}
               placeholder="A brief summary of what your plugin does..."
-              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              className="input"
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+              }}
             />
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Keywords</label>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Comma-separated keywords to help users find your plugin in search.</p>
-            <input 
-              type="text" value={keywords} onChange={e => setKeywords(e.target.value)}
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              Keywords
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              Comma-separated keywords to help users find your plugin in search.
+            </p>
+            <input
+              type="text"
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
               placeholder="e.g. economy, shops, gui"
-              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              className="input"
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+              }}
             />
           </div>
 
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "2px" }}>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500 }}>Long Description (Markdown)</label>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                marginBottom: "2px",
+              }}
+            >
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                }}
+              >
+                Long Description (Markdown)
+              </label>
               {plugin?.repoUrl && (
-                <button 
-                  type="button" 
-                  onClick={fetchReadme} 
+                <button
+                  type="button"
+                  onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  style={{ 
-                    display: "flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", 
-                    background: "rgba(14, 165, 233, 0.1)", color: "var(--accent-cyan)", 
-                    border: "1px solid rgba(14, 165, 233, 0.2)", borderRadius: "var(--radius-sm)", 
-                    padding: "4px 8px", cursor: "pointer", fontWeight: 500,
-                    opacity: isFetchingReadme ? 0.6 : 1
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                    fontSize: "0.75rem",
+                    background: "rgba(14, 165, 233, 0.1)",
+                    color: "var(--accent-cyan)",
+                    border: "1px solid rgba(14, 165, 233, 0.2)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: "4px 8px",
+                    cursor: "pointer",
+                    fontWeight: 500,
+                    opacity: isFetchingReadme ? 0.6 : 1,
                   }}
                 >
-                  <Download size={12} /> {isFetchingReadme ? "Importing..." : "Import from README"}
+                  <Download size={12} />{" "}
+                  {isFetchingReadme ? "Importing..." : "Import from README"}
                 </button>
               )}
             </div>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Explain features, configuration, commands, and permissions. Screenshots and code blocks are highly recommended (Rules D1, D3, D4).</p>
-            <textarea 
-              required value={longDescription} onChange={e => setLongDescription(e.target.value)} rows={12}
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              Explain features, configuration, commands, and permissions.
+              Screenshots and code blocks are highly recommended (Rules D1, D3,
+              D4).
+            </p>
+            <textarea
+              required
+              value={longDescription}
+              onChange={(e) => setLongDescription(e.target.value)}
+              rows={12}
               placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
-              style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical", fontFamily: "var(--font-mono)", fontSize: "0.875rem" }}
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+                outline: "none",
+                resize: "vertical",
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.875rem",
+              }}
             />
           </div>
 
           <div>
-            <label style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", fontSize: "0.875rem", fontWeight: 500, marginBottom: "8px" }}>
-              <span>Categories <span style={{ color: "var(--text-muted)", fontWeight: "normal" }}>(Max 5)</span></span>
-              <span style={{ fontSize: "0.75rem", color: selectedCategories.length > 5 ? "var(--status-error)" : "var(--text-muted)" }}>{selectedCategories.length}/5</span>
+            <label
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "8px",
+              }}
+            >
+              <span>
+                Categories{" "}
+                <span
+                  style={{ color: "var(--text-muted)", fontWeight: "normal" }}
+                >
+                  (Max 5)
+                </span>
+              </span>
+              <span
+                style={{
+                  fontSize: "0.75rem",
+                  color:
+                    selectedCategories.length > 5
+                      ? "var(--status-error)"
+                      : "var(--text-muted)",
+                }}
+              >
+                {selectedCategories.length}/5
+              </span>
             </label>
-            <div style={{ 
-              display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "8px",
-              background: "var(--bg-secondary)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)"
-            }}>
-              {PLUGIN_CATEGORIES.map(cat => (
-                <label key={cat} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.875rem" }}>
-                  <input 
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                gap: "8px",
+                background: "var(--bg-secondary)",
+                padding: "var(--space-4)",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+              }}
+            >
+              {PLUGIN_CATEGORIES.map((cat) => (
+                <label
+                  key={cat}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
                     onChange={() => toggleCategory(cat)}
-                    style={{ accentColor: "var(--accent-purple)", width: "16px", height: "16px" }}
+                    style={{
+                      accentColor: "var(--accent-purple)",
+                      width: "16px",
+                      height: "16px",
+                    }}
                   />
                   <span>{cat}</span>
                 </label>
@@ -314,21 +628,74 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>
-              License {isFetchingLicense && <span style={{ opacity: 0.5, fontSize: "0.75rem" }}>(Fetching from GitHub...)</span>}
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              License{" "}
+              {isFetchingLicense && (
+                <span style={{ opacity: 0.5, fontSize: "0.75rem" }}>
+                  (Fetching from GitHub...)
+                </span>
+              )}
             </label>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>All plugins must have an OSI-approved open source license (Rule D6).</p>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              All plugins must have an OSI-approved open source license (Rule
+              D6).
+            </p>
             <div style={{ position: "relative" }}>
-              <select 
-                value={license} onChange={e => setLicense(e.target.value)}
-                style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", paddingRight: "40px", appearance: "auto" }}
+              <select
+                value={license}
+                onChange={(e) => setLicense(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "0.625rem",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)",
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  paddingRight: "40px",
+                  appearance: "auto",
+                }}
               >
                 <option value="">Select a license...</option>
-                {COMMON_LICENSES.map(l => <option key={l} value={l}>{l}</option>)}
-                {license && !COMMON_LICENSES.includes(license) && <option value={license}>{license} (Custom/Fetched)</option>}
+                {COMMON_LICENSES.map((l) => (
+                  <option key={l} value={l}>
+                    {l}
+                  </option>
+                ))}
+                {license && !COMMON_LICENSES.includes(license) && (
+                  <option value={license}>{license} (Custom/Fetched)</option>
+                )}
               </select>
               {plugin?.repoUrl && (
-                <button type="button" onClick={fetchLicense} disabled={isFetchingLicense} style={{ position: "absolute", right: "28px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "var(--accent-cyan)", opacity: isFetchingLicense ? 0.5 : 1 }} title="Fetch from GitHub">
+                <button
+                  type="button"
+                  onClick={fetchLicense}
+                  disabled={isFetchingLicense}
+                  style={{
+                    position: "absolute",
+                    right: "28px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "var(--accent-cyan)",
+                    opacity: isFetchingLicense ? 0.5 : 1,
+                  }}
+                  title="Fetch from GitHub"
+                >
                   <Download size={16} />
                 </button>
               )}
@@ -336,27 +703,65 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
               Supported APIs (Endstone Versions)
             </label>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Select the stable Endstone API versions this build is verified to work with (Rule B1).</p>
-            <div style={{ 
-              display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: "8px",
-              background: "var(--bg-secondary)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)"
-            }}>
-              {ENDSTONE_APIS.map(api => (
-                <label key={api} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer", fontSize: "0.875rem" }}>
-                  <input 
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              Select the stable Endstone API versions this build is verified to
+              work with (Rule B1).
+            </p>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
+                gap: "8px",
+                background: "var(--bg-secondary)",
+                padding: "var(--space-4)",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+              }}
+            >
+              {ENDSTONE_APIS.map((api) => (
+                <label
+                  key={api}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <input
                     type="checkbox"
                     checked={supportedApis.includes(api)}
                     onChange={() => {
                       if (supportedApis.includes(api)) {
-                        setSupportedApis(prev => prev.filter(a => a !== api));
+                        setSupportedApis((prev) =>
+                          prev.filter((a) => a !== api),
+                        );
                       } else {
-                        setSupportedApis(prev => [...prev, api]);
+                        setSupportedApis((prev) => [...prev, api]);
                       }
                     }}
-                    style={{ accentColor: "var(--accent-purple)", width: "16px", height: "16px" }}
+                    style={{
+                      accentColor: "var(--accent-purple)",
+                      width: "16px",
+                      height: "16px",
+                    }}
                   />
                   <span>{api}</span>
                 </label>
@@ -365,50 +770,133 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "6px" }}>
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "6px",
+              }}
+            >
               Icon Path (Optional)
             </label>
-            <input 
-              type="text" value={iconPath} onChange={e => setIconPath(e.target.value)} 
+            <input
+              type="text"
+              value={iconPath}
+              onChange={(e) => setIconPath(e.target.value)}
               placeholder="e.g. assets/icon.png (Default: icon.png)"
-              className="input" style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)" }}
+              className="input"
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+              }}
             />
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px" }}>
-              Relative path to the icon file in your repository. If not found, the default EndGit logo will be used.
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginTop: "4px",
+              }}
+            >
+              Relative path to the icon file in your repository. If not found,
+              the default EndGit logo will be used.
             </p>
           </div>
 
           {!isFirstVersion && (
             <div>
-              <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>What&apos;s New (Changelog)</label>
-              <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Provide a human-readable list of changes, bug fixes, and new features (Rule D5).</p>
-              <textarea 
-                value={changelog} onChange={e => setChangelog(e.target.value)} rows={4}
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  marginBottom: "2px",
+                }}
+              >
+                What&apos;s New (Changelog)
+              </label>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--text-muted)",
+                  marginBottom: "6px",
+                }}
+              >
+                Provide a human-readable list of changes, bug fixes, and new
+                features (Rule D5).
+              </p>
+              <textarea
+                value={changelog}
+                onChange={(e) => setChangelog(e.target.value)}
+                rows={4}
                 placeholder="- Added new command /example&#10;- Fixed issue with config loading"
-                style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical", fontFamily: "var(--font-mono)", fontSize: "0.875rem" }}
+                style={{
+                  width: "100%",
+                  padding: "0.625rem",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)",
+                  background: "var(--bg-secondary)",
+                  color: "var(--text-primary)",
+                  outline: "none",
+                  resize: "vertical",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.875rem",
+                }}
               />
             </div>
           )}
 
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+                marginBottom: "8px",
+              }}
+            >
               <label style={{ fontSize: "0.875rem", fontWeight: 500 }}>
                 Producers
               </label>
-              <button 
-                type="button" 
-                onClick={() => setProducers([...producers, { githubUser: "", role: "CONTRIBUTOR" }])}
-                style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", background: "none", border: "1px dashed var(--border-color)", padding: "4px 8px", borderRadius: "var(--radius-sm)", color: "var(--text-primary)", cursor: "pointer" }}
+              <button
+                type="button"
+                onClick={() =>
+                  setProducers([
+                    ...producers,
+                    { githubUser: "", role: "CONTRIBUTOR" },
+                  ])
+                }
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  fontSize: "0.75rem",
+                  background: "none",
+                  border: "1px dashed var(--border-color)",
+                  padding: "4px 8px",
+                  borderRadius: "var(--radius-sm)",
+                  color: "var(--text-primary)",
+                  cursor: "pointer",
+                }}
               >
                 <Plus size={12} /> Add Producer
               </button>
             </div>
-            
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+            >
               {producers.map((producer, index) => (
-                <div key={index} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                  <input 
-                    type="text" 
+                <div
+                  key={index}
+                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
+                >
+                  <input
+                    type="text"
                     placeholder="GitHub Username"
                     value={producer.githubUser}
                     disabled={index === 0}
@@ -417,9 +905,21 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
                       newProducers[index].githubUser = e.target.value;
                       setProducers(newProducers);
                     }}
-                    style={{ flex: 1, padding: "0.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)", color: index === 0 ? "var(--text-muted)" : "var(--text-primary)", opacity: index === 0 ? 0.7 : 1 }}
+                    style={{
+                      flex: 1,
+                      padding: "0.5rem",
+                      borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)",
+                      background:
+                        index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)",
+                      color:
+                        index === 0
+                          ? "var(--text-muted)"
+                          : "var(--text-primary)",
+                      opacity: index === 0 ? 0.7 : 1,
+                    }}
                   />
-                  <select 
+                  <select
                     value={producer.role}
                     disabled={index === 0}
                     onChange={(e) => {
@@ -427,21 +927,42 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
                       newProducers[index].role = e.target.value;
                       setProducers(newProducers);
                     }}
-                    style={{ padding: "0.5rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)", color: index === 0 ? "var(--text-muted)" : "var(--text-primary)", width: "140px", opacity: index === 0 ? 0.7 : 1 }}
+                    style={{
+                      padding: "0.5rem",
+                      borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)",
+                      background:
+                        index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)",
+                      color:
+                        index === 0
+                          ? "var(--text-muted)"
+                          : "var(--text-primary)",
+                      width: "140px",
+                      opacity: index === 0 ? 0.7 : 1,
+                    }}
                   >
                     <option value="COLLABORATOR">Collaborator</option>
                     <option value="CONTRIBUTOR">Contributor</option>
                     <option value="TRANSLATOR">Translator</option>
                     <option value="REQUESTER">Requester</option>
                   </select>
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     onClick={() => {
                       if (producers.length > 1) {
                         setProducers(producers.filter((_, i) => i !== index));
                       }
                     }}
-                    style={{ background: "none", border: "none", color: producers.length > 1 ? "var(--status-error)" : "var(--text-muted)", cursor: producers.length > 1 ? "pointer" : "not-allowed", padding: "8px" }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color:
+                        producers.length > 1
+                          ? "var(--status-error)"
+                          : "var(--text-muted)",
+                      cursor: producers.length > 1 ? "pointer" : "not-allowed",
+                      padding: "8px",
+                    }}
                     disabled={producers.length <= 1}
                   >
                     <Trash2 size={16} />
@@ -449,38 +970,125 @@ export default function SubmitReviewForm({ buildId, buildNumber, plugin }: Props
                 </div>
               ))}
             </div>
-            <div style={{ padding: "var(--space-3)", background: "rgba(14, 165, 233, 0.05)", borderRadius: "var(--radius-md)", border: "1px solid rgba(14, 165, 233, 0.15)", marginTop: "8px" }}>
-              <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", margin: 0 }}>
-                <strong>Rule A7:</strong> You must only submit work you have authored. Add all GitHub contributors who helped create this version. 
-                There must be at least one <strong>Collaborator</strong>.
+            <div
+              style={{
+                padding: "var(--space-3)",
+                background: "rgba(14, 165, 233, 0.05)",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid rgba(14, 165, 233, 0.15)",
+                marginTop: "8px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--text-secondary)",
+                  margin: 0,
+                }}
+              >
+                <strong>Rule A7:</strong> You must only submit work you have
+                authored. Add all GitHub contributors who helped create this
+                version. There must be at least one{" "}
+                <strong>Collaborator</strong>.
               </p>
             </div>
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, marginBottom: "2px" }}>Notes to Reviewer (Optional)</label>
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginBottom: "6px" }}>Provide context for the moderator reviewing your plugin (e.g., test server IPs, known limitations).</p>
-            <textarea 
-              value={notes} onChange={e => setNotes(e.target.value)} rows={3}
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              Notes to Reviewer (Optional)
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              Provide context for the moderator reviewing your plugin (e.g.,
+              test server IPs, known limitations).
+            </p>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows={3}
               placeholder="Any specific features to test, or explanations for unusual code patterns..."
-              style={{ width: "100%", padding: "0.625rem", borderRadius: "var(--radius-md)", border: "1px solid var(--border-color)", background: "var(--bg-secondary)", color: "var(--text-primary)", outline: "none", resize: "vertical" }}
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+                outline: "none",
+                resize: "vertical",
+              }}
             />
           </div>
-          
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-3)", marginTop: "var(--space-2)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--border-color)" }}>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "var(--space-3)",
+              marginTop: "var(--space-2)",
+              paddingTop: "var(--space-4)",
+              borderTop: "1px solid var(--border-color)",
+            }}
+          >
             {isPending && (
-              <button type="button" onClick={(e) => handleSubmit(e as any, true)} disabled={submitting} className="btn btn-secondary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
+              <button
+                type="button"
+                onClick={(e) => handleSubmit(e as any, true)}
+                disabled={submitting}
+                className="btn btn-secondary"
+                style={{
+                  padding: "0.75rem 2rem",
+                  fontSize: "1rem",
+                  opacity: submitting ? 0.6 : 1,
+                }}
+              >
                 Save Draft
               </button>
             )}
-            <button type="button" onClick={(e) => handleSubmit(e as any, false)} disabled={submitting} className="btn btn-primary" style={{ padding: "0.75rem 2rem", fontSize: "1rem", opacity: submitting ? 0.6 : 1 }}>
-              <CheckCircle size={18} /> {submitting ? "Submitting..." : "Submit Plugin for Review"}
+            <button
+              type="button"
+              onClick={(e) => handleSubmit(e as any, false)}
+              disabled={submitting}
+              className="btn btn-primary"
+              style={{
+                padding: "0.75rem 2rem",
+                fontSize: "1rem",
+                opacity: submitting ? 0.6 : 1,
+              }}
+            >
+              <CheckCircle size={18} />{" "}
+              {submitting ? "Submitting..." : "Submit Plugin for Review"}
             </button>
           </div>
         </form>
 
         {error && (
-          <div style={{ marginTop: "var(--space-4)", padding: "var(--space-3)", background: "rgba(239,68,68,0.08)", borderRadius: "var(--radius-sm)", color: "var(--status-error)", fontSize: "0.875rem", display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+          <div
+            style={{
+              marginTop: "var(--space-4)",
+              padding: "var(--space-3)",
+              background: "rgba(239,68,68,0.08)",
+              borderRadius: "var(--radius-sm)",
+              color: "var(--status-error)",
+              fontSize: "0.875rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-2)",
+            }}
+          >
             <AlertTriangle size={16} /> {error}
           </div>
         )}

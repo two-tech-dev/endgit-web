@@ -9,9 +9,13 @@ async function getPlugin(slug: string) {
   return data?.data || null;
 }
 
-export default async function EditPluginPage({ params }: { params: { slug: string } }) {
+export default async function EditPluginPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const session = await getServerSession(authOptions);
-  
+
   if (!session) {
     redirect("/api/auth/signin");
   }

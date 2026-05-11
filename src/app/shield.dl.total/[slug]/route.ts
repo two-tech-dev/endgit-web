@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 function formatNumber(num: number): string {
   if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
@@ -34,29 +34,38 @@ function createBadgeSvg(label: string, message: string, color: string): string {
   </svg>`;
 }
 
-export async function GET(request: Request, { params }: { params: { slug: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { slug: string } },
+) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
     const res = await fetch(`${apiUrl}/api/v1/plugins/${params.slug}`);
-    
+
     if (!res.ok) {
-      return new NextResponse(createBadgeSvg("downloads", "not found", "#e05d44"), {
-        headers: { 'Content-Type': 'image/svg+xml' }
-      });
+      return new NextResponse(
+        createBadgeSvg("downloads", "not found", "#e05d44"),
+        {
+          headers: { "Content-Type": "image/svg+xml" },
+        },
+      );
     }
 
     const { data: plugin } = await res.json();
     const downloads = plugin?.downloads || 0;
 
-    return new NextResponse(createBadgeSvg("downloads", formatNumber(downloads), "#007ec6"), {
-      headers: { 
-        'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=3600'
-      }
-    });
+    return new NextResponse(
+      createBadgeSvg("downloads", formatNumber(downloads), "#007ec6"),
+      {
+        headers: {
+          "Content-Type": "image/svg+xml",
+          "Cache-Control": "public, max-age=3600",
+        },
+      },
+    );
   } catch (error) {
     return new NextResponse(createBadgeSvg("downloads", "error", "#e05d44"), {
-      headers: { 'Content-Type': 'image/svg+xml' }
+      headers: { "Content-Type": "image/svg+xml" },
     });
   }
 }

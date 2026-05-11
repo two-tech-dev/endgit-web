@@ -13,9 +13,7 @@ import {
 } from "lucide-react";
 
 function timeAgo(dateStr: string) {
-  const seconds = Math.floor(
-    (Date.now() - new Date(dateStr).getTime()) / 1000
-  );
+  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
 
   if (seconds < 60) return `${seconds}s ago`;
 
@@ -80,22 +78,20 @@ export default function BuildsList({
     const q = query.toLowerCase();
 
     return builds.filter((build) => {
-      const plugin =
-        build.plugin?.displayName ||
-        build.plugin?.name ||
-        "";
+      const plugin = build.plugin?.displayName || build.plugin?.name || "";
 
       const matchesSearch =
         plugin.toLowerCase().includes(q) ||
         build.branch?.toLowerCase().includes(q) ||
         build.status?.toLowerCase().includes(q);
-        
+
       if (!q) {
         // If no search query, only show today's builds
-        const isToday = new Date(build.createdAt).toISOString().slice(0, 10) === today;
+        const isToday =
+          new Date(build.createdAt).toISOString().slice(0, 10) === today;
         return isToday && matchesSearch;
       }
-      
+
       // If there is a search query, show any matching build regardless of date
       return matchesSearch;
     });
@@ -186,10 +182,8 @@ export default function BuildsList({
         />
 
         <div>
-          <span style={{ fontWeight: 600 }}>
-            Caution:
-          </span>{" "}
-          Development builds may be unstable.
+          <span style={{ fontWeight: 600 }}>Caution:</span> Development builds
+          may be unstable.
         </div>
       </div>
 
@@ -248,8 +242,7 @@ export default function BuildsList({
                     color: "var(--text-primary)",
                   }}
                 >
-                  {build.plugin?.displayName ||
-                    build.plugin?.name}
+                  {build.plugin?.displayName || build.plugin?.name}
                 </div>
 
                 <div

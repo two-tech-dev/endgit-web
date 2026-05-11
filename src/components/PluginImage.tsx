@@ -13,7 +13,9 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
   useEffect(() => {
     let targetSrc = iconUrl;
     if (!targetSrc && repoUrl) {
-      const repoPath = repoUrl.replace("https://github.com/", "").replace(/\/$/, "");
+      const repoPath = repoUrl
+        .replace("https://github.com/", "")
+        .replace(/\/$/, "");
       targetSrc = `https://raw.githubusercontent.com/${repoPath}/main/icon.png`;
     }
 
@@ -29,23 +31,31 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
   }, [iconUrl, repoUrl]);
 
   if (!imgSrc) {
-    return <div style={{ width: "100%", height: "100%", background: "var(--bg-secondary)" }} />;
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          background: "var(--bg-secondary)",
+        }}
+      />
+    );
   }
 
   const isFallback = imgSrc === "/logo.png";
 
   return (
-    <img 
-      src={imgSrc} 
-      alt={isFallback ? "EndGit Logo" : alt} 
-      style={{ 
-        width: "100%", 
-        height: "100%", 
-        borderRadius: "var(--radius-lg)", 
+    <img
+      src={imgSrc}
+      alt={isFallback ? "EndGit Logo" : alt}
+      style={{
+        width: "100%",
+        height: "100%",
+        borderRadius: "var(--radius-lg)",
         objectFit: "cover",
         padding: "0",
-        transition: "opacity 0.2s"
-      }} 
+        transition: "opacity 0.2s",
+      }}
     />
   );
 }

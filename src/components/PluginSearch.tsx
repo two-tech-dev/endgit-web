@@ -23,11 +23,20 @@ export default function PluginSearch() {
 
   return (
     <div style={{ position: "relative", width: "300px" }}>
-      <Search style={{ position: "absolute", left: "var(--space-3)", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }} size={18} />
-      <input 
-        className="input" 
-        placeholder="Search plugins..." 
-        style={{ paddingLeft: "var(--space-10)", width: "100%" }} 
+      <Search
+        style={{
+          position: "absolute",
+          left: "var(--space-3)",
+          top: "50%",
+          transform: "translateY(-50%)",
+          color: "var(--text-muted)",
+        }}
+        size={18}
+      />
+      <input
+        className="input"
+        placeholder="Search plugins..."
+        style={{ paddingLeft: "var(--space-10)", width: "100%" }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

@@ -9,7 +9,11 @@ interface Props {
   initialStatus?: string;
 }
 
-export default function LiveBuildLog({ buildId, initialLogs, initialStatus }: Props) {
+export default function LiveBuildLog({
+  buildId,
+  initialLogs,
+  initialStatus,
+}: Props) {
   const [logs, setLogs] = useState(initialLogs || "");
   const [status, setStatus] = useState(initialStatus || "RUNNING");
   const [safeScore, setSafeScore] = useState<number | null>(null);
@@ -21,13 +25,15 @@ export default function LiveBuildLog({ buildId, initialLogs, initialStatus }: Pr
     if (status !== "RUNNING" && status !== "QUEUED") return;
 
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    const eventSource = new EventSource(`${apiUrl}/api/v1/builds/${buildId}/stream`);
+    const eventSource = new EventSource(
+      `${apiUrl}/api/v1/builds/${buildId}/stream`,
+    );
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      
+
       if (data.type === "log") {
-        setLogs(prev => prev + data.content);
+        setLogs((prev) => prev + data.content);
       } else if (data.type === "finish") {
         setStatus(data.status);
         setSafeScore(data.safeScore);
@@ -57,36 +63,57 @@ export default function LiveBuildLog({ buildId, initialLogs, initialStatus }: Pr
   const isSuccess = status === "SUCCESS";
 
   const lines = logs ? logs.split("\n") : [];
-  
+
   // Custom log parser for syntax highlighting
   const parseLogLine = (line: string, index: number) => {
     let color = "#cbd5e1"; // default slate-300
     let fontWeight = "normal";
 
-    if (line.includes("✅")) color = "#10b981"; // success green
-    else if (line.includes("❌") || line.includes("ERROR") || line.includes("Failed permanently")) color = "#ef4444"; // error red
-    else if (line.includes("⚠️") || line.includes("Warning")) color = "#f59e0b"; // warning yellow
+    if (line.includes("✅"))
+      color = "#10b981"; // success green
+    else if (
+      line.includes("❌") ||
+      line.includes("ERROR") ||
+      line.includes("Failed permanently")
+    )
+      color = "#ef4444"; // error red
+    else if (line.includes("⚠️") || line.includes("Warning"))
+      color = "#f59e0b"; // warning yellow
     else if (line.trim().startsWith("[") && line.includes("]")) {
       color = "#38bdf8"; // cyan for steps like [1/5]
       fontWeight = "600";
-    }
-    else if (line.includes("->")) color = "#94a3b8"; // muted slate-400 for sub-steps
-    else if (line.includes("Safe Score") || line.includes("Security Scan")) color = "#c084fc"; // purple for security
+    } else if (line.includes("->"))
+      color = "#94a3b8"; // muted slate-400 for sub-steps
+    else if (line.includes("Safe Score") || line.includes("Security Scan"))
+      color = "#c084fc"; // purple for security
 
     return (
-      <div key={index} style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
-        <span style={{ 
-          color: "#334155", 
-          minWidth: "2rem", 
-          textAlign: "right", 
-          userSelect: "none",
-          fontSize: "0.75rem",
-          paddingTop: "0.1rem",
-          fontFamily: "var(--font-mono)"
-        }}>
+      <div
+        key={index}
+        style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}
+      >
+        <span
+          style={{
+            color: "#334155",
+            minWidth: "2rem",
+            textAlign: "right",
+            userSelect: "none",
+            fontSize: "0.75rem",
+            paddingTop: "0.1rem",
+            fontFamily: "var(--font-mono)",
+          }}
+        >
           {index + 1}
         </span>
-        <span style={{ color, fontWeight, whiteSpace: "pre-wrap", wordBreak: "break-word", flex: 1 }}>
+        <span
+          style={{
+            color,
+            fontWeight,
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-word",
+            flex: 1,
+          }}
+        >
           {line}
         </span>
       </div>
@@ -94,50 +121,106 @@ export default function LiveBuildLog({ buildId, initialLogs, initialStatus }: Pr
   };
 
   return (
-    <div className="card" style={{ 
-      overflow: "hidden", 
-      border: "1px solid rgba(255,255,255,0.05)",
-      boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)",
-      background: "#09090b" // Very dark background
-    }}>
+    <div
+      className="card"
+      style={{
+        overflow: "hidden",
+        border: "1px solid rgba(255,255,255,0.05)",
+        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)",
+        background: "#09090b", // Very dark background
+      }}
+    >
       {/* Header */}
-      <div style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "0.75rem 1.25rem",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        background: "rgba(255, 255, 255, 0.02)",
-        backdropFilter: "blur(10px)"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "0.75rem 1.25rem",
+          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          background: "rgba(255, 255, 255, 0.02)",
+          backdropFilter: "blur(10px)",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
           <Terminal size={16} color="#38bdf8" />
-          <span style={{ fontWeight: 600, fontSize: "0.875rem", color: "#f8fafc", letterSpacing: "0.02em" }}>Execution Log</span>
+          <span
+            style={{
+              fontWeight: 600,
+              fontSize: "0.875rem",
+              color: "#f8fafc",
+              letterSpacing: "0.02em",
+            }}
+          >
+            Execution Log
+          </span>
           {isRunning && (
-            <span style={{ 
-              display: "inline-flex", alignItems: "center", gap: "6px",
-              fontSize: "0.6875rem", color: "#38bdf8", fontWeight: 700, letterSpacing: "0.05em",
-              background: "rgba(56, 189, 248, 0.1)", padding: "2px 8px", borderRadius: "99px"
-            }}>
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#38bdf8", animation: "pulse 1.5s infinite" }} />
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                fontSize: "0.6875rem",
+                color: "#38bdf8",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                background: "rgba(56, 189, 248, 0.1)",
+                padding: "2px 8px",
+                borderRadius: "99px",
+              }}
+            >
+              <span
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#38bdf8",
+                  animation: "pulse 1.5s infinite",
+                }}
+              />
               LIVE
             </span>
           )}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", fontSize: "0.8125rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "1rem",
+            fontSize: "0.8125rem",
+          }}
+        >
           {safeScore !== null && (
-            <span style={{ display: "flex", alignItems: "center", gap: "6px", color: safeScore >= 80 ? "#10b981" : "#f59e0b", fontWeight: 500 }}>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                color: safeScore >= 80 ? "#10b981" : "#f59e0b",
+                fontWeight: 500,
+              }}
+            >
               <Shield size={14} /> {safeScore}/100
             </span>
           )}
           {duration !== null && (
-            <span style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8" }}>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                color: "#94a3b8",
+              }}
+            >
               <Clock size={14} /> {duration}s
             </span>
           )}
-          {!isRunning && (
-            isSuccess
-              ? <CheckCircle size={16} color="#10b981" />
-              : <XCircle size={16} color="#ef4444" />
-          )}
+          {!isRunning &&
+            (isSuccess ? (
+              <CheckCircle size={16} color="#10b981" />
+            ) : (
+              <XCircle size={16} color="#ef4444" />
+            ))}
         </div>
       </div>
 
@@ -163,16 +246,43 @@ export default function LiveBuildLog({ buildId, initialLogs, initialStatus }: Pr
           lines.map((line, i) => parseLogLine(line, i))
         ) : (
           <div style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
-            <span style={{ color: "#334155", minWidth: "2rem", textAlign: "right", fontSize: "0.75rem", paddingTop: "0.1rem" }}>1</span>
-            <span style={{ color: "#64748b", fontStyle: "italic" }}>Waiting for build agent to start...</span>
+            <span
+              style={{
+                color: "#334155",
+                minWidth: "2rem",
+                textAlign: "right",
+                fontSize: "0.75rem",
+                paddingTop: "0.1rem",
+              }}
+            >
+              1
+            </span>
+            <span style={{ color: "#64748b", fontStyle: "italic" }}>
+              Waiting for build agent to start...
+            </span>
           </div>
         )}
         {isRunning && (
           <div style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
-            <span style={{ color: "#334155", minWidth: "2rem", textAlign: "right", fontSize: "0.75rem", paddingTop: "0.1rem" }}>
+            <span
+              style={{
+                color: "#334155",
+                minWidth: "2rem",
+                textAlign: "right",
+                fontSize: "0.75rem",
+                paddingTop: "0.1rem",
+              }}
+            >
               {logs ? lines.length + 1 : 2}
             </span>
-            <span style={{ color: "#38bdf8", animation: "blink 1s step-end infinite" }}>▋</span>
+            <span
+              style={{
+                color: "#38bdf8",
+                animation: "blink 1s step-end infinite",
+              }}
+            >
+              ▋
+            </span>
           </div>
         )}
       </div>

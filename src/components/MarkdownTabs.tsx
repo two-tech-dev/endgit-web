@@ -27,25 +27,11 @@ const markdownSchema = {
   attributes: {
     ...defaultSchema.attributes,
 
-    a: [
-      ...(defaultSchema.attributes?.a || []),
-      "href",
-      "target",
-      "rel",
-    ],
+    a: [...(defaultSchema.attributes?.a || []), "href", "target", "rel"],
 
-    img: [
-      "src",
-      "alt",
-      "title",
-      "width",
-      "height",
-    ],
+    img: ["src", "alt", "title", "width", "height"],
 
-    "*": [
-      "title",
-      "align",
-    ],
+    "*": ["title", "align"],
   },
 };
 
@@ -56,7 +42,11 @@ const markdownSchema = {
  *   - <img src="assets/foo.png"> → <img src="https://raw.githubusercontent.com/...">
  *   - Skips URLs that are already absolute (http/https/data:)
  */
-function rewriteRelativeUrls(markdown: string, repoUrl?: string, commitHash?: string): string {
+function rewriteRelativeUrls(
+  markdown: string,
+  repoUrl?: string,
+  commitHash?: string,
+): string {
   if (!repoUrl || !markdown) return markdown;
 
   const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)/);
@@ -70,13 +60,14 @@ function rewriteRelativeUrls(markdown: string, repoUrl?: string, commitHash?: st
   // Rewrite markdown image syntax: ![alt](relative/path)
   let result = markdown.replace(
     /!\[([^\]]*)\]\((?!https?:\/\/|data:)([^)]+)\)/g,
-    (_, alt, path) => `![${alt}](${rawBase}/${path.replace(/^\.\//, "")})`
+    (_, alt, path) => `![${alt}](${rawBase}/${path.replace(/^\.\//, "")})`,
   );
 
   // Rewrite HTML img src: <img src="relative/path">
   result = result.replace(
     /(<img\s[^>]*src=["'])(?!https?:\/\/|data:)([^"']+)(["'])/gi,
-    (_, prefix, path, suffix) => `${prefix}${rawBase}/${path.replace(/^\.\//, "")}${suffix}`
+    (_, prefix, path, suffix) =>
+      `${prefix}${rawBase}/${path.replace(/^\.\//, "")}${suffix}`,
   );
 
   return result;
@@ -103,15 +94,30 @@ function parseMarkdownTabs(markdown: string): Tab[] {
   return tabs;
 }
 
-export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdown: string; repoUrl?: string; commitHash?: string }) {
-  const processedMarkdown = rewriteRelativeUrls(markdown || "", repoUrl, commitHash);
+export default function MarkdownTabs({
+  markdown,
+  repoUrl,
+  commitHash,
+}: {
+  markdown: string;
+  repoUrl?: string;
+  commitHash?: string;
+}) {
+  const processedMarkdown = rewriteRelativeUrls(
+    markdown || "",
+    repoUrl,
+    commitHash,
+  );
   const tabs = parseMarkdownTabs(processedMarkdown);
   const [activeTab, setActiveTab] = useState(0);
 
   // Fallback if no content
   if (tabs.length === 0) {
     return (
-      <div className="markdown-body" style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}>
+      <div
+        className="markdown-body"
+        style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}
+      >
         <em>No description provided.</em>
       </div>
     );
@@ -120,8 +126,14 @@ export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdo
   // If there's only one tab, just render it normally without tabs UI
   if (tabs.length === 1) {
     return (
-      <div className="markdown-body" style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}>
+      <div
+        className="markdown-body"
+        style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}
+      >
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
+        >
           {tabs[0].content}
         </ReactMarkdown>
       </div>
@@ -133,18 +145,23 @@ export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdo
   return (
     <div>
       {/* Tabs Header */}
-      <div style={{
-        display: "flex",
-        flexWrap: "wrap",
-        background: "transparent",
-        borderBottom: "1px solid var(--border-color)",
-        padding: "8px 8px 0 8px",
-        gap: "4px"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          background: "transparent",
+          borderBottom: "1px solid var(--border-color)",
+          padding: "8px 8px 0 8px",
+          gap: "4px",
+        }}
+      >
         {tabs.map((tab, idx) => {
           const isActive = activeTab === idx;
-          const displayTitle = tab.title.length > 30 ? tab.title.substring(0, 30) + "..." : tab.title;
-          
+          const displayTitle =
+            tab.title.length > 30
+              ? tab.title.substring(0, 30) + "..."
+              : tab.title;
+
           return (
             <button
               key={idx}
@@ -161,7 +178,7 @@ export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdo
                 fontWeight: 500,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
-                transition: "all 0.2s"
+                transition: "all 0.2s",
               }}
               title={tab.title}
             >
@@ -172,13 +189,19 @@ export default function MarkdownTabs({ markdown, repoUrl, commitHash }: { markdo
       </div>
 
       {/* Tab Content */}
-      <div className="markdown-body" style={{ 
-        padding: "var(--space-6)", 
-        color: "var(--text-secondary)", 
-        lineHeight: 1.7,
-        background: "var(--bg-card)"
-      }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}>
+      <div
+        className="markdown-body"
+        style={{
+          padding: "var(--space-6)",
+          color: "var(--text-secondary)",
+          lineHeight: 1.7,
+          background: "var(--bg-card)",
+        }}
+      >
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
+        >
           {currentTab.content}
         </ReactMarkdown>
       </div>

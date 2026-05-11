@@ -29,13 +29,18 @@ export default function ThemeToggle() {
   if (!mounted) return <div style={{ width: 32, height: 32 }} />;
 
   return (
-    <button 
+    <button
       onClick={toggleTheme}
       style={{
-        display: "flex", alignItems: "center", justifyContent: "center",
-        width: 32, height: 32, borderRadius: "50%",
-        background: "var(--bg-secondary)", color: "var(--text-secondary)",
-        transition: "all var(--transition-fast)"
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 32,
+        height: 32,
+        borderRadius: "50%",
+        background: "var(--bg-secondary)",
+        color: "var(--text-secondary)",
+        transition: "all var(--transition-fast)",
       }}
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >

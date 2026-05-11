@@ -4,10 +4,9 @@ async function getTodayBuilds() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
   try {
-    const res = await fetch(
-      `${apiUrl}/api/v1/builds/recent?limit=50`,
-      { cache: "no-store" }
-    );
+    const res = await fetch(`${apiUrl}/api/v1/builds/recent?limit=50`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) return [];
 

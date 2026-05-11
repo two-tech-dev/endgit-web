@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 function createBadgeSvg(label: string, message: string, color: string): string {
   const labelWidth = label.length * 7 + 10;
@@ -27,37 +27,48 @@ function createBadgeSvg(label: string, message: string, color: string): string {
   </svg>`;
 }
 
-export async function GET(request: Request, { params }: { params: { slug: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { slug: string } },
+) {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
     const res = await fetch(`${apiUrl}/api/v1/plugins/${params.slug}`);
-    
+
     if (!res.ok) {
-      return new NextResponse(createBadgeSvg("rating", "not found", "#e05d44"), {
-        headers: { 'Content-Type': 'image/svg+xml' }
-      });
+      return new NextResponse(
+        createBadgeSvg("rating", "not found", "#e05d44"),
+        {
+          headers: { "Content-Type": "image/svg+xml" },
+        },
+      );
     }
 
     const { data: plugin } = await res.json();
-    const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0;
-    
+    const avgRating = plugin.stars
+      ? Math.round((plugin.stars / 20) * 10) / 10
+      : 0;
+
     let color = "#9f9f9f"; // lightgrey
-    if (avgRating >= 4.5) color = "#4c1"; // brightgreen
-    else if (avgRating >= 3.5) color = "#97ca00"; // green
-    else if (avgRating >= 2.5) color = "#dfb317"; // yellow
+    if (avgRating >= 4.5)
+      color = "#4c1"; // brightgreen
+    else if (avgRating >= 3.5)
+      color = "#97ca00"; // green
+    else if (avgRating >= 2.5)
+      color = "#dfb317"; // yellow
     else if (avgRating > 0) color = "#fe7d37"; // orange
 
     const message = avgRating > 0 ? `${avgRating}/5` : "unrated";
 
     return new NextResponse(createBadgeSvg("rating", message, color), {
-      headers: { 
-        'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=3600'
-      }
+      headers: {
+        "Content-Type": "image/svg+xml",
+        "Cache-Control": "public, max-age=3600",
+      },
     });
   } catch (error) {
     return new NextResponse(createBadgeSvg("rating", "error", "#e05d44"), {
-      headers: { 'Content-Type': 'image/svg+xml' }
+      headers: { "Content-Type": "image/svg+xml" },
     });
   }
 }
