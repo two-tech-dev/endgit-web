@@ -5,8 +5,20 @@ import { useSession } from "next-auth/react";
 import PluginImage from "@/components/PluginImage";
 import {
   Users, Shield, BarChart3, AlertTriangle, CheckCircle, XCircle,
-  Search, Eye, Clock, Package, Activity, Loader2, Star
+  Search, Eye, Clock, Package, Activity, Loader2, Star, Filter, ShieldAlert
 } from "lucide-react";
+
+const PLUGIN_STATUSES = ["ALL", "APPROVED", "PENDING_REVIEW", "REJECTED", "SUSPENDED", "FLAGGED", "DRAFT"] as const;
+const STATUS_COLORS: Record<string, { bg: string; color: string; border: string }> = {
+  APPROVED: { bg: "rgba(16,185,129,0.1)", color: "var(--status-success)", border: "rgba(16,185,129,0.3)" },
+  PENDING_REVIEW: { bg: "rgba(245,158,11,0.1)", color: "var(--status-warning)", border: "rgba(245,158,11,0.3)" },
+  PENDING: { bg: "rgba(245,158,11,0.1)", color: "var(--status-warning)", border: "rgba(245,158,11,0.3)" },
+  REJECTED: { bg: "rgba(239,68,68,0.1)", color: "var(--status-error)", border: "rgba(239,68,68,0.3)" },
+  SUSPENDED: { bg: "rgba(239,68,68,0.08)", color: "#f87171", border: "rgba(248,113,113,0.3)" },
+  FLAGGED: { bg: "rgba(251,146,60,0.1)", color: "#fb923c", border: "rgba(251,146,60,0.3)" },
+  DRAFT: { bg: "rgba(100,116,139,0.1)", color: "var(--text-muted)", border: "rgba(100,116,139,0.3)" },
+};
+const NEGATIVE_STATUSES = ["REJECTED", "SUSPENDED", "FLAGGED"];
 
 const TRUST_LEVELS = ["NEW", "TRUSTED", "FLAGGED", "ADMIN"];
 const TRUST_COLORS: Record<string, { bg: string; color: string }> = {
@@ -25,8 +37,21 @@ export default function AdminPage() {
   const [stats, setStats] = useState({ users: 0, plugins: 0, builds: 0, pendingReviews: 0 });
   const [userSearch, setUserSearch] = useState("");
   const [pluginSearch, setPluginSearch] = useState("");
+  const [pluginStatusFilter, setPluginStatusFilter] = useState<string>("ALL");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // Modal for rejecting plugins/versions from the Plugins tab
+  const [pluginRejectModal, setPluginRejectModal] = useState<{
+    type: "plugin" | "version";
+    pluginId: string;
+    versionId?: string;
+    name: string;
+    currentStatus: string;
+    targetStatus: string;
+  } | null>(null);
+  const [pluginRejectReason, setPluginRejectReason] = useState("");
+  const [pluginRejectLoading, setPluginRejectLoading] = useState(false);
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   const token = (session?.user as any)?.apiToken || "";
@@ -121,12 +146,12 @@ export default function AdminPage() {
     }
   };
 
-  const changeVersionStatus = async (pluginId: string, versionId: string, newStatus: string) => {
+  const changeVersionStatus = async (pluginId: string, versionId: string, newStatus: string, reason?: string) => {
     try {
       const res = await fetch(`${apiUrl}/api/v1/admin/versions/${versionId}/status`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus })
+        body: JSON.stringify({ status: newStatus, ...(reason ? { reason } : {}) })
       });
       const json = await res.json();
       if (json.success) {
@@ -143,18 +168,53 @@ export default function AdminPage() {
     } catch { /* noop */ }
   };
 
-  const changePluginStatus = async (pluginId: string, newStatus: string) => {
+  const changePluginStatus = async (pluginId: string, newStatus: string, reason?: string) => {
     try {
       const res = await fetch(`${apiUrl}/api/v1/admin/plugins/${pluginId}/status`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus })
+        body: JSON.stringify({ status: newStatus, ...(reason ? { reason } : {}) })
       });
       const json = await res.json();
       if (json.success) {
         setPlugins(prev => prev.map(p => p.id === pluginId ? { ...p, status: newStatus } : p));
       }
     } catch { /* noop */ }
+  };
+
+  // Intercept status changes: if changing TO a negative status, open rejection reason modal
+  const handlePluginStatusChange = (pluginId: string, currentStatus: string, newStatus: string, pluginName: string) => {
+    if (NEGATIVE_STATUSES.includes(newStatus) && currentStatus !== newStatus) {
+      setPluginRejectModal({ type: "plugin", pluginId, name: pluginName, currentStatus, targetStatus: newStatus });
+      setPluginRejectReason("");
+    } else {
+      changePluginStatus(pluginId, newStatus);
+    }
+  };
+
+  const handleVersionStatusChange = (pluginId: string, versionId: string, currentStatus: string, newStatus: string, versionLabel: string) => {
+    if (NEGATIVE_STATUSES.includes(newStatus) && currentStatus !== newStatus) {
+      setPluginRejectModal({ type: "version", pluginId, versionId, name: versionLabel, currentStatus, targetStatus: newStatus });
+      setPluginRejectReason("");
+    } else {
+      changeVersionStatus(pluginId, versionId, newStatus);
+    }
+  };
+
+  const confirmPluginReject = async () => {
+    if (!pluginRejectModal || !pluginRejectReason.trim()) return;
+    setPluginRejectLoading(true);
+    try {
+      if (pluginRejectModal.type === "plugin") {
+        await changePluginStatus(pluginRejectModal.pluginId, pluginRejectModal.targetStatus, pluginRejectReason.trim());
+      } else if (pluginRejectModal.versionId) {
+        await changeVersionStatus(pluginRejectModal.pluginId, pluginRejectModal.versionId, pluginRejectModal.targetStatus, pluginRejectReason.trim());
+      }
+      setPluginRejectModal(null);
+      setPluginRejectReason("");
+    } finally {
+      setPluginRejectLoading(false);
+    }
   };
 
   const toggleFeatured = async (pluginId: string) => {
@@ -459,10 +519,13 @@ export default function AdminPage() {
       )}
 
       {/* Plugins Tab */}
-      {!loading && tab === "plugins" && (
+      {!loading && tab === "plugins" && (() => {
+        const filtered = pluginStatusFilter === "ALL" ? plugins : plugins.filter(p => p.status === pluginStatusFilter);
+        return (
         <div className="card" style={{ padding: "var(--space-6)" }}>
-          <div style={{ display: "flex", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
-            <div style={{ flex: 1, position: "relative" }}>
+          {/* Search + Filter Bar */}
+          <div style={{ display: "flex", gap: "var(--space-4)", marginBottom: "var(--space-4)", flexWrap: "wrap" }}>
+            <div style={{ flex: 1, position: "relative", minWidth: "240px" }}>
               <Search size={16} color="var(--text-muted)" style={{ position: "absolute", left: "var(--space-3)", top: "50%", transform: "translateY(-50%)" }} />
               <input
                 type="text"
@@ -477,6 +540,33 @@ export default function AdminPage() {
             <button onClick={loadData} className="btn btn-secondary">Search</button>
           </div>
 
+          {/* Status Filter Pills */}
+          <div style={{ display: "flex", gap: "6px", marginBottom: "var(--space-5)", flexWrap: "wrap", alignItems: "center" }}>
+            <Filter size={14} color="var(--text-muted)" style={{ marginRight: "4px" }} />
+            {PLUGIN_STATUSES.map(s => {
+              const isActive = pluginStatusFilter === s;
+              const sc = s !== "ALL" ? STATUS_COLORS[s] : null;
+              const count = s === "ALL" ? plugins.length : plugins.filter(p => p.status === s).length;
+              return (
+                <button key={s} onClick={() => setPluginStatusFilter(s)} style={{
+                  padding: "4px 12px", borderRadius: "var(--radius-full)", fontSize: "0.75rem", fontWeight: 600,
+                  border: isActive ? `1px solid ${sc?.border || "var(--border-highlight)"}` : "1px solid var(--border-color)",
+                  background: isActive ? (sc?.bg || "var(--bg-secondary)") : "transparent",
+                  color: isActive ? (sc?.color || "var(--text-primary)") : "var(--text-muted)",
+                  cursor: "pointer", transition: "all 150ms",
+                  display: "flex", alignItems: "center", gap: "6px"
+                }}>
+                  {s === "ALL" ? "All" : s.replace("_", " ")}
+                  <span style={{
+                    background: isActive ? "rgba(255,255,255,0.15)" : "var(--bg-secondary)",
+                    padding: "0 6px", borderRadius: "var(--radius-full)", fontSize: "0.6875rem",
+                    minWidth: "20px", textAlign: "center"
+                  }}>{count}</span>
+                </button>
+              );
+            })}
+          </div>
+
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
               <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
@@ -487,7 +577,9 @@ export default function AdminPage() {
               </tr>
             </thead>
             <tbody>
-              {plugins.map((plugin: any) => (
+              {filtered.map((plugin: any) => {
+                const psc = STATUS_COLORS[plugin.status] || STATUS_COLORS.DRAFT;
+                return (
                 <React.Fragment key={plugin.id}>
                   <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
                     <td style={{ padding: "var(--space-4)" }}>
@@ -502,14 +594,15 @@ export default function AdminPage() {
                     <td style={{ padding: "var(--space-4)" }}>
                       <select
                         value={plugin.status}
-                        onChange={(e) => changePluginStatus(plugin.id, e.target.value)}
+                        onChange={(e) => handlePluginStatusChange(plugin.id, plugin.status, e.target.value, plugin.displayName)}
                         style={{
                           padding: "0.25rem 0.5rem",
                           borderRadius: "var(--radius-sm)",
-                          background: "var(--bg-secondary)",
-                          border: "1px solid var(--border-color)",
-                          color: "var(--text-primary)",
+                          background: psc.bg,
+                          border: `1px solid ${psc.border}`,
+                          color: psc.color,
                           fontSize: "0.8125rem",
+                          fontWeight: 600,
                           cursor: "pointer",
                         }}
                       >
@@ -523,6 +616,25 @@ export default function AdminPage() {
                     </td>
                     <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
                       <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end", alignItems: "center" }}>
+                        {/* Quick reject button — only shown for approved plugins */}
+                        {plugin.status === "APPROVED" && (
+                          <button
+                            onClick={() => {
+                              setPluginRejectModal({ type: "plugin", pluginId: plugin.id, name: plugin.displayName, currentStatus: plugin.status, targetStatus: "REJECTED" });
+                              setPluginRejectReason("");
+                            }}
+                            title="Reject this approved plugin"
+                            style={{
+                              display: "flex", alignItems: "center", justifyContent: "center", gap: "4px",
+                              height: "32px", padding: "0 10px", borderRadius: "var(--radius-sm)",
+                              border: "1px solid rgba(239,68,68,0.3)", background: "rgba(239,68,68,0.08)",
+                              color: "var(--status-error)", cursor: "pointer", transition: "all 150ms",
+                              fontSize: "0.6875rem", fontWeight: 600
+                            }}
+                          >
+                            <ShieldAlert size={14} /> Reject
+                          </button>
+                        )}
                         <button
                           onClick={() => toggleFeatured(plugin.id)}
                           title={plugin.isFeatured ? "Remove Featured" : "Mark as Featured"}
@@ -543,20 +655,34 @@ export default function AdminPage() {
                     </td>
                   </tr>
                   {plugin.versions && plugin.versions.length > 0 && (
-                    <tr style={{ borderBottom: "1px solid var(--border-color)", background: "rgba(0,0,0,0.1)" }}>
-                      <td colSpan={4} style={{ padding: "0 var(--space-4) var(--space-4) var(--space-8)" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginTop: "12px" }}>
-                          {plugin.versions.map((v: any) => (
-                            <div key={v.id} style={{ display: "flex", alignItems: "center", gap: "8px", background: "var(--bg-card)", padding: "4px 8px", borderRadius: "4px", border: "1px solid var(--border-color)" }}>
-                              <span style={{ fontSize: "0.75rem", fontWeight: 600 }}>v{v.version}</span>
+                    <tr style={{ borderBottom: "1px solid var(--border-color)", background: "rgba(0,0,0,0.04)" }}>
+                      <td colSpan={4} style={{ padding: "var(--space-3) var(--space-4) var(--space-4) var(--space-8)" }}>
+                        <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 600 }}>Versions</div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                          {plugin.versions.map((v: any) => {
+                            const vsc = STATUS_COLORS[v.status] || STATUS_COLORS.DRAFT;
+                            return (
+                            <div key={v.id} style={{
+                              display: "flex", alignItems: "center", gap: "8px",
+                              background: "var(--bg-card)", padding: "6px 10px", borderRadius: "var(--radius-sm)",
+                              border: `1px solid ${vsc.border}`,
+                              transition: "all 150ms"
+                            }}>
+                              <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--text-primary)" }}>v{v.version}</span>
+                              <span style={{
+                                fontSize: "0.625rem", fontWeight: 700, padding: "1px 6px",
+                                borderRadius: "var(--radius-full)",
+                                background: vsc.bg, color: vsc.color,
+                                textTransform: "uppercase", letterSpacing: "0.03em"
+                              }}>{v.status}</span>
                               <select
                                 value={v.status}
-                                onChange={(e) => changeVersionStatus(plugin.id, v.id, e.target.value)}
+                                onChange={(e) => handleVersionStatusChange(plugin.id, v.id, v.status, e.target.value, `${plugin.displayName} v${v.version}`)}
                                 style={{
                                   padding: "2px 4px",
                                   borderRadius: "4px",
                                   background: "var(--bg-secondary)",
-                                  border: "none",
+                                  border: "1px solid var(--border-color)",
                                   color: "var(--text-primary)",
                                   fontSize: "0.6875rem",
                                   cursor: "pointer",
@@ -567,22 +693,103 @@ export default function AdminPage() {
                                 <option value="REJECTED">REJECTED</option>
                               </select>
                             </div>
-                          ))}
+                          )})}
                         </div>
                       </td>
                     </tr>
                   )}
                 </React.Fragment>
-              ))}
-              {plugins.length === 0 && (
+              )})}
+              {filtered.length === 0 && (
                 <tr>
                   <td colSpan={4} style={{ padding: "var(--space-8)", textAlign: "center", color: "var(--text-muted)" }}>
-                    No plugins found
+                    {pluginStatusFilter !== "ALL" ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found` : "No plugins found"}
                   </td>
                 </tr>
               )}
             </tbody>
           </table>
+        </div>
+        );
+      })()}
+
+      {/* Plugin/Version Rejection Reason Modal */}
+      {pluginRejectModal && (
+        <div style={{
+          position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
+          display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000,
+          padding: "var(--space-4)"
+        }} onClick={() => { setPluginRejectModal(null); setPluginRejectReason(""); }}>
+          <div className="card" style={{
+            width: "100%", maxWidth: "560px", padding: "0", overflow: "hidden",
+            borderTop: `4px solid ${pluginRejectModal.targetStatus === "SUSPENDED" ? "#f87171" : pluginRejectModal.targetStatus === "FLAGGED" ? "#fb923c" : "var(--status-error)"}`
+          }} onClick={e => e.stopPropagation()}>
+            <div style={{ padding: "var(--space-6)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-1)" }}>
+                <ShieldAlert size={22} color={pluginRejectModal.targetStatus === "FLAGGED" ? "#fb923c" : "var(--status-error)"} />
+                <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>
+                  {pluginRejectModal.targetStatus === "SUSPENDED" ? "Suspend" : pluginRejectModal.targetStatus === "FLAGGED" ? "Flag" : "Reject"} {pluginRejectModal.type === "version" ? "Version" : "Plugin"}
+                </h3>
+              </div>
+              <p style={{ color: "var(--text-muted)", fontSize: "0.875rem", margin: "var(--space-2) 0 var(--space-4)" }}>
+                Changing <strong style={{ color: "var(--text-primary)" }}>{pluginRejectModal.name}</strong> from{" "}
+                <span style={{ fontWeight: 600, color: STATUS_COLORS[pluginRejectModal.currentStatus]?.color || "var(--text-primary)" }}>
+                  {pluginRejectModal.currentStatus}
+                </span>{" → "}
+                <span style={{ fontWeight: 600, color: STATUS_COLORS[pluginRejectModal.targetStatus]?.color || "var(--status-error)" }}>
+                  {pluginRejectModal.targetStatus}
+                </span>.
+                {pluginRejectModal.currentStatus === "APPROVED" && (
+                  <span style={{ display: "block", marginTop: "var(--space-2)", padding: "var(--space-2) var(--space-3)", background: "rgba(245,158,11,0.08)", borderRadius: "var(--radius-sm)", borderLeft: "3px solid var(--status-warning)", fontSize: "0.8125rem" }}>
+                    <AlertTriangle size={12} style={{ display: "inline", verticalAlign: "middle", marginRight: "4px" }} />
+                    This plugin/version is currently <strong>live and approved</strong>. This action will remove it from public availability.
+                  </span>
+                )}
+              </p>
+
+              <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>
+                Reason for {pluginRejectModal.targetStatus === "SUSPENDED" ? "Suspension" : pluginRejectModal.targetStatus === "FLAGGED" ? "Flagging" : "Rejection"} *
+              </label>
+              <textarea
+                value={pluginRejectReason}
+                onChange={e => setPluginRejectReason(e.target.value)}
+                autoFocus
+                placeholder={`Explain why this ${pluginRejectModal.type} is being ${pluginRejectModal.targetStatus.toLowerCase()}...\n\nExample:\nSecurity concern — Suspicious network calls detected in decompiled code.\n\nThe plugin will be reverted to non-public status.`}
+                rows={7}
+                style={{
+                  width: "100%", padding: "var(--space-3)", borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--border-color)", background: "var(--bg-secondary)",
+                  color: "var(--text-primary)", fontSize: "0.875rem", lineHeight: 1.6,
+                  resize: "vertical", outline: "none", fontFamily: "inherit", minHeight: "120px"
+                }}
+              />
+
+              <div style={{ display: "flex", gap: "var(--space-3)", marginTop: "var(--space-5)", justifyContent: "flex-end" }}>
+                <button onClick={() => { setPluginRejectModal(null); setPluginRejectReason(""); }} style={{
+                  padding: "0.625rem 1.25rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 500,
+                  background: "var(--bg-secondary)", color: "var(--text-secondary)", border: "1px solid var(--border-color)", cursor: "pointer"
+                }}>
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmPluginReject}
+                  disabled={!pluginRejectReason.trim() || pluginRejectLoading}
+                  style={{
+                    padding: "0.625rem 1.25rem", borderRadius: "var(--radius-md)", fontSize: "0.875rem", fontWeight: 600,
+                    background: pluginRejectReason.trim() ? (STATUS_COLORS[pluginRejectModal.targetStatus]?.color || "var(--status-error)") : "rgba(239,68,68,0.3)",
+                    color: "white", border: "none",
+                    cursor: pluginRejectReason.trim() ? "pointer" : "not-allowed",
+                    display: "flex", alignItems: "center", gap: "6px",
+                    opacity: pluginRejectLoading ? 0.7 : 1
+                  }}
+                >
+                  {pluginRejectLoading && <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />}
+                  <ShieldAlert size={14} />
+                  {pluginRejectModal.targetStatus === "SUSPENDED" ? "Suspend" : pluginRejectModal.targetStatus === "FLAGGED" ? "Flag" : "Reject"} & Save
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
