@@ -1,5 +1,8 @@
 # EndGit Web
 
+[![CI](https://github.com/two-tech-dev/endgit-web/actions/workflows/ci.yml/badge.svg)](https://github.com/two-tech-dev/endgit-web/actions/workflows/ci.yml)
+[![Code Quality](https://github.com/two-tech-dev/endgit-web/actions/workflows/code-quality.yml/badge.svg)](https://github.com/two-tech-dev/endgit-web/actions/workflows/code-quality.yml)
+
 **Next.js Web Dashboard for the EndGit Plugin Marketplace**
 
 The web frontend for [EndGit](https://endgit.dev) — providing a modern dashboard for browsing, managing, and distributing Endstone plugins.
