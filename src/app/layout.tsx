@@ -88,8 +88,8 @@ function Navbar() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "#0a0a0a", // Standard dark theme background
-        borderBottom: "1px solid #27272a", // Standard dark theme border
+        background: "var(--bg-secondary)",
+        borderBottom: "1px solid var(--border-color)",
         padding: "1rem 0",
       }}
     >
@@ -120,7 +120,7 @@ function Navbar() {
             alt="EndGit Logo"
             style={{ width: 36, height: 36, objectFit: "contain" }}
           />
-          <span style={{ color: "white" }}>EndGit</span>
+          <span style={{ color: "var(--text-primary)" }}>EndGit</span>
         </a>
         <NavbarMobile />
       </div>

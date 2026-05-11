@@ -59,8 +59,8 @@ export default function NavbarClient() {
           gap: "0.5rem",
           padding: "0.375rem 0.75rem",
           borderRadius: "var(--radius-full)",
-          border: "1px solid #27272a",
-          background: "#121212",
+          border: "1px solid var(--border-color)",
+          background: "var(--bg-card)",
           cursor: "pointer",
           transition: "all 150ms",
         }}
@@ -99,7 +99,7 @@ export default function NavbarClient() {
           style={{
             fontWeight: 500,
             fontSize: "0.875rem",
-            color: "#f8fafc",
+            color: "var(--text-primary)",
             maxWidth: "120px",
             overflow: "hidden",
             textOverflow: "ellipsis",

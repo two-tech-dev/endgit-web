@@ -15,16 +15,16 @@ export default function NavbarMobile() {
         className="nav-links"
         style={{ display: "flex", gap: "2rem", alignItems: "center" }}
       >
-        <a href="/plugins" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+        <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
           Releases
         </a>
-        <a href="/plugins/top" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+        <a href="/plugins/top" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
           Top Plugins
         </a>
-        <a href="/builds" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+        <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
           Dev Builds
         </a>
-        <a href="/faq" style={{ color: "#cbd5e1", fontWeight: 500 }}>
+        <a href="/faq" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
           FAQ
         </a>
         <ThemeToggle />
@@ -42,7 +42,7 @@ export default function NavbarMobile() {
           className="mobile-menu-btn"
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
-          style={{ color: "#f8fafc" }}
+          style={{ color: "var(--text-primary)" }}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
