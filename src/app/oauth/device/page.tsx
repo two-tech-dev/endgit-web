@@ -46,6 +46,22 @@ export default function DeviceAuthPage() {
         }
     }
 
+    function handlePaste(e: React.ClipboardEvent<HTMLInputElement>) {
+        e.preventDefault();
+        const pasted = e.clipboardData.getData("text").toUpperCase();
+        // Strip everything except allowed chars and the separator
+        const clean = pasted.replace(/[^A-Z2-9-]/g, "");
+        const parts = clean.split("-");
+        const first = (parts[0] || "").slice(0, 4);
+        const second = (parts[1] || "").slice(0, 4);
+        setSegments([first, second]);
+        setError("");
+        // Focus second input if first is complete
+        if (first.length === 4) {
+            secondRef.current?.focus();
+        }
+    }
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         if (userCode.length !== 9) return;
@@ -263,6 +279,7 @@ export default function DeviceAuthPage() {
                                     onChange={(e) =>
                                         handleSegmentChange(0, e.target.value)
                                     }
+                                    onPaste={handlePaste}
                                     maxLength={4}
                                     placeholder="XXXX"
                                     autoFocus
@@ -299,6 +316,7 @@ export default function DeviceAuthPage() {
                                     onChange={(e) =>
                                         handleSegmentChange(1, e.target.value)
                                     }
+                                    onPaste={handlePaste}
                                     onKeyDown={(e) =>
                                         handleSegmentKeyDown(1, e)
                                     }
