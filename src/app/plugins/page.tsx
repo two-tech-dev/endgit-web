@@ -5,6 +5,15 @@ import PluginSidebarFilters from "@/components/PluginSidebarFilters";
 import { fetchApi } from "@/lib/api";
 
 import MobileFiltersWrapper from "@/components/MobileFiltersWrapper";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Endstone Plugins — EndGit",
+  description: "Browse and discover the best plugins for your Endstone server.",
+  alternates: {
+    canonical: "/plugins",
+  },
+};
 
 export default async function PluginsPage({
   searchParams,

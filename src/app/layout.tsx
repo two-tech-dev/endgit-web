@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "EndGit — CI/CD & Plugin Marketplace for Endstone",
   description: "Discover, download, and publish Endstone plugins automatically from GitHub. The premier CI/CD and marketplace platform for Endstone servers.",
   keywords: ["endstone", "minecraft bedrock", "plugins", "ci/cd", "endstone plugins", "marketplace", "endgit"],
+  metadataBase: new URL("https://endgit.dev"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "EndGit — Endstone Plugin Marketplace",
     description: "Discover, download, and publish Endstone plugins automatically from GitHub.",
