@@ -40,7 +40,8 @@ export default async function DashboardPage() {
       <div
         className="container"
         style={{
-          padding: "var(--space-12) 0",
+          paddingTop: "var(--space-12)",
+          paddingBottom: "var(--space-12)",
           minHeight: "60vh",
           display: "flex",
           alignItems: "center",
@@ -109,7 +110,8 @@ export default async function DashboardPage() {
       <div
         className="container"
         style={{
-          padding: "var(--space-12) 0",
+          paddingTop: "var(--space-12)",
+          paddingBottom: "var(--space-12)",
           minHeight: "60vh",
           display: "flex",
           alignItems: "center",
@@ -185,7 +187,7 @@ export default async function DashboardPage() {
   const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
-    <div className="container" style={{ padding: "var(--space-8) 0" }}>
+    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
       <div
         style={{
           display: "flex",

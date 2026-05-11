@@ -32,7 +32,7 @@ export default async function EditPluginPage({
   }
 
   return (
-    <div className="container" style={{ padding: "var(--space-8) 0" }}>
+    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
       <EditPluginForm plugin={plugin} />
     </div>
   );

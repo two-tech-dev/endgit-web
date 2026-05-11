@@ -418,7 +418,7 @@ export default function AdminPage() {
     return (
       <div
         className="container"
-        style={{ padding: "var(--space-16) 0", textAlign: "center" }}
+        style={{ paddingTop: "var(--space-16)", paddingBottom: "var(--space-16)", textAlign: "center" }}
       >
         <Loader2
           size={32}
@@ -434,7 +434,7 @@ export default function AdminPage() {
     return (
       <div
         className="container"
-        style={{ padding: "var(--space-16) 0", textAlign: "center" }}
+        style={{ paddingTop: "var(--space-16)", paddingBottom: "var(--space-16)", textAlign: "center" }}
       >
         <Shield
           size={48}
@@ -452,7 +452,7 @@ export default function AdminPage() {
   return (
     <div
       className="container"
-      style={{ padding: "var(--space-8) 0", maxWidth: "1100px" }}
+      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)", maxWidth: "1100px" }}
     >
       <div style={{ marginBottom: "var(--space-6)" }}>
         <h1

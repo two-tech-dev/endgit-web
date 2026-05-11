@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <div className="container" style={{ padding: "4rem 0", maxWidth: "800px" }}>
+    <div className="container" style={{ paddingTop: "4rem", paddingBottom: "4rem", maxWidth: "800px" }}>
       <h1
         style={{
           fontSize: "2.5rem",

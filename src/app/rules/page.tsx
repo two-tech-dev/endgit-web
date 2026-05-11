@@ -322,7 +322,7 @@ export default function RulesPage() {
   return (
     <div
       className="container"
-      style={{ padding: "var(--space-10) 0 var(--space-16)" }}
+      style={{ paddingTop: "var(--space-10)", paddingBottom: "var(--space-16)" }}
     >
       {/* Hero Header */}
       <div style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>

@@ -103,7 +103,7 @@ export default async function PluginBuildsPage({
     plugin.status === "PENDING_REVIEW";
 
   return (
-    <div className="container" style={{ padding: "var(--space-8) 0" }}>
+    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
       <Link
         href="/dashboard/dev"
         style={{

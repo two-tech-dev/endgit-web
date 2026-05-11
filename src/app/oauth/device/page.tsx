@@ -118,7 +118,8 @@ export default function DeviceAuthPage() {
     <div
       className="container"
       style={{
-        padding: "var(--space-12) 0",
+        paddingTop: "var(--space-12)",
+        paddingBottom: "var(--space-12)",
         minHeight: "60vh",
         display: "flex",
         alignItems: "center",

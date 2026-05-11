@@ -113,7 +113,8 @@ export default function FAQPage() {
     <div
       className="container"
       style={{
-        padding: "var(--space-10) 0 var(--space-16)",
+        paddingTop: "var(--space-10)",
+        paddingBottom: "var(--space-16)",
         maxWidth: "780px",
       }}
     >
