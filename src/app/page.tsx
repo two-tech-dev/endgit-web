@@ -1,6 +1,7 @@
 import { ArrowRight, Zap, Terminal, Activity, ShieldCheck, GitBranch, BookOpen } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import TypewriterHeading from "@/components/TypewriterHeading";
+import AnimatedNumber from "@/components/AnimatedNumber";
 
 async function getStats() {
   try {
@@ -98,7 +99,9 @@ export default async function Home() {
             <div key={i} className="card" style={{
               flex: "1 1 200px", maxWidth: "260px", textAlign: "center", padding: "var(--space-5) var(--space-6)"
             }}>
-              <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "2px" }}>{s.value}</h3>
+              <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--text-primary)", marginBottom: "2px" }}>
+                <AnimatedNumber value={s.value} />
+              </h3>
               <p style={{ color: "var(--text-muted)", fontSize: "0.75rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", margin: 0 }}>{s.label}</p>
             </div>
           ))}
@@ -161,7 +164,7 @@ export default async function Home() {
 
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", fontSize: "0.75rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
                       <span>{new Date(plugin.createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
-                      <span>{plugin.downloads.toLocaleString()} downloads</span>
+                      <span><AnimatedNumber value={plugin.downloads} /> downloads</span>
                       {avgRating > 0 && (
                         <span style={{ color: "#f59e0b", fontSize: "0.8125rem", display: "flex", alignItems: "center", gap: "3px" }}>
                           {"★".repeat(Math.round(avgRating))}{"☆".repeat(5 - Math.round(avgRating))}

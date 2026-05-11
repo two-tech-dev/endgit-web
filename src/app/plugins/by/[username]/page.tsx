@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
 
@@ -72,7 +73,7 @@ export default async function AuthorPluginsPage({
                   {/* Right: Date & Stats */}
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", fontSize: "0.75rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
                     <span>{new Date(plugin.createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span>
-                    <span>{plugin.downloads.toLocaleString()} downloads</span>
+                    <span><AnimatedNumber value={plugin.downloads} /> downloads</span>
                     {avgRating > 0 && (
                       <span style={{ color: "#f59e0b", fontSize: "0.8125rem", display: "flex", alignItems: "center", gap: "3px" }}>
                         {"★".repeat(Math.round(avgRating))}{"☆".repeat(5 - Math.round(avgRating))}

@@ -1,5 +1,6 @@
 import { ArrowLeft, Trophy, Download } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
 
@@ -89,7 +90,7 @@ export default async function TopPluginsPage() {
               }}>
                 <div style={{ display: "flex", gap: "var(--space-4)" }}>
                   <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                    <Download size={14} /> {plugin.downloads}
+                    <Download size={14} /> <AnimatedNumber value={plugin.downloads} />
                   </span>
                 </div>
                 <span>By {(() => {

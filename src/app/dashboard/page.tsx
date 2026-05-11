@@ -1,6 +1,7 @@
 import { PackagePlus, Settings, Activity, Upload, AlertCircle, ExternalLink, ArrowRight } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import CopyTokenButton from "@/components/CopyTokenButton";
+import AnimatedNumber from "@/components/AnimatedNumber";
 
 import { fetchApi } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
@@ -113,7 +114,7 @@ export default async function DashboardPage() {
           </div>
           <div>
             <div className="text-muted" style={{ fontSize: "0.875rem", marginBottom: "0.25rem" }}>Total Plugins</div>
-            <div className="heading-2">{stats.totalPlugins}</div>
+            <div className="heading-2"><AnimatedNumber value={stats.totalPlugins} /></div>
           </div>
         </div>
 
@@ -123,7 +124,7 @@ export default async function DashboardPage() {
           </div>
           <div>
             <div className="text-muted" style={{ fontSize: "0.875rem", marginBottom: "0.25rem" }}>Total Downloads</div>
-            <div className="heading-2">{stats.totalDownloads.toLocaleString()}</div>
+            <div className="heading-2"><AnimatedNumber value={stats.totalDownloads} /></div>
           </div>
         </div>
 
@@ -133,7 +134,7 @@ export default async function DashboardPage() {
           </div>
           <div>
             <div className="text-muted" style={{ fontSize: "0.875rem", marginBottom: "0.25rem" }}>Pending Review</div>
-            <div className="heading-2">{stats.pendingReviews}</div>
+            <div className="heading-2"><AnimatedNumber value={stats.pendingReviews} /></div>
           </div>
         </div>
       </div>
@@ -170,7 +171,7 @@ export default async function DashboardPage() {
                 <div style={{ flex: 1 }}>
                   <div style={{ color: "var(--text-muted)", fontSize: "0.75rem", marginBottom: "0.25rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>Downloads</div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", fontWeight: 500, color: "var(--text-primary)" }}>
-                    <Activity size={14} color="var(--accent-cyan)" /> {plugin.downloads.toLocaleString()}
+                    <Activity size={14} color="var(--accent-cyan)" /> <AnimatedNumber value={plugin.downloads} />
                   </div>
                 </div>
                 <div style={{ flex: 1 }}>

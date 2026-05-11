@@ -7,6 +7,7 @@ import PluginRatings from "@/components/PluginRatings";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
+import AnimatedNumber from "@/components/AnimatedNumber";
 import { fetchApi } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
@@ -169,13 +170,13 @@ export default async function PluginDetailPage({ params, searchParams }: { param
             <VersionSelector slug={plugin.slug} pluginType={plugin.pluginType} versions={plugin.versions} />
             <div style={{ display: "flex", gap: "var(--space-6)", marginTop: "var(--space-2)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }}>
-                <Star size={16} color="var(--status-warning)" /> {(plugin.averageRating || 0).toLocaleString()}
+                <Star size={16} color="var(--status-warning)" /> <AnimatedNumber value={plugin.averageRating || 0} />
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 600 }} title="Total Downloads">
-                <Download size={16} color="var(--text-muted)" /> {(plugin.downloads || 0).toLocaleString()}
+                <Download size={16} color="var(--text-muted)" /> <AnimatedNumber value={plugin.downloads || 0} />
                 {activeVersion && (
                   <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginLeft: "4px", fontWeight: 400 }}>
-                    ({(activeVersion.downloads || 0).toLocaleString()} this version)
+                    (<AnimatedNumber value={activeVersion.downloads || 0} /> this version)
                   </span>
                 )}
               </div>
@@ -278,7 +279,7 @@ export default async function PluginDetailPage({ params, searchParams }: { param
                 display: "flex", alignItems: "center", justifyContent: "center",
                 boxShadow: `0 0 15px rgba(16, 185, 129, 0.1)`
               }}>
-                {safeScore}
+                <AnimatedNumber value={safeScore} />
               </div>
             </div>
 
