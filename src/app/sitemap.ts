@@ -1,15 +1,19 @@
 import { MetadataRoute } from 'next';
-import { fetchApi } from '@/lib/api';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://endgit.dev';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
-  // Fetch all approved plugins
+  // Fetch all approved plugins — use revalidate instead of no-store
+  // so the sitemap can be statically generated at build time
   let plugins: any[] = [];
   try {
-    const { data } = await fetchApi('/api/v1/plugins?pageSize=1000');
-    if (data?.data?.plugins) {
-      plugins = data.data.plugins;
+    const res = await fetch(`${apiUrl}/api/v1/plugins?pageSize=1000`, {
+      next: { revalidate: 3600 }, // re-generate hourly
+    });
+    const json = await res.json();
+    if (json?.data?.plugins) {
+      plugins = json.data.plugins;
     }
   } catch (error) {
     console.error('Failed to fetch plugins for sitemap:', error);
