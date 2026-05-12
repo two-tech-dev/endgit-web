@@ -422,6 +422,7 @@ ol {
 @media (max-width: 768px) {
   .container {
     padding: 0 var(--space-4);
+    overflow-x: hidden;
   }
   .heading-1 {
     font-size: 2.25rem;

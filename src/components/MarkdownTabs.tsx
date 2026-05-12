@@ -155,8 +155,7 @@ export default function MarkdownTabs({
       <div
         style={{
           display: "flex",
-          flexWrap: "nowrap",
-          overflowX: "auto",
+          flexWrap: "wrap",
           maxWidth: "100%",
           background: "transparent",
           borderBottom: "1px solid var(--border-color)",
@@ -167,8 +166,8 @@ export default function MarkdownTabs({
         {tabs.map((tab, idx) => {
           const isActive = activeTab === idx;
           const displayTitle =
-            tab.title.length > 30
-              ? tab.title.substring(0, 30) + "..."
+            tab.title.length > 20
+              ? tab.title.substring(0, 20) + "..."
               : tab.title;
 
           return (
@@ -176,14 +175,14 @@ export default function MarkdownTabs({
               key={idx}
               onClick={() => setActiveTab(idx)}
               style={{
-                padding: "8px 16px",
+                padding: "6px 12px",
                 background: isActive ? "#007bff" : "var(--bg-card)",
                 color: isActive ? "white" : "var(--text-primary)",
                 border: "1px solid",
                 borderColor: isActive ? "#007bff" : "var(--border-color)",
                 borderBottomColor: isActive ? "#007bff" : "var(--border-color)",
                 borderRadius: "4px 4px 0 0",
-                fontSize: "0.875rem",
+                fontSize: "0.8125rem",
                 fontWeight: 500,
                 cursor: "pointer",
                 whiteSpace: "nowrap",
