@@ -107,10 +107,19 @@
 }
 
 .markdown-body {
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: break-word;
   max-width: 100%;
+  min-width: 0;
   overflow-x: hidden;
+}
+
+.markdown-body > * {
+  max-width: 100%;
+}
+
+.markdown-body a {
+  overflow-wrap: anywhere;
 }
 
 .markdown-body pre {
@@ -129,7 +138,9 @@
   word-break: normal;
 }
 
-.markdown-body img {
+.markdown-body img,
+.markdown-body video,
+.markdown-body iframe {
   max-width: 100%;
   height: auto;
 }

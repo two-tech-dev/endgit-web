@@ -143,12 +143,14 @@ export default function MarkdownTabs({
   const currentTab = tabs[activeTab];
 
   return (
-    <div>
+    <div style={{ minWidth: 0, maxWidth: "100%", overflow: "hidden" }}>
       {/* Tabs Header */}
       <div
         style={{
           display: "flex",
-          flexWrap: "wrap",
+          flexWrap: "nowrap",
+          overflowX: "auto",
+          maxWidth: "100%",
           background: "transparent",
           borderBottom: "1px solid var(--border-color)",
           padding: "8px 8px 0 8px",
@@ -192,6 +194,8 @@ export default function MarkdownTabs({
       <div
         className="markdown-body"
         style={{
+          minWidth: 0,
+          maxWidth: "100%",
           padding: "var(--space-6)",
           color: "var(--text-secondary)",
           lineHeight: 1.7,
