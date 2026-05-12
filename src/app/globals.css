@@ -123,19 +123,23 @@
 }
 
 .markdown-body pre {
-  overflow-x: auto;
   max-width: 100%;
-  white-space: pre;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .markdown-body code {
   white-space: pre-wrap;
-  word-break: break-all;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .markdown-body pre code {
-  white-space: pre;
-  word-break: normal;
+  white-space: inherit;
+  overflow-wrap: inherit;
+  word-break: inherit;
 }
 
 .markdown-body img,
@@ -147,8 +151,16 @@
 
 .markdown-body table {
   display: block;
-  overflow-x: auto;
+  width: 100%;
   max-width: 100%;
+  table-layout: fixed;
+  overflow-x: hidden;
+}
+
+.markdown-body th,
+.markdown-body td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 * {
