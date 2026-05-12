@@ -455,6 +455,12 @@ ol {
   align-items: flex-end;
 }
 
+.plugin-description-panel {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
 .mobile-only {
   display: none;
 }
@@ -500,7 +506,11 @@ ol {
     flex-direction: column;
   }
   .plugin-main-content {
-    display: contents;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
   }
   .plugin-sidebar {
     order: 2;

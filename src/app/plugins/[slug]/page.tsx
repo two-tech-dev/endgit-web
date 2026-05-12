@@ -514,11 +514,14 @@ export default async function PluginDetailPage({
 
           {/* About — Plugin Description Panel */}
           <div
+            className="plugin-description-panel"
             style={{
               border: "1px solid var(--border-color)",
               borderRadius: "var(--radius-md)",
               background: "var(--bg-secondary)",
               overflow: "hidden",
+              minWidth: 0,
+              maxWidth: "100%",
             }}
           >
             {/* Header */}
