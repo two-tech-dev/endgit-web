@@ -18,7 +18,7 @@ export default function LiveBuildLog({
   const [status, setStatus] = useState(initialStatus || "RUNNING");
   const [safeScore, setSafeScore] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
-  const logRef = useRef<HTMLPreElement>(null);
+  const logRef = useRef<HTMLDivElement>(null);
   const [autoScroll, setAutoScroll] = useState(true);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { fetchApi } from "@/lib/api";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import EditPluginForm from "@/components/EditPluginForm";
 
 async function getPlugin(slug: string) {
@@ -25,7 +25,7 @@ export default async function EditPluginPage({
   if (!plugin) return notFound();
 
   const isAuthor = session?.user?.id === plugin.authorId;
-  const isAdmin = (session?.user as any)?.trustLevel === "ADMIN";
+  const isAdmin = session?.user?.trustLevel === "ADMIN";
 
   if (!isAuthor && !isAdmin) {
     redirect(`/plugins/${plugin.slug}`);
