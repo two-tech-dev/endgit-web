@@ -16,7 +16,10 @@ export default async function TopPluginsPage() {
   const plugins = responseData?.data?.plugins || [];
 
   return (
-    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
+    <div
+      className="container"
+      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
+    >
       <div style={{ marginBottom: "var(--space-8)" }}>
         <Link
           href="/plugins"

@@ -85,7 +85,10 @@ export default async function PluginsPage({
   }
 
   return (
-    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
+    <div
+      className="container"
+      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
+    >
       <div
         style={{
           display: "flex",

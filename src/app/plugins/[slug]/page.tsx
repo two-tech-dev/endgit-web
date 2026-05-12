@@ -143,7 +143,10 @@ export default async function PluginDetailPage({
     plugin.description;
 
   return (
-    <div className="container" style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}>
+    <div
+      className="container"
+      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
+    >
       {/* Header Section */}
       <div
         className="card"

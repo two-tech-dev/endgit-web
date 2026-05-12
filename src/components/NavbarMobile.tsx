@@ -15,16 +15,28 @@ export default function NavbarMobile() {
         className="nav-links"
         style={{ display: "flex", gap: "2rem", alignItems: "center" }}
       >
-        <a href="/plugins" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
+        <a
+          href="/plugins"
+          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+        >
           Releases
         </a>
-        <a href="/plugins/top" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
+        <a
+          href="/plugins/top"
+          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+        >
           Top Plugins
         </a>
-        <a href="/builds" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
+        <a
+          href="/builds"
+          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+        >
           Dev Builds
         </a>
-        <a href="/faq" style={{ color: "var(--text-secondary)", fontWeight: 500 }}>
+        <a
+          href="/faq"
+          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+        >
           FAQ
         </a>
         <ThemeToggle />

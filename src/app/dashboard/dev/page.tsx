@@ -258,7 +258,11 @@ export default function DevDashboardPage() {
     return (
       <div
         className="container"
-        style={{ paddingTop: "var(--space-16)", paddingBottom: "var(--space-16)", textAlign: "center" }}
+        style={{
+          paddingTop: "var(--space-16)",
+          paddingBottom: "var(--space-16)",
+          textAlign: "center",
+        }}
       >
         <Loader2
           size={32}
@@ -274,7 +278,11 @@ export default function DevDashboardPage() {
     return (
       <div
         className="container"
-        style={{ paddingTop: "var(--space-16)", paddingBottom: "var(--space-16)", textAlign: "center" }}
+        style={{
+          paddingTop: "var(--space-16)",
+          paddingBottom: "var(--space-16)",
+          textAlign: "center",
+        }}
       >
         <h2 className="heading-3">Sign in Required</h2>
         <p style={{ color: "var(--text-muted)", marginTop: "var(--space-2)" }}>
@@ -361,7 +369,11 @@ export default function DevDashboardPage() {
   return (
     <div
       className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)", maxWidth: "1100px" }}
+      style={{
+        paddingTop: "var(--space-8)",
+        paddingBottom: "var(--space-8)",
+        maxWidth: "1100px",
+      }}
     >
       {/* Header */}
       <div
