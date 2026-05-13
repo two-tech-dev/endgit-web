@@ -362,10 +362,18 @@ export default async function Home() {
                             display: "flex",
                             flexDirection: "column",
                             gap: "2px",
+                            minWidth: 0,
+                            flex: "1 1 0",
                           }}
                         >
                           <span>v{plugin.latestVersion || "1.0.0"}</span>
-                          <span>
+                          <span
+                            style={{
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
                             {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
                               plugin.author?.displayName ||
                               plugin.author?.username}

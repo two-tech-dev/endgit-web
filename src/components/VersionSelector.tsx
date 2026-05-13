@@ -72,6 +72,7 @@ export default function VersionSelector({
           alignItems: "stretch",
           gap: "10px",
           flexWrap: "wrap",
+          width: "100%",
         }}
       >
         <select
@@ -86,7 +87,8 @@ export default function VersionSelector({
             fontSize: "0.9375rem",
             cursor: "pointer",
             outline: "none",
-            minWidth: "140px",
+            flex: "1 1 140px",
+            minWidth: 0,
           }}
         >
           {versions.map((v) => (
@@ -146,11 +148,13 @@ export default function VersionSelector({
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
               fontSize: "1rem",
               padding: "0.625rem 1.5rem",
               fontWeight: 600,
               textDecoration: "none",
+              flex: "1 1 auto",
             }}
           >
             <Download size={18} /> Download
