@@ -1,5 +1,7 @@
 import { fetchApi } from "@/lib/api";
+import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth/next";
 import {
   Clock,
   GitBranch,
@@ -83,12 +85,15 @@ export default async function PluginBuildsPage({
 }: {
   params: { slug: string };
 }) {
-  const [plugin, builds] = await Promise.all([
+  const [plugin, builds, session] = await Promise.all([
     getPlugin(params.slug),
     getPluginBuilds(params.slug),
+    getServerSession(authOptions),
   ]);
 
   if (!plugin) return notFound();
+
+  const isOwner = session?.user?.id === plugin.authorId;
 
   // Find the highest build number that has been submitted (has a versionStatus)
   const versionedBuilds = builds.filter((b: any) => b.versionStatus !== null);
@@ -378,7 +383,7 @@ export default async function PluginBuildsPage({
                           </span>
                         </div>
                         <div style={{ display: "flex", gap: "6px" }}>
-                          {build.versionStatus === "PENDING" && (
+                          {isOwner && build.versionStatus === "PENDING" && (
                             <span
                               className="badge badge-warning"
                               style={{
@@ -390,7 +395,7 @@ export default async function PluginBuildsPage({
                               PENDING REVIEW
                             </span>
                           )}
-                          {build.versionStatus === "APPROVED" && (
+                          {isOwner && build.versionStatus === "APPROVED" && (
                             <span
                               className="badge badge-success"
                               style={{
@@ -402,7 +407,7 @@ export default async function PluginBuildsPage({
                               APPROVED
                             </span>
                           )}
-                          {build.versionStatus === "REJECTED" && (
+                          {isOwner && build.versionStatus === "REJECTED" && (
                             <span
                               className="badge badge-error"
                               style={{
@@ -464,7 +469,8 @@ export default async function PluginBuildsPage({
                         >
                           Logs
                         </Link>
-                        {build.status === "SUCCESS" &&
+                        {isOwner &&
+                          build.canSubmit &&
                           Number(build.buildNumber) >
                             Number(reviewedBuildNumber) &&
                           !hasPendingVersion && (
