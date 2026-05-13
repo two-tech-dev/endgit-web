@@ -92,11 +92,14 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
   return (
     <div className="card" style={{ padding: "var(--space-6)" }}>
       <div
+        className="chart-header"
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           marginBottom: "var(--space-5)",
+          flexWrap: "wrap",
+          gap: "var(--space-2)",
         }}
       >
         <h3

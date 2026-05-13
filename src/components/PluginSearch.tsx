@@ -22,7 +22,7 @@ export default function PluginSearch() {
   }, [search, router, searchParams]);
 
   return (
-    <div style={{ position: "relative", width: "300px" }}>
+    <div style={{ position: "relative", width: "100%" }}>
       <Search
         style={{
           position: "absolute",

@@ -165,6 +165,7 @@ export default async function PluginBuildsPage({
         ) : (
           <div style={{ overflowX: "auto" }}>
             <table
+              className="builds-table"
               style={{
                 width: "100%",
                 borderCollapse: "collapse",

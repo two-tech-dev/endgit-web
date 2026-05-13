@@ -478,11 +478,23 @@ export default async function PluginDetailPage({
               }}
             >
               <code>endgit install {plugin.slug}</code>
-              <Copy
-                size={16}
-                color="var(--text-muted)"
-                style={{ cursor: "pointer" }}
-              />
+              <button
+                className="touch-target"
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Copy
+                  size={16}
+                  color="var(--text-muted)"
+                />
+              </button>
             </div>
           </div>
 
@@ -526,6 +538,7 @@ export default async function PluginDetailPage({
           >
             {/* Header */}
             <div
+              className="plugin-description-header"
               style={{
                 display: "flex",
                 justifyContent: "space-between",

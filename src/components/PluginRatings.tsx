@@ -223,13 +223,13 @@ export default function PluginRatings({
                     background: "transparent",
                     border: "none",
                     cursor: "pointer",
-                    padding: "2px",
+                    padding: "6px",
                     display: "flex",
                     alignItems: "center",
                   }}
                 >
                   <Star
-                    size={18}
+                    size={22}
                     fill={
                       i <= (hoverScore || myScore) ? "#f59e0b" : "transparent"
                     }
@@ -444,6 +444,7 @@ export default function PluginRatings({
               {/* Comment block — indented like Poggit */}
               {rating.comment && (
                 <div
+                  className="rating-comment"
                   style={{
                     marginTop: "var(--space-2)",
                     marginLeft: "40px",
@@ -463,6 +464,7 @@ export default function PluginRatings({
               {/* Owner Reply */}
               {rating.ownerReply && (
                 <div
+                  className="rating-reply"
                   style={{
                     marginTop: "var(--space-2)",
                     marginLeft: "56px",
@@ -512,6 +514,7 @@ export default function PluginRatings({
                 session?.user &&
                 (session.user as any).id === authorId && (
                   <div
+                    className="rating-comment"
                     style={{ marginLeft: "40px", marginTop: "var(--space-2)" }}
                   >
                     {replyingTo === rating.id ? (

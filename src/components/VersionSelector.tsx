@@ -96,7 +96,7 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div className="cpp-download-buttons" style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
               className="btn btn-primary"
@@ -112,6 +112,9 @@ export default function VersionSelector({
                 fontWeight: 600,
                 color: "white",
                 textDecoration: "none",
+                flex: "1 1 auto",
+                minWidth: "120px",
+                justifyContent: "center",
               }}
             >
               <Download size={16} /> Linux (.so)
@@ -128,6 +131,9 @@ export default function VersionSelector({
                 borderRadius: "var(--radius-md)",
                 fontWeight: 600,
                 textDecoration: "none",
+                flex: "1 1 auto",
+                minWidth: "120px",
+                justifyContent: "center",
               }}
             >
               <Download size={16} /> Windows (.dll)
@@ -152,6 +158,7 @@ export default function VersionSelector({
         )}
       </div>
       <div
+        className="version-info-text"
         style={{
           fontSize: "0.75rem",
           color: "var(--text-muted)",
