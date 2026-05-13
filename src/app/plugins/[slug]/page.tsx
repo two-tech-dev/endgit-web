@@ -491,10 +491,7 @@ export default async function PluginDetailPage({
                   justifyContent: "center",
                 }}
               >
-                <Copy
-                  size={16}
-                  color="var(--text-muted)"
-                />
+                <Copy size={16} color="var(--text-muted)" />
               </button>
             </div>
           </div>

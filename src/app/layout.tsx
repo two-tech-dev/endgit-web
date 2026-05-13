@@ -185,7 +185,10 @@ function Footer() {
         </div>
 
         {/* Links */}
-        <div className="footer-links" style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}>
+        <div
+          className="footer-links"
+          style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}
+        >
           <div>
             <h4
               style={{

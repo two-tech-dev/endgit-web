@@ -98,7 +98,10 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="cpp-download-buttons" style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          <div
+            className="cpp-download-buttons"
+            style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}
+          >
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
               className="btn btn-primary"

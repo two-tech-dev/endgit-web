@@ -232,7 +232,9 @@ export default async function PluginsPage({
                               whiteSpace: "nowrap",
                             }}
                           >
-                            {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
+                            {plugin.repoUrl?.match(
+                              /github\.com\/([^/]+)/,
+                            )?.[1] ||
                               plugin.author?.displayName ||
                               plugin.author?.username}
                           </span>
@@ -251,11 +253,16 @@ export default async function PluginsPage({
                           <span>
                             {new Date(plugin.createdAt).toLocaleDateString(
                               "en-GB",
-                              { day: "2-digit", month: "short", year: "numeric" },
+                              {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              },
                             )}
                           </span>
                           <span>
-                            <AnimatedNumber value={plugin.downloads} /> downloads
+                            <AnimatedNumber value={plugin.downloads} />{" "}
+                            downloads
                           </span>
                           {avgRating > 0 && (
                             <span
