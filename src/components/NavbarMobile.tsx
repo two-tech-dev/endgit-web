@@ -108,6 +108,7 @@ export default function NavbarMobile() {
               borderTop: "1px solid var(--border-color)",
               paddingTop: "var(--space-3)",
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <NavbarClient />
           </div>
