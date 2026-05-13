@@ -473,13 +473,7 @@ ol {
     padding: 0 !important;
   }
   .plugin-card-inner {
-    flex-direction: column;
-  }
-  .plugin-card-stats {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    gap: var(--space-3);
   }
   .dev-repo-actions {
     flex-direction: column;

@@ -189,7 +189,7 @@ export default async function PluginsPage({
                       />
                     </div>
 
-                    {/* Middle: Title, Version, Author */}
+                    {/* Middle: Title, Version, Author, Stats */}
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <h3
                         className="heading-3"
@@ -206,67 +206,74 @@ export default async function PluginsPage({
                       </h3>
                       <div
                         style={{
-                          fontSize: "0.8125rem",
-                          color: "var(--text-muted)",
                           display: "flex",
-                          flexDirection: "column",
-                          gap: "2px",
+                          justifyContent: "space-between",
+                          alignItems: "flex-start",
+                          gap: "var(--space-3)",
+                          flexWrap: "wrap",
                         }}
                       >
-                        <span>v{plugin.latestVersion || "1.0.0"}</span>
-                        <span>
-                          {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
-                            plugin.author?.displayName ||
-                            plugin.author?.username}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Right: Date & Stats */}
-                    <div
-                      className="plugin-card-stats"
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        gap: "4px",
-                        fontSize: "0.75rem",
-                        color: "var(--text-muted)",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      <span>
-                        {new Date(plugin.createdAt).toLocaleDateString(
-                          "en-GB",
-                          { day: "2-digit", month: "short", year: "numeric" },
-                        )}
-                      </span>
-                      <span>
-                        <AnimatedNumber value={plugin.downloads} /> downloads
-                      </span>
-                      {avgRating > 0 && (
-                        <span
+                        <div
                           style={{
-                            color: "#f59e0b",
                             fontSize: "0.8125rem",
+                            color: "var(--text-muted)",
                             display: "flex",
-                            alignItems: "center",
-                            gap: "3px",
+                            flexDirection: "column",
+                            gap: "2px",
                           }}
                         >
-                          {"★".repeat(Math.round(avgRating))}
-                          {"☆".repeat(5 - Math.round(avgRating))}
-                          <span
-                            style={{
-                              color: "var(--text-muted)",
-                              fontSize: "0.6875rem",
-                              marginLeft: "2px",
-                            }}
-                          >
-                            ({avgRating})
+                          <span>v{plugin.latestVersion || "1.0.0"}</span>
+                          <span>
+                            {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
+                              plugin.author?.displayName ||
+                              plugin.author?.username}
                           </span>
-                        </span>
-                      )}
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-end",
+                            gap: "4px",
+                            fontSize: "0.75rem",
+                            color: "var(--text-muted)",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          <span>
+                            {new Date(plugin.createdAt).toLocaleDateString(
+                              "en-GB",
+                              { day: "2-digit", month: "short", year: "numeric" },
+                            )}
+                          </span>
+                          <span>
+                            <AnimatedNumber value={plugin.downloads} /> downloads
+                          </span>
+                          {avgRating > 0 && (
+                            <span
+                              style={{
+                                color: "#f59e0b",
+                                fontSize: "0.8125rem",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "3px",
+                              }}
+                            >
+                              {"★".repeat(Math.round(avgRating))}
+                              {"☆".repeat(5 - Math.round(avgRating))}
+                              <span
+                                style={{
+                                  color: "var(--text-muted)",
+                                  fontSize: "0.6875rem",
+                                  marginLeft: "2px",
+                                }}
+                              >
+                                ({avgRating})
+                              </span>
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
