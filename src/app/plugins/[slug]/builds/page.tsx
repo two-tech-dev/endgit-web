@@ -306,17 +306,17 @@ export default async function PluginBuildsPage({
                       }}
                     >
                       {timeAgo(build.createdAt)}
-                      {build.duration && (
-                        <div
+                      {build.duration ? (
+                        <span
                           style={{
-                            fontSize: "0.75rem",
-                            marginTop: "4px",
+                            fontSize: "0.8125rem",
                             color: "var(--text-muted)",
                           }}
                         >
-                          in {build.duration}s
-                        </div>
-                      )}
+                          {" "}
+                          (in {build.duration}s)
+                        </span>
+                      ) : null}
                     </td>
                     <td
                       style={{
