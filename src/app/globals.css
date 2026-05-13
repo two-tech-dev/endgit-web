@@ -453,10 +453,26 @@ ol {
     flex-direction: column;
     gap: 1.5rem;
   }
-  .plugin-description-header {
+  .plugin-header-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+  .plugin-header-inner > div {
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
+    align-items: center;
+  }
+  .plugin-header-inner h1 {
+    justify-content: center !important;
+  }
+  .plugin-header-inner p {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  .plugin-header-actions {
+    align-items: center !important;
+    width: 100%;
   }
   .builds-table thead {
     display: none;
@@ -500,11 +516,6 @@ ol {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-2);
-  }
-  .live-build-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
   }
   .rating-comment {
     margin-left: 28px;

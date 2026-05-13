@@ -162,6 +162,7 @@ export default async function PluginDetailPage({
           }}
         >
           <div
+            className="plugin-header-inner"
             style={{
               display: "flex",
               gap: "var(--space-4)",
