@@ -156,6 +156,7 @@ export default async function BuildDetailPage({
         >
           <div>
             <div
+              className="build-title-row"
               style={{
                 display: "flex",
                 alignItems: "center",

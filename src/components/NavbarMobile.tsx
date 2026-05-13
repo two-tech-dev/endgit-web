@@ -47,7 +47,7 @@ export default function NavbarMobile() {
       <div
         style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}
       >
-        <div className="mobile-menu-btn" style={{ display: "none" }}>
+        <div className="mobile-menu-btn">
           <ThemeToggle />
         </div>
         <button

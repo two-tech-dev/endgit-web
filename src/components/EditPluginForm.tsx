@@ -440,7 +440,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
                 gap: "8px",
                 background: "var(--bg-secondary)",
                 padding: "var(--space-4)",
@@ -501,7 +501,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               All plugins must have an OSI-approved open source license (Rule
               D6).
             </p>
-            <div style={{ position: "relative" }}>
+            <div className="license-select-wrapper" style={{ position: "relative" }}>
               <select
                 value={license}
                 onChange={(e) => setLicense(e.target.value)}

@@ -407,7 +407,7 @@ export default function DevDashboardPage() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
           gap: "var(--space-4)",
           marginBottom: "var(--space-6)",
         }}
@@ -576,11 +576,13 @@ export default function DevDashboardPage() {
 
       {/* Search + Filter */}
       <div
+        className="dev-search-filter"
         style={{
           display: "flex",
           gap: "var(--space-3)",
           marginBottom: "var(--space-5)",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
         <div style={{ flex: 1, position: "relative" }}>
@@ -625,7 +627,7 @@ export default function DevDashboardPage() {
               key={f}
               onClick={() => setFilter(f)}
               style={{
-                padding: "0.375rem 0.875rem",
+                padding: "0.5rem 0.875rem",
                 borderRadius: "var(--radius-sm)",
                 fontSize: "0.8125rem",
                 fontWeight: 500,
@@ -714,6 +716,7 @@ export default function DevDashboardPage() {
                 }}
               >
                 <div
+                  className="dev-repo-card-inner"
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -839,7 +842,7 @@ export default function DevDashboardPage() {
                           overflow: "hidden",
                           textOverflow: "ellipsis",
                           whiteSpace: "nowrap",
-                          maxWidth: "500px",
+                          maxWidth: "100%",
                         }}
                       >
                         {repo.description || "No description"}
@@ -866,6 +869,7 @@ export default function DevDashboardPage() {
                     </div>
                   </div>
                   <div
+                    className="dev-repo-actions"
                     style={{
                       display: "flex",
                       alignItems: "center",

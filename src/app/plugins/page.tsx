@@ -112,7 +112,7 @@ export default async function PluginsPage({
             </p>
           )}
         </div>
-        <div className="desktop-only">
+        <div className="desktop-only" style={{ maxWidth: "300px" }}>
           <PluginSearch />
         </div>
       </div>
@@ -159,6 +159,7 @@ export default async function PluginsPage({
                   }}
                 >
                   <div
+                    className="plugin-card-inner"
                     style={{
                       padding: "var(--space-4)",
                       display: "flex",
@@ -223,6 +224,7 @@ export default async function PluginsPage({
 
                     {/* Right: Date & Stats */}
                     <div
+                      className="plugin-card-stats"
                       style={{
                         display: "flex",
                         flexDirection: "column",

@@ -134,6 +134,7 @@ export default function NavbarClient() {
               top: "calc(100% + 8px)",
               zIndex: 50,
               width: "220px",
+              maxWidth: "calc(100vw - 2rem)",
               background: "var(--bg-card)",
               border: "1px solid var(--border-color)",
               borderRadius: "var(--radius-lg)",

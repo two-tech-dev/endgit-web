@@ -132,6 +132,7 @@ export default function LiveBuildLog({
     >
       {/* Header */}
       <div
+        className="live-build-header"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -140,6 +141,8 @@ export default function LiveBuildLog({
           borderBottom: "1px solid rgba(255,255,255,0.05)",
           background: "rgba(255, 255, 255, 0.02)",
           backdropFilter: "blur(10px)",
+          flexWrap: "wrap",
+          gap: "var(--space-3)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>

@@ -303,6 +303,7 @@ export default async function Home() {
                   }}
                 >
                   <div
+                    className="plugin-card-inner"
                     style={{
                       padding: "var(--space-4)",
                       display: "flex",
@@ -364,6 +365,7 @@ export default async function Home() {
                     </div>
 
                     <div
+                      className="plugin-card-stats"
                       style={{
                         display: "flex",
                         flexDirection: "column",
