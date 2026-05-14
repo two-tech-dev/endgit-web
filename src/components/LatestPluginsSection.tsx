@@ -38,8 +38,7 @@ export default function LatestPluginsSection() {
     setLoading(true);
     setError(false);
     try {
-      const apiUrl =
-        process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
       const res = await fetch(
         `${apiUrl}/api/v1/plugins/latest?page=${page}&pageSize=${PAGE_SIZE}`,
       );
@@ -69,10 +68,7 @@ export default function LatestPluginsSection() {
   if (error && plugins.length === 0) return null;
 
   return (
-    <section
-      className="container"
-      style={{ paddingBottom: "var(--space-16)" }}
-    >
+    <section className="container" style={{ paddingBottom: "var(--space-16)" }}>
       <div
         style={{
           display: "flex",
@@ -253,14 +249,13 @@ export default function LatestPluginsSection() {
                           }}
                         >
                           <span>
-                            {new Date(plugin.createdAt || "").toLocaleDateString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              },
-                            )}
+                            {new Date(
+                              plugin.createdAt || "",
+                            ).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })}
                           </span>
                           <span>
                             <AnimatedNumber value={plugin.downloads || 0} />{" "}
@@ -336,38 +331,39 @@ export default function LatestPluginsSection() {
                 <ChevronLeft size={16} /> Prev
               </button>
 
-              {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(
-                (p) => (
-                  <button
-                    key={p}
-                    onClick={() => goToPage(p)}
-                    style={{
-                      padding: "0.5rem 0.75rem",
-                      borderRadius: "var(--radius-md)",
-                      border:
-                        p === currentPage
-                          ? "1px solid var(--accent-cyan)"
-                          : "1px solid var(--border-color)",
-                      background:
-                        p === currentPage
-                          ? "rgba(6, 182, 212, 0.1)"
-                          : "var(--bg-card)",
-                      color:
-                        p === currentPage
-                          ? "var(--accent-cyan)"
-                          : "var(--text-secondary)",
-                      fontSize: "0.875rem",
-                      fontWeight: p === currentPage ? 700 : 500,
-                      cursor: "pointer",
-                      transition: "all 150ms",
-                      minWidth: "38px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {p}
-                  </button>
-                ),
-              )}
+              {Array.from(
+                { length: pagination.totalPages },
+                (_, i) => i + 1,
+              ).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => goToPage(p)}
+                  style={{
+                    padding: "0.5rem 0.75rem",
+                    borderRadius: "var(--radius-md)",
+                    border:
+                      p === currentPage
+                        ? "1px solid var(--accent-cyan)"
+                        : "1px solid var(--border-color)",
+                    background:
+                      p === currentPage
+                        ? "rgba(6, 182, 212, 0.1)"
+                        : "var(--bg-card)",
+                    color:
+                      p === currentPage
+                        ? "var(--accent-cyan)"
+                        : "var(--text-secondary)",
+                    fontSize: "0.875rem",
+                    fontWeight: p === currentPage ? 700 : 500,
+                    cursor: "pointer",
+                    transition: "all 150ms",
+                    minWidth: "38px",
+                    textAlign: "center",
+                  }}
+                >
+                  {p}
+                </button>
+              ))}
 
               <button
                 onClick={() => goToPage(currentPage + 1)}

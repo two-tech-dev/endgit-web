@@ -402,7 +402,7 @@ ol {
 /* Forms */
 .input {
   width: 100%;
-  background: #ffffff;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
   padding: var(--space-3) var(--space-4);

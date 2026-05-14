@@ -10,7 +10,8 @@ export default function PluginSearch() {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (search !== (searchParams.get("q") || "")) {
+      const currentQ = searchParams.get("q") || "";
+      if (search !== currentQ) {
         const params = new URLSearchParams(searchParams.toString());
         if (search) params.set("q", search);
         else params.delete("q");
@@ -20,6 +21,14 @@ export default function PluginSearch() {
     }, 500);
     return () => clearTimeout(timeoutId);
   }, [search, router, searchParams]);
+
+  // Sync state with URL when it changes externally (e.g. from another search input or back button)
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    if (q !== search) {
+      setSearch(q);
+    }
+  }, [searchParams]);
 
   return (
     <div style={{ position: "relative", width: "100%" }}>
