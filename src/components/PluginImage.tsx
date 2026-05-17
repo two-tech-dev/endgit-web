@@ -48,6 +48,8 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
     <img
       src={imgSrc}
       alt={isFallback ? "EndGit Logo" : alt}
+      loading="lazy"
+      decoding="async"
       style={{
         width: "100%",
         height: "100%",
