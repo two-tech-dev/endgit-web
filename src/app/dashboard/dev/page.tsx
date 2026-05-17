@@ -715,7 +715,7 @@ export default function DevDashboardPage() {
                   transition: "all 200ms",
                 }}
               >
-                 <div
+                <div
                   className="dev-repo-card-inner"
                   style={{
                     display: "flex",
