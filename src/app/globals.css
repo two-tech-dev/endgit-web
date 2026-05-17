@@ -139,12 +139,13 @@
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-secondary) !important;
   border-radius: var(--radius-md);
   margin-bottom: 1rem;
   border: 1px solid var(--border-color);
 }
 
+/* Base style for inline code */
 .markdown-body code {
   padding: 0.2em 0.4em;
   margin: 0;
@@ -158,16 +159,17 @@
   background-color: rgba(110, 118, 129, 0.4);
 }
 
-.markdown-body pre code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
+/* Reset styles for code tags inside any block container (pre or highlighter div) */
+.markdown-body pre code,
+.markdown-body div > code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: inherit !important;
+  border-radius: 0 !important;
+  border: 0 !important;
   display: inline;
-  max-width: auto;
+  max-width: none;
   overflow: visible;
   line-height: inherit;
   color: inherit;
