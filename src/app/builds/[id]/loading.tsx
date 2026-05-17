@@ -10,9 +10,15 @@ export default function BuildDetailLoading() {
         maxWidth: "960px",
       }}
     >
-      <Skeleton width="10rem" height="0.875rem" style={{ marginBottom: "var(--space-6)" }} />
+      <Skeleton
+        width="10rem"
+        height="0.875rem"
+        style={{ marginBottom: "var(--space-6)" }}
+      />
 
-      <SkeletonCard style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}>
+      <SkeletonCard
+        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
+      >
         <div
           style={{
             display: "flex",
@@ -23,13 +29,28 @@ export default function BuildDetailLoading() {
           }}
         >
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "var(--space-3)",
+                marginBottom: "var(--space-2)",
+              }}
+            >
               <Skeleton width="14rem" height="1.5rem" />
-              <Skeleton width="5rem" height="1.5rem" borderRadius="var(--radius-full)" />
+              <Skeleton
+                width="5rem"
+                height="1.5rem"
+                borderRadius="var(--radius-full)"
+              />
             </div>
             <Skeleton width="8rem" height="0.875rem" />
           </div>
-          <Skeleton width="10rem" height="2.25rem" borderRadius="var(--radius-md)" />
+          <Skeleton
+            width="10rem"
+            height="2.25rem"
+            borderRadius="var(--radius-md)"
+          />
         </div>
 
         <div
@@ -44,7 +65,11 @@ export default function BuildDetailLoading() {
         >
           {Array.from({ length: 4 }, (_, i) => (
             <div key={i}>
-              <Skeleton width="4rem" height="0.625rem" style={{ marginBottom: "6px" }} />
+              <Skeleton
+                width="4rem"
+                height="0.625rem"
+                style={{ marginBottom: "6px" }}
+              />
               <Skeleton width="6rem" height="0.875rem" />
             </div>
           ))}
@@ -52,7 +77,13 @@ export default function BuildDetailLoading() {
       </SkeletonCard>
 
       <SkeletonCard style={{ padding: "var(--space-5)" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--space-3)" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "var(--space-3)",
+          }}
+        >
           <Skeleton width="6rem" height="1rem" />
           <Skeleton width="4rem" height="0.875rem" />
         </div>

@@ -6,7 +6,11 @@ export default function PluginBuildsLoading() {
       className="container"
       style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
     >
-      <Skeleton width="10rem" height="0.875rem" style={{ marginBottom: "var(--space-6)" }} />
+      <Skeleton
+        width="10rem"
+        height="0.875rem"
+        style={{ marginBottom: "var(--space-6)" }}
+      />
 
       <div style={{ marginBottom: "var(--space-6)" }}>
         <Skeleton width="14rem" height="2rem" style={{ marginBottom: "4px" }} />
@@ -27,7 +31,11 @@ export default function PluginBuildsLoading() {
               }}
             >
               <div style={{ flex: "0 0 100px" }}>
-                <Skeleton width="4rem" height="0.875rem" style={{ marginBottom: "2px" }} />
+                <Skeleton
+                  width="4rem"
+                  height="0.875rem"
+                  style={{ marginBottom: "2px" }}
+                />
                 <Skeleton width="3rem" height="0.75rem" />
               </div>
               <div style={{ flex: "0 0 80px" }}>
@@ -42,9 +50,24 @@ export default function PluginBuildsLoading() {
               <div style={{ flex: "0 0 80px" }}>
                 <Skeleton width="4rem" height="0.875rem" />
               </div>
-              <div style={{ flex: "0 0 100px", display: "flex", justifyContent: "flex-end", gap: "var(--space-2)" }}>
-                <Skeleton width="3rem" height="1.75rem" borderRadius="var(--radius-md)" />
-                <Skeleton width="4rem" height="1.75rem" borderRadius="var(--radius-md)" />
+              <div
+                style={{
+                  flex: "0 0 100px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "var(--space-2)",
+                }}
+              >
+                <Skeleton
+                  width="3rem"
+                  height="1.75rem"
+                  borderRadius="var(--radius-md)"
+                />
+                <Skeleton
+                  width="4rem"
+                  height="1.75rem"
+                  borderRadius="var(--radius-md)"
+                />
               </div>
             </div>
           ))}

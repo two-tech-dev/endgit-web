@@ -10,7 +10,11 @@ export default function BuildsLoading() {
       }}
     >
       <div style={{ marginBottom: "var(--space-8)" }}>
-        <Skeleton width="10rem" height="2rem" style={{ marginBottom: "var(--space-2)" }} />
+        <Skeleton
+          width="10rem"
+          height="2rem"
+          style={{ marginBottom: "var(--space-2)" }}
+        />
         <Skeleton width="16rem" height="0.875rem" />
       </div>
 
@@ -28,11 +32,19 @@ export default function BuildsLoading() {
               }}
             >
               <div style={{ flex: 1 }}>
-                <Skeleton width="60%" height="0.875rem" style={{ marginBottom: "4px" }} />
+                <Skeleton
+                  width="60%"
+                  height="0.875rem"
+                  style={{ marginBottom: "4px" }}
+                />
                 <Skeleton width="40%" height="0.75rem" />
               </div>
               <Skeleton width="5rem" height="0.875rem" />
-              <Skeleton width="4rem" height="1.5rem" borderRadius="var(--radius-full)" />
+              <Skeleton
+                width="4rem"
+                height="1.5rem"
+                borderRadius="var(--radius-full)"
+              />
               <Skeleton width="3rem" height="0.875rem" />
             </div>
           ))}

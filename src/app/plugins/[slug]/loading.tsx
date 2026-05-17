@@ -6,7 +6,9 @@ export default function PluginDetailLoading() {
       className="container"
       style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
     >
-      <SkeletonCard style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}>
+      <SkeletonCard
+        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
+      >
         <div
           style={{
             display: "flex",
@@ -27,17 +29,43 @@ export default function PluginDetailLoading() {
           >
             <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" />
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-2)" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-3)",
+                  marginBottom: "var(--space-2)",
+                }}
+              >
                 <Skeleton width="14rem" height="2rem" />
-                <Skeleton width="5rem" height="1.25rem" borderRadius="var(--radius-full)" />
+                <Skeleton
+                  width="5rem"
+                  height="1.25rem"
+                  borderRadius="var(--radius-full)"
+                />
               </div>
-              <Skeleton width="10rem" height="0.875rem" style={{ marginBottom: "var(--space-2)" }} />
+              <Skeleton
+                width="10rem"
+                height="0.875rem"
+                style={{ marginBottom: "var(--space-2)" }}
+              />
               <Skeleton width="20rem" height="0.875rem" />
             </div>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", alignItems: "flex-end" }}>
-            <Skeleton width="10rem" height="2.5rem" borderRadius="var(--radius-md)" />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-2)",
+              alignItems: "flex-end",
+            }}
+          >
+            <Skeleton
+              width="10rem"
+              height="2.5rem"
+              borderRadius="var(--radius-md)"
+            />
             <div style={{ display: "flex", gap: "var(--space-6)" }}>
               <Skeleton width="4rem" height="1rem" />
               <Skeleton width="5rem" height="1rem" />
@@ -61,8 +89,16 @@ export default function PluginDetailLoading() {
           }}
         >
           <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton width="10rem" height="1rem" style={{ marginBottom: "var(--space-3)" }} />
-            <Skeleton width="100%" height="2.75rem" borderRadius="var(--radius-md)" />
+            <Skeleton
+              width="10rem"
+              height="1rem"
+              style={{ marginBottom: "var(--space-3)" }}
+            />
+            <Skeleton
+              width="100%"
+              height="2.75rem"
+              borderRadius="var(--radius-md)"
+            />
           </SkeletonCard>
 
           <div
@@ -85,23 +121,49 @@ export default function PluginDetailLoading() {
               <Skeleton width="3rem" height="0.875rem" />
             </div>
             <div style={{ padding: "12px" }}>
-              <Skeleton width="100%" height="12rem" borderRadius="var(--radius-sm)" />
+              <Skeleton
+                width="100%"
+                height="12rem"
+                borderRadius="var(--radius-sm)"
+              />
             </div>
           </div>
 
           <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton width="10rem" height="1rem" style={{ marginBottom: "var(--space-4)" }} />
-            <Skeleton width="100%" height="10rem" borderRadius="var(--radius-sm)" />
+            <Skeleton
+              width="10rem"
+              height="1rem"
+              style={{ marginBottom: "var(--space-4)" }}
+            />
+            <Skeleton
+              width="100%"
+              height="10rem"
+              borderRadius="var(--radius-sm)"
+            />
           </SkeletonCard>
 
           <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton width="8rem" height="1rem" style={{ marginBottom: "var(--space-4)" }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+            <Skeleton
+              width="8rem"
+              height="1rem"
+              style={{ marginBottom: "var(--space-4)" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-4)",
+              }}
+            >
               {Array.from({ length: 3 }, (_, i) => (
                 <div key={i} style={{ display: "flex", gap: "var(--space-3)" }}>
                   <Skeleton circle width={32} height={32} />
                   <div style={{ flex: 1 }}>
-                    <Skeleton width="40%" height="0.875rem" style={{ marginBottom: "var(--space-1)" }} />
+                    <Skeleton
+                      width="40%"
+                      height="0.875rem"
+                      style={{ marginBottom: "var(--space-1)" }}
+                    />
                     <Skeleton width="100%" height="0.75rem" />
                   </div>
                 </div>
@@ -120,18 +182,42 @@ export default function PluginDetailLoading() {
             gap: "var(--space-6)",
           }}
         >
-          <SkeletonCard style={{ padding: "var(--space-5)", background: "var(--bg-secondary)" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <SkeletonCard
+            style={{
+              padding: "var(--space-5)",
+              background: "var(--bg-secondary)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <Skeleton width="6rem" height="1rem" />
               <Skeleton circle width={48} height={48} />
             </div>
           </SkeletonCard>
 
           <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton width="4rem" height="1rem" style={{ marginBottom: "var(--space-4)" }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+            <Skeleton
+              width="4rem"
+              height="1rem"
+              style={{ marginBottom: "var(--space-4)" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-3)",
+              }}
+            >
               {Array.from({ length: 4 }, (_, i) => (
-                <div key={i} style={{ display: "flex", justifyContent: "space-between" }}>
+                <div
+                  key={i}
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <Skeleton width="5rem" height="0.875rem" />
                   <Skeleton width="5rem" height="0.875rem" />
                 </div>
@@ -140,13 +226,30 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
 
           <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton width="8rem" height="1rem" style={{ marginBottom: "var(--space-3)" }} />
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+            <Skeleton
+              width="8rem"
+              height="1rem"
+              style={{ marginBottom: "var(--space-3)" }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-3)",
+              }}
+            >
               {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                <div
+                  key={i}
+                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                >
                   <Skeleton circle width={32} height={32} />
                   <div>
-                    <Skeleton width="7rem" height="0.875rem" style={{ marginBottom: "4px" }} />
+                    <Skeleton
+                      width="7rem"
+                      height="0.875rem"
+                      style={{ marginBottom: "4px" }}
+                    />
                     <Skeleton width="5rem" height="0.625rem" />
                   </div>
                 </div>

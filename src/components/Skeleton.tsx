@@ -39,9 +39,7 @@ export function SkeletonText({
   style?: React.CSSProperties;
 }) {
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", gap, ...style }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", gap, ...style }}>
       {Array.from({ length: lines }, (_, i) => (
         <Skeleton
           key={i}
