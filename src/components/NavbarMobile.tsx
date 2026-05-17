@@ -131,7 +131,7 @@ export default function NavbarMobile() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.25, duration: 0.2 }}
             >
-              <NavbarClient />
+              <NavbarClient mobile onNavigate={() => setOpen(false)} />
             </motion.div>
           </motion.nav>
         )}
