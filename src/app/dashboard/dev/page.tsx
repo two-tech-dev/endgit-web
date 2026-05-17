@@ -715,18 +715,18 @@ export default function DevDashboardPage() {
                   transition: "all 200ms",
                 }}
               >
-                <div
+                 <div
                   className="dev-repo-card-inner"
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center",
+                    alignItems: "flex-start",
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-start",
                       gap: "var(--space-4)",
                       flex: 1,
                     }}
@@ -839,9 +839,9 @@ export default function DevDashboardPage() {
                           fontSize: "0.8125rem",
                           color: "var(--text-muted)",
                           marginTop: "2px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
+                          overflowWrap: "break-word",
+                          wordBreak: "break-word",
+                          whiteSpace: "normal",
                           maxWidth: "100%",
                         }}
                       >
