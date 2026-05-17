@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import FadeIn from "@/components/FadeIn";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
 const FAQ_ITEMS = [
   {
@@ -81,29 +84,37 @@ function FAQItem({ item }: { item: { q: string; a: string } }) {
         >
           {item.q}
         </span>
-        <ChevronDown
-          size={18}
-          color="var(--text-muted)"
-          style={{
-            flexShrink: 0,
-            transition: "transform 200ms",
-            transform: open ? "rotate(180deg)" : "none",
-          }}
-        />
-      </button>
-      {open && (
-        <div
-          style={{
-            padding: "0 var(--space-5) var(--space-5)",
-            fontSize: "0.875rem",
-            color: "var(--text-secondary)",
-            lineHeight: 1.7,
-            whiteSpace: "pre-line",
-          }}
+        <motion.div
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          style={{ flexShrink: 0, display: "flex" }}
         >
-          {item.a}
-        </div>
-      )}
+          <ChevronDown size={18} color="var(--text-muted)" />
+        </motion.div>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ overflow: "hidden" }}
+          >
+            <div
+              style={{
+                padding: "0 var(--space-5) var(--space-5)",
+                fontSize: "0.875rem",
+                color: "var(--text-secondary)",
+                lineHeight: 1.7,
+                whiteSpace: "pre-line",
+              }}
+            >
+              {item.a}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -119,32 +130,35 @@ export default function FAQPage() {
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
-        <div
-          style={{
-            width: "56px",
-            height: "56px",
-            borderRadius: "var(--radius-lg)",
-            background: "rgba(6,182,212,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto var(--space-4)",
-            border: "1px solid rgba(6,182,212,0.15)",
-          }}
-        >
-          <HelpCircle size={28} color="var(--accent-cyan)" />
+      <FadeIn>
+        <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "var(--radius-lg)",
+              background: "rgba(6,182,212,0.1)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto var(--space-4)",
+              border: "1px solid rgba(6,182,212,0.15)",
+            }}
+          >
+            <HelpCircle size={28} color="var(--accent-cyan)" />
+          </div>
+          <h1 className="heading-1" style={{ marginBottom: "var(--space-2)" }}>
+            Frequently Asked Questions
+          </h1>
+          <p className="text-muted" style={{ fontSize: "1.0625rem" }}>
+            Everything you need to know about EndGit.
+          </p>
         </div>
-        <h1 className="heading-1" style={{ marginBottom: "var(--space-2)" }}>
-          Frequently Asked Questions
-        </h1>
-        <p className="text-muted" style={{ fontSize: "1.0625rem" }}>
-          Everything you need to know about EndGit.
-        </p>
-      </div>
+      </FadeIn>
 
       {/* FAQ List */}
-      <div
+      <StaggerContainer
+        staggerDelay={0.06}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -152,49 +166,53 @@ export default function FAQPage() {
         }}
       >
         {FAQ_ITEMS.map((item, i) => (
-          <FAQItem key={i} item={item} />
+          <StaggerItem key={i}>
+            <FAQItem item={item} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
 
       {/* Still have questions? */}
-      <div
-        style={{
-          marginTop: "var(--space-10)",
-          padding: "var(--space-6)",
-          textAlign: "center",
-          background: "rgba(6,182,212,0.04)",
-          borderRadius: "var(--radius-lg)",
-          border: "1px solid rgba(6,182,212,0.12)",
-        }}
-      >
-        <p
+      <FadeIn delay={0.2}>
+        <div
           style={{
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginBottom: "var(--space-2)",
+            marginTop: "var(--space-10)",
+            padding: "var(--space-6)",
+            textAlign: "center",
+            background: "rgba(6,182,212,0.04)",
+            borderRadius: "var(--radius-lg)",
+            border: "1px solid rgba(6,182,212,0.12)",
           }}
         >
-          Still have questions?
-        </p>
-        <p
-          style={{
-            color: "var(--text-muted)",
-            fontSize: "0.875rem",
-            marginBottom: "var(--space-4)",
-          }}
-        >
-          Join our Discord community for help and discussion.
-        </p>
-        <a
-          href="https://discord.gg/9eZhP9y26Q"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary"
-          style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
-        >
-          Join Discord
-        </a>
-      </div>
+          <p
+            style={{
+              fontWeight: 600,
+              color: "var(--text-primary)",
+              marginBottom: "var(--space-2)",
+            }}
+          >
+            Still have questions?
+          </p>
+          <p
+            style={{
+              color: "var(--text-muted)",
+              fontSize: "0.875rem",
+              marginBottom: "var(--space-4)",
+            }}
+          >
+            Join our Discord community for help and discussion.
+          </p>
+          <a
+            href="https://discord.gg/9eZhP9y26Q"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+          >
+            Join Discord
+          </a>
+        </div>
+      </FadeIn>
     </div>
   );
 }

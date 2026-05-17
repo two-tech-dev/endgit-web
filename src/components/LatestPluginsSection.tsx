@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import AnimatedNumber from "@/components/AnimatedNumber";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import FadeIn from "@/components/FadeIn";
 
 interface Pagination {
   page: number;
@@ -69,49 +71,51 @@ export default function LatestPluginsSection() {
 
   return (
     <section className="container" style={{ paddingBottom: "var(--space-16)" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-8)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
-        <div>
-          <h2
-            className="heading-2"
-            style={{
-              fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
-              letterSpacing: "-0.01em",
-              margin: 0,
-            }}
-          >
-            Recent Releases
-          </h2>
-          <p
-            className="text-muted"
-            style={{ fontSize: "1.0625rem", marginTop: "var(--space-2)" }}
-          >
-            The latest additions to the Endstone ecosystem.
-          </p>
-        </div>
-        <a
-          href="/plugins"
-          className="btn"
+      <FadeIn>
+        <div
           style={{
-            background: "var(--bg-secondary)",
-            color: "var(--text-primary)",
-            border: "1px solid var(--border-color)",
-            display: "inline-flex",
+            display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            gap: "6px",
+            marginBottom: "var(--space-8)",
+            flexWrap: "wrap",
+            gap: "var(--space-4)",
           }}
         >
-          View All <ArrowRight size={16} />
-        </a>
-      </div>
+          <div>
+            <h2
+              className="heading-2"
+              style={{
+                fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
+                letterSpacing: "-0.01em",
+                margin: 0,
+              }}
+            >
+              Recent Releases
+            </h2>
+            <p
+              className="text-muted"
+              style={{ fontSize: "1.0625rem", marginTop: "var(--space-2)" }}
+            >
+              The latest additions to the Endstone ecosystem.
+            </p>
+          </div>
+          <a
+            href="/plugins"
+            className="btn"
+            style={{
+              background: "var(--bg-secondary)",
+              color: "var(--text-primary)",
+              border: "1px solid var(--border-color)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            View All <ArrowRight size={16} />
+          </a>
+        </div>
+      </FadeIn>
 
       {loading ? (
         <div
@@ -129,7 +133,7 @@ export default function LatestPluginsSection() {
         </div>
       ) : (
         <>
-          <div
+          <StaggerContainer
             style={{
               display: "grid",
               gridTemplateColumns:
@@ -144,20 +148,21 @@ export default function LatestPluginsSection() {
                 : 0;
 
               return (
-                <a
-                  href={`/plugins/${plugin.slug}`}
-                  key={plugin.id}
-                  className="card"
-                  style={{
-                    padding: "0",
-                    display: "flex",
-                    flexDirection: "column",
-                    textDecoration: "none",
-                    background: "var(--bg-card)",
-                    overflow: "hidden",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                  }}
-                >
+                <StaggerItem key={plugin.id}>
+                  <a
+                    href={`/plugins/${plugin.slug}`}
+                    className="card"
+                    style={{
+                      padding: "0",
+                      display: "flex",
+                      flexDirection: "column",
+                      textDecoration: "none",
+                      background: "var(--bg-card)",
+                      overflow: "hidden",
+                      transition: "transform 0.2s, box-shadow 0.2s",
+                      height: "100%",
+                    }}
+                  >
                   <div
                     className="plugin-card-inner"
                     style={{
@@ -288,10 +293,11 @@ export default function LatestPluginsSection() {
                       </div>
                     </div>
                   </div>
-                </a>
+                  </a>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerContainer>
 
           {/* Pagination Controls */}
           {pagination && pagination.totalPages > 1 && (
