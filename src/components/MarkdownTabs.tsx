@@ -5,6 +5,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface Tab {
   title: string;
@@ -111,6 +113,34 @@ export default function MarkdownTabs({
   const tabs = parseMarkdownTabs(processedMarkdown);
   const [activeTab, setActiveTab] = useState(0);
 
+  const MarkdownContent = ({ content }: { content: string }) => (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
+      components={{
+        code({ node, inline, className, children, ...props }: any) {
+          const match = /language-(\w+)/.exec(className || "");
+          return !inline && match ? (
+            <SyntaxHighlighter
+              style={vscDarkPlus}
+              language={match[1]}
+              PreTag="div"
+              {...props}
+            >
+              {String(children).replace(/\n$/, "")}
+            </SyntaxHighlighter>
+          ) : (
+            <code className={className} {...props}>
+              {children}
+            </code>
+          );
+        },
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+
   // Fallback if no content
   if (tabs.length === 0) {
     return (
@@ -130,12 +160,7 @@ export default function MarkdownTabs({
         className="markdown-body"
         style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}
       >
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
-        >
-          {tabs[0].content}
-        </ReactMarkdown>
+        <MarkdownContent content={tabs[0].content} />
       </div>
     );
   }
@@ -209,12 +234,7 @@ export default function MarkdownTabs({
           background: "var(--bg-card)",
         }}
       >
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
-        >
-          {currentTab.content}
-        </ReactMarkdown>
+        <MarkdownContent content={currentTab.content} />
       </div>
     </div>
   );
