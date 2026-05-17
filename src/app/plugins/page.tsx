@@ -43,6 +43,7 @@ export default async function PluginsPage({
 
   const { data: responseData } = await fetchApi(
     `/api/v1/plugins?${query.toString()}`,
+    { revalidate: 120 },
   );
   const realPlugins = responseData?.data?.plugins || [];
   const pagination = responseData?.pagination || {
