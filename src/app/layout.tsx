@@ -128,5 +128,3 @@ function Navbar() {
     </header>
   );
 }
-
-

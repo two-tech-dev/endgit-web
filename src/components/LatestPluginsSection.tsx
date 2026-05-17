@@ -163,136 +163,136 @@ export default function LatestPluginsSection() {
                       height: "100%",
                     }}
                   >
-                  <div
-                    className="plugin-card-inner"
-                    style={{
-                      padding: "var(--space-4)",
-                      display: "flex",
-                      gap: "var(--space-4)",
-                      flexWrap: "wrap",
-                    }}
-                  >
                     <div
+                      className="plugin-card-inner"
                       style={{
-                        width: "64px",
-                        height: "64px",
-                        flexShrink: 0,
-                        borderRadius: "var(--radius-md)",
-                        overflow: "hidden",
-                        background: "var(--bg-secondary)",
-                        border: "1px solid var(--border-color)",
+                        padding: "var(--space-4)",
                         display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        gap: "var(--space-4)",
+                        flexWrap: "wrap",
                       }}
                     >
-                      <PluginImage
-                        iconUrl={plugin.iconUrl}
-                        repoUrl={plugin.repoUrl}
-                        alt={`${plugin.displayName} icon`}
-                      />
-                    </div>
-
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <h3
-                        className="heading-3"
-                        style={{
-                          fontSize: "1.125rem",
-                          margin: "0 0 4px 0",
-                          color: "var(--accent-cyan)",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {plugin.displayName}
-                      </h3>
                       <div
                         style={{
+                          width: "64px",
+                          height: "64px",
+                          flexShrink: 0,
+                          borderRadius: "var(--radius-md)",
+                          overflow: "hidden",
+                          background: "var(--bg-secondary)",
+                          border: "1px solid var(--border-color)",
                           display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "flex-start",
-                          gap: "var(--space-3)",
-                          flexWrap: "wrap",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        <div
+                        <PluginImage
+                          iconUrl={plugin.iconUrl}
+                          repoUrl={plugin.repoUrl}
+                          alt={`${plugin.displayName} icon`}
+                        />
+                      </div>
+
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <h3
+                          className="heading-3"
                           style={{
-                            fontSize: "0.8125rem",
-                            color: "var(--text-muted)",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "2px",
-                            minWidth: 0,
-                            flex: "1 1 0",
-                          }}
-                        >
-                          <span>v{plugin.latestVersion || "1.0.0"}</span>
-                          <span
-                            style={{
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                            }}
-                          >
-                            {plugin.repoUrl?.match(
-                              /github\.com\/([^/]+)/,
-                            )?.[1] ||
-                              plugin.author?.displayName ||
-                              plugin.author?.username}
-                          </span>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "flex-end",
-                            gap: "4px",
-                            fontSize: "0.75rem",
-                            color: "var(--text-muted)",
+                            fontSize: "1.125rem",
+                            margin: "0 0 4px 0",
+                            color: "var(--accent-cyan)",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
                           }}
                         >
-                          <span>
-                            {new Date(
-                              plugin.createdAt || "",
-                            ).toLocaleDateString("en-GB", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                            })}
-                          </span>
-                          <span>
-                            <AnimatedNumber value={plugin.downloads || 0} />{" "}
-                            downloads
-                          </span>
-                          {avgRating > 0 && (
+                          {plugin.displayName}
+                        </h3>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "flex-start",
+                            gap: "var(--space-3)",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontSize: "0.8125rem",
+                              color: "var(--text-muted)",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "2px",
+                              minWidth: 0,
+                              flex: "1 1 0",
+                            }}
+                          >
+                            <span>v{plugin.latestVersion || "1.0.0"}</span>
                             <span
                               style={{
-                                color: "#f59e0b",
-                                fontSize: "0.8125rem",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "3px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              {"★".repeat(Math.round(avgRating))}
-                              {"☆".repeat(5 - Math.round(avgRating))}
+                              {plugin.repoUrl?.match(
+                                /github\.com\/([^/]+)/,
+                              )?.[1] ||
+                                plugin.author?.displayName ||
+                                plugin.author?.username}
+                            </span>
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "flex-end",
+                              gap: "4px",
+                              fontSize: "0.75rem",
+                              color: "var(--text-muted)",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            <span>
+                              {new Date(
+                                plugin.createdAt || "",
+                              ).toLocaleDateString("en-GB", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })}
+                            </span>
+                            <span>
+                              <AnimatedNumber value={plugin.downloads || 0} />{" "}
+                              downloads
+                            </span>
+                            {avgRating > 0 && (
                               <span
                                 style={{
-                                  color: "var(--text-muted)",
-                                  fontSize: "0.6875rem",
-                                  marginLeft: "2px",
+                                  color: "#f59e0b",
+                                  fontSize: "0.8125rem",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "3px",
                                 }}
                               >
-                                ({avgRating})
+                                {"★".repeat(Math.round(avgRating))}
+                                {"☆".repeat(5 - Math.round(avgRating))}
+                                <span
+                                  style={{
+                                    color: "var(--text-muted)",
+                                    fontSize: "0.6875rem",
+                                    marginLeft: "2px",
+                                  }}
+                                >
+                                  ({avgRating})
+                                </span>
                               </span>
-                            </span>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   </a>
                 </StaggerItem>
               );
