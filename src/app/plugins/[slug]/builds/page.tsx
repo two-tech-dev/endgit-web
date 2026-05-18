@@ -27,6 +27,7 @@ async function getPluginBuilds(
     { noAuth: true },
   );
   return {
+    plugin: data?.data?.plugin || null,
     builds: data?.data?.builds || [],
     pagination: data?.pagination || {
       page: 1,
@@ -35,11 +36,6 @@ async function getPluginBuilds(
       pageSize,
     },
   };
-}
-
-async function getPlugin(slug: string) {
-  const { data } = await fetchApi(`/api/v1/plugins/${slug}`, { noAuth: true });
-  return data?.data || null;
 }
 
 function timeAgo(dateStr: string) {
@@ -107,15 +103,14 @@ export default async function PluginBuildsPage({
   const currentPage = parseInt(searchParams.page as string) || 1;
   const pageSize = 10;
 
-  const [plugin, buildsData, session] = await Promise.all([
-    getPlugin(params.slug),
+  const [buildsData, session] = await Promise.all([
     getPluginBuilds(params.slug, currentPage, pageSize),
     getServerSession(authOptions),
   ]);
 
-  if (!plugin) return notFound();
+  const { plugin, builds, pagination } = buildsData;
 
-  const { builds, pagination } = buildsData;
+  if (!plugin) return notFound();
   const isOwner = session?.user?.id === plugin.authorId;
 
   // Find the highest build number that has been submitted (has a versionStatus)

@@ -1,18 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 import FadeIn from "@/components/FadeIn";
-
-interface Pagination {
-  page: number;
-  pageSize: number;
-  total: number;
-  totalPages: number;
-}
 
 interface Plugin {
   id: string;
@@ -29,43 +22,31 @@ interface Plugin {
 
 export default function LatestPluginsSection() {
   const [plugins, setPlugins] = useState<Plugin[]>([]);
-  const [pagination, setPagination] = useState<Pagination | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const PAGE_SIZE = 6;
-
-  const fetchPlugins = useCallback(async (page: number) => {
-    setLoading(true);
-    setError(false);
-    try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-      const res = await fetch(
-        `${apiUrl}/api/v1/plugins/latest?page=${page}&pageSize=${PAGE_SIZE}`,
-      );
-      const json = await res.json();
-      if (json?.success && json?.data?.plugins) {
-        setPlugins(json.data.plugins);
-        setPagination(json.pagination || null);
-      } else {
-        setError(true);
-      }
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchPlugins(currentPage);
-  }, [currentPage, fetchPlugins]);
-
-  const goToPage = (page: number) => {
-    if (page < 1 || (pagination && page > pagination.totalPages)) return;
-    setCurrentPage(page);
-  };
+    async function fetchPlugins() {
+      try {
+        const apiUrl =
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+        const res = await fetch(
+          `${apiUrl}/api/v1/plugins/latest?page=1&pageSize=6`,
+        );
+        const json = await res.json();
+        if (json?.success && json?.data?.plugins) {
+          setPlugins(json.data.plugins);
+        } else {
+          setError(true);
+        }
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPlugins();
+  }, []);
 
   if (error && plugins.length === 0) return null;
 
@@ -298,111 +279,6 @@ export default function LatestPluginsSection() {
               );
             })}
           </StaggerContainer>
-
-          {/* Pagination Controls */}
-          {pagination && pagination.totalPages > 1 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                marginTop: "var(--space-8)",
-                flexWrap: "wrap",
-              }}
-            >
-              <button
-                onClick={() => goToPage(currentPage - 1)}
-                disabled={currentPage <= 1}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background:
-                    currentPage <= 1 ? "var(--bg-secondary)" : "var(--bg-card)",
-                  color:
-                    currentPage <= 1
-                      ? "var(--text-muted)"
-                      : "var(--text-secondary)",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  cursor: currentPage <= 1 ? "not-allowed" : "pointer",
-                  opacity: currentPage <= 1 ? 0.5 : 1,
-                  transition: "all 150ms",
-                }}
-              >
-                <ChevronLeft size={16} /> Prev
-              </button>
-
-              {Array.from(
-                { length: pagination.totalPages },
-                (_, i) => i + 1,
-              ).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => goToPage(p)}
-                  style={{
-                    padding: "0.5rem 0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border:
-                      p === currentPage
-                        ? "1px solid var(--accent-cyan)"
-                        : "1px solid var(--border-color)",
-                    background:
-                      p === currentPage
-                        ? "rgba(6, 182, 212, 0.1)"
-                        : "var(--bg-card)",
-                    color:
-                      p === currentPage
-                        ? "var(--accent-cyan)"
-                        : "var(--text-secondary)",
-                    fontSize: "0.875rem",
-                    fontWeight: p === currentPage ? 700 : 500,
-                    cursor: "pointer",
-                    transition: "all 150ms",
-                    minWidth: "38px",
-                    textAlign: "center",
-                  }}
-                >
-                  {p}
-                </button>
-              ))}
-
-              <button
-                onClick={() => goToPage(currentPage + 1)}
-                disabled={currentPage >= pagination.totalPages}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background:
-                    currentPage >= pagination.totalPages
-                      ? "var(--bg-secondary)"
-                      : "var(--bg-card)",
-                  color:
-                    currentPage >= pagination.totalPages
-                      ? "var(--text-muted)"
-                      : "var(--text-secondary)",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  cursor:
-                    currentPage >= pagination.totalPages
-                      ? "not-allowed"
-                      : "pointer",
-                  opacity: currentPage >= pagination.totalPages ? 0.5 : 1,
-                  transition: "all 150ms",
-                }}
-              >
-                Next <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
         </>
       )}
     </section>

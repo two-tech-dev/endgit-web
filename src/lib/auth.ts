@@ -67,13 +67,13 @@ export const authOptions: NextAuthOptions = {
         token.trustLevel = user.trustLevel;
         token.apiToken = user.apiToken;
         token.refreshToken = user.refreshToken;
-        token.apiTokenExpiresAt = Math.floor(Date.now() / 1000) + 3600;
+        token.apiTokenExpiresAt = Math.floor(Date.now() / 1000) + 7 * 24 * 3600;
       }
 
       if (
         token.refreshToken &&
         typeof token.apiTokenExpiresAt === "number" &&
-        Date.now() / 1000 > token.apiTokenExpiresAt - 300
+        Date.now() / 1000 > token.apiTokenExpiresAt - 3600
       ) {
         try {
           const res = await fetch(
@@ -90,7 +90,8 @@ export const authOptions: NextAuthOptions = {
           if (data.success && data.data) {
             token.apiToken = data.data.access_token;
             token.refreshToken = data.data.refresh_token;
-            token.apiTokenExpiresAt = Math.floor(Date.now() / 1000) + 3600;
+            token.apiTokenExpiresAt =
+              Math.floor(Date.now() / 1000) + 7 * 24 * 3600;
           }
         } catch {
           // Keep the old token; the session will fail once it hard-expires.

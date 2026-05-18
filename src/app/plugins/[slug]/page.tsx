@@ -15,7 +15,6 @@ import {
 import MarkdownTabs from "@/components/MarkdownTabs";
 import PluginAnalyticsChart from "@/components/PluginAnalyticsChart";
 import DependencyGraph from "@/components/DependencyGraph";
-import CompatibilityChecker from "@/components/CompatibilityChecker";
 import PluginRatings from "@/components/PluginRatings";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
@@ -1050,9 +1049,6 @@ export default async function PluginDetailPage({
               </div>
             </div>
           )}
-
-          {/* Compatibility Checker */}
-          <CompatibilityChecker slug={plugin.slug} />
 
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />
