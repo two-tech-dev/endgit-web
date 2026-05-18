@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import HomeContent from "@/components/HomeContent";
-import HomeSkeleton from "@/components/HomeSkeleton";
 
 async function StatsSection() {
   let stats = {
@@ -22,9 +20,5 @@ async function StatsSection() {
 }
 
 export default function Home() {
-  return (
-    <Suspense fallback={<HomeSkeleton />}>
-      <StatsSection />
-    </Suspense>
-  );
+  return <StatsSection />;
 }

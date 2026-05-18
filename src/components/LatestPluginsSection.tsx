@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
@@ -98,21 +98,7 @@ export default function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      {loading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "200px",
-            color: "var(--text-muted)",
-            gap: "8px",
-          }}
-        >
-          <Loader2 size={20} className="spin" />
-          <span>Loading plugins…</span>
-        </div>
-      ) : (
+      {!loading && (
         <>
           <StaggerContainer
             style={{
