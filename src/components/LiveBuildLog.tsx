@@ -67,8 +67,7 @@ export default function LiveBuildLog({
 
   const allLines = logs ? logs.split("\n") : [];
   const totalLines = allLines.length;
-  const isTruncated =
-    !isRunning && !showAll && totalLines > INITIAL_LINE_LIMIT;
+  const isTruncated = !isRunning && !showAll && totalLines > INITIAL_LINE_LIMIT;
   const visibleLines = isTruncated
     ? allLines.slice(totalLines - INITIAL_LINE_LIMIT)
     : allLines;
