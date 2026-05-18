@@ -7,7 +7,7 @@ import {
   Upload,
   Activity,
   ShieldCheck,
-  GitBranch,
+  GitFork,
   BookOpen,
   Cpu,
   Download,
@@ -15,7 +15,9 @@ import {
 import AnimatedNumber from "@/components/AnimatedNumber";
 import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
-import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import StaggerContainer, {
+  StaggerItem,
+} from "@/components/StaggerContainer";
 
 interface HomeContentProps {
   stats: {
@@ -25,23 +27,22 @@ interface HomeContentProps {
   };
 }
 
-function TerminalMock() {
-  const lines = [
-    { text: "endgit install endstone-warps", prefix: "$", isCommand: true },
-    { text: "→ Saved to: plugins/endstone_warps-1.0.5-py3-none-any.whl" },
-    { text: "✓ Installed endstone-warps@1.0.5", success: true },
-  ];
+const TERMINAL_LINES = [
+  { text: "endgit install endstone-warps", isCommand: true },
+  { text: "→ Saved to: plugins/endstone_warps-1.0.5-py3-none-any.whl" },
+  { text: "✓ Installed endstone-warps@1.0.5", success: true },
+];
 
+function TerminalMock() {
   return (
     <FadeIn delay={0.3} direction="right" duration={0.6}>
       <div
         style={{
           background: "#0c0c14",
-          borderRadius: "var(--radius-lg)",
+          borderRadius: "var(--radius-xl)",
           border: "1px solid #1e1e2e",
           overflow: "hidden",
-          boxShadow:
-            "0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03)",
+          boxShadow: "var(--shadow-lg)",
           maxWidth: "520px",
           width: "100%",
         }}
@@ -60,7 +61,7 @@ function TerminalMock() {
             style={{
               width: 12,
               height: 12,
-              borderRadius: "50%",
+              borderRadius: "var(--radius-full)",
               background: "#f38ba8",
             }}
           />
@@ -68,7 +69,7 @@ function TerminalMock() {
             style={{
               width: 12,
               height: 12,
-              borderRadius: "50%",
+              borderRadius: "var(--radius-full)",
               background: "#f9e2af",
             }}
           />
@@ -76,14 +77,14 @@ function TerminalMock() {
             style={{
               width: 12,
               height: 12,
-              borderRadius: "50%",
+              borderRadius: "var(--radius-full)",
               background: "#a6e3a1",
             }}
           />
           <span
             style={{
               marginLeft: "8px",
-              fontSize: "0.75rem",
+              fontSize: "var(--text-xs)",
               color: "#585b70",
               fontFamily: "var(--font-mono)",
             }}
@@ -95,29 +96,30 @@ function TerminalMock() {
           style={{
             padding: "20px",
             fontFamily: "var(--font-mono)",
-            fontSize: "0.8125rem",
+            fontSize: "var(--text-sm)",
             lineHeight: 1.8,
             minHeight: "200px",
           }}
         >
-          {lines.map((line, i) => (
+          {TERMINAL_LINES.map((line, i) => (
             <div
               key={i}
-              style={{
-                display: "flex",
-                gap: "8px",
-                opacity: 1,
-              }}
+              style={{ display: "flex", gap: "8px" }}
             >
               {line.isCommand ? (
                 <>
-                  <span style={{ color: "#89b4fa", userSelect: "none" }}>
-                    {line.prefix}
+                  <span style={{ color: "#f38ba8", userSelect: "none" }}>
+                    ╰─λ
                   </span>
                   <span style={{ color: "#cdd6f4" }}>{line.text}</span>
                 </>
               ) : (
-                <span style={{ color: line.success ? "#a6e3a1" : "#89dceb" }}>
+                <span
+                  style={{
+                    color: line.success ? "#a6e3a1" : "#89dceb",
+                    paddingLeft: "38px",
+                  }}
+                >
                   {line.text}
                 </span>
               )}
@@ -130,7 +132,9 @@ function TerminalMock() {
               gap: "8px",
             }}
           >
-            <span style={{ color: "#89b4fa", userSelect: "none" }}>$</span>
+            <span style={{ color: "#f38ba8", userSelect: "none" }}>
+              ╰─λ
+            </span>
             <span
               style={{
                 display: "inline-block",
@@ -148,154 +152,91 @@ function TerminalMock() {
   );
 }
 
-function StepCard({
-  number,
-  icon,
-  title,
-  desc,
-  color,
-}: {
-  number: number;
-  icon: React.ReactNode;
-  title: string;
-  desc: string;
-  color: string;
-}) {
-  return (
-    <StaggerItem
-      style={{
-        flex: "1 1 280px",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          width: "56px",
-          height: "56px",
-          borderRadius: "50%",
-          background: `${color}12`,
-          border: `2px solid ${color}30`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: color,
-          marginBottom: "var(--space-4)",
-          position: "relative",
-        }}
-      >
-        {icon}
-        <span
-          style={{
-            position: "absolute",
-            top: "-6px",
-            right: "-6px",
-            width: "20px",
-            height: "20px",
-            borderRadius: "50%",
-            background: color,
-            color: "#fff",
-            fontSize: "0.6875rem",
-            fontWeight: 700,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {number}
-        </span>
-      </div>
-      <h3
-        style={{
-          fontSize: "1.0625rem",
-          fontWeight: 600,
-          color: "var(--text-primary)",
-          margin: "0 0 var(--space-2) 0",
-        }}
-      >
-        {title}
-      </h3>
-      <p
-        style={{
-          color: "var(--text-secondary)",
-          fontSize: "0.875rem",
-          lineHeight: 1.6,
-          margin: 0,
-          maxWidth: "300px",
-        }}
-      >
-        {desc}
-      </p>
-    </StaggerItem>
-  );
-}
+const FEATURES = [
+  {
+    icon: <ShieldCheck size={20} />,
+    title: "Reviewed & Trusted",
+    desc: "Every plugin is reviewed against our submission rules before being published to the marketplace.",
+  },
+  {
+    icon: <Terminal size={20} />,
+    title: "CLI Tooling",
+    desc: "Install plugins, fetch dev builds, and manage versions from your terminal with the endgit CLI.",
+  },
+  {
+    icon: <BookOpen size={20} />,
+    title: "Open & Transparent",
+    desc: "All plugins must be open source. Full source code and build logs are publicly available.",
+  },
+];
+
+const STEPS = [
+  {
+    number: 1,
+    icon: <Upload size={20} />,
+    title: "Push your code",
+    desc: "Connect your GitHub repo. Every push triggers an automated build pipeline.",
+  },
+  {
+    number: 2,
+    icon: <Cpu size={20} />,
+    title: "We compile & review",
+    desc: "Our CI workers build your C++ or Python plugin and run it through our review process.",
+  },
+  {
+    number: 3,
+    icon: <Download size={20} />,
+    title: "Users install instantly",
+    desc: "Published to the registry. Anyone can install with endgit install <plugin>.",
+  },
+];
 
 export default function HomeContent({ stats }: HomeContentProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {/* ── Hero: Split layout ── */}
+      {/* ── Hero ── */}
       <section
         style={{
-          padding: "clamp(3rem, 8vw, 6rem) 0",
+          padding: "clamp(3.5rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem)",
           position: "relative",
+          overflow: "hidden",
         }}
       >
         <div
           style={{
             position: "absolute",
-            top: "-40%",
-            right: "-20%",
-            width: "1100px",
-            height: "800px",
+            top: "-30%",
+            right: "-10%",
+            width: "800px",
+            height: "600px",
             background:
-              "radial-gradient(ellipse at center, rgba(99,102,241,0.06) 0%, rgba(99,102,241,0.03) 30%, transparent 70%)",
+              "radial-gradient(ellipse at center, rgba(99,102,241,0.04) 0%, transparent 60%)",
             pointerEvents: "none",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-20%",
-            left: "-15%",
-            width: "1200px",
-            height: "900px",
-            background:
-              "radial-gradient(ellipse at center, rgba(6,182,212,0.05) 0%, rgba(6,182,212,0.02) 35%, transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
-
         <div
           className="container"
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "clamp(2rem, 6vw, 5rem)",
+            gap: "clamp(2.5rem, 6vw, 5rem)",
             flexWrap: "wrap",
           }}
         >
           {/* Left: Copy */}
-          <div
-            style={{
-              flex: "1 1 420px",
-              minWidth: 0,
-            }}
-          >
+          <div style={{ flex: "1 1 420px", minWidth: 0 }}>
             <FadeIn delay={0} direction="down">
               <span
                 style={{
-                  fontSize: "0.6875rem",
+                  fontSize: "var(--text-xs)",
                   fontWeight: 700,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                   padding: "0.3rem 0.875rem",
                   borderRadius: "var(--radius-full)",
-                  background: "rgba(6,182,212,0.08)",
-                  color: "var(--accent-cyan)",
-                  border: "1px solid rgba(6,182,212,0.15)",
+                  background: "var(--color-brand-light)",
+                  color: "var(--accent-purple)",
+                  border: "1px solid rgba(99,102,241,0.2)",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "6px",
@@ -308,19 +249,20 @@ export default function HomeContent({ stats }: HomeContentProps) {
 
             <FadeIn delay={0.1} direction="none">
               <h1
-                className="heading-1"
                 style={{
                   fontSize: "clamp(2rem, 4.5vw, 3.25rem)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.025em",
+                  fontWeight: 800,
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.03em",
                   margin: "0 0 var(--space-4) 0",
+                  color: "var(--text-primary)",
                 }}
               >
                 Ship plugins for{" "}
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, var(--accent-cyan), var(--accent-purple))",
+                      "linear-gradient(135deg, #6366f1, #4338ca)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -335,7 +277,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
             <FadeIn delay={0.15}>
               <p
                 style={{
-                  fontSize: "clamp(0.9375rem, 2vw, 1.125rem)",
+                  fontSize: "var(--text-md)",
                   color: "var(--text-secondary)",
                   lineHeight: 1.65,
                   maxWidth: "480px",
@@ -364,7 +306,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                     alignItems: "center",
                     gap: "8px",
                     padding: "0.75rem 1.75rem",
-                    fontSize: "0.9375rem",
+                    fontSize: "var(--text-base)",
                     fontWeight: 600,
                   }}
                 >
@@ -380,7 +322,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                     alignItems: "center",
                     gap: "8px",
                     padding: "0.75rem 1.5rem",
-                    fontSize: "0.9375rem",
+                    fontSize: "var(--text-base)",
                   }}
                 >
                   <Terminal size={16} /> Install CLI
@@ -393,7 +335,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
               <div
                 style={{
                   display: "flex",
-                  gap: "var(--space-6)",
+                  gap: "var(--space-8)",
                   marginTop: "var(--space-8)",
                   paddingTop: "var(--space-5)",
                   borderTop: "1px solid var(--border-color)",
@@ -408,7 +350,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   <div key={i}>
                     <div
                       style={{
-                        fontSize: "1.5rem",
+                        fontSize: "var(--text-xl)",
                         fontWeight: 700,
                         color: "var(--text-primary)",
                         lineHeight: 1,
@@ -419,7 +361,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                     </div>
                     <div
                       style={{
-                        fontSize: "0.6875rem",
+                        fontSize: "var(--text-xs)",
                         fontWeight: 600,
                         color: "var(--text-muted)",
                         textTransform: "uppercase",
@@ -454,14 +396,19 @@ export default function HomeContent({ stats }: HomeContentProps) {
         style={{ paddingBottom: "var(--space-16)" }}
       >
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: "var(--space-10)",
+            }}
+          >
             <span
               style={{
-                fontSize: "0.6875rem",
+                fontSize: "var(--text-xs)",
                 fontWeight: 700,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "var(--accent-purple)",
+                color: "var(--text-muted)",
                 display: "block",
                 marginBottom: "var(--space-2)",
               }}
@@ -469,11 +416,12 @@ export default function HomeContent({ stats }: HomeContentProps) {
               How it works
             </span>
             <h2
-              className="heading-2"
               style={{
                 fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
+                fontWeight: 700,
                 letterSpacing: "-0.01em",
                 margin: 0,
+                color: "var(--text-primary)",
               }}
             >
               From code to users in three steps
@@ -484,52 +432,96 @@ export default function HomeContent({ stats }: HomeContentProps) {
         <StaggerContainer
           style={{
             display: "flex",
-            flexWrap: "wrap",
-            gap: "var(--space-8)",
-            justifyContent: "center",
+            flexDirection: "column",
+            gap: "var(--space-5)",
+            maxWidth: "640px",
+            margin: "0 auto",
           }}
         >
-          <StepCard
-            number={1}
-            icon={<Upload size={22} />}
-            title="Push your code"
-            desc="Connect your GitHub repo. Every push triggers an automated build pipeline."
-            color="var(--accent-cyan)"
-          />
-          <StepCard
-            number={2}
-            icon={<Cpu size={22} />}
-            title="We compile & review"
-            desc="Our CI workers build your C++ or Python plugin and run it through our review process."
-            color="var(--accent-purple)"
-          />
-          <StepCard
-            number={3}
-            icon={<Download size={22} />}
-            title="Users install instantly"
-            desc="Published to the registry. Anyone can install with endgit install <plugin>."
-            color="var(--status-success)"
-          />
+          {STEPS.map((step) => (
+            <StaggerItem
+              key={step.number}
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "var(--space-5)",
+                padding: "var(--space-5) var(--space-6)",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "var(--radius-lg)",
+                boxShadow: "var(--shadow-sm)",
+                transition:
+                  "transform var(--transition-base), box-shadow var(--transition-base)",
+                cursor: "default",
+              }}
+              className="step-card"
+            >
+              <div
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "var(--radius-md)",
+                  background: "var(--color-brand-light)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--accent-purple)",
+                  flexShrink: 0,
+                  fontWeight: 700,
+                  fontSize: "var(--text-sm)",
+                }}
+              >
+                {step.number}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h3
+                  style={{
+                    fontSize: "var(--text-base)",
+                    fontWeight: 600,
+                    color: "var(--text-primary)",
+                    margin: "0 0 var(--space-1) 0",
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  style={{
+                    color: "var(--text-secondary)",
+                    fontSize: "var(--text-sm)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {step.desc}
+                </p>
+              </div>
+            </StaggerItem>
+          ))}
         </StaggerContainer>
       </section>
 
       {/* ── Recent Releases ── */}
       <LatestPluginsSection />
 
-      {/* ── Features: Asymmetric layout ── */}
+      {/* ── Features ── */}
       <section
         className="container"
         style={{ paddingBottom: "var(--space-16)" }}
       >
         <FadeIn>
-          <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
+          <div
+            style={{
+              textAlign: "center",
+              marginBottom: "var(--space-10)",
+            }}
+          >
             <span
               style={{
-                fontSize: "0.6875rem",
+                fontSize: "var(--text-xs)",
                 fontWeight: 700,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "var(--accent-cyan)",
+                color: "var(--text-muted)",
                 display: "block",
                 marginBottom: "var(--space-2)",
               }}
@@ -537,11 +529,12 @@ export default function HomeContent({ stats }: HomeContentProps) {
               Why EndGit
             </span>
             <h2
-              className="heading-2"
               style={{
                 fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
+                fontWeight: 700,
                 letterSpacing: "-0.01em",
                 margin: 0,
+                color: "var(--text-primary)",
               }}
             >
               Built for the Endstone ecosystem
@@ -549,7 +542,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
           </div>
         </FadeIn>
 
-        {/* Large feature card */}
+        {/* CI/CD hero feature */}
         <FadeIn style={{ marginBottom: "var(--space-5)" }}>
           <div
             className="card"
@@ -559,29 +552,27 @@ export default function HomeContent({ stats }: HomeContentProps) {
               gap: "var(--space-6)",
               alignItems: "center",
               flexWrap: "wrap",
-              background:
-                "linear-gradient(135deg, rgba(99,102,241,0.04), rgba(6,182,212,0.04))",
             }}
           >
             <div
               style={{
-                width: "64px",
-                height: "64px",
+                width: "56px",
+                height: "56px",
                 borderRadius: "var(--radius-lg)",
-                background: "rgba(6,182,212,0.1)",
+                background: "var(--color-brand-light)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "var(--accent-cyan)",
+                color: "var(--accent-purple)",
                 flexShrink: 0,
               }}
             >
-              <Activity size={28} />
+              <Activity size={26} />
             </div>
             <div style={{ flex: 1, minWidth: "240px" }}>
               <h3
                 style={{
-                  fontSize: "1.25rem",
+                  fontSize: "var(--text-lg)",
                   fontWeight: 600,
                   color: "var(--text-primary)",
                   margin: "0 0 var(--space-2) 0",
@@ -592,7 +583,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
               <p
                 style={{
                   color: "var(--text-secondary)",
-                  fontSize: "0.9375rem",
+                  fontSize: "var(--text-base)",
                   lineHeight: 1.6,
                   margin: 0,
                   maxWidth: "560px",
@@ -606,7 +597,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
           </div>
         </FadeIn>
 
-        {/* Smaller feature cards grid */}
+        {/* Smaller feature cards */}
         <StaggerContainer
           style={{
             display: "grid",
@@ -615,29 +606,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
             gap: "var(--space-5)",
           }}
         >
-          {[
-            {
-              icon: <ShieldCheck size={22} />,
-              bg: "rgba(16,185,129,0.1)",
-              color: "var(--status-success)",
-              title: "Reviewed & Trusted",
-              desc: "Every plugin is reviewed against our submission rules before being published to the marketplace.",
-            },
-            {
-              icon: <Terminal size={22} />,
-              bg: "rgba(99,102,241,0.1)",
-              color: "var(--accent-purple)",
-              title: "CLI Tooling",
-              desc: "Install plugins, fetch dev builds, and manage versions from your terminal with the endgit CLI.",
-            },
-            {
-              icon: <BookOpen size={22} />,
-              bg: "rgba(245,158,11,0.1)",
-              color: "#f59e0b",
-              title: "Open & Transparent",
-              desc: "All plugins must be open source. Full source code and build logs are publicly available.",
-            },
-          ].map((f, i) => (
+          {FEATURES.map((f, i) => (
             <StaggerItem
               key={i}
               className="card"
@@ -650,21 +619,21 @@ export default function HomeContent({ stats }: HomeContentProps) {
             >
               <div
                 style={{
-                  width: "44px",
-                  height: "44px",
+                  width: "40px",
+                  height: "40px",
                   borderRadius: "var(--radius-md)",
-                  background: f.bg,
+                  background: "var(--color-brand-light)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: f.color,
+                  color: "var(--accent-purple)",
                 }}
               >
                 {f.icon}
               </div>
               <h3
                 style={{
-                  fontSize: "1.0625rem",
+                  fontSize: "var(--text-base)",
                   fontWeight: 600,
                   color: "var(--text-primary)",
                   margin: 0,
@@ -675,7 +644,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
               <p
                 style={{
                   color: "var(--text-secondary)",
-                  fontSize: "0.875rem",
+                  fontSize: "var(--text-sm)",
                   lineHeight: 1.6,
                   margin: 0,
                 }}
@@ -695,112 +664,113 @@ export default function HomeContent({ stats }: HomeContentProps) {
         <FadeIn direction="none">
           <div
             style={{
+              background: "#0f172a",
+              borderRadius: "var(--radius-xl)",
+              padding:
+                "var(--space-10) var(--space-8)",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "var(--space-4)",
               position: "relative",
-              borderRadius: "var(--radius-lg)",
               overflow: "hidden",
             }}
           >
             <div
               style={{
                 position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)",
-                zIndex: 0,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                top: "0",
+                top: 0,
                 left: "50%",
                 transform: "translateX(-50%)",
-                width: "900px",
-                height: "500px",
+                width: "600px",
+                height: "300px",
                 background:
-                  "radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, rgba(99,102,241,0.04) 40%, transparent 70%)",
+                  "radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%)",
                 pointerEvents: "none",
               }}
             />
-            <div
+            <h2
               style={{
+                fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
+                fontWeight: 700,
+                margin: 0,
+                color: "#ffffff",
                 position: "relative",
-                zIndex: 1,
-                padding: "var(--space-10) var(--space-8)",
-                textAlign: "center",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "var(--space-4)",
               }}
             >
-              <h2
+              Ready to publish your plugin?
+            </h2>
+            <p
+              style={{
+                color: "#94a3b8",
+                fontSize: "var(--text-base)",
+                maxWidth: "420px",
+                margin: 0,
+                lineHeight: 1.5,
+                position: "relative",
+              }}
+            >
+              Connect your GitHub, push your code, and let EndGit handle the
+              rest.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                gap: "var(--space-3)",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                marginTop: "var(--space-2)",
+                position: "relative",
+              }}
+            >
+              <a
+                href="/dashboard/dev"
+                className="btn"
                 style={{
-                  fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-                  fontWeight: 700,
-                  margin: 0,
-                  color: "white",
+                  background: "#ffffff",
+                  color: "#0f172a",
+                  border: "none",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "0.75rem 1.75rem",
                 }}
               >
-                Ready to publish your plugin?
-              </h2>
-              <p
+                <GitFork size={16} /> Start Publishing
+              </a>
+              <a
+                href="/plugins"
+                className="btn"
                 style={{
-                  color: "#94a3b8",
-                  fontSize: "1rem",
-                  maxWidth: "420px",
-                  margin: 0,
-                  lineHeight: 1.5,
+                  background: "rgba(255,255,255,0.08)",
+                  color: "#ffffff",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "0.75rem 1.5rem",
                 }}
               >
-                Connect your GitHub, push your code, and let EndGit handle the
-                rest.
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-3)",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  marginTop: "var(--space-2)",
-                }}
-              >
-                <a
-                  href="/dashboard/dev"
-                  className="btn"
-                  style={{
-                    background: "white",
-                    color: "#0f172a",
-                    border: "none",
-                    fontWeight: 600,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "0.75rem 1.75rem",
-                  }}
-                >
-                  <GitBranch size={16} /> Start Publishing
-                </a>
-                <a
-                  href="/plugins"
-                  className="btn"
-                  style={{
-                    background: "rgba(255,255,255,0.08)",
-                    color: "white",
-                    border: "1px solid rgba(255,255,255,0.15)",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "0.75rem 1.5rem",
-                  }}
-                >
-                  Explore Plugins
-                </a>
-              </div>
+                Explore Plugins
+              </a>
             </div>
           </div>
         </FadeIn>
       </section>
+
+      <style>{`
+        .step-card:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+        @media (max-width: 768px) {
+          .step-card:hover {
+            transform: none;
+          }
+        }
+      `}</style>
     </div>
   );
 }

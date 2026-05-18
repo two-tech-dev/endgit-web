@@ -7,6 +7,7 @@ import {
   AlertTriangle,
   Server,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
 
 interface CompatResult {
@@ -129,7 +130,7 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
               background:
                 selected === v ? "var(--accent-purple)" : "var(--bg-secondary)",
               color: selected === v ? "#fff" : "var(--text-secondary)",
-              border: `1px solid ${selected === v ? "var(--text-primary)" : "var(--border-color)"}`,
+              border: `1px solid ${selected === v ? "var(--accent-purple-hover)" : "var(--border-color)"}`,
               cursor: "pointer",
             }}
           >
@@ -144,18 +145,17 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
             padding: "var(--space-4)",
             textAlign: "center",
             color: "var(--text-muted)",
-            fontSize: "0.875rem",
+            fontSize: "var(--text-sm)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
           }}
         >
-          <span
-            style={{
-              display: "inline-block",
-              animation: "spin 1s linear infinite",
-              marginRight: "8px",
-            }}
-          >
-            ⚙️
-          </span>
+          <Loader2
+            size={16}
+            style={{ animation: "spin 1s linear infinite" }}
+          />
           Checking compatibility...
         </div>
       )}
