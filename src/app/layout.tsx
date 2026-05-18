@@ -119,9 +119,9 @@ function Navbar() {
           <img
             src="/logo.png"
             alt="EndGit Logo"
-            style={{ width: 36, height: 36, objectFit: "contain" }}
+            style={{ width: 42, height: 42, objectFit: "contain" }}
           />
-          <span style={{ color: "var(--text-primary)" }}>EndGit</span>
+          <span style={{ color: "var(--text-primary)" }}>endgit<span style={{ color: "var(--accent-cyan)" }}>.</span> </span>
         </a>
         <NavbarMobile />
       </div>
