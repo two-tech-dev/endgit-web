@@ -9,7 +9,10 @@ interface FetchApiOptions extends RequestInit {
   revalidate?: number;
 }
 
-export async function fetchApi(endpoint: string, options: FetchApiOptions = {}) {
+export async function fetchApi(
+  endpoint: string,
+  options: FetchApiOptions = {},
+) {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
 
