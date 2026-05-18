@@ -11,7 +11,13 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: boolean; onNavigate?: () => void }) {
+export default function NavbarClient({
+  mobile = false,
+  onNavigate,
+}: {
+  mobile?: boolean;
+  onNavigate?: () => void;
+}) {
   const { data: session, status } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -34,7 +40,11 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
       <button
         onClick={() => signIn("github")}
         className="btn btn-primary"
-        style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", width: mobile ? "100%" : undefined }}
+        style={{
+          padding: "0.5rem 1rem",
+          fontSize: "0.875rem",
+          width: mobile ? "100%" : undefined,
+        }}
       >
         <LogIn size={16} /> Sign In
       </button>
@@ -80,7 +90,10 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
     <>
       <a
         href="/dashboard/dev"
-        onClick={() => { setDropdownOpen(false); onNavigate?.(); }}
+        onClick={() => {
+          setDropdownOpen(false);
+          onNavigate?.();
+        }}
         style={{
           display: "flex",
           alignItems: "center",
@@ -94,15 +107,16 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
         onMouseEnter={(e) =>
           (e.currentTarget.style.background = "var(--bg-secondary)")
         }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.background = "transparent")
-        }
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <LayoutDashboard size={16} /> Dev Dashboard
       </a>
       <a
         href="/dashboard"
-        onClick={() => { setDropdownOpen(false); onNavigate?.(); }}
+        onClick={() => {
+          setDropdownOpen(false);
+          onNavigate?.();
+        }}
         style={{
           display: "flex",
           alignItems: "center",
@@ -116,9 +130,7 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
         onMouseEnter={(e) =>
           (e.currentTarget.style.background = "var(--bg-secondary)")
         }
-        onMouseLeave={(e) =>
-          (e.currentTarget.style.background = "transparent")
-        }
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <Package size={16} /> My Plugins
       </a>
@@ -126,7 +138,10 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
       (session?.user as any)?.trustLevel === "TRUSTED" ? (
         <a
           href="/admin"
-          onClick={() => { setDropdownOpen(false); onNavigate?.(); }}
+          onClick={() => {
+            setDropdownOpen(false);
+            onNavigate?.();
+          }}
           style={{
             display: "flex",
             alignItems: "center",
@@ -172,9 +187,7 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
       onMouseEnter={(e) =>
         (e.currentTarget.style.background = "rgba(239, 68, 68, 0.05)")
       }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.background = "transparent")
-      }
+      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
       <LogOut size={16} /> Sign Out
     </button>
@@ -182,7 +195,13 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
 
   if (mobile) {
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "var(--space-1)",
+        }}
+      >
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
           style={{
@@ -239,7 +258,12 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
             }}
           >
             {menuItems}
-            <div style={{ borderTop: "1px solid var(--border-color)", margin: "0.25rem 0" }} />
+            <div
+              style={{
+                borderTop: "1px solid var(--border-color)",
+                margin: "0.25rem 0",
+              }}
+            />
             {signOutButton}
           </div>
         )}
@@ -330,9 +354,7 @@ export default function NavbarClient({ mobile = false, onNavigate }: { mobile?: 
               </div>
             </div>
 
-            <div style={{ padding: "0.375rem" }}>
-              {menuItems}
-            </div>
+            <div style={{ padding: "0.375rem" }}>{menuItems}</div>
 
             <div
               style={{
