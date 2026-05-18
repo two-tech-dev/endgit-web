@@ -7,10 +7,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "EndGit — CI/CD & Plugin Marketplace for Endstone",
+export const metadata: metadata = {
+  title: "endgit — ci/cd & plugin marketplace for endstone",
   description:
-    "Discover, download, and publish Endstone plugins automatically from GitHub. The premier CI/CD and marketplace platform for Endstone servers.",
+    "discover, download, and publish endstone plugins automatically from github. the premier ci/cd and marketplace platform for endstone servers.",
   keywords: [
     "endstone",
     "minecraft bedrock",
@@ -20,24 +20,24 @@ export const metadata: Metadata = {
     "marketplace",
     "endgit",
   ],
-  metadataBase: new URL("https://endgit.dev"),
+  metadatabase: new url("https://endgit.dev"),
   alternates: {
     canonical: "/",
   },
-  openGraph: {
-    title: "EndGit — Endstone Plugin Marketplace",
+  opengraph: {
+    title: "endgit — endstone plugin marketplace",
     description:
-      "Discover, download, and publish Endstone plugins automatically from GitHub.",
+      "discover, download, and publish endstone plugins automatically from github.",
     url: "https://endgit.dev",
-    siteName: "EndGit",
+    sitename: "endgit",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
-    card: "summary",
-    title: "EndGit — CI/CD & Plugin Marketplace for Endstone",
+    card: "summary_large_image",
+    title: "endgit — ci/cd & plugin marketplace for endstone",
     description:
-      "Discover, download, and publish Endstone plugins automatically from GitHub.",
+      "discover, download, and publish endstone plugins automatically from github.",
     images: ["/og-image.png"],
   },
 };
