@@ -3,7 +3,7 @@
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
-export default function AnimatedFooter() {
+export default function Footer() {
   return (
     <footer
       style={{

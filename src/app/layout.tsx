@@ -70,7 +70,7 @@ export default function RootLayout({
         <AuthProvider>
           <Navbar />
           <main>{children}</main>
-          <AnimatedFooter />
+          <Footer />
         </AuthProvider>
         <Analytics />
         <SpeedInsights />
@@ -80,7 +80,7 @@ export default function RootLayout({
 }
 
 import NavbarMobile from "@/components/NavbarMobile";
-import AnimatedFooter from "@/components/AnimatedFooter";
+import Footer from "@/components/Footer";
 
 function Navbar() {
   return (
