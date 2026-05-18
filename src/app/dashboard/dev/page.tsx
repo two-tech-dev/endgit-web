@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import {
   GitBranch,
@@ -16,7 +16,17 @@ import {
   Loader2,
   PackagePlus,
   ArrowRight,
+  ChevronDown,
+  Building2,
 } from "lucide-react";
+
+interface OrgSummary {
+  id: number;
+  login: string;
+  description: string | null;
+  avatarUrl: string;
+  url: string;
+}
 
 interface Repo {
   id: number;
@@ -52,13 +62,58 @@ export default function DevDashboardPage() {
     limit: number;
     resetsAt: string;
   } | null>(null);
+  const [orgs, setOrgs] = useState<OrgSummary[]>([]);
+  const [selectedOrg, setSelectedOrg] = useState<string | null>(null);
+  const [orgsLoading, setOrgsLoading] = useState(false);
+  const [orgsError, setOrgsError] = useState("");
+  const [orgDropdownOpen, setOrgDropdownOpen] = useState(false);
+  const orgDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (sessionStatus !== "authenticated") return;
-    fetchRepos(1);
+    fetchRepos(1, null);
+    fetchOrgs();
   }, [sessionStatus]);
 
-  const fetchRepos = async (pageNumber: number = 1) => {
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        orgDropdownRef.current &&
+        !orgDropdownRef.current.contains(e.target as Node)
+      ) {
+        setOrgDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const fetchOrgs = async () => {
+    setOrgsLoading(true);
+    setOrgsError("");
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const token = (session?.user as any)?.apiToken;
+      const res = await fetch(`${apiUrl}/api/v1/github/orgs`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      const json = await res.json();
+      if (json.success) {
+        setOrgs(json.data);
+      } else {
+        setOrgsError(json.error || "Failed to fetch organizations");
+      }
+    } catch {
+      setOrgsError("Failed to load organizations");
+    } finally {
+      setOrgsLoading(false);
+    }
+  };
+
+  const fetchRepos = async (
+    pageNumber: number = 1,
+    org: string | null = selectedOrg,
+  ) => {
     if (pageNumber === 1) setLoading(true);
     else setIsFetchingMore(true);
 
@@ -92,8 +147,9 @@ export default function DevDashboardPage() {
         }
       }
 
+      const orgParam = org ? `&org=${encodeURIComponent(org)}` : "";
       const res = await fetch(
-        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=30`,
+        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=30${orgParam}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         },
@@ -118,6 +174,12 @@ export default function DevDashboardPage() {
       if (pageNumber === 1) setLoading(false);
       else setIsFetchingMore(false);
     }
+  };
+
+  const handleOrgChange = (orgLogin: string | null) => {
+    setSelectedOrg(orgLogin);
+    setOrgDropdownOpen(false);
+    fetchRepos(1, orgLogin);
   };
 
   const toggleCI = async (repo: Repo) => {
@@ -181,7 +243,7 @@ export default function DevDashboardPage() {
       }
 
       // Refresh current repos by reloading page 1
-      await fetchRepos(1);
+      await fetchRepos(1, selectedOrg);
     } catch (err: any) {
       alert(`An error occurred while toggling CI: ${err.message}`);
     } finally {
@@ -569,6 +631,207 @@ export default function DevDashboardPage() {
             >
               ⚠️ Build quota exceeded. New pushes will not trigger builds until
               the quota resets. Contact an admin to increase your limit.
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Org Selector */}
+      {orgsLoading && (
+        <div
+          className="card"
+          style={{
+            padding: "var(--space-4) var(--space-5)",
+            marginBottom: "var(--space-5)",
+            display: "flex",
+            alignItems: "center",
+            gap: "var(--space-3)",
+          }}
+        >
+          <Loader2
+            size={16}
+            color="var(--accent-cyan)"
+            style={{ animation: "spin 1s linear infinite" }}
+          />
+          <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+            Loading organizations...
+          </span>
+        </div>
+      )}
+      {orgsError && !orgsLoading && (
+        <div
+          className="card"
+          style={{
+            padding: "var(--space-3) var(--space-5)",
+            marginBottom: "var(--space-5)",
+            borderLeft: "3px solid var(--status-warning)",
+            fontSize: "0.8125rem",
+            color: "var(--status-warning)",
+          }}
+        >
+          {orgsError}
+        </div>
+      )}
+      {!orgsLoading && !orgsError && orgs.length > 0 && (
+        <div
+          ref={orgDropdownRef}
+          style={{
+            position: "relative",
+            marginBottom: "var(--space-5)",
+          }}
+        >
+          <button
+            onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-3)",
+              padding: "var(--space-3) var(--space-4)",
+              borderRadius: "var(--radius-md)",
+              border: "1px solid var(--border-color)",
+              background: "var(--bg-card)",
+              cursor: "pointer",
+              fontSize: "0.875rem",
+              color: "var(--text-primary)",
+              minWidth: "240px",
+              transition: "border-color 150ms",
+            }}
+          >
+            {selectedOrg ? (
+              <>
+                <img
+                  src={orgs.find((o) => o.login === selectedOrg)?.avatarUrl}
+                  alt=""
+                  width={20}
+                  height={20}
+                  style={{ borderRadius: "var(--radius-full)" }}
+                />
+                <span style={{ fontWeight: 500, flex: 1, textAlign: "left" }}>
+                  {selectedOrg}
+                </span>
+              </>
+            ) : (
+              <>
+                <Building2 size={18} color="var(--text-muted)" />
+                <span style={{ flex: 1, textAlign: "left" }}>
+                  All organizations
+                </span>
+              </>
+            )}
+            <ChevronDown
+              size={16}
+              color="var(--text-muted)"
+              style={{
+                transform: orgDropdownOpen ? "rotate(180deg)" : "none",
+                transition: "transform 150ms",
+              }}
+            />
+          </button>
+          {orgDropdownOpen && (
+            <div
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: 0,
+                marginTop: "4px",
+                minWidth: "280px",
+                background: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "var(--radius-md)",
+                boxShadow: "var(--shadow-lg)",
+                zIndex: 50,
+                overflow: "hidden",
+              }}
+            >
+              <button
+                onClick={() => handleOrgChange(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-3)",
+                  width: "100%",
+                  padding: "var(--space-3) var(--space-4)",
+                  border: "none",
+                  background:
+                    selectedOrg === null
+                      ? "var(--bg-secondary)"
+                      : "transparent",
+                  cursor: "pointer",
+                  fontSize: "0.875rem",
+                  color: "var(--text-primary)",
+                  textAlign: "left",
+                  transition: "background 100ms",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "var(--bg-secondary)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background =
+                    selectedOrg === null
+                      ? "var(--bg-secondary)"
+                      : "transparent")
+                }
+              >
+                <Building2 size={18} color="var(--text-muted)" />
+                <span>All organizations</span>
+              </button>
+              {orgs.map((org) => (
+                <button
+                  key={org.id}
+                  onClick={() => handleOrgChange(org.login)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "var(--space-3)",
+                    width: "100%",
+                    padding: "var(--space-3) var(--space-4)",
+                    border: "none",
+                    borderTop: "1px solid var(--border-color)",
+                    background:
+                      selectedOrg === org.login
+                        ? "var(--bg-secondary)"
+                        : "transparent",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                    color: "var(--text-primary)",
+                    textAlign: "left",
+                    transition: "background 100ms",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = "var(--bg-secondary)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background =
+                      selectedOrg === org.login
+                        ? "var(--bg-secondary)"
+                        : "transparent")
+                  }
+                >
+                  <img
+                    src={org.avatarUrl}
+                    alt=""
+                    width={20}
+                    height={20}
+                    style={{ borderRadius: "var(--radius-full)" }}
+                  />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontWeight: 500 }}>{org.login}</div>
+                    {org.description && (
+                      <div
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "var(--text-muted)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {org.description}
+                      </div>
+                    )}
+                  </div>
+                </button>
+              ))}
             </div>
           )}
         </div>
