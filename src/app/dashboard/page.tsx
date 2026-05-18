@@ -140,7 +140,7 @@ export default async function DashboardPage() {
               margin: "0 auto var(--space-6)",
             }}
           >
-            <PackagePlus size={40} color="var(--accent-purple)" />
+            <PackagePlus size={40} color="var(--accent-primary)" />
           </div>
           <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
             Welcome to EndGit!
@@ -253,7 +253,7 @@ export default async function DashboardPage() {
               background: "rgba(124, 58, 237, 0.1)",
               padding: "var(--space-3)",
               borderRadius: "var(--radius-md)",
-              color: "var(--accent-purple)",
+              color: "var(--accent-primary)",
             }}
           >
             <PackagePlus size={24} />
@@ -288,7 +288,7 @@ export default async function DashboardPage() {
               background: "rgba(6, 182, 212, 0.1)",
               padding: "var(--space-3)",
               borderRadius: "var(--radius-md)",
-              color: "var(--accent-cyan)",
+              color: "var(--accent-primary)",
             }}
           >
             <Activity size={24} />
@@ -485,7 +485,7 @@ export default async function DashboardPage() {
                       color: "var(--text-primary)",
                     }}
                   >
-                    <Activity size={14} color="var(--accent-cyan)" />{" "}
+                    <Activity size={14} color="var(--accent-primary)" />{" "}
                     <AnimatedNumber value={plugin.downloads} />
                   </div>
                 </div>

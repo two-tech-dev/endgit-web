@@ -204,7 +204,7 @@ export default async function PluginsPage({
                       borderRadius: "var(--radius-md)",
                       border:
                         p === currentPage
-                          ? "1px solid var(--accent-cyan)"
+                          ? "1px solid var(--accent-primary)"
                           : "1px solid var(--border-color)",
                       background:
                         p === currentPage
@@ -212,7 +212,7 @@ export default async function PluginsPage({
                           : "var(--bg-card)",
                       color:
                         p === currentPage
-                          ? "var(--accent-cyan)"
+                          ? "var(--accent-primary)"
                           : "var(--text-secondary)",
                       fontSize: "0.875rem",
                       fontWeight: p === currentPage ? 700 : 500,

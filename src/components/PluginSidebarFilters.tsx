@@ -97,7 +97,7 @@ export default function PluginSidebarFilters() {
               style={{
                 color:
                   currentSort === opt.value
-                    ? "var(--accent-purple)"
+                    ? "var(--accent-primary)"
                     : "var(--text-secondary)",
                 cursor: "pointer",
                 fontWeight: currentSort === opt.value ? 600 : 400,
@@ -144,7 +144,7 @@ export default function PluginSidebarFilters() {
               id="type-all"
               checked={currentType === ""}
               onChange={() => updateFilter("type", "")}
-              style={{ accentColor: "var(--accent-purple)" }}
+              style={{ accentColor: "var(--accent-primary)" }}
             />
             <label htmlFor="type-all" style={{ cursor: "pointer" }}>
               All Types
@@ -164,7 +164,7 @@ export default function PluginSidebarFilters() {
               id="type-python"
               checked={currentType === "PYTHON"}
               onChange={() => updateFilter("type", "PYTHON")}
-              style={{ accentColor: "var(--accent-purple)" }}
+              style={{ accentColor: "var(--accent-primary)" }}
             />
             <label htmlFor="type-python" style={{ cursor: "pointer" }}>
               Python (.whl)
@@ -184,7 +184,7 @@ export default function PluginSidebarFilters() {
               id="type-cpp"
               checked={currentType === "CPP"}
               onChange={() => updateFilter("type", "CPP")}
-              style={{ accentColor: "var(--accent-purple)" }}
+              style={{ accentColor: "var(--accent-primary)" }}
             />
             <label htmlFor="type-cpp" style={{ cursor: "pointer" }}>
               C++ (.so)

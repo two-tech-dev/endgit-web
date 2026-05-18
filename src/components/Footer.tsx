@@ -44,7 +44,7 @@ export default function Footer() {
                 color: "var(--text-primary)",
               }}
             >
-              endgit<span style={{ color: "var(--accent-cyan)" }}>.</span>
+              endgit<span style={{ color: "var(--accent-primary)" }}>.</span>
             </span>
           </div>
           <p
@@ -282,7 +282,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: "var(--accent-cyan)",
+                color: "var(--accent-primary)",
                 textDecoration: "none",
                 fontWeight: 600,
               }}

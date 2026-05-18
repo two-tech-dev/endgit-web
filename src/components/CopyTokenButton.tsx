@@ -34,7 +34,7 @@ export default function CopyTokenButton({ token }: { token: string }) {
             background: "rgba(124, 58, 237, 0.1)",
             padding: "8px",
             borderRadius: "8px",
-            color: "var(--accent-purple)",
+            color: "var(--accent-primary)",
           }}
         >
           <Key size={20} />

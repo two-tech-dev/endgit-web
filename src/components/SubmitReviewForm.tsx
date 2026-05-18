@@ -287,7 +287,7 @@ export default function SubmitReviewForm({
             padding: "var(--space-4)",
             background: "rgba(139, 92, 246, 0.05)",
             borderRadius: "var(--radius-md)",
-            borderLeft: "4px solid var(--accent-purple)",
+            borderLeft: "4px solid var(--accent-primary)",
           }}
         >
           <p
@@ -305,7 +305,7 @@ export default function SubmitReviewForm({
               href="/rules"
               target="_blank"
               style={{
-                color: "var(--accent-cyan)",
+                color: "var(--accent-primary)",
                 textDecoration: "underline",
               }}
             >
@@ -512,7 +512,7 @@ export default function SubmitReviewForm({
                     gap: "4px",
                     fontSize: "0.75rem",
                     background: "rgba(14, 165, 233, 0.1)",
-                    color: "var(--accent-cyan)",
+                    color: "var(--accent-primary)",
                     border: "1px solid rgba(14, 165, 233, 0.2)",
                     borderRadius: "var(--radius-sm)",
                     padding: "4px 8px",
@@ -616,7 +616,7 @@ export default function SubmitReviewForm({
                     checked={selectedCategories.includes(cat)}
                     onChange={() => toggleCategory(cat)}
                     style={{
-                      accentColor: "var(--accent-purple)",
+                      accentColor: "var(--accent-primary)",
                       width: "16px",
                       height: "16px",
                     }}
@@ -691,7 +691,7 @@ export default function SubmitReviewForm({
                     background: "none",
                     border: "none",
                     cursor: "pointer",
-                    color: "var(--accent-cyan)",
+                    color: "var(--accent-primary)",
                     opacity: isFetchingLicense ? 0.5 : 1,
                   }}
                   title="Fetch from GitHub"
@@ -758,7 +758,7 @@ export default function SubmitReviewForm({
                       }
                     }}
                     style={{
-                      accentColor: "var(--accent-purple)",
+                      accentColor: "var(--accent-primary)",
                       width: "16px",
                       height: "16px",
                     }}

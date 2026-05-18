@@ -39,7 +39,7 @@ export default function TypewriterHeading() {
         }}
       >
         {fullText}
-        <span style={{ color: "var(--accent-cyan)" }}>{highlightText}</span>
+        <span style={{ color: "var(--accent-primary)" }}>{highlightText}</span>
       </h1>
 
       {/* Absolutely positioned typing text */}
@@ -57,7 +57,7 @@ export default function TypewriterHeading() {
         }}
       >
         {fullText.slice(0, textIndex)}
-        <span style={{ color: "var(--accent-cyan)" }}>
+        <span style={{ color: "var(--accent-primary)" }}>
           {highlightText.slice(0, highlightIndex)}
         </span>
         <span
@@ -69,7 +69,7 @@ export default function TypewriterHeading() {
                 : showCursor
                   ? 1
                   : 0,
-            color: "var(--accent-cyan)",
+            color: "var(--accent-primary)",
             marginLeft: "2px",
             display: "inline-block",
             fontWeight: 300,

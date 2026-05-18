@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
 
-export default function ThemeToggle() {
+export function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark" | null;
@@ -20,7 +21,6 @@ export default function ThemeToggle() {
       document.documentElement.setAttribute("data-theme", "dark");
     }
 
-    // Listen for system theme changes if no user preference is set
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem("theme")) {
@@ -31,19 +31,25 @@ export default function ThemeToggle() {
     };
 
     mediaQuery.addEventListener("change", handler);
+    setMounted(true);
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  const toggleTheme = () => {
-    const next = theme === "light" ? "dark" : "light";
-    setTheme(next);
-    localStorage.setItem("theme", next);
-    document.documentElement.setAttribute("data-theme", next);
-  };
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      localStorage.setItem("theme", next);
+      document.documentElement.setAttribute("data-theme", next);
+      return next;
+    });
+  }, []);
 
-  // Avoid rendering until mounted to prevent hydration mismatch
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  return { theme, mounted, toggleTheme };
+}
+
+export default function ThemeToggle() {
+  const { theme, mounted, toggleTheme } = useTheme();
+
   if (!mounted) return <div style={{ width: 32, height: 32 }} />;
 
   return (
@@ -55,7 +61,7 @@ export default function ThemeToggle() {
         justifyContent: "center",
         width: 32,
         height: 32,
-        borderRadius: "50%",
+        borderRadius: "var(--radius-full)",
         background: "var(--bg-secondary)",
         color: "var(--text-secondary)",
         transition: "all var(--transition-fast)",

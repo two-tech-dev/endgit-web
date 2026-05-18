@@ -48,7 +48,7 @@ function StatusBadge({ status }: { status: string }) {
       icon: <XCircle size={14} />,
     },
     RUNNING: {
-      color: "var(--accent-cyan)",
+      color: "var(--accent-primary)",
       bg: "rgba(14, 165, 233, 0.1)",
       icon: (
         <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
@@ -252,7 +252,7 @@ export default async function BuildDetailPage({
                           ? "var(--status-success)"
                           : build.linuxBuildStatus === "FAILED"
                             ? "var(--status-error)"
-                            : "var(--accent-cyan)",
+                            : "var(--accent-primary)",
                     }}
                   >
                     🐧 Linux:{" "}
@@ -271,7 +271,7 @@ export default async function BuildDetailPage({
                           ? "var(--status-success)"
                           : build.winBuildStatus === "FAILED"
                             ? "var(--status-error)"
-                            : "var(--accent-cyan)",
+                            : "var(--accent-primary)",
                     }}
                   >
                     🪟 Windows:{" "}
@@ -318,7 +318,7 @@ export default async function BuildDetailPage({
                 color: "var(--text-primary)",
               }}
             >
-              <GitBranch size={14} color="var(--accent-purple)" />{" "}
+              <GitBranch size={14} color="var(--accent-primary)" />{" "}
               {build.branch}
             </div>
           </div>
@@ -366,7 +366,7 @@ export default async function BuildDetailPage({
                 color: "var(--text-primary)",
               }}
             >
-              <Clock size={14} color="var(--accent-cyan)" />{" "}
+              <Clock size={14} color="var(--accent-primary)" />{" "}
               {build.duration ? `${build.duration}s` : "—"}
             </div>
           </div>

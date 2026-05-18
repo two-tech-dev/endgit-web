@@ -111,13 +111,13 @@ export default async function PluginDetailPage({
       case "CONTRIBUTOR":
         return {
           background: "rgba(14, 165, 233, 0.1)",
-          color: "var(--accent-cyan)",
+          color: "var(--accent-primary)",
           border: "1px solid rgba(14, 165, 233, 0.2)",
         };
       case "TRANSLATOR":
         return {
           background: "rgba(168, 85, 247, 0.1)",
-          color: "var(--accent-purple)",
+          color: "var(--accent-primary)",
           border: "1px solid rgba(168, 85, 247, 0.2)",
         };
       case "REQUESTER":
@@ -266,7 +266,7 @@ export default async function PluginDetailPage({
                       fontWeight: 500,
                       textDecoration: "none",
                       background: "rgba(139, 92, 246, 0.08)",
-                      color: "var(--accent-purple)",
+                      color: "var(--accent-primary)",
                       border: "1px solid rgba(139, 92, 246, 0.2)",
                       transition: "all 200ms",
                     }}
@@ -295,7 +295,7 @@ export default async function PluginDetailPage({
                         <Link
                           href={`/plugins/by/${repoOwner}`}
                           style={{
-                            color: "var(--accent-cyan)",
+                            color: "var(--accent-primary)",
                             textDecoration: "none",
                           }}
                         >
@@ -328,7 +328,7 @@ export default async function PluginDetailPage({
                       <Link
                         href={`/plugins/by/${plugin.author.username}`}
                         style={{
-                          color: "var(--accent-cyan)",
+                          color: "var(--accent-primary)",
                           textDecoration: "none",
                         }}
                       >
@@ -461,7 +461,7 @@ export default async function PluginDetailPage({
                 gap: "var(--space-2)",
               }}
             >
-              <Terminal size={18} color="var(--accent-cyan)" /> Quick Install
+              <Terminal size={18} color="var(--accent-primary)" /> Quick Install
               (CLI)
             </h3>
             <div
@@ -823,7 +823,7 @@ export default async function PluginDetailPage({
                   <a
                     href={plugin.repoUrl}
                     style={{
-                      color: "var(--accent-cyan)",
+                      color: "var(--accent-primary)",
                       display: "flex",
                       alignItems: "center",
                       gap: "0.25rem",

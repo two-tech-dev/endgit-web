@@ -32,7 +32,7 @@ export default async function AuthorPluginsPage({
           }}
         >
           Plugins by{" "}
-          <span style={{ color: "var(--accent-cyan)" }}>{username}</span>
+          <span style={{ color: "var(--accent-primary)" }}>{username}</span>
         </h1>
         <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
           Viewing all {realPlugins.length} plugins created by this author.
@@ -123,7 +123,7 @@ export default async function AuthorPluginsPage({
                       style={{
                         fontSize: "1.125rem",
                         margin: "0 0 4px 0",
-                        color: "var(--accent-cyan)",
+                        color: "var(--accent-primary)",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",

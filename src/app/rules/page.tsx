@@ -343,7 +343,7 @@ export default function RulesPage() {
             border: "1px solid rgba(124,58,237,0.2)",
           }}
         >
-          <Shield size={32} color="var(--accent-purple)" />
+          <Shield size={32} color="var(--accent-primary)" />
         </div>
         <h1 className="heading-1" style={{ marginBottom: "var(--space-3)" }}>
           Plugin Submission Rules

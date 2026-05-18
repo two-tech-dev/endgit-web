@@ -104,7 +104,7 @@ function TerminalMock() {
               {line.isCommand ? (
                 <>
                   <span style={{ color: "#f38ba8", userSelect: "none" }}>
-                    ╰─λ
+                    $
                   </span>
                   <span style={{ color: "#cdd6f4" }}>{line.text}</span>
                 </>
@@ -112,7 +112,6 @@ function TerminalMock() {
                 <span
                   style={{
                     color: line.success ? "#a6e3a1" : "#89dceb",
-                    paddingLeft: "38px",
                   }}
                 >
                   {line.text}
@@ -127,7 +126,7 @@ function TerminalMock() {
               gap: "8px",
             }}
           >
-            <span style={{ color: "#f38ba8", userSelect: "none" }}>╰─λ</span>
+            <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
             <span
               style={{
                 display: "inline-block",
@@ -227,8 +226,8 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   textTransform: "uppercase",
                   padding: "0.3rem 0.875rem",
                   borderRadius: "var(--radius-full)",
-                  background: "var(--color-brand-light)",
-                  color: "var(--accent-purple)",
+                  background: "rgba(99,102,241,0.08)",
+                  color: "var(--accent-primary)",
                   border: "1px solid rgba(99,102,241,0.2)",
                   display: "inline-flex",
                   alignItems: "center",
@@ -254,7 +253,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 Ship plugins for{" "}
                 <span
                   style={{
-                    background: "linear-gradient(135deg, #6366f1, #4338ca)",
+                    background: "linear-gradient(135deg, #0ea5e9, #0284c7)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -276,7 +275,18 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   margin: "0 0 var(--space-6) 0",
                 }}
               >
-                The plugin registry for Endstone — push to GitHub, get compiled
+                The{" "}
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #0ea5e9, #0284c7)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  <b>official</b>
+                </span>{" "}
+                plugin registry for Endstone - push to GitHub, get compiled
                 builds, and install with one command.
               </p>
             </FadeIn>
@@ -424,19 +434,20 @@ export default function HomeContent({ stats }: HomeContentProps) {
         <StaggerContainer
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexWrap: "wrap",
             gap: "var(--space-5)",
-            maxWidth: "640px",
-            margin: "0 auto",
+            justifyContent: "center",
           }}
         >
           {STEPS.map((step) => (
             <StaggerItem
               key={step.number}
               style={{
+                flex: "1 1 280px",
+                maxWidth: "360px",
                 display: "flex",
                 alignItems: "flex-start",
-                gap: "var(--space-5)",
+                gap: "var(--space-4)",
                 padding: "var(--space-5) var(--space-6)",
                 background: "var(--bg-card)",
                 border: "1px solid var(--border-color)",
@@ -457,7 +468,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "var(--accent-purple)",
+                  color: "var(--accent-primary)",
                   flexShrink: 0,
                   fontWeight: 700,
                   fontSize: "var(--text-sm)",
@@ -555,7 +566,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "var(--accent-purple)",
+                color: "var(--accent-primary)",
                 flexShrink: 0,
               }}
             >
@@ -618,7 +629,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: "var(--accent-purple)",
+                  color: "var(--accent-primary)",
                 }}
               >
                 {f.icon}

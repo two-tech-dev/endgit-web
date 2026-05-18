@@ -1,13 +1,13 @@
 /* ─────────────────────────────────────────────────────────
 // EndGit Design System
-// Dark navy, electric purple, cyan accent
+// Dark navy, cyan accent
 // ───────────────────────────────────────────────────────── */
 
 :root {
   /* ── Brand (10% accent) ── */
-  --color-brand: #6366f1;
-  --color-brand-light: #eef2ff;
-  --color-brand-dark: #4f46e5;
+  --color-brand: #0ea5e9;
+  --color-brand-light: #e0f2fe;
+  --color-brand-dark: #0284c7;
 
   /* ── Surfaces (60% canvas, 30% secondary) ── */
   --bg-main: #f8fafc;
@@ -19,10 +19,10 @@
   --text-secondary: #475569;
   --text-muted: #94a3b8;
 
-  /* ── Accent (legacy aliases) ── */
-  --accent-purple: #6366f1;
-  --accent-purple-hover: #4f46e5;
-  --accent-purple-glow: rgba(99, 102, 241, 0.15);
+  /* ── Accent ── */
+  --accent-primary: #0ea5e9;
+  --accent-primary-hover: #0284c7;
+  --accent-primary-glow: rgba(14, 165, 233, 0.15);
   --accent-cyan: #0ea5e9;
   --accent-cyan-hover: #0284c7;
   --accent-cyan-glow: rgba(14, 165, 233, 0.15);
@@ -96,11 +96,11 @@
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
 
-  --color-brand-light: #1e1b4b;
+  --color-brand-light: #0c4a6e;
 
-  --accent-purple: #818cf8;
-  --accent-purple-hover: #6366f1;
-  --accent-purple-glow: rgba(129, 140, 248, 0.2);
+  --accent-primary: #38bdf8;
+  --accent-primary-hover: #0ea5e9;
+  --accent-primary-glow: rgba(56, 189, 248, 0.2);
 
   --accent-cyan: #38bdf8;
   --accent-cyan-hover: #0ea5e9;
@@ -335,7 +335,11 @@ ol {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-primary-hover)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -424,9 +428,9 @@ ol {
 }
 
 .badge-purple {
-  background: rgba(124, 58, 237, 0.2);
-  color: #a78bfa;
-  border: 1px solid rgba(124, 58, 237, 0.3);
+  background: rgba(14, 165, 233, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
 .badge-cyan {
@@ -495,8 +499,8 @@ ol {
 
 .input:focus {
   outline: none;
-  border-color: var(--accent-purple);
-  box-shadow: 0 0 0 3px var(--accent-purple-glow);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-glow);
 }
 
 .input::placeholder {
@@ -736,7 +740,7 @@ ol {
   }
 
   .navbar-container {
-    justify-content: flex-end !important;
+    justify-content: space-between !important;
   }
 
   .navbar-logo {

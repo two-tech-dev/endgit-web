@@ -91,7 +91,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   style={{
                     fontSize: "1.125rem",
                     margin: "0 0 4px 0",
-                    color: "var(--accent-cyan)",
+                    color: "var(--accent-primary)",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",

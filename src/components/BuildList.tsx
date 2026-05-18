@@ -39,7 +39,7 @@ function StatusIcon({ status }: { status: string }) {
       return (
         <Loader2
           size={16}
-          color="var(--accent-cyan)"
+          color="var(--accent-primary)"
           style={{ animation: "spin 1s linear infinite" }}
         />
       );
@@ -58,7 +58,7 @@ function statusColor(status: string) {
       return "var(--status-error)";
 
     case "RUNNING":
-      return "var(--accent-cyan)";
+      return "var(--accent-primary)";
 
     default:
       return "var(--text-muted)";
@@ -118,7 +118,7 @@ export default function BuildsList({
               padding: "2px 10px",
               borderRadius: "var(--radius-full)",
               background: "rgba(6, 182, 212, 0.1)",
-              color: "var(--accent-cyan)",
+              color: "var(--accent-primary)",
               border: "1px solid rgba(6, 182, 212, 0.2)",
             }}
           >

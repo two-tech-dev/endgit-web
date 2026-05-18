@@ -56,7 +56,7 @@ export default function TermsOfServicePage() {
             href="https://2tech.studio"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--accent-cyan)", textDecoration: "none" }}
+            style={{ color: "var(--accent-primary)", textDecoration: "none" }}
           >
             https://2tech.studio
           </a>
@@ -666,7 +666,7 @@ export default function TermsOfServicePage() {
           please contact us at{" "}
           <a
             href="mailto:two-tech-dev@proton.me"
-            style={{ color: "var(--accent-cyan)", textDecoration: "none" }}
+            style={{ color: "var(--accent-primary)", textDecoration: "none" }}
           >
             two-tech-dev@proton.me
           </a>{" "}

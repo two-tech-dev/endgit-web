@@ -70,7 +70,7 @@ export default function DependencyGraph({ slug }: { slug: string }) {
           marginBottom: "var(--space-4)",
         }}
       >
-        <GitBranch size={18} color="var(--accent-purple)" /> Dependency Graph
+        <GitBranch size={18} color="var(--accent-primary)" /> Dependency Graph
       </h3>
 
       {loading ? (
@@ -153,15 +153,15 @@ function TreeNode({
           size={13}
           color={
             isRoot
-              ? "var(--accent-cyan)"
+              ? "var(--accent-primary)"
               : node.required
-                ? "var(--accent-purple)"
+                ? "var(--accent-primary)"
                 : "var(--text-muted)"
           }
         />
         <span
           style={{
-            color: isRoot ? "var(--accent-cyan)" : "var(--text-primary)",
+            color: isRoot ? "var(--accent-primary)" : "var(--text-primary)",
             fontWeight: isRoot ? 600 : 400,
           }}
         >

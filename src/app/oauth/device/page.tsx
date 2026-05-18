@@ -107,7 +107,7 @@ export default function DeviceAuthPage() {
           size={32}
           style={{
             animation: "spin 1s linear infinite",
-            color: "var(--accent-cyan)",
+            color: "var(--accent-primary)",
           }}
         />
       </div>
@@ -148,7 +148,7 @@ export default function DeviceAuthPage() {
             margin: "0 auto var(--space-6)",
           }}
         >
-          <Terminal size={36} color="var(--accent-cyan)" />
+          <Terminal size={36} color="var(--accent-primary)" />
         </div>
 
         <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>
@@ -397,7 +397,7 @@ export default function DeviceAuthPage() {
               . Not you?{" "}
               <a
                 href="/api/auth/signout"
-                style={{ color: "var(--accent-cyan)" }}
+                style={{ color: "var(--accent-primary)" }}
               >
                 Sign out
               </a>

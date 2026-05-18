@@ -110,7 +110,7 @@ export default function SubmitForReview({
               gap: "var(--space-2)",
             }}
           >
-            <Send size={16} color="var(--accent-purple)" /> Submit for Review
+            <Send size={16} color="var(--accent-primary)" /> Submit for Review
           </h3>
           <p
             style={{

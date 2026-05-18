@@ -541,7 +541,7 @@ export default function DevDashboardPage() {
               margin: "0 auto var(--space-6)",
             }}
           >
-            <PackagePlus size={40} color="var(--accent-purple)" />
+            <PackagePlus size={40} color="var(--accent-primary)" />
           </div>
           <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
             Welcome to EndGit!
@@ -604,7 +604,7 @@ export default function DevDashboardPage() {
               gap: "var(--space-3)",
             }}
           >
-            <Settings size={28} color="var(--accent-cyan)" /> Dev Dashboard
+            <Settings size={28} color="var(--accent-primary)" /> Dev Dashboard
           </h1>
           <p
             style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}
@@ -748,7 +748,7 @@ export default function DevDashboardPage() {
                       ? "var(--status-error)"
                       : quota.used >= quota.limit * 0.8
                         ? "var(--status-warning)"
-                        : "var(--accent-cyan)",
+                        : "var(--accent-primary)",
                   transition: "width 300ms",
                 }}
               />
@@ -1021,7 +1021,7 @@ export default function DevDashboardPage() {
                             width: 6,
                             height: 6,
                             borderRadius: "50%",
-                            background: "var(--accent-cyan)",
+                            background: "var(--accent-primary)",
                             flexShrink: 0,
                           }}
                         />
@@ -1047,7 +1047,7 @@ export default function DevDashboardPage() {
                 gap: "var(--space-2)",
                 padding: "var(--space-2) var(--space-3)",
                 borderRadius: "var(--radius-full)",
-                border: `1px solid ${selectedOrg === null ? "var(--accent-cyan)" : "var(--border-color)"}`,
+                border: `1px solid ${selectedOrg === null ? "var(--accent-primary)" : "var(--border-color)"}`,
                 background:
                   selectedOrg === null
                     ? "rgba(6,182,212,0.1)"
@@ -1057,7 +1057,7 @@ export default function DevDashboardPage() {
                 fontWeight: selectedOrg === null ? 600 : 400,
                 color:
                   selectedOrg === null
-                    ? "var(--accent-cyan)"
+                    ? "var(--accent-primary)"
                     : "var(--text-muted)",
                 transition: "all 150ms",
               }}
@@ -1075,7 +1075,7 @@ export default function DevDashboardPage() {
                   gap: "var(--space-2)",
                   padding: "var(--space-2) var(--space-3)",
                   borderRadius: "var(--radius-full)",
-                  border: `1px solid ${selectedOrg === org.login ? "var(--accent-cyan)" : "var(--border-color)"}`,
+                  border: `1px solid ${selectedOrg === org.login ? "var(--accent-primary)" : "var(--border-color)"}`,
                   background:
                     selectedOrg === org.login
                       ? "rgba(6,182,212,0.1)"
@@ -1085,7 +1085,7 @@ export default function DevDashboardPage() {
                   fontWeight: selectedOrg === org.login ? 600 : 400,
                   color:
                     selectedOrg === org.login
-                      ? "var(--accent-cyan)"
+                      ? "var(--accent-primary)"
                       : "var(--text-muted)",
                   transition: "all 150ms",
                 }}
@@ -1479,7 +1479,7 @@ export default function DevDashboardPage() {
                           alignItems: "center",
                           gap: "4px",
                           fontSize: "0.8125rem",
-                          color: "var(--accent-cyan)",
+                          color: "var(--accent-primary)",
                           fontWeight: 500,
                         }}
                       >

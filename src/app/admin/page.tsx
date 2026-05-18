@@ -655,7 +655,7 @@ export default function AdminPage() {
                               height: "32px",
                               borderRadius: "50%",
                               background:
-                                "linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))",
+                                "linear-gradient(135deg, var(--accent-primary), var(--accent-primary))",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
@@ -998,7 +998,7 @@ export default function AdminPage() {
                       href={`/plugins/${plugin.slug}`}
                       style={{
                         fontSize: "0.75rem",
-                        color: "var(--accent-cyan)",
+                        color: "var(--accent-primary)",
                         textAlign: "center",
                       }}
                     >
@@ -1906,13 +1906,13 @@ export default function AdminPage() {
             {
               label: "Total Users",
               value: stats.users,
-              icon: <Users size={20} color="var(--accent-purple)" />,
+              icon: <Users size={20} color="var(--accent-primary)" />,
               bg: "rgba(139,92,246,0.08)",
             },
             {
               label: "Total Plugins",
               value: stats.plugins,
-              icon: <Package size={20} color="var(--accent-cyan)" />,
+              icon: <Package size={20} color="var(--accent-primary)" />,
               bg: "rgba(14,165,233,0.08)",
             },
             {

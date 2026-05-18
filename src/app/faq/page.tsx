@@ -145,7 +145,7 @@ export default function FAQPage() {
               border: "1px solid rgba(6,182,212,0.15)",
             }}
           >
-            <HelpCircle size={28} color="var(--accent-cyan)" />
+            <HelpCircle size={28} color="var(--accent-primary)" />
           </div>
           <h1 className="heading-1" style={{ marginBottom: "var(--space-2)" }}>
             Frequently Asked Questions

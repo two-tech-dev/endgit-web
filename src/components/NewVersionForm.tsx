@@ -80,7 +80,7 @@ export default function NewVersionForm({
           gap: "6px",
           padding: "0.5rem 1rem",
           borderRadius: "var(--radius-md)",
-          background: "var(--accent-purple)",
+          background: "var(--accent-primary)",
           color: "white",
           border: "none",
           fontSize: "0.875rem",
@@ -385,7 +385,7 @@ export default function NewVersionForm({
                     gap: "6px",
                     padding: "0.625rem 1.25rem",
                     borderRadius: "var(--radius-md)",
-                    background: "var(--accent-purple)",
+                    background: "var(--accent-primary)",
                     color: "white",
                     border: "none",
                     cursor:

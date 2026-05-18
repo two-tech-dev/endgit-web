@@ -294,7 +294,7 @@ export default function PluginRatings({
                 padding: "0.5rem 1.25rem",
                 borderRadius: "var(--radius-md)",
                 background:
-                  myScore > 0 ? "var(--accent-purple)" : "var(--bg-secondary)",
+                  myScore > 0 ? "var(--accent-primary)" : "var(--bg-secondary)",
                 color: myScore > 0 ? "white" : "var(--text-muted)",
                 border: "none",
                 fontSize: "0.8125rem",
@@ -371,7 +371,7 @@ export default function PluginRatings({
                       height: "28px",
                       borderRadius: "4px",
                       background:
-                        "linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))",
+                        "linear-gradient(135deg, var(--accent-primary), var(--accent-primary))",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -404,7 +404,7 @@ export default function PluginRatings({
                     style={{
                       fontWeight: 600,
                       fontSize: "0.875rem",
-                      color: "var(--accent-cyan)",
+                      color: "var(--accent-primary)",
                       textDecoration: "none",
                       display: "flex",
                       alignItems: "center",
@@ -571,7 +571,7 @@ export default function PluginRatings({
                             onClick={() => handleReplySubmit(rating.id)}
                             disabled={replying}
                             style={{
-                              background: "var(--accent-purple)",
+                              background: "var(--accent-primary)",
                               border: "none",
                               color: "white",
                               borderRadius: "var(--radius-sm)",
@@ -594,7 +594,7 @@ export default function PluginRatings({
                         style={{
                           background: "transparent",
                           border: "none",
-                          color: "var(--accent-cyan)",
+                          color: "var(--accent-primary)",
                           cursor: "pointer",
                           fontSize: "0.75rem",
                           fontWeight: 600,

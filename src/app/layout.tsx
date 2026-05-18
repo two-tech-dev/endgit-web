@@ -122,7 +122,7 @@ function Navbar() {
             style={{ width: 42, height: 42, objectFit: "contain" }}
           />
           <span style={{ color: "var(--text-primary)" }}>
-            endgit<span style={{ color: "var(--accent-cyan)" }}>.</span>{" "}
+            endgit<span style={{ color: "var(--accent-primary)" }}>.</span>{" "}
           </span>
         </a>
         <NavbarMobile />

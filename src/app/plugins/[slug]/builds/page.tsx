@@ -61,7 +61,7 @@ function StatusBadge({ status }: { status: string }) {
       icon: <XCircle size={14} />,
     },
     RUNNING: {
-      color: "var(--accent-cyan)",
+      color: "var(--accent-primary)",
       bg: "rgba(14, 165, 233, 0.1)",
       icon: (
         <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
@@ -380,7 +380,7 @@ export default async function PluginBuildsPage({
                             Failed
                           </span>
                         ) : build.status === "RUNNING" ? (
-                          <span style={{ color: "var(--accent-cyan)" }}>
+                          <span style={{ color: "var(--accent-primary)" }}>
                             Running
                           </span>
                         ) : (
@@ -618,7 +618,7 @@ export default async function PluginBuildsPage({
                         borderRadius: "var(--radius-md)",
                         border:
                           p === currentPage
-                            ? "1px solid var(--accent-cyan)"
+                            ? "1px solid var(--accent-primary)"
                             : "1px solid var(--border-color)",
                         background:
                           p === currentPage
@@ -626,7 +626,7 @@ export default async function PluginBuildsPage({
                             : "var(--bg-card)",
                         color:
                           p === currentPage
-                            ? "var(--accent-cyan)"
+                            ? "var(--accent-primary)"
                             : "var(--text-secondary)",
                         fontSize: "0.875rem",
                         fontWeight: p === currentPage ? 700 : 500,

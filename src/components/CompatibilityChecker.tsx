@@ -95,7 +95,7 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
           fontSize: "0.9375rem",
         }}
       >
-        <Server size={16} color="var(--accent-cyan)" /> Compatibility Check
+        <Server size={16} color="var(--accent-primary)" /> Compatibility Check
       </h3>
 
       <label
@@ -128,9 +128,9 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
               fontWeight: 500,
               transition: "all 150ms",
               background:
-                selected === v ? "var(--accent-purple)" : "var(--bg-secondary)",
+                selected === v ? "var(--accent-primary)" : "var(--bg-secondary)",
               color: selected === v ? "#fff" : "var(--text-secondary)",
-              border: `1px solid ${selected === v ? "var(--accent-purple-hover)" : "var(--border-color)"}`,
+              border: `1px solid ${selected === v ? "var(--accent-primary-hover)" : "var(--border-color)"}`,
               cursor: "pointer",
             }}
           >

@@ -10,6 +10,7 @@ import {
   Shield,
 } from "lucide-react";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function NavbarClient({
   mobile = false,
@@ -72,7 +73,7 @@ export default function NavbarClient({
         height: mobile ? "32px" : "28px",
         borderRadius: "50%",
         background:
-          "linear-gradient(135deg, var(--accent-purple), var(--accent-cyan))",
+          "linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover))",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -248,25 +249,35 @@ export default function NavbarClient({
           />
         </button>
 
-        {dropdownOpen && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-1)",
-              padding: "0 0.25rem",
-            }}
-          >
-            {menuItems}
-            <div
-              style={{
-                borderTop: "1px solid var(--border-color)",
-                margin: "0.25rem 0",
-              }}
-            />
-            {signOutButton}
-          </div>
-        )}
+        <AnimatePresence>
+          {dropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{ overflow: "hidden" }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--space-1)",
+                  padding: "0 0.25rem",
+                }}
+              >
+                {menuItems}
+                <div
+                  style={{
+                    borderTop: "1px solid var(--border-color)",
+                    margin: "0.25rem 0",
+                  }}
+                />
+                {signOutButton}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }

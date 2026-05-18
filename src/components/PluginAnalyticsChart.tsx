@@ -112,14 +112,14 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
             color: "var(--text-primary)",
           }}
         >
-          <BarChart3 size={18} color="var(--accent-cyan)" /> Downloads (Last 30
-          Days)
+          <BarChart3 size={18} color="var(--accent-primary)" /> Downloads (Last
+          30 Days)
         </h3>
         <span
           style={{
             fontSize: "1.25rem",
             fontWeight: 700,
-            color: "var(--accent-cyan)",
+            color: "var(--accent-primary)",
           }}
         >
           {totalDownloads.toLocaleString()}
