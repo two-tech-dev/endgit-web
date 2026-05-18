@@ -35,7 +35,7 @@ export default function AnimatedFooter() {
             <img
               src="/logo.png"
               alt="EndGit"
-              style={{ width: 24, height: 24, objectFit: "contain" }}
+              style={{ width: 32, height: 32, objectFit: "contain" }}
             />
             <span
               style={{
@@ -44,7 +44,7 @@ export default function AnimatedFooter() {
                 color: "var(--text-primary)",
               }}
             >
-              EndGit
+              endgit<span style={{ color: "var(--accent-cyan)" }}>.</span>
             </span>
           </div>
           <p

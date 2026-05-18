@@ -95,7 +95,7 @@ export default async function PluginsPage({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "var(--space-8)",
+          marginBottom: "var(--space-4)",
           flexWrap: "wrap",
           gap: "var(--space-4)",
         }}
@@ -120,7 +120,7 @@ export default async function PluginsPage({
 
       <div
         className="plugins-layout"
-        style={{ display: "flex", gap: "var(--space-8)" }}
+        style={{ display: "flex" }}
       >
         {/* Sidebar Filters */}
         <MobileFiltersWrapper searchComponent={<PluginSearch />}>
@@ -139,7 +139,7 @@ export default async function PluginsPage({
                 justifyContent: "center",
                 alignItems: "center",
                 gap: "var(--space-2)",
-                marginTop: "var(--space-10)",
+                marginTop: "var(--space-1)",
                 flexWrap: "wrap",
               }}
             >
