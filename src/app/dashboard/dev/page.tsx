@@ -776,8 +776,7 @@ export default function DevDashboardPage() {
                       transition: "background 100ms",
                     }}
                     onMouseEnter={(e) =>
-                      (e.currentTarget.style.background =
-                        "var(--bg-secondary)")
+                      (e.currentTarget.style.background = "var(--bg-secondary)")
                     }
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.background =
