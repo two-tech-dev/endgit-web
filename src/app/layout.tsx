@@ -7,7 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: metadata = {
+export const metadata: Metadata = {
   title: "endgit — ci/cd & plugin marketplace for endstone",
   description:
     "discover, download, and publish endstone plugins automatically from github. the premier ci/cd and marketplace platform for endstone servers.",
@@ -20,7 +20,7 @@ export const metadata: metadata = {
     "marketplace",
     "endgit",
   ],
-  metadatabase: new url("https://endgit.dev"),
+  metadataBase: new URL("https://endgit.dev"),
   alternates: {
     canonical: "/",
   },
