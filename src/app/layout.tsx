@@ -24,12 +24,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  opengraph: {
+  openGraph: {
     title: "endgit — endstone plugin marketplace",
     description:
       "discover, download, and publish endstone plugins automatically from github.",
     url: "https://endgit.dev",
-    sitename: "endgit",
+    siteName: "endgit",
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
     type: "website",
   },
