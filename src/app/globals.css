@@ -507,7 +507,7 @@ ol {
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 var(--space-4);
+    padding: 0 var(--space-8);
     overflow-x: clip;
   }
 
@@ -844,7 +844,7 @@ ol {
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 var(--space-3);
+    padding: 0 var(--space-6);
   }
 
   .heading-1 {
