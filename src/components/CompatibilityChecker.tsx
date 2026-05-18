@@ -128,7 +128,9 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
               fontWeight: 500,
               transition: "all 150ms",
               background:
-                selected === v ? "var(--accent-primary)" : "var(--bg-secondary)",
+                selected === v
+                  ? "var(--accent-primary)"
+                  : "var(--bg-secondary)",
               color: selected === v ? "#fff" : "var(--text-secondary)",
               border: `1px solid ${selected === v ? "var(--accent-primary-hover)" : "var(--border-color)"}`,
               cursor: "pointer",
