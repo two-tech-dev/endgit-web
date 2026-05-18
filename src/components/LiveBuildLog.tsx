@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Terminal, CheckCircle, XCircle, Shield, Clock } from "lucide-react";
 
+const INITIAL_LINE_LIMIT = 500;
+
 interface Props {
   buildId: string;
   initialLogs?: string;
@@ -20,6 +22,7 @@ export default function LiveBuildLog({
   const [duration, setDuration] = useState<number | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
   const [autoScroll, setAutoScroll] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     if (status !== "RUNNING" && status !== "QUEUED") return;
@@ -62,7 +65,16 @@ export default function LiveBuildLog({
   const isRunning = status === "RUNNING" || status === "QUEUED";
   const isSuccess = status === "SUCCESS";
 
-  const lines = logs ? logs.split("\n") : [];
+  const allLines = logs ? logs.split("\n") : [];
+  const totalLines = allLines.length;
+  const isTruncated =
+    !isRunning && !showAll && totalLines > INITIAL_LINE_LIMIT;
+  const visibleLines = isTruncated
+    ? allLines.slice(totalLines - INITIAL_LINE_LIMIT)
+    : allLines;
+  const hiddenCount = totalLines - visibleLines.length;
+
+  const lineOffset = isTruncated ? hiddenCount : 0;
 
   // Custom log parser for syntax highlighting
   const parseLogLine = (line: string, index: number) => {
@@ -103,7 +115,7 @@ export default function LiveBuildLog({
             fontFamily: "var(--font-mono)",
           }}
         >
-          {index + 1}
+          {index + 1 + lineOffset}
         </span>
         <span
           style={{
@@ -245,8 +257,27 @@ export default function LiveBuildLog({
           overflowY: "auto",
         }}
       >
+        {isTruncated && (
+          <div style={{ textAlign: "center", padding: "0.5rem 0 0.75rem" }}>
+            <button
+              onClick={() => setShowAll(true)}
+              style={{
+                background: "rgba(56, 189, 248, 0.1)",
+                border: "1px solid rgba(56, 189, 248, 0.3)",
+                color: "#38bdf8",
+                padding: "0.375rem 1rem",
+                borderRadius: "var(--radius-md)",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Show all {totalLines} lines ({hiddenCount} hidden)
+            </button>
+          </div>
+        )}
         {logs ? (
-          lines.map((line, i) => parseLogLine(line, i))
+          visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
           <div style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
             <span
@@ -276,7 +307,7 @@ export default function LiveBuildLog({
                 paddingTop: "0.1rem",
               }}
             >
-              {logs ? lines.length + 1 : 2}
+              {logs ? allLines.length + 1 : 2}
             </span>
             <span
               style={{

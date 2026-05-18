@@ -7,6 +7,7 @@ import { authOptions } from "@/lib/auth";
  */
 interface FetchApiOptions extends RequestInit {
   revalidate?: number;
+  noAuth?: boolean;
 }
 
 export async function fetchApi(
@@ -17,12 +18,14 @@ export async function fetchApi(
   const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint}`;
 
   let token = null;
-  try {
-    const session = (await getServerSession(authOptions)) as any;
-    if (session && session.user && session.user.apiToken) {
-      token = session.user.apiToken;
-    }
-  } catch (error) {}
+  if (!options.noAuth) {
+    try {
+      const session = (await getServerSession(authOptions)) as any;
+      if (session && session.user && session.user.apiToken) {
+        token = session.user.apiToken;
+      }
+    } catch (error) {}
+  }
 
   const headers = new Headers(options.headers || {});
 
@@ -34,7 +37,7 @@ export async function fetchApi(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  const { revalidate, ...fetchOptions } = options;
+  const { revalidate, noAuth, ...fetchOptions } = options;
 
   const nextOptions: RequestInit["next"] = revalidate
     ? { revalidate }

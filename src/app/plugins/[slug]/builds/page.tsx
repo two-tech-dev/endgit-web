@@ -24,6 +24,7 @@ async function getPluginBuilds(
 ) {
   const { data } = await fetchApi(
     `/api/v1/builds/plugin/${slug}?page=${page}&pageSize=${pageSize}`,
+    { noAuth: true },
   );
   return {
     builds: data?.data?.builds || [],
@@ -37,7 +38,7 @@ async function getPluginBuilds(
 }
 
 async function getPlugin(slug: string) {
-  const { data } = await fetchApi(`/api/v1/plugins/${slug}`);
+  const { data } = await fetchApi(`/api/v1/plugins/${slug}`, { noAuth: true });
   return data?.data || null;
 }
 
