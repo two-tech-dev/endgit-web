@@ -19,6 +19,7 @@ import {
   ChevronDown,
   Building2,
 } from "lucide-react";
+import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
 
 interface OrgSummary {
   id: number;
@@ -336,17 +337,64 @@ export default function DevDashboardPage() {
       <div
         className="container"
         style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
+          paddingTop: "var(--space-8)",
+          paddingBottom: "var(--space-8)",
+          maxWidth: "1100px",
         }}
       >
-        <Loader2
-          size={32}
-          color="var(--accent-cyan)"
-          style={{ animation: "spin 1s linear infinite" }}
-        />
-        <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+        <div style={{ marginBottom: "var(--space-6)" }}>
+          <Skeleton width="14rem" height="2rem" style={{ marginBottom: "var(--space-2)" }} />
+          <Skeleton width="20rem" height="0.875rem" />
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+            gap: "var(--space-4)",
+            marginBottom: "var(--space-6)",
+          }}
+        >
+          {Array.from({ length: 3 }, (_, i) => (
+            <SkeletonCard key={i} style={{ padding: "var(--space-5)" }}>
+              <Skeleton width="5rem" height="0.6875rem" style={{ marginBottom: "6px" }} />
+              <Skeleton width="3rem" height="1.75rem" />
+            </SkeletonCard>
+          ))}
+        </div>
+        <SkeletonCard style={{ padding: "var(--space-4) var(--space-5)", marginBottom: "var(--space-5)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+            <Skeleton width={20} height={20} borderRadius="var(--radius-full)" />
+            <Skeleton width="10rem" height="0.875rem" />
+          </div>
+        </SkeletonCard>
+        <div style={{ display: "flex", gap: "var(--space-3)", marginBottom: "var(--space-5)", alignItems: "center" }}>
+          <Skeleton width="100%" height="2.5rem" borderRadius="var(--radius-md)" style={{ flex: 1 }} />
+          <Skeleton width="14rem" height="2.5rem" borderRadius="var(--radius-md)" />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <SkeletonCard key={i} style={{ padding: "var(--space-5)", borderLeft: "3px solid var(--border-color)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "var(--space-4)", flex: 1 }}>
+                  <Skeleton width={40} height={40} borderRadius="var(--radius-md)" />
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: "flex", gap: "var(--space-2)", marginBottom: "4px" }}>
+                      <Skeleton width="8rem" height="0.9375rem" />
+                      <Skeleton width="3rem" height="0.6875rem" borderRadius="var(--radius-full)" />
+                    </div>
+                    <Skeleton width="70%" height="0.8125rem" style={{ marginBottom: "6px" }} />
+                    <div style={{ display: "flex", gap: "var(--space-4)" }}>
+                      <Skeleton width="2rem" height="0.75rem" />
+                      <Skeleton width="3rem" height="0.75rem" />
+                      <Skeleton width="4rem" height="0.75rem" />
+                    </div>
+                  </div>
+                </div>
+                <Skeleton width="6rem" height="2rem" borderRadius="var(--radius-md)" />
+              </div>
+            </SkeletonCard>
+          ))}
+        </div>
       </div>
     );
   }
@@ -653,25 +701,45 @@ export default function DevDashboardPage() {
 
       {/* Org Selector Section */}
       {orgsLoading && (
-        <div
-          className="card"
+        <SkeletonCard
           style={{
-            padding: "var(--space-4) var(--space-5)",
+            padding: "var(--space-5)",
             marginBottom: "var(--space-5)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
           }}
         >
-          <Loader2
-            size={16}
-            color="var(--accent-cyan)"
-            style={{ animation: "spin 1s linear infinite" }}
-          />
-          <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
-            Loading organizations...
-          </span>
-        </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "var(--space-4)",
+            }}
+          >
+            <div>
+              <Skeleton
+                width="5rem"
+                height="0.6875rem"
+                style={{ marginBottom: "4px" }}
+              />
+              <Skeleton width="10rem" height="0.875rem" />
+            </div>
+            <Skeleton
+              width="4rem"
+              height="2rem"
+              borderRadius="var(--radius-md)"
+            />
+          </div>
+          <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
+            {Array.from({ length: 3 }, (_, i) => (
+              <Skeleton
+                key={i}
+                width={`${5 + i * 1.5}rem`}
+                height="1.75rem"
+                borderRadius="var(--radius-full)"
+              />
+            ))}
+          </div>
+        </SkeletonCard>
       )}
       {orgsError && !orgsLoading && (
         <div
@@ -1028,18 +1096,76 @@ export default function DevDashboardPage() {
 
       {/* Loading / Error */}
       {loading && (
-        <div style={{ textAlign: "center", padding: "var(--space-12)" }}>
-          <Loader2
-            size={32}
-            color="var(--accent-cyan)"
-            style={{ animation: "spin 1s linear infinite", margin: "0 auto" }}
-          />
-          <p
-            style={{ color: "var(--text-muted)", marginTop: "var(--space-3)" }}
-          >
-            Fetching your repositories from GitHub...
-          </p>
-          <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <SkeletonCard
+              key={i}
+              style={{
+                padding: "var(--space-5)",
+                borderLeft: "3px solid var(--border-color)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "var(--space-4)",
+                    flex: 1,
+                  }}
+                >
+                  <Skeleton
+                    width={40}
+                    height={40}
+                    borderRadius="var(--radius-md)"
+                  />
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "var(--space-2)",
+                        marginBottom: "4px",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Skeleton width="8rem" height="0.9375rem" />
+                      <Skeleton
+                        width="3rem"
+                        height="0.6875rem"
+                        borderRadius="var(--radius-full)"
+                      />
+                      <Skeleton
+                        width="4rem"
+                        height="0.6875rem"
+                        borderRadius="var(--radius-full)"
+                      />
+                    </div>
+                    <Skeleton
+                      width="70%"
+                      height="0.8125rem"
+                      style={{ marginBottom: "6px" }}
+                    />
+                    <div style={{ display: "flex", gap: "var(--space-4)" }}>
+                      <Skeleton width="2rem" height="0.75rem" />
+                      <Skeleton width="3rem" height="0.75rem" />
+                      <Skeleton width="4rem" height="0.75rem" />
+                    </div>
+                  </div>
+                </div>
+                <Skeleton
+                  width="6rem"
+                  height="2rem"
+                  borderRadius="var(--radius-md)"
+                />
+              </div>
+            </SkeletonCard>
+          ))}
         </div>
       )}
 
