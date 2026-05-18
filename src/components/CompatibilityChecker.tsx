@@ -38,7 +38,7 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
           version: "0.10.x",
           status: "compatible",
           note: "Primary target version. All features supported.",
-        }
+        },
       };
       setResult(results[version] || null);
       setChecking(false);

@@ -15,9 +15,7 @@ import {
 import AnimatedNumber from "@/components/AnimatedNumber";
 import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
-import StaggerContainer, {
-  StaggerItem,
-} from "@/components/StaggerContainer";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
 interface HomeContentProps {
   stats: {
@@ -119,9 +117,7 @@ function TerminalMock() {
                   <span style={{ color: "#cdd6f4" }}>{line.text}</span>
                 </>
               ) : (
-                <span
-                  style={{ color: line.success ? "#a6e3a1" : "#89dceb" }}
-                >
+                <span style={{ color: line.success ? "#a6e3a1" : "#89dceb" }}>
                   {line.text}
                 </span>
               )}
