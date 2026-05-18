@@ -57,6 +57,9 @@ export default function DevDashboardPage() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalEnabled, setTotalEnabled] = useState(0);
+  const [totalDisabled, setTotalDisabled] = useState(0);
   const [quota, setQuota] = useState<{
     used: number;
     limit: number;
@@ -163,6 +166,15 @@ export default function DevDashboardPage() {
         }
         setHasMore(json.pagination?.hasMore || false);
         setPage(pageNumber);
+        if (json.pagination?.totalCount !== undefined) {
+          setTotalCount(json.pagination.totalCount);
+        }
+        if (json.pagination?.totalEnabled !== undefined) {
+          setTotalEnabled(json.pagination.totalEnabled);
+        }
+        if (json.pagination?.totalDisabled !== undefined) {
+          setTotalDisabled(json.pagination.totalDisabled);
+        }
       } else {
         setError(json.error || "Failed to fetch repos");
       }
@@ -261,6 +273,9 @@ export default function DevDashboardPage() {
 
   const enabledCount = repos.filter((r) => r.ciEnabled).length;
   const disabledCount = repos.filter((r) => !r.ciEnabled).length;
+  const displayTotal = totalCount || repos.length;
+  const displayEnabled = totalEnabled || enabledCount;
+  const displayDisabled = totalDisabled || disabledCount;
 
   const langColor = (lang: string | null) => {
     switch (lang) {
@@ -493,7 +508,7 @@ export default function DevDashboardPage() {
               color: "var(--text-primary)",
             }}
           >
-            {repos.length}
+            {displayTotal}
           </div>
         </div>
         <div className="card" style={{ padding: "var(--space-5)" }}>
@@ -515,7 +530,7 @@ export default function DevDashboardPage() {
               color: "var(--status-success)",
             }}
           >
-            {enabledCount}
+            {displayEnabled}
           </div>
         </div>
         <div className="card" style={{ padding: "var(--space-5)" }}>
@@ -537,7 +552,7 @@ export default function DevDashboardPage() {
               color: "var(--text-muted)",
             }}
           >
-            {disabledCount}
+            {displayDisabled}
           </div>
         </div>
       </div>
@@ -1002,10 +1017,10 @@ export default function DevDashboardPage() {
             >
               {f}{" "}
               {f === "all"
-                ? `(${repos.length})`
+                ? `(${displayTotal})`
                 : f === "enabled"
-                  ? `(${enabledCount})`
-                  : `(${disabledCount})`}
+                  ? `(${displayEnabled})`
+                  : `(${displayDisabled})`}
             </button>
           ))}
         </div>
