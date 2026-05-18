@@ -15,9 +15,7 @@ import {
 import AnimatedNumber from "@/components/AnimatedNumber";
 import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
-import StaggerContainer, {
-  StaggerItem,
-} from "@/components/StaggerContainer";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
 interface HomeContentProps {
   stats: {
@@ -102,10 +100,7 @@ function TerminalMock() {
           }}
         >
           {TERMINAL_LINES.map((line, i) => (
-            <div
-              key={i}
-              style={{ display: "flex", gap: "8px" }}
-            >
+            <div key={i} style={{ display: "flex", gap: "8px" }}>
               {line.isCommand ? (
                 <>
                   <span style={{ color: "#f38ba8", userSelect: "none" }}>
@@ -132,9 +127,7 @@ function TerminalMock() {
               gap: "8px",
             }}
           >
-            <span style={{ color: "#f38ba8", userSelect: "none" }}>
-              ╰─λ
-            </span>
+            <span style={{ color: "#f38ba8", userSelect: "none" }}>╰─λ</span>
             <span
               style={{
                 display: "inline-block",
@@ -261,8 +254,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 Ship plugins for{" "}
                 <span
                   style={{
-                    background:
-                      "linear-gradient(135deg, #6366f1, #4338ca)",
+                    background: "linear-gradient(135deg, #6366f1, #4338ca)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -666,8 +658,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
             style={{
               background: "#0f172a",
               borderRadius: "var(--radius-xl)",
-              padding:
-                "var(--space-10) var(--space-8)",
+              padding: "var(--space-10) var(--space-8)",
               textAlign: "center",
               display: "flex",
               flexDirection: "column",

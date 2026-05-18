@@ -152,10 +152,7 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
             gap: "8px",
           }}
         >
-          <Loader2
-            size={16}
-            style={{ animation: "spin 1s linear infinite" }}
-          />
+          <Loader2 size={16} style={{ animation: "spin 1s linear infinite" }} />
           Checking compatibility...
         </div>
       )}
