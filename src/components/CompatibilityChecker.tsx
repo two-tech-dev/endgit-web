@@ -29,26 +29,16 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
     // Mock compatibility check — in production, calls API
     setTimeout(() => {
       const results: Record<string, CompatResult> = {
-        "0.6.x": {
-          version: "0.6.x",
+        "0.11.x": {
+          version: "0.11.x",
           status: "compatible",
-          note: "Fully tested and compatible with Endstone 0.6.x",
+          note: "Fully tested and compatible with Endstone 0.11.x",
         },
-        "0.5.x": {
-          version: "0.5.x",
+        "0.10.x": {
+          version: "0.10.x",
           status: "compatible",
           note: "Primary target version. All features supported.",
-        },
-        "0.4.x": {
-          version: "0.4.x",
-          status: "risky",
-          note: "Some API changes may cause issues. Economy module untested.",
-        },
-        "0.3.x": {
-          version: "0.3.x",
-          status: "incompatible",
-          note: "Plugin requires Command API v2 introduced in 0.4.x",
-        },
+        }
       };
       setResult(results[version] || null);
       setChecking(false);
@@ -82,11 +72,11 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
   const statusLabel = (status: string) => {
     switch (status) {
       case "compatible":
-        return "✅ Compatible";
+        return "Compatible";
       case "risky":
-        return "⚠️ Risky";
+        return "Risky";
       case "incompatible":
-        return "❌ Not Supported";
+        return "Not Supported";
       default:
         return "";
     }
@@ -137,8 +127,8 @@ export default function CompatibilityChecker({ slug }: { slug: string }) {
               fontWeight: 500,
               transition: "all 150ms",
               background:
-                selected === v ? "var(--text-primary)" : "var(--bg-secondary)",
-              color: selected === v ? "white" : "var(--text-secondary)",
+                selected === v ? "var(--accent-purple)" : "var(--bg-secondary)",
+              color: selected === v ? "#fff" : "var(--text-secondary)",
               border: `1px solid ${selected === v ? "var(--text-primary)" : "var(--border-color)"}`,
               cursor: "pointer",
             }}
