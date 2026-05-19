@@ -9,7 +9,6 @@ interface Version {
   version: string;
   fileSize: number;
   createdAt: string;
-  isLatest: boolean;
 }
 
 interface Props {
@@ -91,9 +90,9 @@ export default function VersionSelector({
             minWidth: 0,
           }}
         >
-          {versions.map((v) => (
+          {versions.map((v, i) => (
             <option key={v.version} value={v.version}>
-              v{v.version} {v.isLatest ? "(Latest)" : ""}
+              v{v.version} {i === 0 ? "(Latest)" : ""}
             </option>
           ))}
         </select>
