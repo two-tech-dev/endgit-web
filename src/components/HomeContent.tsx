@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
   Zap,
@@ -25,15 +26,56 @@ interface HomeContentProps {
   };
 }
 
-const TERMINAL_LINES = [
-  { text: "endgit install endstone-warps", isCommand: true },
+const COMMAND_TEXT = "endgit install endstone-warps";
+const OUTPUT_LINES = [
   { text: "→ Saved to: plugins/endstone_warps-1.0.5-py3-none-any.whl" },
   { text: "✓ Installed endstone-warps@1.0.5", success: true },
 ];
 
 function TerminalMock() {
+  const [typedChars, setTypedChars] = useState(0);
+  const [visibleLines, setVisibleLines] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    const t = timerRef.current;
+    t.length = 0;
+
+    const charDelay = 45;
+    const lineDelay = 400;
+    let offset = COMMAND_TEXT.length * charDelay + 400;
+
+    for (let i = 1; i <= COMMAND_TEXT.length; i++) {
+      t.push(setTimeout(() => setTypedChars(i), i * charDelay));
+    }
+
+    t.push(
+      setTimeout(() => setShowCursor(false), offset)
+    );
+
+    for (let i = 0; i < OUTPUT_LINES.length; i++) {
+      offset += lineDelay;
+      t.push(setTimeout(() => setVisibleLines(i + 1), offset));
+    }
+
+    offset += 600;
+    t.push(setTimeout(() => {
+      setShowCursor(false);
+      setShowPrompt(true);
+    }, offset));
+
+    return () => t.forEach(clearTimeout);
+  }, []);
+
   return (
-    <FadeIn delay={0.3} direction="right" duration={0.6}>
+    <FadeIn
+      delay={0.3}
+      direction="right"
+      duration={0.6}
+      style={{ width: "100%", maxWidth: "520px", height: "260px", flexShrink: 0 }}
+    >
       <div
         style={{
           background: "#0c0c14",
@@ -41,8 +83,8 @@ function TerminalMock() {
           border: "1px solid #1e1e2e",
           overflow: "hidden",
           boxShadow: "var(--shadow-lg)",
-          maxWidth: "520px",
           width: "100%",
+          height: "100%",
         }}
       >
         <div
@@ -96,47 +138,60 @@ function TerminalMock() {
             fontFamily: "var(--font-mono)",
             fontSize: "var(--text-sm)",
             lineHeight: 1.8,
-            minHeight: "200px",
+            height: "200px",
           }}
         >
-          {TERMINAL_LINES.map((line, i) => (
-            <div key={i} style={{ display: "flex", gap: "8px" }}>
-              {line.isCommand ? (
-                <>
-                  <span style={{ color: "#f38ba8", userSelect: "none" }}>
-                    $
-                  </span>
-                  <span style={{ color: "#cdd6f4" }}>{line.text}</span>
-                </>
-              ) : (
-                <span
-                  style={{
-                    color: line.success ? "#a6e3a1" : "#89dceb",
-                  }}
-                >
-                  {line.text}
-                </span>
-              )}
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
+            <span style={{ color: "#cdd6f4" }}>
+              {COMMAND_TEXT.slice(0, typedChars)}
+            </span>
+            {showCursor && (
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "8px",
+                  height: "1.2em",
+                  background: "#cdd6f4",
+                  animation: "blink 1s step-end infinite",
+                }}
+              />
+            )}
+          </div>
+
+          {OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
+            <div key={i}>
+              <span
+                style={{
+                  color: line.success ? "#a6e3a1" : "#89dceb",
+                }}
+              >
+                {line.text}
+              </span>
             </div>
           ))}
-          <div
-            style={{
-              marginTop: "4px",
-              display: "flex",
-              gap: "8px",
-            }}
-          >
-            <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
-            <span
+
+          {showPrompt && (
+            <div
               style={{
-                display: "inline-block",
-                width: "8px",
-                height: "16px",
-                background: "#cdd6f4",
-                animation: "blink 1s step-end infinite",
+                marginTop: "4px",
+                display: "flex",
+                gap: "8px",
+                alignItems: "center",
               }}
-            />
-          </div>
+            >
+              <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "8px",
+                  height: "1.2em",
+                  background: "#cdd6f4",
+                  animation: "blink 1s step-end infinite",
+                }}
+              />
+            </div>
+          )}
         </div>
         <style>{`@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }`}</style>
       </div>
