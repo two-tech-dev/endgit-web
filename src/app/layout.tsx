@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
@@ -116,10 +117,13 @@ function Navbar() {
             flexShrink: 0,
           }}
         >
-          <img
+          <Image
             src="/logo.png"
             alt="EndGit Logo"
-            style={{ width: 42, height: 42, objectFit: "contain" }}
+            width={42}
+            height={42}
+            style={{ objectFit: "contain" }}
+            priority
           />
           <span style={{ color: "var(--text-primary)" }}>
             endgit<span style={{ color: "var(--accent-primary)" }}>.</span>{" "}

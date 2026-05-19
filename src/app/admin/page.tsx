@@ -429,7 +429,6 @@ export default function AdminPage() {
           color="#8b5cf6"
           style={{ animation: "spin 1s linear infinite" }}
         />
-        <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
       </div>
     );
   }
@@ -551,7 +550,6 @@ export default function AdminPage() {
             color="#8b5cf6"
             style={{ animation: "spin 1s linear infinite", margin: "0 auto" }}
           />
-          <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
         </div>
       )}
 

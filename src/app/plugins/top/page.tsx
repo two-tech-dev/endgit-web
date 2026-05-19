@@ -10,10 +10,16 @@ export const metadata = {
 };
 
 export default async function TopPluginsPage() {
-  const { data: responseData } = await fetchApi(
-    "/api/v1/plugins?sort=downloads&order=desc&pageSize=50",
-  );
-  const plugins = responseData?.data?.plugins || [];
+  let plugins: any[] = [];
+  try {
+    const { data: responseData } = await fetchApi(
+      "/api/v1/plugins?sort=downloads&order=desc&pageSize=50",
+      { revalidate: 300 },
+    );
+    plugins = responseData?.data?.plugins || [];
+  } catch {
+    plugins = [];
+  }
 
   return (
     <div

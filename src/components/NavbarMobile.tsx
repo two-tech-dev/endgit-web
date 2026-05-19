@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Menu, X, Moon, Sun } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import NavbarClient from "./NavbarClient";
 import { useTheme } from "@/components/ThemeToggle";
 
@@ -14,6 +13,8 @@ export default function NavbarMobile() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownTop, setDropdownTop] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
@@ -46,125 +47,140 @@ export default function NavbarMobile() {
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target as Node)
       ) {
-        setOpen(false);
+        handleClose();
       }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, [open]);
 
+  const handleOpen = () => {
+    setOpen(true);
+    setAnimating(true);
+    requestAnimationFrame(() => {
+      setVisible(true);
+      setTimeout(() => setAnimating(false), 250);
+    });
+  };
+
+  const handleClose = () => {
+    setVisible(false);
+    setAnimating(true);
+    setTimeout(() => {
+      setOpen(false);
+      setAnimating(false);
+    }, 250);
+  };
+
+  const handleToggle = () => {
+    if (open) {
+      handleClose();
+    } else {
+      handleOpen();
+    }
+  };
+
   const dropdown = (
-    <AnimatePresence>
-      {open && mounted && (
-        <motion.div
-          ref={dropdownRef}
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-          style={{
-            position: "fixed",
-            top: dropdownTop,
-            left: 0,
-            right: 0,
-            zIndex: 49,
-            background: "var(--bg-card)",
-            borderBottom: "1px solid var(--border-color)",
-            boxShadow: "var(--shadow-md)",
-            overflow: "hidden",
-          }}
-        >
+    <div
+      ref={dropdownRef}
+      style={{
+        position: "fixed",
+        top: dropdownTop,
+        left: 0,
+        right: 0,
+        zIndex: 49,
+        background: "var(--bg-card)",
+        borderBottom: "1px solid var(--border-color)",
+        boxShadow: "var(--shadow-md)",
+        overflow: "hidden",
+        opacity: visible ? 1 : 0,
+        maxHeight: visible ? "400px" : "0px",
+        transition: "opacity 250ms ease, max-height 250ms ease",
+      }}
+    >
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          paddingTop: "var(--space-4)",
+          gap: "var(--space-1)",
+        }}
+      >
+        {[
+          { href: "/plugins", label: "Releases" },
+          { href: "/plugins/top", label: "Top Plugins" },
+          { href: "/builds", label: "Dev Builds" },
+          { href: "/faq", label: "FAQ" },
+        ].map((item, i) => (
           <div
-            className="container"
+            key={item.href}
             style={{
-              display: "flex",
-              flexDirection: "column",
-              paddingTop: "var(--space-4)",
-              gap: "var(--space-1)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(-16px)",
+              transition: `opacity 250ms ease ${50 + i * 50}ms, transform 250ms ease ${50 + i * 50}ms`,
             }}
           >
-            {[
-              { href: "/plugins", label: "Releases" },
-              { href: "/plugins/top", label: "Top Plugins" },
-              { href: "/builds", label: "Dev Builds" },
-              { href: "/faq", label: "FAQ" },
-            ].map((item, i) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{
-                  delay: 0.05 + i * 0.05,
-                  duration: 0.25,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-              >
-                <a
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  style={{
-                    display: "block",
-                    color: "var(--text-secondary)",
-                    fontWeight: 500,
-                    fontSize: "1rem",
-                    padding: "0.625rem 0",
-                  }}
-                >
-                  {item.label}
-                </a>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            key="theme-toggle"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.25 }}
-          >
-            <div
+            <a
+              href={item.href}
+              onClick={() => handleClose()}
               style={{
-                borderTop: "1px solid var(--border-color)",
-              }}
-            />
-            <div
-              className="container"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                paddingTop: "var(--space-3)",
-                paddingBottom: "var(--space-4)",
-                gap: "var(--space-1)",
+                display: "block",
+                color: "var(--text-secondary)",
+                fontWeight: 500,
+                fontSize: "1rem",
+                padding: "0.625rem 0",
               }}
             >
-              <button
-                onClick={toggleTheme}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.625rem 0",
-                  color: "var(--text-secondary)",
-                  fontWeight: 500,
-                  fontSize: "1rem",
-                  width: "100%",
-                }}
-              >
-                {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-                {theme === "light" ? "Dark mode" : "Light mode"}
-              </button>
+              {item.label}
+            </a>
+          </div>
+        ))}
+      </div>
 
-              <div
-                onClick={(e) => e.stopPropagation()}
-                style={{ paddingTop: "var(--space-2)" }}
-              >
-                <NavbarClient mobile onNavigate={() => setOpen(false)} />
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+      <div
+        style={{
+          borderTop: "1px solid var(--border-color)",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 250ms ease 200ms",
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            paddingTop: "var(--space-3)",
+            paddingBottom: "var(--space-4)",
+            gap: "var(--space-1)",
+          }}
+        >
+          <button
+            onClick={toggleTheme}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.625rem 0",
+              color: "var(--text-secondary)",
+              fontWeight: 500,
+              fontSize: "1rem",
+              width: "100%",
+            }}
+          >
+            {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+            {theme === "light" ? "Dark mode" : "Light mode"}
+          </button>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ paddingTop: "var(--space-2)" }}
+          >
+            <NavbarClient mobile onNavigate={() => handleClose()} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 
   return (
@@ -221,39 +237,55 @@ export default function NavbarMobile() {
       {/* Mobile hamburger button */}
       <button
         className="mobile-menu-btn"
-        onClick={() => setOpen(!open)}
+        onClick={handleToggle}
         aria-label="Toggle menu"
-        style={{ color: "var(--text-primary)" }}
+        style={{
+          color: "var(--text-primary)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <AnimatePresence mode="wait" initial={false}>
-          {open ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              style={{ display: "flex" }}
-            >
-              <X size={24} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="menu"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              style={{ display: "flex" }}
-            >
-              <Menu size={24} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div
+          style={{
+            position: "relative",
+            width: 24,
+            height: 24,
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: open ? 0 : 1,
+              transform: open ? "rotate(90deg)" : "rotate(0deg)",
+              transition: "opacity 200ms, transform 200ms",
+            }}
+          >
+            <Menu size={24} />
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              opacity: open ? 1 : 0,
+              transform: open ? "rotate(0deg)" : "rotate(-90deg)",
+              transition: "opacity 200ms, transform 200ms",
+            }}
+          >
+            <X size={24} />
+          </div>
+        </div>
       </button>
 
       {/* Dropdown rendered via portal to body */}
-      {mounted && createPortal(dropdown, document.body)}
+      {mounted && open && createPortal(dropdown, document.body)}
     </div>
   );
 }
