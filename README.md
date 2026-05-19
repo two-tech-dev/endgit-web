@@ -34,6 +34,12 @@ pnpm dev
 
 The web app will be available at `http://localhost:3000`.
 
+## Maintained by
+
+Maintained and developed by [2Tech Studio](https://2tech.studio).
+
+- Discord 2Tech Studio: https://discord.gg/TcY9vxx9fE
+
 ## License
 
 This project is licensed under the [GNU Affero General Public License v3.0](LICENSE).

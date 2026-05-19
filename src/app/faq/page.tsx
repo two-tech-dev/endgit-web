@@ -45,7 +45,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "How can I get support?",
-    a: "Join our Discord community at discord.gg/9eZhP9y26Q for help, bug reports, and feature requests. You can also open issues on our GitHub repository.",
+    a: "Join our Discord communities for help, bug reports, and feature requests:\n\n• Discord 2Tech Studio: https://discord.gg/TcY9vxx9fE\n• Discord Endstone: https://discord.gg/JPNrk7Bgeb\n\nYou can also open issues on our GitHub repository.",
   },
 ];
 

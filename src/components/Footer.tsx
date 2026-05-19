@@ -288,7 +288,7 @@ export default function Footer() {
           >
             Powered by{" "}
             <a
-              href="https://discord.gg/9eZhP9y26Q"
+              href="https://2tech.studio"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -297,7 +297,7 @@ export default function Footer() {
                 fontWeight: 600,
               }}
             >
-              2Tech
+              2Tech Studio
             </a>
           </p>
         </div>
