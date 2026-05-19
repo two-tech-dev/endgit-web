@@ -462,7 +462,10 @@ export default async function PluginDetailPage({
                 }}
               >
                 <Star size={16} color="var(--status-warning)" />{" "}
-                {(plugin.averageRating || 0).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
+                {(plugin.averageRating || 0).toLocaleString(undefined, {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 1,
+                })}
               </div>
               <div
                 style={{
@@ -484,8 +487,8 @@ export default async function PluginDetailPage({
                       fontWeight: 400,
                     }}
                   >
-                    ({(activeVersion.downloads || 0).toLocaleString()}{" "}
-                    this version)
+                    ({(activeVersion.downloads || 0).toLocaleString()} this
+                    version)
                   </span>
                 )}
               </div>

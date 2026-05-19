@@ -159,7 +159,8 @@ export default function NavbarMobile() {
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transition: "opacity 250ms ease 250ms, transform 250ms ease 250ms",
+              transition:
+                "opacity 250ms ease 250ms, transform 250ms ease 250ms",
             }}
           >
             <button
@@ -186,7 +187,8 @@ export default function NavbarMobile() {
               paddingTop: "var(--space-2)",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transition: "opacity 250ms ease 300ms, transform 250ms ease 300ms",
+              transition:
+                "opacity 250ms ease 300ms, transform 250ms ease 300ms",
             }}
           >
             <NavbarClient mobile onNavigate={() => handleClose()} />
