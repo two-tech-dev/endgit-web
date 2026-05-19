@@ -94,7 +94,7 @@ export default function NavbarMobile() {
         boxShadow: "var(--shadow-md)",
         overflow: "hidden",
         opacity: visible ? 1 : 0,
-        maxHeight: visible ? "400px" : "0px",
+        maxHeight: visible ? "100vh" : "0px",
         transition: "opacity 250ms ease, max-height 250ms ease",
       }}
     >
@@ -155,26 +155,39 @@ export default function NavbarMobile() {
             gap: "var(--space-1)",
           }}
         >
-          <button
-            onClick={toggleTheme}
+          <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0.625rem 0",
-              color: "var(--text-secondary)",
-              fontWeight: 500,
-              fontSize: "1rem",
-              width: "100%",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(-16px)",
+              transition: "opacity 250ms ease 250ms, transform 250ms ease 250ms",
             }}
           >
-            {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-            {theme === "light" ? "Dark mode" : "Light mode"}
-          </button>
+            <button
+              onClick={toggleTheme}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.625rem 0",
+                color: "var(--text-secondary)",
+                fontWeight: 500,
+                fontSize: "1rem",
+                width: "100%",
+              }}
+            >
+              {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
+              {theme === "light" ? "Dark mode" : "Light mode"}
+            </button>
+          </div>
 
           <div
             onClick={(e) => e.stopPropagation()}
-            style={{ paddingTop: "var(--space-2)" }}
+            style={{
+              paddingTop: "var(--space-2)",
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateX(0)" : "translateX(-16px)",
+              transition: "opacity 250ms ease 300ms, transform 250ms ease 300ms",
+            }}
           >
             <NavbarClient mobile onNavigate={() => handleClose()} />
           </div>
