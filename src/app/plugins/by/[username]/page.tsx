@@ -1,6 +1,5 @@
 import { Search } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import AnimatedNumber from "@/components/AnimatedNumber";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
 
@@ -170,7 +169,7 @@ export default async function AuthorPluginsPage({
                       })}
                     </span>
                     <span>
-                      <AnimatedNumber value={plugin.downloads} /> downloads
+                      {plugin.downloads?.toLocaleString() ?? 0} downloads
                     </span>
                     {avgRating > 0 && (
                       <span

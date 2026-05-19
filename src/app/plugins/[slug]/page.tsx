@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
-import AnimatedNumber from "@/components/AnimatedNumber";
 import { fetchApi } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
@@ -463,7 +462,7 @@ export default async function PluginDetailPage({
                 }}
               >
                 <Star size={16} color="var(--status-warning)" />{" "}
-                <AnimatedNumber value={plugin.averageRating || 0} />
+                {(plugin.averageRating || 0).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
               </div>
               <div
                 style={{
@@ -475,7 +474,7 @@ export default async function PluginDetailPage({
                 title="Total Downloads"
               >
                 <Download size={16} color="var(--text-muted)" />{" "}
-                <AnimatedNumber value={plugin.downloads || 0} />
+                {(plugin.downloads || 0).toLocaleString()}
                 {activeVersion && (
                   <span
                     style={{
@@ -485,7 +484,7 @@ export default async function PluginDetailPage({
                       fontWeight: 400,
                     }}
                   >
-                    (<AnimatedNumber value={activeVersion.downloads || 0} />{" "}
+                    ({(activeVersion.downloads || 0).toLocaleString()}{" "}
                     this version)
                   </span>
                 )}
@@ -722,7 +721,7 @@ export default async function PluginDetailPage({
                   boxShadow: `0 0 15px rgba(16, 185, 129, 0.1)`,
                 }}
               >
-                <AnimatedNumber value={safeScore} />
+                {safeScore.toLocaleString()}
               </div>
             </div>
 

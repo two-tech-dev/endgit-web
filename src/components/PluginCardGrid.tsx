@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import PluginImage from "@/components/PluginImage";
-import AnimatedNumber from "@/components/AnimatedNumber";
 
 interface Plugin {
   id: string;
@@ -154,7 +153,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                       )}
                     </span>
                     <span>
-                      <AnimatedNumber value={plugin.downloads || 0} /> downloads
+                      {plugin.downloads?.toLocaleString() ?? 0} downloads
                     </span>
                     {avgRating > 0 && (
                       <span

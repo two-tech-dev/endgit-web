@@ -9,7 +9,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import AnimatedNumber from "@/components/AnimatedNumber";
 import PluginSearch from "@/components/PluginSearch";
 import PluginSidebarFilters from "@/components/PluginSidebarFilters";
 import PluginCardGrid from "@/components/PluginCardGrid";

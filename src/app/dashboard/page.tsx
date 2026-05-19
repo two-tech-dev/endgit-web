@@ -8,7 +8,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import AnimatedNumber from "@/components/AnimatedNumber";
 
 import { fetchApi } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
@@ -269,7 +268,7 @@ export default async function DashboardPage() {
               Total Plugins
             </div>
             <div className="heading-2">
-              <AnimatedNumber value={stats.totalPlugins} />
+              {stats.totalPlugins?.toLocaleString() ?? 0}
             </div>
           </div>
         </div>
@@ -304,7 +303,7 @@ export default async function DashboardPage() {
               Total Downloads
             </div>
             <div className="heading-2">
-              <AnimatedNumber value={stats.totalDownloads} />
+              {stats.totalDownloads?.toLocaleString() ?? 0}
             </div>
           </div>
         </div>
@@ -339,7 +338,7 @@ export default async function DashboardPage() {
               Pending Review
             </div>
             <div className="heading-2">
-              <AnimatedNumber value={stats.pendingReviews} />
+              {stats.pendingReviews?.toLocaleString() ?? 0}
             </div>
           </div>
         </div>
@@ -486,7 +485,7 @@ export default async function DashboardPage() {
                     }}
                   >
                     <Activity size={14} color="var(--accent-primary)" />{" "}
-                    <AnimatedNumber value={plugin.downloads} />
+                    {plugin.downloads?.toLocaleString() ?? 0}
                   </div>
                 </div>
                 <div style={{ flex: 1 }}>

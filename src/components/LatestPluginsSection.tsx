@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import AnimatedNumber from "@/components/AnimatedNumber";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 import FadeIn from "@/components/FadeIn";
 
@@ -230,7 +229,7 @@ export default function LatestPluginsSection() {
                               })}
                             </span>
                             <span>
-                              <AnimatedNumber value={plugin.downloads || 0} />{" "}
+                              {plugin.downloads?.toLocaleString() ?? 0}{" "}
                               downloads
                             </span>
                             {avgRating > 0 && (
