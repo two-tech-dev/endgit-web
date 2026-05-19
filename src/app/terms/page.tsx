@@ -1,8 +1,25 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service — EndGit",
-  description: "Terms of Website Use for EndGit",
+  title: "Terms of Service — endgit",
+  description:
+    "Read the terms of service for endgit, the CI/CD and plugin marketplace for Endstone. Understand your rights and responsibilities when using the platform.",
+  openGraph: {
+    title: "Terms of Service — endgit",
+    description:
+      "Read the terms of service for endgit, the CI/CD and plugin marketplace for Endstone.",
+    url: "https://endgit.dev/terms",
+    siteName: "endgit",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Service — endgit",
+    description:
+      "Read the terms of service for endgit, the CI/CD and plugin marketplace for Endstone.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function TermsOfServicePage() {
