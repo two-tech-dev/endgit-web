@@ -25,7 +25,13 @@ import Link from "next/link";
 
 const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
   loading: () => (
-    <div style={{ padding: "var(--space-6)", color: "var(--text-muted)", fontSize: "0.875rem" }}>
+    <div
+      style={{
+        padding: "var(--space-6)",
+        color: "var(--text-muted)",
+        fontSize: "0.875rem",
+      }}
+    >
       Loading description...
     </div>
   ),

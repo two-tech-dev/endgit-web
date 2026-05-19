@@ -465,7 +465,6 @@ export default async function BuildDetailPage({
           </span>
         </div>
       ) : null}
-
     </div>
   );
 }
