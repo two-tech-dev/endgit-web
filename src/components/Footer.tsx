@@ -220,6 +220,16 @@ export default function Footer() {
                 >
                   Terms of Service
                 </a>
+                <a
+                  href="/privacy"
+                  style={{
+                    color: "var(--text-muted)",
+                    fontSize: "0.875rem",
+                    textDecoration: "none",
+                  }}
+                >
+                  Privacy Policy
+                </a>
               </div>
             </div>
           </StaggerItem>
