@@ -916,3 +916,27 @@ ol {
   box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
+
+.builds-table-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) var(--bg-secondary);
+}
+
+.builds-table-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.builds-table-wrapper::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 3px;
+}
+
+.builds-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.builds-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
