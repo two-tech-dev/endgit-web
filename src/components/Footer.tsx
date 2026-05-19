@@ -1,7 +1,4 @@
-"use client";
-
-import FadeIn from "@/components/FadeIn";
-import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -23,7 +20,7 @@ export default function Footer() {
         }}
       >
         {/* Brand */}
-        <FadeIn delay={0} style={{ maxWidth: "280px" }}>
+        <div style={{ maxWidth: "280px" }}>
           <div
             style={{
               display: "flex",
@@ -32,10 +29,12 @@ export default function Footer() {
               marginBottom: "0.75rem",
             }}
           >
-            <img
+            <Image
               src="/logo.png"
               alt="EndGit"
-              style={{ width: 32, height: 32, objectFit: "contain" }}
+              width={32}
+              height={32}
+              style={{ objectFit: "contain" }}
             />
             <span
               style={{
@@ -57,251 +56,242 @@ export default function Footer() {
           >
             The modern CI/CD and plugin marketplace for the Endstone ecosystem.
           </p>
-        </FadeIn>
+        </div>
 
         {/* Links */}
-        <StaggerContainer
-          staggerDelay={0.1}
+        <div
           className="footer-links"
           style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}
         >
-          <StaggerItem>
-            <div>
-              <h4
+          <div>
+            <h4
+              style={{
+                fontWeight: 600,
+                fontSize: "0.8125rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                marginBottom: "0.75rem",
+              }}
+            >
+              Platform
+            </h4>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              <a
+                href="/plugins"
                 style={{
-                  fontWeight: 600,
-                  fontSize: "0.8125rem",
-                  color: "var(--text-primary)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  marginBottom: "0.75rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                Platform
-              </h4>
-              <div
+                Releases
+              </a>
+              <a
+                href="/builds"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                <a
-                  href="/plugins"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Releases
-                </a>
-                <a
-                  href="/builds"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Dev Builds
-                </a>
-                <a
-                  href="/rules"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Submission Rules
-                </a>
-              </div>
+                Dev Builds
+              </a>
+              <a
+                href="/rules"
+                style={{
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
+                }}
+              >
+                Submission Rules
+              </a>
             </div>
-          </StaggerItem>
-          <StaggerItem>
-            <div>
-              <h4
+          </div>
+          <div>
+            <h4
+              style={{
+                fontWeight: 600,
+                fontSize: "0.8125rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                marginBottom: "0.75rem",
+              }}
+            >
+              Community
+            </h4>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              <a
+                href="https://discord.gg/9eZhP9y26Q"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  fontWeight: 600,
-                  fontSize: "0.8125rem",
-                  color: "var(--text-primary)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  marginBottom: "0.75rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                Community
-              </h4>
-              <div
+                Discord
+              </a>
+              <a
+                href="https://github.com/two-tech-dev/endgit-web"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                <a
-                  href="https://discord.gg/9eZhP9y26Q"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Discord
-                </a>
-                <a
-                  href="https://github.com/two-tech-dev/endgit-web"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Source code
-                </a>
-                <a
-                  href="https://github.com/apps/endgit-local-dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  GitHub App
-                </a>
-                <a
-                  href="/faq"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  FAQ
-                </a>
-              </div>
+                Source code
+              </a>
+              <a
+                href="https://github.com/apps/endgit-local-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
+                }}
+              >
+                GitHub App
+              </a>
+              <a
+                href="/faq"
+                style={{
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
+                }}
+              >
+                FAQ
+              </a>
             </div>
-          </StaggerItem>
-          <StaggerItem>
-            <div>
-              <h4
+          </div>
+          <div>
+            <h4
+              style={{
+                fontWeight: 600,
+                fontSize: "0.8125rem",
+                color: "var(--text-primary)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                marginBottom: "0.75rem",
+              }}
+            >
+              Legal
+            </h4>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              <a
+                href="/terms"
                 style={{
-                  fontWeight: 600,
-                  fontSize: "0.8125rem",
-                  color: "var(--text-primary)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  marginBottom: "0.75rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                Legal
-              </h4>
-              <div
+                Terms of Service
+              </a>
+              <a
+                href="/privacy"
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.5rem",
+                  color: "var(--text-muted)",
+                  fontSize: "0.875rem",
+                  textDecoration: "none",
                 }}
               >
-                <a
-                  href="/terms"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Terms of Service
-                </a>
-                <a
-                  href="/privacy"
-                  style={{
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    textDecoration: "none",
-                  }}
-                >
-                  Privacy Policy
-                </a>
-              </div>
+                Privacy Policy
+              </a>
             </div>
-          </StaggerItem>
-        </StaggerContainer>
+          </div>
+        </div>
       </div>
 
       {/* Bottom bar */}
-      <FadeIn delay={0.3}>
-        <div
-          className="container"
+      <div
+        className="container"
+        style={{
+          marginTop: "2rem",
+          paddingTop: "1.5rem",
+          borderTop: "1px solid var(--border-color)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "0.5rem",
+        }}
+      >
+        <p
           style={{
-            marginTop: "2rem",
-            paddingTop: "1.5rem",
-            borderTop: "1px solid var(--border-color)",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "0.5rem",
+            color: "var(--text-muted)",
+            fontSize: "0.75rem",
+            margin: 0,
           }}
         >
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.75rem",
-              margin: 0,
-            }}
-          >
-            &copy; {new Date().getFullYear()} EndGit. All rights reserved.
-            {process.env.VERCEL_GIT_COMMIT_SHA && (
-              <span
-                style={{
-                  marginLeft: "8px",
-                  opacity: 0.7,
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.6875rem",
-                }}
-              >
-                <a
-                  href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "inherit", textDecoration: "none" }}
-                >
-                  ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
-                </a>
-              </span>
-            )}
-          </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.75rem",
-              margin: 0,
-            }}
-          >
-            Powered by{" "}
-            <a
-              href="https://2tech.studio"
-              target="_blank"
-              rel="noopener noreferrer"
+          &copy; {new Date().getFullYear()} EndGit. All rights reserved.
+          {process.env.VERCEL_GIT_COMMIT_SHA && (
+            <span
               style={{
-                color: "var(--accent-primary)",
-                textDecoration: "none",
-                fontWeight: 600,
+                marginLeft: "8px",
+                opacity: 0.7,
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.6875rem",
               }}
             >
-              2Tech Studio
-            </a>
-          </p>
-        </div>
-      </FadeIn>
+              <a
+                href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
+              </a>
+            </span>
+          )}
+        </p>
+        <p
+          style={{
+            color: "var(--text-muted)",
+            fontSize: "0.75rem",
+            margin: 0,
+          }}
+        >
+          Powered by{" "}
+          <a
+            href="https://2tech.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "var(--accent-primary)",
+              textDecoration: "none",
+              fontWeight: 600,
+            }}
+          >
+            2Tech Studio
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }

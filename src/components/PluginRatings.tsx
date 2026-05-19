@@ -323,7 +323,6 @@ export default function PluginRatings({
             color="var(--text-muted)"
             style={{ animation: "spin 1s linear infinite" }}
           />
-          <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
         </div>
       )}
 

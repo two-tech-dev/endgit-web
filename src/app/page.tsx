@@ -9,7 +9,7 @@ async function StatsSection() {
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
     const res = await fetch(`${apiUrl}/api/v1/plugins/stats/global`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
     const json = await res.json();
     stats = json?.data || stats;

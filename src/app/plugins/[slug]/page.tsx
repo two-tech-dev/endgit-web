@@ -12,10 +12,7 @@ import {
   Zap,
   Pencil,
 } from "lucide-react";
-import MarkdownTabs from "@/components/MarkdownTabs";
-import PluginAnalyticsChart from "@/components/PluginAnalyticsChart";
-import DependencyGraph from "@/components/DependencyGraph";
-import PluginRatings from "@/components/PluginRatings";
+import dynamic from "next/dynamic";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
@@ -26,8 +23,45 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 
+const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
+  loading: () => (
+    <div style={{ padding: "var(--space-6)", color: "var(--text-muted)", fontSize: "0.875rem" }}>
+      Loading description...
+    </div>
+  ),
+});
+const PluginAnalyticsChart = dynamic(
+  () => import("@/components/PluginAnalyticsChart"),
+  {
+    loading: () => (
+      <div
+        className="card"
+        style={{
+          padding: "var(--space-6)",
+          height: "280px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+          Loading analytics...
+        </p>
+      </div>
+    ),
+  },
+);
+const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
+  ssr: false,
+});
+const PluginRatings = dynamic(() => import("@/components/PluginRatings"), {
+  ssr: false,
+});
+
 async function getPlugin(slug: string) {
-  const { data } = await fetchApi(`/api/v1/plugins/${slug}`);
+  const { data } = await fetchApi(`/api/v1/plugins/${slug}`, {
+    revalidate: 30,
+  });
   return data?.data || null;
 }
 

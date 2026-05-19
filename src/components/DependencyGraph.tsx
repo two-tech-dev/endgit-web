@@ -80,7 +80,6 @@ export default function DependencyGraph({ slug }: { slug: string }) {
             color="var(--text-muted)"
             style={{ animation: "spin 1s linear infinite" }}
           />
-          <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
         </div>
       ) : error ? (
         <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>

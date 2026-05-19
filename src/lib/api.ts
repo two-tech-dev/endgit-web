@@ -44,10 +44,9 @@ export async function fetchApi(
     : undefined;
 
   const config: RequestInit = {
-    cache: revalidate ? "force-cache" : "no-store",
     ...fetchOptions,
     headers,
-    ...(nextOptions ? { next: nextOptions } : {}),
+    ...(nextOptions ? { next: nextOptions } : { cache: "no-store" }),
   };
 
   const response = await fetch(url, config);

@@ -15,7 +15,7 @@ async function getBuild(id: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   try {
     const res = await fetch(`${apiUrl}/api/v1/builds/${id}`, {
-      cache: "no-store",
+      next: { revalidate: 10 },
     });
     if (!res.ok) return null;
     const json = await res.json();
@@ -466,9 +466,6 @@ export default async function BuildDetailPage({
         </div>
       ) : null}
 
-      <style>{`
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
     </div>
   );
 }

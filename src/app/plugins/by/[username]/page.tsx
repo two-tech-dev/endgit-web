@@ -14,6 +14,7 @@ export default async function AuthorPluginsPage({
   // Fetch plugins by this author
   const { data: responseData } = await fetchApi(
     `/api/v1/plugins?author=${username}`,
+    { revalidate: 120 },
   );
   const realPlugins = responseData?.data?.plugins || [];
 
