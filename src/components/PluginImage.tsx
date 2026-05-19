@@ -24,6 +24,8 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
       return;
     }
 
+    targetSrc = targetSrc.replace(/\/\.\//g, "/");
+
     const img = new Image();
     img.onload = () => setImgSrc(targetSrc as string);
     img.onerror = () => setImgSrc("/logo.png");
