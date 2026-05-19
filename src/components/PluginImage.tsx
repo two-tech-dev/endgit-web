@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import NextImage from "next/image";
 
 interface Props {
   iconUrl?: string | null;
@@ -46,12 +45,12 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
   const isFallback = imgSrc === "/logo.png";
 
   return (
-    <NextImage
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={imgSrc}
       alt={isFallback ? "EndGit Logo" : alt}
-      width={64}
-      height={64}
-      sizes="64px"
+      loading="lazy"
+      decoding="async"
       style={{
         width: "100%",
         height: "100%",
