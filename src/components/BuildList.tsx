@@ -11,6 +11,7 @@ import {
   Package,
   Search,
 } from "lucide-react";
+import Link from "next/link";
 
 function timeAgo(dateStr: string) {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
@@ -214,7 +215,7 @@ export default function BuildsList({
           }}
         >
           {filteredBuilds.map((build: any) => (
-            <a
+            <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
               className="card"
@@ -305,7 +306,7 @@ export default function BuildsList({
                   {timeAgo(build.createdAt)}
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       )}

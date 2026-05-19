@@ -3,8 +3,20 @@ import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { BuildsTableClient } from "./BuildsTableClient";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  return {
+    title: `Builds - ${params.slug} - EndGit`,
+    description: `View build history for the ${params.slug} plugin.`,
+  };
+}
 
 export default async function PluginBuildsPage({
   params,

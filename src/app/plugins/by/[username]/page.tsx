@@ -2,6 +2,18 @@ import { Search } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { username: string };
+}): Promise<Metadata> {
+  return {
+    title: `Plugins by ${params.username} - EndGit`,
+    description: `Browse all Endstone plugins published by ${params.username}.`,
+  };
+}
 
 export default async function AuthorPluginsPage({
   params,

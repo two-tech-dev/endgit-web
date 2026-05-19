@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import {
   Users,
@@ -664,9 +666,11 @@ export default function AdminPage() {
                             }}
                           >
                             {user.avatarUrl ? (
-                              <img
+                              <Image
                                 src={user.avatarUrl}
                                 alt=""
+                                width={32}
+                                height={32}
                                 style={{
                                   width: "100%",
                                   height: "100%",
@@ -992,7 +996,7 @@ export default function AdminPage() {
                       justifyContent: "center",
                     }}
                   >
-                    <a
+                    <Link
                       href={`/plugins/${plugin.slug}`}
                       style={{
                         fontSize: "0.75rem",
@@ -1001,7 +1005,7 @@ export default function AdminPage() {
                       }}
                     >
                       View Plugin →
-                    </a>
+                    </Link>
                     {plugin.repoUrl && plugin.versions?.[0]?.fileHash && (
                       <a
                         href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
@@ -1087,7 +1091,6 @@ export default function AdminPage() {
                     }}
                   >
                     Reason for Rejection *
-                  </label>
                   <textarea
                     value={rejectReason}
                     onChange={(e) => setRejectReason(e.target.value)}
@@ -1110,6 +1113,7 @@ export default function AdminPage() {
                       minHeight: "140px",
                     }}
                   />
+                  </label>
                   <p
                     style={{
                       color: "var(--text-muted)",
@@ -1585,7 +1589,7 @@ export default function AdminPage() {
                                       </span>
                                       <span
                                         style={{
-                                          fontSize: "0.625rem",
+                                          fontSize: "0.75rem",
                                           fontWeight: 700,
                                           padding: "1px 6px",
                                           borderRadius: "var(--radius-full)",

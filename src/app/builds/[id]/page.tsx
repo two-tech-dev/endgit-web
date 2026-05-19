@@ -8,8 +8,21 @@ import {
   XCircle,
   Loader2,
 } from "lucide-react";
+import Link from "next/link";
+import type { Metadata } from "next";
 import LiveBuildLog from "@/components/LiveBuildLog";
 import SubmitForReview from "@/components/SubmitForReview";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  return {
+    title: `Build ${params.id} - EndGit`,
+    description: `View build details and logs for build ${params.id}.`,
+  };
+}
 
 async function getBuild(id: string) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
@@ -97,13 +110,13 @@ export default async function BuildDetailPage({
         <p className="text-muted" style={{ marginTop: "var(--space-2)" }}>
           This build may have been deleted or doesn't exist.
         </p>
-        <a
+        <Link
           href="/builds"
           className="btn btn-secondary"
           style={{ marginTop: "var(--space-6)" }}
         >
           <ArrowLeft size={16} /> Back to Live Builds
-        </a>
+        </Link>
       </div>
     );
   }
@@ -126,7 +139,7 @@ export default async function BuildDetailPage({
       }}
     >
       {/* Breadcrumb */}
-      <a
+      <Link
         href="/builds"
         style={{
           display: "inline-flex",
@@ -138,7 +151,7 @@ export default async function BuildDetailPage({
         }}
       >
         <ArrowLeft size={14} /> Back to Live Builds
-      </a>
+      </Link>
 
       {/* Header Card */}
       <div

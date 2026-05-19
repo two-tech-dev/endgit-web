@@ -68,7 +68,7 @@ export default async function TopPluginsPage() {
             : 0;
 
           return (
-            <a
+            <Link
               href={`/plugins/${plugin.slug}`}
               key={plugin.id}
               className="card"
@@ -214,7 +214,7 @@ export default async function TopPluginsPage() {
                   })()}
                 </span>
               </div>
-            </a>
+            </Link>
           );
         })}
       </div>

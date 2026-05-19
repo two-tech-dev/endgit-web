@@ -1,4 +1,11 @@
 import HomeContent from "@/components/HomeContent";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "EndGit - Plugin Registry for Endstone",
+  description:
+    "The official plugin registry for Endstone. Push to GitHub, get compiled builds, and install with one command.",
+};
 
 async function StatsSection() {
   let stats = {

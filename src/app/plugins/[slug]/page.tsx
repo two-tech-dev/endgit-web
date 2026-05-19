@@ -13,6 +13,7 @@ import {
   Pencil,
 } from "lucide-react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
@@ -290,7 +291,7 @@ export default async function PluginDetailPage({
                           : "View repository on GitHub"
                       }
                     >
-                      <img
+                      <Image
                         className="github-icon"
                         src="/github-svgrepo-com.svg"
                         alt="GitHub"
@@ -372,7 +373,7 @@ export default async function PluginDetailPage({
                           }}
                           title={`View ${repoOwner} on GitHub`}
                         >
-                          <img
+                          <Image
                             className="github-icon"
                             src="/github-svgrepo-com.svg"
                             alt="GitHub"
@@ -775,12 +776,12 @@ export default async function PluginDetailPage({
                         gap: "12px",
                       }}
                     >
-                      <img
+                      <Image
                         src={`https://github.com/${producer.githubUser}.png?size=40`}
                         alt={producer.githubUser}
+                        width={32}
+                        height={32}
                         style={{
-                          width: "32px",
-                          height: "32px",
                           borderRadius: "50%",
                           objectFit: "cover",
                           background: "var(--bg-secondary)",
@@ -802,7 +803,7 @@ export default async function PluginDetailPage({
                         </a>
                         <span
                           style={{
-                            fontSize: "0.625rem",
+                            fontSize: "0.75rem",
                             textTransform: "uppercase",
                             fontWeight: 600,
                             padding: "2px 6px",
@@ -978,9 +979,12 @@ export default async function PluginDetailPage({
                     gap: "var(--space-2)",
                   }}
                 >
-                  <img
+                  <Image
                     src={`https://endgit.dev/shield.dl.total/${plugin.slug}`}
                     alt="Downloads Badge"
+                    width={120}
+                    height={20}
+                    unoptimized
                   />
                 </div>
                 <div
@@ -1015,9 +1019,12 @@ export default async function PluginDetailPage({
                     gap: "var(--space-2)",
                   }}
                 >
-                  <img
+                  <Image
                     src={`https://endgit.dev/shield.state/${plugin.slug}`}
                     alt="Status Badge"
+                    width={120}
+                    height={20}
+                    unoptimized
                   />
                 </div>
                 <div
@@ -1052,9 +1059,12 @@ export default async function PluginDetailPage({
                     gap: "var(--space-2)",
                   }}
                 >
-                  <img
+                  <Image
                     src={`https://endgit.dev/shield.version/${plugin.slug}`}
                     alt="Version Badge"
+                    width={120}
+                    height={20}
+                    unoptimized
                   />
                 </div>
                 <div

@@ -96,24 +96,8 @@ function parseMarkdownTabs(markdown: string): Tab[] {
   return tabs;
 }
 
-export default function MarkdownTabs({
-  markdown,
-  repoUrl,
-  commitHash,
-}: {
-  markdown: string;
-  repoUrl?: string;
-  commitHash?: string;
-}) {
-  const processedMarkdown = rewriteRelativeUrls(
-    markdown || "",
-    repoUrl,
-    commitHash,
-  );
-  const tabs = parseMarkdownTabs(processedMarkdown);
-  const [activeTab, setActiveTab] = useState(0);
-
-  const MarkdownContent = ({ content }: { content: string }) => (
+function MarkdownContent({ content }: { content: string }) {
+  return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
@@ -140,6 +124,24 @@ export default function MarkdownTabs({
       {content}
     </ReactMarkdown>
   );
+}
+
+export default function MarkdownTabs({
+  markdown,
+  repoUrl,
+  commitHash,
+}: {
+  markdown: string;
+  repoUrl?: string;
+  commitHash?: string;
+}) {
+  const processedMarkdown = rewriteRelativeUrls(
+    markdown || "",
+    repoUrl,
+    commitHash,
+  );
+  const tabs = parseMarkdownTabs(processedMarkdown);
+  const [activeTab, setActiveTab] = useState(0);
 
   // Fallback if no content
   if (tabs.length === 0) {

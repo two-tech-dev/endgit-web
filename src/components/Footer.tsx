@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -83,7 +84,7 @@ export default function Footer() {
                 gap: "0.5rem",
               }}
             >
-              <a
+              <Link
                 href="/plugins"
                 style={{
                   color: "var(--text-muted)",
@@ -92,8 +93,8 @@ export default function Footer() {
                 }}
               >
                 Releases
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/builds"
                 style={{
                   color: "var(--text-muted)",
@@ -102,8 +103,8 @@ export default function Footer() {
                 }}
               >
                 Dev Builds
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/rules"
                 style={{
                   color: "var(--text-muted)",
@@ -112,7 +113,7 @@ export default function Footer() {
                 }}
               >
                 Submission Rules
-              </a>
+              </Link>
             </div>
           </div>
           <div>
@@ -171,7 +172,7 @@ export default function Footer() {
               >
                 GitHub App
               </a>
-              <a
+              <Link
                 href="/faq"
                 style={{
                   color: "var(--text-muted)",
@@ -180,7 +181,7 @@ export default function Footer() {
                 }}
               >
                 FAQ
-              </a>
+              </Link>
             </div>
           </div>
           <div>
@@ -203,7 +204,7 @@ export default function Footer() {
                 gap: "0.5rem",
               }}
             >
-              <a
+              <Link
                 href="/terms"
                 style={{
                   color: "var(--text-muted)",
@@ -212,8 +213,8 @@ export default function Footer() {
                 }}
               >
                 Terms of Service
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/privacy"
                 style={{
                   color: "var(--text-muted)",
@@ -222,7 +223,7 @@ export default function Footer() {
                 }}
               >
                 Privacy Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -248,6 +249,7 @@ export default function Footer() {
             fontSize: "0.75rem",
             margin: 0,
           }}
+          suppressHydrationWarning
         >
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
           {process.env.VERCEL_GIT_COMMIT_SHA && (

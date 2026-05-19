@@ -172,7 +172,7 @@ function TreeNode({
         {!node.required ? (
           <span
             style={{
-              fontSize: "0.625rem",
+              fontSize: "0.75rem",
               color: "var(--text-muted)",
               background: "var(--bg-secondary)",
               padding: "0 4px",

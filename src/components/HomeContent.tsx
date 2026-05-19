@@ -13,6 +13,7 @@ import {
   Cpu,
   Download,
 } from "lucide-react";
+import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
@@ -360,7 +361,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   alignItems: "center",
                 }}
               >
-                <a
+                <Link
                   href="/plugins"
                   className="btn btn-primary"
                   style={{
@@ -373,7 +374,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   }}
                 >
                   Browse Plugins <ArrowRight size={16} />
-                </a>
+                </Link>
                 <a
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
@@ -786,7 +787,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 position: "relative",
               }}
             >
-              <a
+              <Link
                 href="/dashboard/dev"
                 className="btn"
                 style={{
@@ -801,8 +802,8 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 }}
               >
                 <GitFork size={16} /> Start Publishing
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/plugins"
                 className="btn"
                 style={{
@@ -816,7 +817,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                 }}
               >
                 Explore Plugins
-              </a>
+              </Link>
             </div>
           </div>
         </FadeIn>

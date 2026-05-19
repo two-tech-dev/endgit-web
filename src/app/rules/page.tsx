@@ -6,6 +6,13 @@ import {
   Lock,
   ChevronRight,
 } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Submission Rules - EndGit",
+  description:
+    "Guidelines and rules for submitting plugins to the EndGit registry.",
+};
 
 const RULE_CATEGORIES = [
   {

@@ -7,6 +7,7 @@ import {
   ExternalLink,
   ArrowRight,
 } from "lucide-react";
+import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
 
 import { fetchApi } from "@/lib/api";
@@ -422,7 +423,7 @@ export default async function DashboardPage() {
                     />
                   </div>
                   <div>
-                    <a
+                    <Link
                       href={`/plugins/${plugin.slug}`}
                       className="heading-3"
                       style={{
@@ -433,7 +434,7 @@ export default async function DashboardPage() {
                       }}
                     >
                       {plugin.displayName}
-                    </a>
+                    </Link>
                     <span
                       style={{
                         fontSize: "0.875rem",

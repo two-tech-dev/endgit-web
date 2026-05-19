@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function NavbarClient({
   mobile = false,
@@ -56,12 +58,12 @@ export default function NavbarClient({
   const initials = user?.name?.charAt(0) || user?.email?.charAt(0) || "U";
 
   const userAvatar = user?.image ? (
-    <img
+    <Image
       src={user.image}
       alt=""
+      width={mobile ? 32 : 28}
+      height={mobile ? 32 : 28}
       style={{
-        width: mobile ? "32px" : "28px",
-        height: mobile ? "32px" : "28px",
         borderRadius: "50%",
         objectFit: "cover",
       }}
@@ -89,7 +91,7 @@ export default function NavbarClient({
 
   const menuItems = (
     <>
-      <a
+      <Link
         href="/dashboard/dev"
         onClick={() => {
           setDropdownOpen(false);
@@ -111,8 +113,8 @@ export default function NavbarClient({
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <LayoutDashboard size={16} /> Dev Dashboard
-      </a>
-      <a
+      </Link>
+      <Link
         href="/dashboard"
         onClick={() => {
           setDropdownOpen(false);
@@ -134,10 +136,10 @@ export default function NavbarClient({
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
         <Package size={16} /> My Plugins
-      </a>
+      </Link>
       {(session?.user as any)?.trustLevel === "ADMIN" ||
       (session?.user as any)?.trustLevel === "TRUSTED" ? (
-        <a
+        <Link
           href="/admin"
           onClick={() => {
             setDropdownOpen(false);
@@ -161,7 +163,7 @@ export default function NavbarClient({
           }
         >
           <Shield size={16} /> Admin Panel
-        </a>
+        </Link>
       ) : null}
     </>
   );

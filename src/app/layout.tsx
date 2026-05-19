@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
@@ -104,7 +105,7 @@ function Navbar() {
           position: "relative",
         }}
       >
-        <a
+        <Link
           href="/"
           className="navbar-logo"
           style={{
@@ -128,7 +129,7 @@ function Navbar() {
           <span style={{ color: "var(--text-primary)" }}>
             endgit<span style={{ color: "var(--accent-primary)" }}>.</span>{" "}
           </span>
-        </a>
+        </Link>
         <NavbarMobile />
       </div>
     </header>

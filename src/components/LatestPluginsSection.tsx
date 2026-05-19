@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 import FadeIn from "@/components/FadeIn";
@@ -80,7 +81,7 @@ export default function LatestPluginsSection() {
               The latest additions to the Endstone ecosystem.
             </p>
           </div>
-          <a
+          <Link
             href="/plugins"
             className="btn"
             style={{
@@ -93,7 +94,7 @@ export default function LatestPluginsSection() {
             }}
           >
             View All <ArrowRight size={16} />
-          </a>
+          </Link>
         </div>
       </FadeIn>
 
@@ -115,7 +116,7 @@ export default function LatestPluginsSection() {
 
               return (
                 <StaggerItem key={plugin.id}>
-                  <a
+                  <Link
                     href={`/plugins/${plugin.slug}`}
                     className="card"
                     style={{
@@ -259,7 +260,7 @@ export default function LatestPluginsSection() {
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </StaggerItem>
               );
             })}

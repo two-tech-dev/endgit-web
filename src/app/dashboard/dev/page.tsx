@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import Image from "next/image";
 import {
   GitBranch,
   Activity,
@@ -992,7 +994,7 @@ export default function DevDashboardPage() {
                             : "transparent")
                       }
                     >
-                      <img
+                      <Image
                         src={org.avatarUrl}
                         alt=""
                         width={20}
@@ -1090,7 +1092,7 @@ export default function DevDashboardPage() {
                   transition: "all 150ms",
                 }}
               >
-                <img
+                <Image
                   src={org.avatarUrl}
                   alt=""
                   width={16}
@@ -1472,7 +1474,7 @@ export default function DevDashboardPage() {
                     }}
                   >
                     {repo.ciEnabled && repo.pluginSlug && (
-                      <a
+                      <Link
                         href={`/plugins/${repo.pluginSlug}/builds`}
                         style={{
                           display: "inline-flex",
@@ -1484,7 +1486,7 @@ export default function DevDashboardPage() {
                         }}
                       >
                         View Builds <ExternalLink size={12} />
-                      </a>
+                      </Link>
                     )}
                     <button
                       onClick={() => toggleCI(repo)}

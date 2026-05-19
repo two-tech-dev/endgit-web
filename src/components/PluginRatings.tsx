@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { Star, Send, Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface RatingData {
   id: string;
@@ -25,6 +26,21 @@ interface RatingSummary {
   average: number;
   total: number;
   distribution: { star: number; count: number; percentage: number }[];
+}
+
+function StarDisplay({ score, size = 14 }: { score: number; size?: number }) {
+  return (
+    <div style={{ display: "flex", gap: "1px" }}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Star
+          key={i}
+          size={size}
+          fill={i <= score ? "#f59e0b" : "transparent"}
+          color={i <= score ? "#f59e0b" : "#d1d5db"}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default function PluginRatings({
@@ -155,25 +171,6 @@ export default function PluginRatings({
       year: "2-digit",
     });
   };
-
-  const StarDisplay = ({
-    score,
-    size = 14,
-  }: {
-    score: number;
-    size?: number;
-  }) => (
-    <div style={{ display: "flex", gap: "1px" }}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star
-          key={i}
-          size={size}
-          fill={i <= score ? "#f59e0b" : "transparent"}
-          color={i <= score ? "#f59e0b" : "#d1d5db"}
-        />
-      ))}
-    </div>
-  );
 
   return (
     <div className="card" style={{ padding: "var(--space-6)" }}>
@@ -382,10 +379,11 @@ export default function PluginRatings({
                     }}
                   >
                     {rating.user.avatarUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={rating.user.avatarUrl}
                         alt=""
+                        width={28}
+                        height={28}
                         style={{
                           width: "100%",
                           height: "100%",
@@ -414,7 +412,7 @@ export default function PluginRatings({
                     {rating.user.trustLevel === "ADMIN" && (
                       <span
                         style={{
-                          fontSize: "0.625rem",
+                          fontSize: "0.75rem",
                           padding: "1px 6px",
                           borderRadius: "4px",
                           background: "rgba(16, 185, 129, 0.15)",

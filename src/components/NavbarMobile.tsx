@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Menu, X, Moon, Sun } from "lucide-react";
+import Link from "next/link";
 import NavbarClient from "./NavbarClient";
 import { useTheme } from "@/components/ThemeToggle";
 
@@ -121,7 +122,7 @@ export default function NavbarMobile() {
               transition: `opacity 250ms ease ${50 + i * 50}ms, transform 250ms ease ${50 + i * 50}ms`,
             }}
           >
-            <a
+            <Link
               href={item.href}
               onClick={() => handleClose()}
               style={{
@@ -133,7 +134,7 @@ export default function NavbarMobile() {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           </div>
         ))}
       </div>
@@ -205,30 +206,30 @@ export default function NavbarMobile() {
         className="nav-links"
         style={{ display: "flex", gap: "2rem", alignItems: "center" }}
       >
-        <a
+        <Link
           href="/plugins"
           style={{ color: "var(--text-secondary)", fontWeight: 500 }}
         >
           Releases
-        </a>
-        <a
+        </Link>
+        <Link
           href="/plugins/top"
           style={{ color: "var(--text-secondary)", fontWeight: 500 }}
         >
           Top Plugins
-        </a>
-        <a
+        </Link>
+        <Link
           href="/builds"
           style={{ color: "var(--text-secondary)", fontWeight: 500 }}
         >
           Dev Builds
-        </a>
-        <a
+        </Link>
+        <Link
           href="/faq"
           style={{ color: "var(--text-secondary)", fontWeight: 500 }}
         >
           FAQ
-        </a>
+        </Link>
         <button
           onClick={toggleTheme}
           style={{

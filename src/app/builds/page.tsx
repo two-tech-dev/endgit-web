@@ -1,4 +1,10 @@
 import BuildsList from "@/components/BuildList";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Live Builds - EndGit",
+  description: "View recent plugin builds across the Endstone ecosystem.",
+};
 
 async function getTodayBuilds() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";

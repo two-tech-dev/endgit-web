@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
 interface StaggerContainerProps {
@@ -16,6 +16,16 @@ export default function StaggerContainer({
   className,
   style,
 }: StaggerContainerProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial="hidden"
@@ -46,6 +56,16 @@ export function StaggerItem({
   className?: string;
   style?: React.CSSProperties;
 }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       variants={{

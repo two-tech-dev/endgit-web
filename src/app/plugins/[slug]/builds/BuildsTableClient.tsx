@@ -287,7 +287,7 @@ export function BuildsTableClient({
                           <span
                             className="badge"
                             style={{
-                              fontSize: "0.625rem",
+                              fontSize: "0.75rem",
                               width: "fit-content",
                               marginTop: "4px",
                             }}
@@ -388,7 +388,7 @@ export function BuildsTableClient({
                             <span
                               className="badge badge-warning"
                               style={{
-                                fontSize: "0.625rem",
+                                fontSize: "0.75rem",
                                 background: "rgba(245, 158, 11, 0.2)",
                                 color: "var(--status-warning)",
                               }}
@@ -400,7 +400,7 @@ export function BuildsTableClient({
                             <span
                               className="badge badge-success"
                               style={{
-                                fontSize: "0.625rem",
+                                fontSize: "0.75rem",
                                 background: "rgba(16, 185, 129, 0.2)",
                                 color: "var(--status-success)",
                               }}
@@ -412,7 +412,7 @@ export function BuildsTableClient({
                             <span
                               className="badge badge-error"
                               style={{
-                                fontSize: "0.625rem",
+                                fontSize: "0.75rem",
                                 background: "rgba(239, 68, 68, 0.2)",
                                 color: "var(--status-error)",
                               }}
