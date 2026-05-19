@@ -89,6 +89,16 @@ export async function generateMetadata({
       ? plugin.keywords.join(", ")
       : `${plugin.name}, endstone plugin, minecraft bedrock`;
 
+  const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+  const authorName =
+    repoOwner || plugin.author?.displayName || plugin.author?.username;
+  const authorUrl =
+    repoOwner
+      ? `https://github.com/${repoOwner}`
+      : plugin.author?.username
+        ? `https://github.com/${plugin.author.username}`
+        : undefined;
+
   let ogImage = "/logo.png";
   if (plugin.iconUrl) {
     try {
@@ -103,6 +113,9 @@ export async function generateMetadata({
     title,
     description,
     keywords,
+    authors: authorName
+      ? [{ name: authorName, url: authorUrl }]
+      : undefined,
     alternates: {
       canonical: `/plugins/${params.slug}`,
     },
@@ -112,6 +125,7 @@ export async function generateMetadata({
       description,
       images: [ogImage],
       type: "website",
+      authors: authorName || undefined,
     },
     twitter: {
       card: "summary",
