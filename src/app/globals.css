@@ -654,6 +654,8 @@ ol {
 
 .mobile-menu-btn {
   display: none;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   padding: 6px;
@@ -751,8 +753,6 @@ ol {
 
   .mobile-menu-btn {
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .nav-links {

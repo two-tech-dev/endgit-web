@@ -241,9 +241,6 @@ export default function NavbarMobile() {
         aria-label="Toggle menu"
         style={{
           color: "var(--text-primary)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
         <div
