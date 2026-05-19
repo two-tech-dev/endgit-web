@@ -1091,28 +1091,28 @@ export default function AdminPage() {
                     }}
                   >
                     Reason for Rejection *
-                  <textarea
-                    value={rejectReason}
-                    onChange={(e) => setRejectReason(e.target.value)}
-                    placeholder={
-                      "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
-                    }
-                    rows={8}
-                    style={{
-                      width: "100%",
-                      padding: "var(--space-3)",
-                      borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--border-color)",
-                      background: "var(--bg-secondary)",
-                      color: "var(--text-primary)",
-                      fontSize: "0.875rem",
-                      lineHeight: 1.6,
-                      resize: "vertical",
-                      outline: "none",
-                      fontFamily: "inherit",
-                      minHeight: "140px",
-                    }}
-                  />
+                    <textarea
+                      value={rejectReason}
+                      onChange={(e) => setRejectReason(e.target.value)}
+                      placeholder={
+                        "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
+                      }
+                      rows={8}
+                      style={{
+                        width: "100%",
+                        padding: "var(--space-3)",
+                        borderRadius: "var(--radius-md)",
+                        border: "1px solid var(--border-color)",
+                        background: "var(--bg-secondary)",
+                        color: "var(--text-primary)",
+                        fontSize: "0.875rem",
+                        lineHeight: 1.6,
+                        resize: "vertical",
+                        outline: "none",
+                        fontFamily: "inherit",
+                        minHeight: "140px",
+                      }}
+                    />
                   </label>
                   <p
                     style={{
