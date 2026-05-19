@@ -146,8 +146,8 @@ export default function PrivacyPolicyPage() {
         </h3>
         <ul style={listStyle}>
           <li>
-            IP address (used temporarily in Redis for download deduplication, not
-            persisted in our database)
+            IP address (used temporarily in Redis for download deduplication,
+            not persisted in our database)
           </li>
           <li>
             Page views and Web Vitals metrics (via Vercel Analytics and Speed
@@ -191,7 +191,8 @@ export default function PrivacyPolicyPage() {
         <h2 style={sectionHeading}>THIRD-PARTY SERVICES</h2>
         <p>
           We rely on the following third-party services to operate the platform.
-          Each service has its own privacy policy governing how they handle data.
+          Each service has its own privacy policy governing how they handle
+          data.
         </p>
 
         <h3
@@ -206,11 +207,11 @@ export default function PrivacyPolicyPage() {
         </h3>
         <p>
           We use GitHub for OAuth authentication, repository access, webhook
-          integration, and CI/CD workflows. We access your GitHub profile, email,
-          repositories, and organizations as authorized during the OAuth flow.
-          GitHub&apos;s privacy policy applies to data held by GitHub. We create
-          webhooks on your repositories only when you explicitly enable CI/CD for
-          them.
+          integration, and CI/CD workflows. We access your GitHub profile,
+          email, repositories, and organizations as authorized during the OAuth
+          flow. GitHub&apos;s privacy policy applies to data held by GitHub. We
+          create webhooks on your repositories only when you explicitly enable
+          CI/CD for them.
         </p>
 
         <h3
@@ -225,10 +226,10 @@ export default function PrivacyPolicyPage() {
         </h3>
         <p>
           The Site is hosted on Vercel. We use Vercel Analytics to collect
-          anonymized page view data and Vercel Speed Insights to collect Core Web
-          Vitals performance metrics. Vercel&apos;s privacy policy governs the
-          handling of data processed through their infrastructure and analytics
-          services.
+          anonymized page view data and Vercel Speed Insights to collect Core
+          Web Vitals performance metrics. Vercel&apos;s privacy policy governs
+          the handling of data processed through their infrastructure and
+          analytics services.
         </p>
 
         <h3
@@ -287,12 +288,13 @@ export default function PrivacyPolicyPage() {
           <li>
             <strong>NextAuth session cookie</strong> — A secure, HTTP-only JWT
             cookie that maintains your authenticated session. It contains your
-            user ID, username, trust level, and an API token. This cookie expires
-            after 7 days and is refreshed automatically.
+            user ID, username, trust level, and an API token. This cookie
+            expires after 7 days and is refreshed automatically.
           </li>
           <li>
-            <strong>NextAuth CSRF token cookie</strong> — Used to protect against
-            cross-site request forgery attacks during authentication flows.
+            <strong>NextAuth CSRF token cookie</strong> — Used to protect
+            against cross-site request forgery attacks during authentication
+            flows.
           </li>
           <li>
             <strong>localStorage (theme)</strong> — We store your light/dark
@@ -328,9 +330,7 @@ export default function PrivacyPolicyPage() {
             public endpoints, stricter limits for authenticated and write
             operations
           </li>
-          <li>
-            HTTPS is enforced for all communications
-          </li>
+          <li>HTTPS is enforced for all communications</li>
           <li>
             Webhook signatures are verified using HMAC-SHA256 with timing-safe
             comparison
@@ -388,8 +388,8 @@ export default function PrivacyPolicyPage() {
           <li>
             <strong>Deletion</strong> — Request deletion of your account and
             associated personal data. Publicly submitted content (plugins,
-            ratings) may be anonymized rather than deleted to maintain marketplace
-            integrity.
+            ratings) may be anonymized rather than deleted to maintain
+            marketplace integrity.
           </li>
           <li>
             <strong>Revoke access</strong> — Revoke our GitHub App installation
@@ -411,18 +411,18 @@ export default function PrivacyPolicyPage() {
 
         <h2 style={sectionHeading}>CHILDREN&apos;S PRIVACY</h2>
         <p>
-          The Site is not intended for use by children under the age of 13. We do
-          not knowingly collect personal information from children under 13. If
-          you are a parent or guardian and believe your child has provided us
+          The Site is not intended for use by children under the age of 13. We
+          do not knowingly collect personal information from children under 13.
+          If you are a parent or guardian and believe your child has provided us
           with personal information, please contact us so we can delete it.
         </p>
 
         <h2 style={sectionHeading}>INTERNATIONAL DATA TRANSFERS</h2>
         <p>
           Your data may be processed and stored in servers located outside your
-          country of residence. Our infrastructure providers (Vercel, Cloudflare)
-          operate globally. By using the Site, you consent to the transfer of
-          your data to these facilities.
+          country of residence. Our infrastructure providers (Vercel,
+          Cloudflare) operate globally. By using the Site, you consent to the
+          transfer of your data to these facilities.
         </p>
 
         <h2 style={sectionHeading}>CHANGES TO THIS POLICY</h2>

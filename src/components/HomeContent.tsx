@@ -51,9 +51,7 @@ function TerminalMock() {
       t.push(setTimeout(() => setTypedChars(i), i * charDelay));
     }
 
-    t.push(
-      setTimeout(() => setShowCursor(false), offset)
-    );
+    t.push(setTimeout(() => setShowCursor(false), offset));
 
     for (let i = 0; i < OUTPUT_LINES.length; i++) {
       offset += lineDelay;
@@ -61,10 +59,12 @@ function TerminalMock() {
     }
 
     offset += 600;
-    t.push(setTimeout(() => {
-      setShowCursor(false);
-      setShowPrompt(true);
-    }, offset));
+    t.push(
+      setTimeout(() => {
+        setShowCursor(false);
+        setShowPrompt(true);
+      }, offset),
+    );
 
     return () => t.forEach(clearTimeout);
   }, []);
@@ -74,7 +74,12 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      style={{ width: "100%", maxWidth: "520px", height: "260px", flexShrink: 0 }}
+      style={{
+        width: "100%",
+        maxWidth: "520px",
+        height: "260px",
+        flexShrink: 0,
+      }}
     >
       <div
         style={{

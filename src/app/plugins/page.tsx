@@ -118,7 +118,10 @@ export default async function PluginsPage({
         </div>
       </div>
 
-      <div className="plugins-layout" style={{ display: "flex", gap: "var(--space-6)" }}>
+      <div
+        className="plugins-layout"
+        style={{ display: "flex", gap: "var(--space-6)" }}
+      >
         {/* Sidebar Filters */}
         <MobileFiltersWrapper searchComponent={<PluginSearch />}>
           <PluginSidebarFilters />
