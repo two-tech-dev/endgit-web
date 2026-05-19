@@ -92,12 +92,11 @@ export async function generateMetadata({
   const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
   const authorName =
     repoOwner || plugin.author?.displayName || plugin.author?.username;
-  const authorUrl =
-    repoOwner
-      ? `https://github.com/${repoOwner}`
-      : plugin.author?.username
-        ? `https://github.com/${plugin.author.username}`
-        : undefined;
+  const authorUrl = repoOwner
+    ? `https://github.com/${repoOwner}`
+    : plugin.author?.username
+      ? `https://github.com/${plugin.author.username}`
+      : undefined;
 
   let ogImage = "/logo.png";
   if (plugin.iconUrl) {
@@ -113,9 +112,7 @@ export async function generateMetadata({
     title,
     description,
     keywords,
-    authors: authorName
-      ? [{ name: authorName, url: authorUrl }]
-      : undefined,
+    authors: authorName ? [{ name: authorName, url: authorUrl }] : undefined,
     alternates: {
       canonical: `/plugins/${params.slug}`,
     },
