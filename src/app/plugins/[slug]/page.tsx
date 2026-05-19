@@ -89,6 +89,16 @@ export async function generateMetadata({
       ? plugin.keywords.join(", ")
       : `${plugin.name}, endstone plugin, minecraft bedrock`;
 
+  let ogImage = "/logo.png";
+  if (plugin.iconUrl) {
+    try {
+      const res = await fetch(plugin.iconUrl, { method: "HEAD" });
+      if (res.ok) ogImage = plugin.iconUrl;
+    } catch {
+      // fetch failed, keep fallback
+    }
+  }
+
   return {
     title,
     description,
@@ -100,14 +110,14 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: [plugin.iconUrl || "/og-image.png"],
+      images: [ogImage],
       type: "website",
     },
     twitter: {
       card: "summary",
       title,
       description,
-      images: [plugin.iconUrl || "/og-image.png"],
+      images: [ogImage],
     },
   };
 }
