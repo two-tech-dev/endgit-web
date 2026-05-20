@@ -83,6 +83,7 @@ export default function SubmitReviewForm({
   );
   const [notes, setNotes] = useState("");
   const [changelog, setChangelog] = useState("");
+  const [isPreRelease, setIsPreRelease] = useState(false);
   const [supportedApis, setSupportedApis] = useState<string[]>(
     plugin?.versions?.[0]?.supportedApis || [],
   );
@@ -230,7 +231,7 @@ export default function SubmitReviewForm({
             displayName,
             description,
             longDescription,
-            tags: selectedCategories.join(","), // backend expects string or array, it handles comma split
+            tags: selectedCategories.join(","),
             keywords,
             license,
             iconPath,
@@ -239,6 +240,7 @@ export default function SubmitReviewForm({
             supportedApis,
             producers,
             isDraft,
+            isPreRelease,
           }),
         },
       );
@@ -268,7 +270,7 @@ export default function SubmitReviewForm({
     );
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+    <div>
       <button
         onClick={() => router.back()}
         className="btn btn-secondary"
@@ -324,86 +326,55 @@ export default function SubmitReviewForm({
             gap: "var(--space-5)",
           }}
         >
-          <div
+          {/* ── Section: About this plugin ── */}
+          <h2
+            className="heading-3"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "var(--space-4)",
+              marginBottom: "var(--space-2)",
+              paddingBottom: "var(--space-2)",
+              borderBottom: "2px solid var(--accent-primary)",
+              fontSize: "1.1rem",
+              fontStyle: "italic",
             }}
           >
-            <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  marginBottom: "2px",
-                }}
-              >
-                Display Name
-              </label>
-              <p
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                }}
-              >
-                The clean name shown on the marketplace (Rule B7).
-              </p>
-              <input
-                type="text"
-                required
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                className="input"
-                style={{
-                  width: "100%",
-                  padding: "0.625rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                }}
-              />
-            </div>
-            <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  marginBottom: "2px",
-                }}
-              >
-                Version
-              </label>
-              <p
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                }}
-              >
-                Follow Semantic Versioning (e.g., 1.0.0).
-              </p>
-              <input
-                type="text"
-                required
-                value={version}
-                onChange={(e) => setVersion(e.target.value)}
-                placeholder="e.g. 1.0.0"
-                className="input"
-                style={{
-                  width: "100%",
-                  padding: "0.625rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                }}
-              />
-            </div>
+            About this plugin...
+          </h2>
+
+          <div>
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              Display Name
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              The clean name shown on the marketplace (Rule B7).
+            </p>
+            <input
+              type="text"
+              required
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              className="input"
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+              }}
+            />
           </div>
 
           <div>
@@ -700,6 +671,97 @@ export default function SubmitReviewForm({
                 </button>
               )}
             </div>
+          </div>
+
+          {/* ── Section: About this version ── */}
+          <h2
+            className="heading-3"
+            style={{
+              marginTop: "var(--space-4)",
+              marginBottom: "var(--space-2)",
+              paddingBottom: "var(--space-2)",
+              borderBottom: "2px solid var(--accent-primary)",
+              fontSize: "1.1rem",
+              fontStyle: "italic",
+            }}
+          >
+            About this version...
+          </h2>
+
+          <div>
+            <label
+              style={{
+                display: "block",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                marginBottom: "2px",
+              }}
+            >
+              Version
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginBottom: "6px",
+              }}
+            >
+              Follow Semantic Versioning (e.g., 1.0.0, 2.0.0-beta).
+            </p>
+            <input
+              type="text"
+              required
+              value={version}
+              onChange={(e) => setVersion(e.target.value)}
+              placeholder="e.g. 1.0.0"
+              className="input"
+              style={{
+                width: "100%",
+                padding: "0.625rem",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+              }}
+            />
+          </div>
+
+          <div>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={isPreRelease}
+                onChange={(e) => setIsPreRelease(e.target.checked)}
+                style={{
+                  accentColor: "var(--accent-primary)",
+                  width: "16px",
+                  height: "16px",
+                }}
+              />
+              <span>Pre-release?</span>
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginTop: "4px",
+                marginLeft: "26px",
+              }}
+            >
+              Pre-release versions will not be listed by default. This is for
+              users to have a &quot;semi-stable&quot; preview version of your
+              updates. Pre-release versions are less likely to be rejected, since
+              a higher amount of bugs are tolerable.
+            </p>
           </div>
 
           <div>

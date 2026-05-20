@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FlaskConical } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
 interface Plugin {
@@ -14,6 +15,7 @@ interface Plugin {
   downloads?: number;
   createdAt?: string;
   isFeatured?: boolean;
+  isPreRelease?: boolean;
   author?: { displayName?: string; username?: string };
 }
 
@@ -94,9 +96,25 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                     overflow: "hidden",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
                   }}
                 >
                   {plugin.displayName}
+                  {plugin.isPreRelease && (
+                    <span
+                      title="This is a pre-release"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        color: "#ef4444",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <FlaskConical size={16} />
+                    </span>
+                  )}
                 </h3>
                 <div
                   style={{

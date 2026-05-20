@@ -21,6 +21,7 @@ import {
   Star,
   Filter,
   ShieldAlert,
+  FlaskConical,
 } from "lucide-react";
 
 const PLUGIN_STATUSES = [
@@ -899,9 +900,24 @@ export default function AdminPage() {
                             fontSize: "1.125rem",
                             margin: 0,
                             color: "var(--text-primary)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
                           }}
                         >
                           {plugin.displayName}
+                          {plugin.versions?.[0]?.isPreRelease && (
+                            <span
+                              title="This is a pre-release"
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                color: "#ef4444",
+                              }}
+                            >
+                              <FlaskConical size={16} />
+                            </span>
+                          )}
                         </h3>
                         <p
                           style={{

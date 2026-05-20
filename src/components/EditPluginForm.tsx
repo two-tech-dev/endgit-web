@@ -40,6 +40,10 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     plugin?.tags || [],
   );
+  const [isPreRelease, setIsPreRelease] = useState(
+    (plugin?.versions?.find((v: any) => v.isLatest) || plugin?.versions?.[0])
+      ?.isPreRelease || false,
+  );
 
   const [isFetchingLicense, setIsFetchingLicense] = useState(false);
   const [isFetchingReadme, setIsFetchingReadme] = useState(false);
@@ -149,6 +153,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             repoUrl,
             license,
             tags: selectedCategories,
+            isPreRelease,
           }),
         },
       );
@@ -178,7 +183,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
     );
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+    <div>
       <button
         onClick={() => router.back()}
         className="btn btn-secondary"
@@ -224,6 +229,20 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             gap: "var(--space-5)",
           }}
         >
+          {/* ── Section: About this plugin ── */}
+          <h2
+            className="heading-3"
+            style={{
+              marginBottom: "var(--space-2)",
+              paddingBottom: "var(--space-2)",
+              borderBottom: "2px solid var(--accent-primary)",
+              fontSize: "1.1rem",
+              fontStyle: "italic",
+            }}
+          >
+            About this plugin...
+          </h2>
+
           <div>
             <label
               style={{
@@ -249,10 +268,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               required
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              disabled={
-                plugin.status === "APPROVED" &&
-                (session?.user as any)?.trustLevel !== "ADMIN"
-              }
+              disabled={(session?.user as any)?.trustLevel !== "ADMIN"}
               className="input"
               style={{
                 width: "100%",
@@ -262,19 +278,14 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                 background: "var(--bg-secondary)",
                 color: "var(--text-primary)",
                 opacity:
-                  plugin.status === "APPROVED" &&
-                  (session?.user as any)?.trustLevel !== "ADMIN"
-                    ? 0.6
-                    : 1,
+                  (session?.user as any)?.trustLevel !== "ADMIN" ? 0.6 : 1,
                 cursor:
-                  plugin.status === "APPROVED" &&
                   (session?.user as any)?.trustLevel !== "ADMIN"
                     ? "not-allowed"
                     : "text",
               }}
             />
-            {plugin.status === "APPROVED" &&
-              (session?.user as any)?.trustLevel !== "ADMIN" && (
+            {(session?.user as any)?.trustLevel !== "ADMIN" && (
                 <p
                   style={{
                     fontSize: "0.75rem",
@@ -285,8 +296,8 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                     gap: "4px",
                   }}
                 >
-                  <AlertTriangle size={12} /> Display name cannot be changed for
-                  approved plugins.
+                  <AlertTriangle size={12} /> Display name cannot be changed.
+                  Contact an admin if you need to rename your plugin.
                 </p>
               )}
           </div>
@@ -474,6 +485,59 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* ── Section: About the latest version ── */}
+          <h2
+            className="heading-3"
+            style={{
+              marginTop: "var(--space-4)",
+              marginBottom: "var(--space-2)",
+              paddingBottom: "var(--space-2)",
+              borderBottom: "2px solid var(--accent-primary)",
+              fontSize: "1.1rem",
+              fontStyle: "italic",
+            }}
+          >
+            About the latest version...
+          </h2>
+
+          <div>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                fontSize: "0.875rem",
+                fontWeight: 500,
+                cursor: "pointer",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={isPreRelease}
+                onChange={(e) => setIsPreRelease(e.target.checked)}
+                style={{
+                  accentColor: "var(--accent-primary)",
+                  width: "16px",
+                  height: "16px",
+                }}
+              />
+              <span>Pre-release?</span>
+            </label>
+            <p
+              style={{
+                fontSize: "0.75rem",
+                color: "var(--text-muted)",
+                marginTop: "4px",
+                marginLeft: "26px",
+              }}
+            >
+              Pre-release versions will not be listed by default. This is for
+              users to have a &quot;semi-stable&quot; preview version of your
+              updates. Pre-release versions are less likely to be rejected, since
+              a higher amount of bugs are tolerable.
+            </p>
           </div>
 
           <div>

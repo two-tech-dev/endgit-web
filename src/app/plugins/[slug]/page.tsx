@@ -11,6 +11,7 @@ import {
   Shield,
   Zap,
   Pencil,
+  FlaskConical,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -269,6 +270,18 @@ export default async function PluginDetailPage({
                   }}
                 >
                   {plugin.displayName}
+                  {plugin.versions?.[0]?.isPreRelease && (
+                    <span
+                      title="This is a pre-release"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        color: "#ef4444",
+                      }}
+                    >
+                      <FlaskConical size={20} />
+                    </span>
+                  )}
                   {plugin.repoUrl && (
                     <a
                       href={
