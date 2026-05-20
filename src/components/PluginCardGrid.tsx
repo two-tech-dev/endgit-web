@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FlaskConical } from "lucide-react";
+import { FlaskConical, BadgeCheck } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
 interface Plugin {
@@ -20,6 +20,8 @@ interface Plugin {
 }
 
 export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
+  const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
+
   return (
     <div
       style={{
@@ -34,6 +36,10 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
           ? Math.round((plugin.stars / 20) * 10) / 10
           : 0;
         const isFeatured = plugin.isFeatured;
+        const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+        const isVerified = repoOwner
+          ? VERIFIED_ORGS.includes(repoOwner)
+          : false;
 
         return (
           <motion.a
@@ -102,6 +108,19 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   }}
                 >
                   {plugin.displayName}
+                  {isVerified && (
+                    <span
+                      title="This plugin is officially supported by EndstoneMC/EndGit"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        color: "var(--accent-primary)",
+                        flexShrink: 0,
+                      }}
+                    >
+                      <BadgeCheck size={16} />
+                    </span>
+                  )}
                   {plugin.isPreRelease && (
                     <span
                       title="This is a pre-release"

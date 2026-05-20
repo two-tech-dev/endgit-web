@@ -12,6 +12,7 @@ import {
   Zap,
   Pencil,
   FlaskConical,
+  BadgeCheck,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -161,6 +162,7 @@ export default async function PluginDetailPage({
     : plugin.versions?.[0];
 
   const isAuthor = session?.user?.id === plugin.authorId;
+  const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
 
   const getRoleStyle = (role: string) => {
     switch (role) {
@@ -270,6 +272,20 @@ export default async function PluginDetailPage({
                   }}
                 >
                   {plugin.displayName}
+                  {["EndstoneMC", "two-tech-dev"].includes(
+                    repoOwnerDetail || "",
+                  ) && (
+                    <span
+                      title="This plugin is officially supported by EndstoneMC/EndGit"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        color: "var(--accent-primary)",
+                      }}
+                    >
+                      <BadgeCheck size={20} />
+                    </span>
+                  )}
                   {plugin.versions?.[0]?.isPreRelease && (
                     <span
                       title="This is a pre-release"

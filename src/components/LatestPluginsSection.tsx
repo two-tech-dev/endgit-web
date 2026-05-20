@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
@@ -21,6 +21,7 @@ interface Plugin {
 }
 
 export default function LatestPluginsSection() {
+  const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
   const [plugins, setPlugins] = useState<Plugin[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -113,6 +114,11 @@ export default function LatestPluginsSection() {
               const avgRating = plugin.stars
                 ? Math.round((plugin.stars / 20) * 10) / 10
                 : 0;
+              const repoOwner =
+                plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+              const isVerified = repoOwner
+                ? VERIFIED_ORGS.includes(repoOwner)
+                : false;
 
               return (
                 <StaggerItem key={plugin.id}>
@@ -170,9 +176,25 @@ export default function LatestPluginsSection() {
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
                           }}
                         >
                           {plugin.displayName}
+                          {isVerified && (
+                            <span
+                              title="This plugin is officially supported by EndstoneMC/EndGit"
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                color: "var(--accent-primary)",
+                                flexShrink: 0,
+                              }}
+                            >
+                              <BadgeCheck size={16} />
+                            </span>
+                          )}
                         </h3>
                         <div
                           style={{
