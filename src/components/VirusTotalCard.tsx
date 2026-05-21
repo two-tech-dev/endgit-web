@@ -17,8 +17,14 @@ interface VirusTotalCardProps {
 export default function VirusTotalCard({ version }: VirusTotalCardProps) {
   if (!version) return null;
 
-  const { vtStatus, vtMalicious, vtSuspicious, vtTotal, vtPermalink, vtScanDate } =
-    version;
+  const {
+    vtStatus,
+    vtMalicious,
+    vtSuspicious,
+    vtTotal,
+    vtPermalink,
+    vtScanDate,
+  } = version;
 
   const malicious = vtMalicious ?? 0;
   const suspicious = vtSuspicious ?? 0;
@@ -204,7 +210,8 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
           }}
         >
           <AlertTriangle size={14} style={{ flexShrink: 0 }} />
-          Scan could not be completed. It will be retried on the next submission.
+          Scan could not be completed. It will be retried on the next
+          submission.
         </p>
       )}
 
