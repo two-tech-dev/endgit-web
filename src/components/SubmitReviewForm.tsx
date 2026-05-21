@@ -759,8 +759,8 @@ export default function SubmitReviewForm({
             >
               Pre-release versions will not be listed by default. This is for
               users to have a &quot;semi-stable&quot; preview version of your
-              updates. Pre-release versions are less likely to be rejected, since
-              a higher amount of bugs are tolerable.
+              updates. Pre-release versions are less likely to be rejected,
+              since a higher amount of bugs are tolerable.
             </p>
           </div>
 

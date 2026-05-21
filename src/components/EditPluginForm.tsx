@@ -286,20 +286,20 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               }}
             />
             {(session?.user as any)?.trustLevel !== "ADMIN" && (
-                <p
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "var(--status-warning)",
-                    marginTop: "4px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                  }}
-                >
-                  <AlertTriangle size={12} /> Display name cannot be changed.
-                  Contact an admin if you need to rename your plugin.
-                </p>
-              )}
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "var(--status-warning)",
+                  marginTop: "4px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                }}
+              >
+                <AlertTriangle size={12} /> Display name cannot be changed.
+                Contact an admin if you need to rename your plugin.
+              </p>
+            )}
           </div>
 
           <div>
@@ -535,8 +535,8 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             >
               Pre-release versions will not be listed by default. This is for
               users to have a &quot;semi-stable&quot; preview version of your
-              updates. Pre-release versions are less likely to be rejected, since
-              a higher amount of bugs are tolerable.
+              updates. Pre-release versions are less likely to be rejected,
+              since a higher amount of bugs are tolerable.
             </p>
           </div>
 
