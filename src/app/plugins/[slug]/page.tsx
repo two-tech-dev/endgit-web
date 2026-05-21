@@ -155,14 +155,18 @@ export default async function PluginDetailPage({
         ? "var(--status-warning)"
         : "var(--status-error)";
 
-  // Determine active version from URL param or default to latest
-  const activeVersion = searchParams.v
-    ? plugin.versions?.find((v: any) => v.version === searchParams.v) ||
-      plugin.versions?.[0]
-    : plugin.versions?.[0];
-
   const isAuthor = session?.user?.id === plugin.authorId;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+
+  const displayVersions =
+    plugin.versions?.filter((v: any) => isAuthor || v.status === "APPROVED") ||
+    [];
+
+  // Determine active version from URL param or default to latest
+  const activeVersion = searchParams.v
+    ? displayVersions.find((v: any) => v.version === searchParams.v) ||
+      displayVersions[0]
+    : displayVersions[0];
 
   const getRoleStyle = (role: string) => {
     switch (role) {
@@ -474,7 +478,7 @@ export default async function PluginDetailPage({
             <VersionSelector
               slug={plugin.slug}
               pluginType={plugin.pluginType}
-              versions={plugin.versions}
+              versions={displayVersions}
             />
             <div
               style={{
