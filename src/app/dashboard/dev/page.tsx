@@ -194,14 +194,16 @@ export default function DevDashboardPage() {
         }
         setHasMore(json.pagination?.hasMore || false);
         setPage(pageNumber);
-        if (json.pagination?.totalCount !== undefined) {
-          setTotalCount(json.pagination.totalCount);
-        }
-        if (json.pagination?.totalEnabled !== undefined) {
-          setTotalEnabled(json.pagination.totalEnabled);
-        }
-        if (json.pagination?.totalDisabled !== undefined) {
-          setTotalDisabled(json.pagination.totalDisabled);
+        if (!searchQuery) {
+          if (json.pagination?.totalCount !== undefined) {
+            setTotalCount(json.pagination.totalCount);
+          }
+          if (json.pagination?.totalEnabled !== undefined) {
+            setTotalEnabled(json.pagination.totalEnabled);
+          }
+          if (json.pagination?.totalDisabled !== undefined) {
+            setTotalDisabled(json.pagination.totalDisabled);
+          }
         }
       } else {
         setError(json.error || "Failed to fetch repos");
