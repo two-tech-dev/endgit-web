@@ -75,6 +75,14 @@ export default function DevDashboardPage() {
   const [orgDropdownOpen, setOrgDropdownOpen] = useState(false);
   const orgDropdownRef = useRef<HTMLDivElement>(null);
 
+  // Enable CI modal state
+  const [enableCIModal, setEnableCIModal] = useState<{
+    repo: Repo;
+    name: string;
+    icon: string;
+    branch: string;
+  } | null>(null);
+
   useEffect(() => {
     if (sessionStatus !== "authenticated") return;
     fetchRepos(1, null);
@@ -198,42 +206,79 @@ export default function DevDashboardPage() {
   };
 
   const toggleCI = async (repo: Repo) => {
+    if (!repo.ciEnabled) {
+      // Show config modal before enabling
+      setEnableCIModal({
+        repo,
+        name: repo.name,
+        icon: "icon.png",
+        branch: repo.defaultBranch || "main",
+      });
+      return;
+    }
+
+    // Disable CI
     setToggling(repo.id);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
     const token = (session?.user as any)?.apiToken;
 
     try {
-      let res;
-      if (repo.ciEnabled && repo.pluginId) {
-        // Disable CI
-        res = await fetch(
-          `${apiUrl}/api/v1/github/repos/${repo.pluginId}/disable`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          },
-        );
-      } else {
-        // Enable CI
-        res = await fetch(`${apiUrl}/api/v1/github/repos/${repo.id}/enable`, {
+      const res = await fetch(
+        `${apiUrl}/api/v1/github/repos/${repo.pluginId}/disable`,
+        {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            name: repo.name,
-            fullName: repo.fullName,
-            htmlUrl: repo.htmlUrl,
-            language: repo.language,
-            defaultBranch: repo.defaultBranch,
-            description: repo.description,
-          }),
-        });
+        },
+      );
+
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json.success === false) {
+        alert(`Failed to disable CI:\n${json.error || "Unknown error"}`);
+        setToggling(null);
+        return;
       }
+
+      await fetchRepos(1, selectedOrg);
+    } catch (err: any) {
+      alert(`An error occurred while toggling CI: ${err.message}`);
+    } finally {
+      setToggling(null);
+    }
+  };
+
+  const confirmEnableCI = async () => {
+    if (!enableCIModal) return;
+    const { repo, name, icon, branch } = enableCIModal;
+
+    setEnableCIModal(null);
+    setToggling(repo.id);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    const token = (session?.user as any)?.apiToken;
+
+    try {
+      const res = await fetch(`${apiUrl}/api/v1/github/repos/${repo.id}/enable`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: repo.name,
+          fullName: repo.fullName,
+          htmlUrl: repo.htmlUrl,
+          language: repo.language,
+          defaultBranch: repo.defaultBranch,
+          description: repo.description,
+          endgitConfig: {
+            name,
+            icon,
+            branch: branch.split(",").map((b) => b.trim()).filter(Boolean),
+          },
+        }),
+      });
 
       const json = await res.json().catch(() => ({}));
       if (!res.ok || json.success === false) {
@@ -250,17 +295,14 @@ export default function DevDashboardPage() {
           return;
         }
 
-        alert(
-          `Failed to ${repo.ciEnabled ? "disable" : "enable"} CI:\n${json.error || "Unknown error"}`,
-        );
+        alert(`Failed to enable CI:\n${json.error || "Unknown error"}`);
         setToggling(null);
         return;
       }
 
-      // Refresh current repos by reloading page 1
       await fetchRepos(1, selectedOrg);
     } catch (err: any) {
-      alert(`An error occurred while toggling CI: ${err.message}`);
+      alert(`An error occurred while enabling CI: ${err.message}`);
     } finally {
       setToggling(null);
     }
@@ -1567,6 +1609,209 @@ export default function DevDashboardPage() {
               </p>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Enable CI Config Modal */}
+      {enableCIModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: "var(--space-4)",
+          }}
+          onClick={() => setEnableCIModal(null)}
+        >
+          <div
+            className="card"
+            style={{
+              width: "100%",
+              maxWidth: "480px",
+              padding: "0",
+              overflow: "hidden",
+              borderTop: "4px solid var(--accent-primary)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ padding: "var(--space-6)" }}>
+              <h2
+                className="heading-2"
+                style={{ margin: "0 0 var(--space-2) 0", fontSize: "1.25rem" }}
+              >
+                Enable CI for {enableCIModal.repo.name}
+              </h2>
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "var(--text-muted)",
+                  marginBottom: "var(--space-5)",
+                }}
+              >
+                Configure your plugin settings. A{" "}
+                <code
+                  style={{
+                    background: "var(--bg-secondary)",
+                    padding: "2px 6px",
+                    borderRadius: "var(--radius-sm)",
+                    fontSize: "0.8125rem",
+                  }}
+                >
+                  .endgit.yml
+                </code>{" "}
+                file will be committed to your repository.
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--space-4)",
+                }}
+              >
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      marginBottom: "4px",
+                    }}
+                  >
+                    Plugin Name
+                  </label>
+                  <input
+                    type="text"
+                    value={enableCIModal.name}
+                    onChange={(e) =>
+                      setEnableCIModal({ ...enableCIModal, name: e.target.value })
+                    }
+                    className="input"
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)",
+                      background: "var(--bg-secondary)",
+                      color: "var(--text-primary)",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      marginBottom: "4px",
+                    }}
+                  >
+                    Icon Path
+                  </label>
+                  <input
+                    type="text"
+                    value={enableCIModal.icon}
+                    onChange={(e) =>
+                      setEnableCIModal({ ...enableCIModal, icon: e.target.value })
+                    }
+                    placeholder="icon.png"
+                    className="input"
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)",
+                      background: "var(--bg-secondary)",
+                      color: "var(--text-primary)",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--text-muted)",
+                      marginTop: "2px",
+                    }}
+                  >
+                    Relative path to icon in your repository
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: "0.875rem",
+                      fontWeight: 500,
+                      marginBottom: "4px",
+                    }}
+                  >
+                    Build Branches
+                  </label>
+                  <input
+                    type="text"
+                    value={enableCIModal.branch}
+                    onChange={(e) =>
+                      setEnableCIModal({
+                        ...enableCIModal,
+                        branch: e.target.value,
+                      })
+                    }
+                    placeholder="main, develop"
+                    className="input"
+                    style={{
+                      width: "100%",
+                      padding: "0.5rem",
+                      borderRadius: "var(--radius-md)",
+                      border: "1px solid var(--border-color)",
+                      background: "var(--bg-secondary)",
+                      color: "var(--text-primary)",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "var(--text-muted)",
+                      marginTop: "2px",
+                    }}
+                  >
+                    Comma-separated branches that trigger builds
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  gap: "var(--space-3)",
+                  marginTop: "var(--space-6)",
+                  paddingTop: "var(--space-4)",
+                  borderTop: "1px solid var(--border-color)",
+                }}
+              >
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => setEnableCIModal(null)}
+                  style={{ padding: "0.5rem 1.25rem" }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={confirmEnableCI}
+                  style={{ padding: "0.5rem 1.25rem" }}
+                >
+                  Enable CI
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
