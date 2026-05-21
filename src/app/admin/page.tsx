@@ -22,6 +22,8 @@ import {
   Filter,
   ShieldAlert,
   FlaskConical,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
 
@@ -115,6 +117,16 @@ export default function AdminPage() {
   } | null>(null);
   const [pluginRejectReason, setPluginRejectReason] = useState("");
   const [pluginRejectLoading, setPluginRejectLoading] = useState(false);
+  const [expandedPlugins, setExpandedPlugins] = useState<Set<string>>(new Set());
+
+  const togglePluginExpanded = (pluginId: string) => {
+    setExpandedPlugins((prev) => {
+      const next = new Set(prev);
+      if (next.has(pluginId)) next.delete(pluginId);
+      else next.add(pluginId);
+      return next;
+    });
+  };
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   const token = (session?.user as any)?.apiToken || "";
@@ -1653,6 +1665,34 @@ export default function AdminPage() {
                                 >
                                   {plugin.slug}
                                 </div>
+                                {plugin.versions && plugin.versions.length > 0 && (
+                                  <button
+                                    onClick={() => togglePluginExpanded(plugin.id)}
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      gap: "4px",
+                                      padding: "2px 8px",
+                                      borderRadius: "var(--radius-sm)",
+                                      border: "1px solid var(--border-color)",
+                                      background: expandedPlugins.has(plugin.id)
+                                        ? "var(--bg-secondary)"
+                                        : "transparent",
+                                      cursor: "pointer",
+                                      fontSize: "0.75rem",
+                                      color: "var(--text-muted)",
+                                      fontWeight: 600,
+                                      transition: "all 150ms",
+                                    }}
+                                  >
+                                    {expandedPlugins.has(plugin.id) ? (
+                                      <ChevronDown size={14} />
+                                    ) : (
+                                      <ChevronRight size={14} />
+                                    )}
+                                    Releases ({plugin.versions.length})
+                                  </button>
+                                )}
                               </div>
                             </td>
                             <td
@@ -1795,120 +1835,110 @@ export default function AdminPage() {
                               </div>
                             </td>
                           </tr>
-                          {plugin.versions && plugin.versions.length > 0 && (
-                            <tr
-                              style={{
-                                borderBottom: "1px solid var(--border-color)",
-                                background: "rgba(0,0,0,0.04)",
-                              }}
-                            >
-                              <td
-                                colSpan={4}
+                          {expandedPlugins.has(plugin.id) &&
+                            plugin.versions &&
+                            plugin.versions.length > 0 && (
+                              <tr
                                 style={{
-                                  padding:
-                                    "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
+                                  borderBottom: "1px solid var(--border-color)",
+                                  background: "rgba(0,0,0,0.02)",
                                 }}
                               >
-                                <div
+                                <td
+                                  colSpan={4}
                                   style={{
-                                    fontSize: "0.6875rem",
-                                    color: "var(--text-muted)",
-                                    marginBottom: "8px",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.05em",
-                                    fontWeight: 600,
+                                    padding:
+                                      "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
                                   }}
                                 >
-                                  Versions
-                                </div>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                    flexWrap: "wrap",
-                                  }}
-                                >
-                                  {plugin.versions.map((v: any) => {
-                                    const vsc =
-                                      STATUS_COLORS[v.status] ||
-                                      STATUS_COLORS.DRAFT;
-                                    return (
-                                      <div
-                                        key={v.id}
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "8px",
-                                          background: "var(--bg-card)",
-                                          padding: "6px 10px",
-                                          borderRadius: "var(--radius-sm)",
-                                          border: `1px solid ${vsc.border}`,
-                                          transition: "all 150ms",
-                                        }}
-                                      >
-                                        <span
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      gap: "6px",
+                                    }}
+                                  >
+                                    {plugin.versions.map((v: any) => {
+                                      const vsc =
+                                        STATUS_COLORS[v.status] ||
+                                        STATUS_COLORS.DRAFT;
+                                      return (
+                                        <div
+                                          key={v.id}
                                           style={{
-                                            fontSize: "0.75rem",
-                                            fontWeight: 700,
-                                            color: "var(--text-primary)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "10px",
+                                            padding: "6px 10px",
+                                            borderRadius: "var(--radius-sm)",
+                                            border: `1px solid ${vsc.border}`,
+                                            background: "var(--bg-card)",
                                           }}
                                         >
-                                          v{v.version}
-                                        </span>
-                                        <span
-                                          style={{
-                                            fontSize: "0.75rem",
-                                            fontWeight: 700,
-                                            padding: "1px 6px",
-                                            borderRadius: "var(--radius-full)",
-                                            background: vsc.bg,
-                                            color: vsc.color,
-                                            textTransform: "uppercase",
-                                            letterSpacing: "0.03em",
-                                          }}
-                                        >
-                                          {v.status}
-                                        </span>
-                                        <select
-                                          value={v.status}
-                                          onChange={(e) =>
-                                            handleVersionStatusChange(
-                                              plugin.id,
-                                              v.id,
-                                              v.status,
-                                              e.target.value,
-                                              `${plugin.displayName} v${v.version}`,
-                                            )
-                                          }
-                                          style={{
-                                            padding: "2px 4px",
-                                            borderRadius: "4px",
-                                            background: "var(--bg-secondary)",
-                                            border:
-                                              "1px solid var(--border-color)",
-                                            color: "var(--text-primary)",
-                                            fontSize: "0.6875rem",
-                                            cursor: "pointer",
-                                          }}
-                                        >
-                                          <option value="PENDING">
-                                            PENDING
-                                          </option>
-                                          <option value="APPROVED">
-                                            APPROVED
-                                          </option>
-                                          <option value="REJECTED">
-                                            REJECTED
-                                          </option>
-                                        </select>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              </td>
-                            </tr>
-                          )}
+                                          <span
+                                            style={{
+                                              fontSize: "0.8125rem",
+                                              fontWeight: 700,
+                                              color: "var(--text-primary)",
+                                              minWidth: "56px",
+                                            }}
+                                          >
+                                            v{v.version}
+                                          </span>
+                                          <span
+                                            style={{
+                                              fontSize: "0.6875rem",
+                                              fontWeight: 700,
+                                              padding: "2px 8px",
+                                              borderRadius: "var(--radius-full)",
+                                              background: vsc.bg,
+                                              color: vsc.color,
+                                              textTransform: "uppercase",
+                                              letterSpacing: "0.03em",
+                                            }}
+                                          >
+                                            {v.status}
+                                          </span>
+                                          <select
+                                            value={v.status}
+                                            onChange={(e) =>
+                                              handleVersionStatusChange(
+                                                plugin.id,
+                                                v.id,
+                                                v.status,
+                                                e.target.value,
+                                                `${plugin.displayName} v${v.version}`,
+                                              )
+                                            }
+                                            style={{
+                                              padding: "2px 6px",
+                                              borderRadius: "4px",
+                                              background: "var(--bg-secondary)",
+                                              border:
+                                                "1px solid var(--border-color)",
+                                              color: "var(--text-primary)",
+                                              fontSize: "0.6875rem",
+                                              cursor: "pointer",
+                                              marginLeft: "auto",
+                                            }}
+                                          >
+                                            <option value="PENDING">
+                                              PENDING
+                                            </option>
+                                            <option value="APPROVED">
+                                              APPROVED
+                                            </option>
+                                            <option value="REJECTED">
+                                              REJECTED
+                                            </option>
+                                          </select>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
                         </React.Fragment>
                       );
                     })}
