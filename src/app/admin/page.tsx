@@ -23,6 +23,7 @@ import {
   ShieldAlert,
   FlaskConical,
 } from "lucide-react";
+import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
 
 const PLUGIN_STATUSES = [
   "ALL",
@@ -545,19 +546,8 @@ export default function AdminPage() {
         </div>
       )}
 
-      {/* Loading */}
-      {loading && (
-        <div style={{ textAlign: "center", padding: "var(--space-12)" }}>
-          <Loader2
-            size={32}
-            color="#8b5cf6"
-            style={{ animation: "spin 1s linear infinite", margin: "0 auto" }}
-          />
-        </div>
-      )}
-
       {/* Users Tab */}
-      {!loading && tab === "users" && (
+      {tab === "users" && (
         <div>
           <div style={{ marginBottom: "var(--space-4)", position: "relative" }}>
             <Search
@@ -594,7 +584,70 @@ export default function AdminPage() {
             />
           </div>
 
-          {users.length === 0 ? (
+          {loading ? (
+            <div className="card" style={{ overflow: "hidden" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <thead>
+                  <tr
+                    style={{
+                      background: "var(--bg-secondary)",
+                      borderBottom: "1px solid var(--border-color)",
+                    }}
+                  >
+                    {["User", "Trust Level", "Quota", "Plugins", "Joined", "Actions"].map((h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "0.75rem 1rem",
+                          textAlign: "left",
+                          fontSize: "0.6875rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          color: "var(--text-muted)",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <tr
+                      key={i}
+                      style={{ borderBottom: "1px solid var(--border-color)" }}
+                    >
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                          <Skeleton circle width={32} height={32} />
+                          <div>
+                            <Skeleton width="7rem" height="0.875rem" style={{ marginBottom: "4px" }} />
+                            <Skeleton width="5rem" height="0.75rem" />
+                          </div>
+                        </div>
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <Skeleton width="4rem" height="1.25rem" borderRadius="var(--radius-full)" />
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <Skeleton width="3.5rem" height="0.875rem" />
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <Skeleton width="1.5rem" height="0.875rem" />
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <Skeleton width="5rem" height="0.8125rem" />
+                      </td>
+                      <td style={{ padding: "0.75rem 1rem" }}>
+                        <Skeleton width="5rem" height="1.5rem" borderRadius="var(--radius-sm)" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : users.length === 0 ? (
             <div
               className="card"
               style={{ padding: "var(--space-12)", textAlign: "center" }}
@@ -811,7 +864,37 @@ export default function AdminPage() {
       )}
 
       {/* Review Queue Tab — shows pending PLUGINS */}
-      {!loading && tab === "queue" && (
+      {tab === "queue" && (loading ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
+            gap: "var(--space-6)",
+          }}
+        >
+          {Array.from({ length: 3 }, (_, i) => (
+            <SkeletonCard key={i} style={{ padding: 0, borderTop: "4px solid var(--border-color)" }}>
+              <div style={{ padding: "var(--space-5)", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                  <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
+                    <Skeleton width={48} height={48} borderRadius="var(--radius-md)" />
+                    <div>
+                      <Skeleton width="8rem" height="1.125rem" style={{ marginBottom: "4px" }} />
+                      <Skeleton width="5rem" height="0.8125rem" />
+                    </div>
+                  </div>
+                  <Skeleton width="3.5rem" height="1.25rem" borderRadius="var(--radius-full)" />
+                </div>
+                <SkeletonText lines={2} />
+                <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)", paddingTop: "var(--space-3)", borderTop: "1px solid var(--border-color)" }}>
+                  <Skeleton width="100%" height="2.25rem" borderRadius="var(--radius-md)" />
+                  <Skeleton width="100%" height="2.25rem" borderRadius="var(--radius-md)" />
+                </div>
+              </div>
+            </SkeletonCard>
+          ))}
+        </div>
+      ) : (
         <div
           style={{
             display: "grid",
@@ -1208,11 +1291,10 @@ export default function AdminPage() {
             </div>
           )}
         </div>
-      )}
+      ))}
 
       {/* Plugins Tab */}
-      {!loading &&
-        tab === "plugins" &&
+      {tab === "plugins" &&
         (() => {
           const filtered =
             pluginStatusFilter === "ALL"
@@ -1324,6 +1406,51 @@ export default function AdminPage() {
                 })}
               </div>
 
+              {loading ? (
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
+                      {["Plugin", "Author", "Status", "Actions"].map((h) => (
+                        <th
+                          key={h}
+                          style={{
+                            padding: "0 var(--space-4) var(--space-3)",
+                            color: "var(--text-muted)",
+                            fontSize: "0.8125rem",
+                          }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: 4 }, (_, i) => (
+                      <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                        <td style={{ padding: "var(--space-4)" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                            <Skeleton width="8rem" height="0.875rem" />
+                            <Skeleton width="4rem" height="0.75rem" />
+                          </div>
+                        </td>
+                        <td style={{ padding: "var(--space-4)" }}>
+                          <Skeleton width="6rem" height="0.875rem" />
+                        </td>
+                        <td style={{ padding: "var(--space-4)" }}>
+                          <Skeleton width="5rem" height="1.5rem" borderRadius="var(--radius-sm)" />
+                        </td>
+                        <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
+                          <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
+                            <Skeleton width="2rem" height="2rem" borderRadius="var(--radius-sm)" />
+                            <Skeleton width="2rem" height="2rem" borderRadius="var(--radius-sm)" />
+                            <Skeleton width="2.5rem" height="2rem" borderRadius="var(--radius-sm)" />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr
@@ -1675,6 +1802,7 @@ export default function AdminPage() {
                   )}
                 </tbody>
               </table>
+              )}
             </div>
           );
         })()}
@@ -1912,7 +2040,25 @@ export default function AdminPage() {
       )}
 
       {/* System Tab */}
-      {!loading && tab === "system" && (
+      {tab === "system" && (loading ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "var(--space-4)",
+          }}
+        >
+          {Array.from({ length: 4 }, (_, i) => (
+            <SkeletonCard key={i} style={{ padding: "var(--space-6)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)" }}>
+                <Skeleton width={40} height={40} borderRadius="var(--radius-md)" />
+                <Skeleton width="5rem" height="0.8125rem" />
+              </div>
+              <Skeleton width="4rem" height="2rem" />
+            </SkeletonCard>
+          ))}
+        </div>
+      ) : (
         <div
           style={{
             display: "grid",
@@ -1995,7 +2141,7 @@ export default function AdminPage() {
             </div>
           ))}
         </div>
-      )}
+      ))}
     </div>
   );
 }
