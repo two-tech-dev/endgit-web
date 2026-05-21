@@ -117,7 +117,9 @@ export default function AdminPage() {
   } | null>(null);
   const [pluginRejectReason, setPluginRejectReason] = useState("");
   const [pluginRejectLoading, setPluginRejectLoading] = useState(false);
-  const [expandedPlugins, setExpandedPlugins] = useState<Set<string>>(new Set());
+  const [expandedPlugins, setExpandedPlugins] = useState<Set<string>>(
+    new Set(),
+  );
 
   const togglePluginExpanded = (pluginId: string) => {
     setExpandedPlugins((prev) => {
@@ -1665,34 +1667,39 @@ export default function AdminPage() {
                                 >
                                   {plugin.slug}
                                 </div>
-                                {plugin.versions && plugin.versions.length > 0 && (
-                                  <button
-                                    onClick={() => togglePluginExpanded(plugin.id)}
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "4px",
-                                      padding: "2px 8px",
-                                      borderRadius: "var(--radius-sm)",
-                                      border: "1px solid var(--border-color)",
-                                      background: expandedPlugins.has(plugin.id)
-                                        ? "var(--bg-secondary)"
-                                        : "transparent",
-                                      cursor: "pointer",
-                                      fontSize: "0.75rem",
-                                      color: "var(--text-muted)",
-                                      fontWeight: 600,
-                                      transition: "all 150ms",
-                                    }}
-                                  >
-                                    {expandedPlugins.has(plugin.id) ? (
-                                      <ChevronDown size={14} />
-                                    ) : (
-                                      <ChevronRight size={14} />
-                                    )}
-                                    Releases ({plugin.versions.length})
-                                  </button>
-                                )}
+                                {plugin.versions &&
+                                  plugin.versions.length > 0 && (
+                                    <button
+                                      onClick={() =>
+                                        togglePluginExpanded(plugin.id)
+                                      }
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: "4px",
+                                        padding: "2px 8px",
+                                        borderRadius: "var(--radius-sm)",
+                                        border: "1px solid var(--border-color)",
+                                        background: expandedPlugins.has(
+                                          plugin.id,
+                                        )
+                                          ? "var(--bg-secondary)"
+                                          : "transparent",
+                                        cursor: "pointer",
+                                        fontSize: "0.75rem",
+                                        color: "var(--text-muted)",
+                                        fontWeight: 600,
+                                        transition: "all 150ms",
+                                      }}
+                                    >
+                                      {expandedPlugins.has(plugin.id) ? (
+                                        <ChevronDown size={14} />
+                                      ) : (
+                                        <ChevronRight size={14} />
+                                      )}
+                                      Releases ({plugin.versions.length})
+                                    </button>
+                                  )}
                               </div>
                             </td>
                             <td
@@ -1890,7 +1897,8 @@ export default function AdminPage() {
                                               fontSize: "0.6875rem",
                                               fontWeight: 700,
                                               padding: "2px 8px",
-                                              borderRadius: "var(--radius-full)",
+                                              borderRadius:
+                                                "var(--radius-full)",
                                               background: vsc.bg,
                                               color: vsc.color,
                                               textTransform: "uppercase",

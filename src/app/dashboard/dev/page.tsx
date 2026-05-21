@@ -53,6 +53,8 @@ export default function DevDashboardPage() {
   const [repos, setRepos] = useState<Repo[]>([]);
   const [filter, setFilter] = useState<"all" | "enabled" | "disabled">("all");
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [loading, setLoading] = useState(true);
   const [hasAppInstalled, setHasAppInstalled] = useState<boolean | null>(null);
   const [error, setError] = useState("");
@@ -75,11 +77,20 @@ export default function DevDashboardPage() {
   const [orgDropdownOpen, setOrgDropdownOpen] = useState(false);
   const orgDropdownRef = useRef<HTMLDivElement>(null);
 
+  const initialFetchDone = useRef(false);
+
   useEffect(() => {
     if (sessionStatus !== "authenticated") return;
     fetchRepos(1, null);
     fetchOrgs();
+    initialFetchDone.current = true;
   }, [sessionStatus]);
+
+  useEffect(() => {
+    if (!initialFetchDone.current) return;
+    if (sessionStatus !== "authenticated") return;
+    fetchRepos(1, selectedOrg, debouncedSearch);
+  }, [debouncedSearch]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -93,6 +104,16 @@ export default function DevDashboardPage() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    searchTimerRef.current = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
+    return () => {
+      if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    };
+  }, [search]);
 
   const fetchOrgs = async () => {
     setOrgsLoading(true);
@@ -119,6 +140,7 @@ export default function DevDashboardPage() {
   const fetchRepos = async (
     pageNumber: number = 1,
     org: string | null = selectedOrg,
+    searchQuery: string = debouncedSearch,
   ) => {
     if (pageNumber === 1) setLoading(true);
     else setIsFetchingMore(true);
@@ -154,8 +176,11 @@ export default function DevDashboardPage() {
       }
 
       const orgParam = org ? `&org=${encodeURIComponent(org)}` : "";
+      const searchParam = searchQuery
+        ? `&search=${encodeURIComponent(searchQuery)}`
+        : "";
       const res = await fetch(
-        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=10${orgParam}`,
+        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=10${orgParam}${searchParam}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         },
@@ -194,7 +219,7 @@ export default function DevDashboardPage() {
   const handleOrgChange = (orgLogin: string | null) => {
     setSelectedOrg(orgLogin);
     setOrgDropdownOpen(false);
-    fetchRepos(1, orgLogin);
+    fetchRepos(1, orgLogin, debouncedSearch);
   };
 
   const toggleCI = async (repo: Repo) => {
@@ -258,7 +283,7 @@ export default function DevDashboardPage() {
       }
 
       // Refresh current repos by reloading page 1
-      await fetchRepos(1, selectedOrg);
+      await fetchRepos(1, selectedOrg, debouncedSearch);
     } catch (err: any) {
       alert(`An error occurred while toggling CI: ${err.message}`);
     } finally {
@@ -1531,7 +1556,7 @@ export default function DevDashboardPage() {
             <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
               <button
                 className="btn btn-secondary"
-                onClick={() => fetchRepos(page + 1)}
+                onClick={() => fetchRepos(page + 1, selectedOrg, debouncedSearch)}
                 disabled={isFetchingMore}
                 style={{
                   minWidth: "150px",
