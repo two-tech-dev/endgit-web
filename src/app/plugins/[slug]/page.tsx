@@ -65,6 +65,9 @@ const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
 const PluginRatings = dynamic(() => import("@/components/PluginRatings"), {
   ssr: false,
 });
+const VirusTotalCard = dynamic(() => import("@/components/VirusTotalCard"), {
+  ssr: false,
+});
 
 async function getPlugin(slug: string) {
   const { data } = await fetchApi(`/api/v1/plugins/${slug}`, {
@@ -1158,6 +1161,9 @@ export default async function PluginDetailPage({
 
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />
+
+          {/* VirusTotal Scan */}
+          <VirusTotalCard version={activeVersion} />
         </aside>
       </div>
     </div>
