@@ -4,57 +4,51 @@ import { Shield, ExternalLink, Loader2, AlertTriangle } from "lucide-react";
 
 interface VirusTotalCardProps {
   version: {
-    vtStatus?: string | null;
-    vtMalicious?: number | null;
-    vtSuspicious?: number | null;
-    vtUndetected?: number | null;
-    vtTotal?: number | null;
-    vtPermalink?: string | null;
-    vtScanDate?: string | null;
+    virustotal?: {
+      status?: string | null;
+      malicious?: number | null;
+      suspicious?: number | null;
+      undetected?: number | null;
+      total?: number | null;
+      permalink?: string | null;
+      scanDate?: string | null;
+    } | null;
   } | null;
 }
 
 export default function VirusTotalCard({ version }: VirusTotalCardProps) {
-  if (!version) return null;
+  if (!version?.virustotal) return null;
 
-  const {
-    vtStatus,
-    vtMalicious,
-    vtSuspicious,
-    vtTotal,
-    vtPermalink,
-    vtScanDate,
-  } = version;
-
-  const malicious = vtMalicious ?? 0;
-  const suspicious = vtSuspicious ?? 0;
+  const vt = version.virustotal;
+  const malicious = vt.malicious ?? 0;
+  const suspicious = vt.suspicious ?? 0;
 
   const statusColor =
-    vtStatus === "completed"
+    vt.status === "completed"
       ? malicious === 0 && suspicious === 0
         ? "var(--status-success)"
         : malicious > 0
           ? "var(--status-error)"
           : "var(--status-warning)"
-      : vtStatus === "failed"
+      : vt.status === "failed"
         ? "var(--text-muted)"
         : "var(--status-warning)";
 
   const statusLabel =
-    vtStatus === "completed"
+    vt.status === "completed"
       ? malicious === 0 && suspicious === 0
         ? "Clean"
         : malicious > 0
           ? "Flagged"
           : "Suspicious"
-      : vtStatus === "scanning" || vtStatus === "queued"
+      : vt.status === "scanning" || vt.status === "queued"
         ? "Scanning..."
-        : vtStatus === "failed"
+        : vt.status === "failed"
           ? "Scan Failed"
           : "Not Scanned";
 
-  const formattedDate = vtScanDate
-    ? new Date(vtScanDate).toLocaleDateString("en-US", {
+  const formattedDate = vt.scanDate
+    ? new Date(vt.scanDate).toLocaleDateString("en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -89,7 +83,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
         >
           <Shield size={18} color={statusColor} /> VirusTotal Scan
         </h3>
-        {!vtStatus && (
+        {!vt.status && (
           <span
             style={{
               fontSize: "0.75rem",
@@ -100,7 +94,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
             Pending
           </span>
         )}
-        {(vtStatus === "queued" || vtStatus === "scanning") && (
+        {(vt.status === "queued" || vt.status === "scanning") && (
           <Loader2
             size={16}
             color="var(--status-warning)"
@@ -109,7 +103,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
         )}
       </div>
 
-      {vtStatus === "completed" && (
+      {vt.status === "completed" && (
         <div
           style={{
             display: "flex",
@@ -138,7 +132,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
           >
             <span style={{ color: "var(--text-muted)" }}>Detection</span>
             <span style={{ fontWeight: 600 }}>
-              {malicious}/{vtTotal ?? 0} engines flagged
+              {malicious}/{vt.total ?? 0} engines flagged
             </span>
           </div>
           {formattedDate && (
@@ -153,9 +147,9 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
               <span style={{ fontWeight: 500 }}>{formattedDate}</span>
             </div>
           )}
-          {vtPermalink && (
+          {vt.permalink && (
             <a
-              href={vtPermalink}
+              href={vt.permalink}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -181,7 +175,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
         </div>
       )}
 
-      {(vtStatus === "queued" || vtStatus === "scanning") && (
+      {(vt.status === "queued" || vt.status === "scanning") && (
         <p
           style={{
             fontSize: "0.8125rem",
@@ -199,7 +193,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
         </p>
       )}
 
-      {vtStatus === "failed" && (
+      {vt.status === "failed" && (
         <p
           style={{
             fontSize: "0.8125rem",
@@ -215,7 +209,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
         </p>
       )}
 
-      {!vtStatus && (
+      {!vt.status && (
         <p
           style={{
             fontSize: "0.8125rem",
