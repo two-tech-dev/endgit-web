@@ -594,7 +594,14 @@ export default function AdminPage() {
                       borderBottom: "1px solid var(--border-color)",
                     }}
                   >
-                    {["User", "Trust Level", "Quota", "Plugins", "Joined", "Actions"].map((h) => (
+                    {[
+                      "User",
+                      "Trust Level",
+                      "Quota",
+                      "Plugins",
+                      "Joined",
+                      "Actions",
+                    ].map((h) => (
                       <th
                         key={h}
                         style={{
@@ -619,16 +626,30 @@ export default function AdminPage() {
                       style={{ borderBottom: "1px solid var(--border-color)" }}
                     >
                       <td style={{ padding: "0.75rem 1rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "var(--space-3)",
+                          }}
+                        >
                           <Skeleton circle width={32} height={32} />
                           <div>
-                            <Skeleton width="7rem" height="0.875rem" style={{ marginBottom: "4px" }} />
+                            <Skeleton
+                              width="7rem"
+                              height="0.875rem"
+                              style={{ marginBottom: "4px" }}
+                            />
                             <Skeleton width="5rem" height="0.75rem" />
                           </div>
                         </div>
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton width="4rem" height="1.25rem" borderRadius="var(--radius-full)" />
+                        <Skeleton
+                          width="4rem"
+                          height="1.25rem"
+                          borderRadius="var(--radius-full)"
+                        />
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>
                         <Skeleton width="3.5rem" height="0.875rem" />
@@ -640,7 +661,11 @@ export default function AdminPage() {
                         <Skeleton width="5rem" height="0.8125rem" />
                       </td>
                       <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton width="5rem" height="1.5rem" borderRadius="var(--radius-sm)" />
+                        <Skeleton
+                          width="5rem"
+                          height="1.5rem"
+                          borderRadius="var(--radius-sm)"
+                        />
                       </td>
                     </tr>
                   ))}
@@ -864,74 +889,21 @@ export default function AdminPage() {
       )}
 
       {/* Review Queue Tab — shows pending PLUGINS */}
-      {tab === "queue" && (loading ? (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-            gap: "var(--space-6)",
-          }}
-        >
-          {Array.from({ length: 3 }, (_, i) => (
-            <SkeletonCard key={i} style={{ padding: 0, borderTop: "4px solid var(--border-color)" }}>
-              <div style={{ padding: "var(--space-5)", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                  <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "center" }}>
-                    <Skeleton width={48} height={48} borderRadius="var(--radius-md)" />
-                    <div>
-                      <Skeleton width="8rem" height="1.125rem" style={{ marginBottom: "4px" }} />
-                      <Skeleton width="5rem" height="0.8125rem" />
-                    </div>
-                  </div>
-                  <Skeleton width="3.5rem" height="1.25rem" borderRadius="var(--radius-full)" />
-                </div>
-                <SkeletonText lines={2} />
-                <div style={{ display: "flex", gap: "var(--space-2)", marginTop: "var(--space-2)", paddingTop: "var(--space-3)", borderTop: "1px solid var(--border-color)" }}>
-                  <Skeleton width="100%" height="2.25rem" borderRadius="var(--radius-md)" />
-                  <Skeleton width="100%" height="2.25rem" borderRadius="var(--radius-md)" />
-                </div>
-              </div>
-            </SkeletonCard>
-          ))}
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-            gap: "var(--space-6)",
-          }}
-        >
-          {queue.length === 0 ? (
-            <div
-              className="card"
-              style={{
-                padding: "var(--space-12)",
-                textAlign: "center",
-                gridColumn: "1 / -1",
-              }}
-            >
-              <CheckCircle
-                size={40}
-                color="var(--status-success)"
-                style={{ margin: "0 auto var(--space-3)" }}
-              />
-              <p style={{ fontWeight: 600 }}>All caught up!</p>
-              <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
-                No plugins pending review
-              </p>
-            </div>
-          ) : (
-            queue.map((plugin: any) => (
-              <div
-                key={plugin.id}
-                className="card"
+      {tab === "queue" &&
+        (loading ? (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
+              gap: "var(--space-6)",
+            }}
+          >
+            {Array.from({ length: 3 }, (_, i) => (
+              <SkeletonCard
+                key={i}
                 style={{
-                  padding: "0",
-                  display: "flex",
-                  flexDirection: "column",
-                  overflow: "hidden",
-                  borderTop: "4px solid var(--status-warning)",
+                  padding: 0,
+                  borderTop: "4px solid var(--border-color)",
                 }}
               >
                 <div
@@ -956,83 +928,27 @@ export default function AdminPage() {
                         alignItems: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "var(--radius-md)",
-                          background: "var(--bg-secondary)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "1px solid var(--border-color)",
-                          flexShrink: 0,
-                          overflow: "hidden",
-                        }}
-                      >
-                        <PluginImage
-                          iconUrl={plugin.iconUrl}
-                          repoUrl={plugin.repoUrl}
-                          alt={`${plugin.displayName} icon`}
-                        />
-                      </div>
+                      <Skeleton
+                        width={48}
+                        height={48}
+                        borderRadius="var(--radius-md)"
+                      />
                       <div>
-                        <h3
-                          className="heading-3"
-                          style={{
-                            fontSize: "1.125rem",
-                            margin: 0,
-                            color: "var(--text-primary)",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                          }}
-                        >
-                          {plugin.displayName}
-                          {plugin.versions?.[0]?.isPreRelease && (
-                            <span
-                              title="This is a pre-release"
-                              style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                color: "#ef4444",
-                              }}
-                            >
-                              <FlaskConical size={16} />
-                            </span>
-                          )}
-                        </h3>
-                        <p
-                          style={{
-                            color: "var(--text-muted)",
-                            fontSize: "0.8125rem",
-                          }}
-                        >
-                          @{plugin.author?.username}
-                        </p>
+                        <Skeleton
+                          width="8rem"
+                          height="1.125rem"
+                          style={{ marginBottom: "4px" }}
+                        />
+                        <Skeleton width="5rem" height="0.8125rem" />
                       </div>
                     </div>
-                    <span
-                      className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}
-                    >
-                      {plugin.pluginType}
-                    </span>
+                    <Skeleton
+                      width="3.5rem"
+                      height="1.25rem"
+                      borderRadius="var(--radius-full)"
+                    />
                   </div>
-
-                  <p
-                    style={{
-                      color: "var(--text-secondary)",
-                      fontSize: "0.8125rem",
-                      lineHeight: 1.5,
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {plugin.description}
-                  </p>
-
+                  <SkeletonText lines={2} />
                   <div
                     style={{
                       display: "flex",
@@ -1042,256 +958,421 @@ export default function AdminPage() {
                       borderTop: "1px solid var(--border-color)",
                     }}
                   >
-                    <button
-                      onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        padding: "0.5rem",
-                        borderRadius: "var(--radius-md)",
-                        fontSize: "0.875rem",
-                        fontWeight: 600,
-                        background: "var(--status-success)",
-                        color: "white",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <CheckCircle size={16} /> Approve Plugin
-                    </button>
-                    <button
-                      onClick={() =>
-                        setRejectModal({
-                          slug: plugin.slug,
-                          name: plugin.displayName,
-                        })
-                      }
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "6px",
-                        padding: "0.5rem",
-                        borderRadius: "var(--radius-md)",
-                        fontSize: "0.875rem",
-                        fontWeight: 600,
-                        background: "rgba(239,68,68,0.1)",
-                        color: "var(--status-error)",
-                        border: "1px solid rgba(239,68,68,0.2)",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <XCircle size={16} /> Reject Plugin
-                    </button>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-2)",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Link
-                      href={`/plugins/${plugin.slug}`}
-                      style={{
-                        fontSize: "0.75rem",
-                        color: "var(--accent-primary)",
-                        textAlign: "center",
-                      }}
-                    >
-                      View Plugin →
-                    </Link>
-                    {plugin.repoUrl && plugin.versions?.[0]?.fileHash && (
-                      <a
-                        href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          fontSize: "0.75rem",
-                          color: "var(--text-muted)",
-                          textAlign: "center",
-                        }}
-                      >
-                        View Commit →
-                      </a>
-                    )}
+                    <Skeleton
+                      width="100%"
+                      height="2.25rem"
+                      borderRadius="var(--radius-md)"
+                    />
+                    <Skeleton
+                      width="100%"
+                      height="2.25rem"
+                      borderRadius="var(--radius-md)"
+                    />
                   </div>
                 </div>
-              </div>
-            ))
-          )}
-
-          {/* Reject Reason Modal */}
-          {rejectModal && (
-            <div
-              style={{
-                position: "fixed",
-                inset: 0,
-                background: "rgba(0,0,0,0.6)",
-                backdropFilter: "blur(4px)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                zIndex: 1000,
-                padding: "var(--space-4)",
-              }}
-              onClick={() => {
-                setRejectModal(null);
-                setRejectReason("");
-              }}
-            >
+              </SkeletonCard>
+            ))}
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
+              gap: "var(--space-6)",
+            }}
+          >
+            {queue.length === 0 ? (
               <div
                 className="card"
                 style={{
-                  width: "100%",
-                  maxWidth: "560px",
-                  padding: "0",
-                  overflow: "hidden",
-                  borderTop: "4px solid var(--status-error)",
+                  padding: "var(--space-12)",
+                  textAlign: "center",
+                  gridColumn: "1 / -1",
                 }}
-                onClick={(e) => e.stopPropagation()}
               >
-                <div style={{ padding: "var(--space-6)" }}>
-                  <h3
-                    style={{
-                      fontSize: "1.125rem",
-                      fontWeight: 700,
-                      color: "var(--text-primary)",
-                      margin: "0 0 var(--space-1)",
-                    }}
-                  >
-                    Reject Plugin
-                  </h3>
-                  <p
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.875rem",
-                      margin: "0 0 var(--space-5)",
-                    }}
-                  >
-                    Rejecting{" "}
-                    <strong style={{ color: "var(--text-primary)" }}>
-                      {rejectModal.name}
-                    </strong>
-                    . The author will be notified via email with your reason.
-                  </p>
-
-                  <label
-                    style={{
-                      display: "block",
-                      fontSize: "0.8125rem",
-                      fontWeight: 600,
-                      color: "var(--text-secondary)",
-                      marginBottom: "var(--space-2)",
-                    }}
-                  >
-                    Reason for Rejection *
-                    <textarea
-                      value={rejectReason}
-                      onChange={(e) => setRejectReason(e.target.value)}
-                      placeholder={
-                        "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
-                      }
-                      rows={8}
-                      style={{
-                        width: "100%",
-                        padding: "var(--space-3)",
-                        borderRadius: "var(--radius-md)",
-                        border: "1px solid var(--border-color)",
-                        background: "var(--bg-secondary)",
-                        color: "var(--text-primary)",
-                        fontSize: "0.875rem",
-                        lineHeight: 1.6,
-                        resize: "vertical",
-                        outline: "none",
-                        fontFamily: "inherit",
-                        minHeight: "140px",
-                      }}
-                    />
-                  </label>
-                  <p
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginTop: "var(--space-1)",
-                    }}
-                  >
-                    Supports **bold** and {">"} blockquote formatting in the
-                    email.
-                  </p>
-
+                <CheckCircle
+                  size={40}
+                  color="var(--status-success)"
+                  style={{ margin: "0 auto var(--space-3)" }}
+                />
+                <p style={{ fontWeight: 600 }}>All caught up!</p>
+                <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+                  No plugins pending review
+                </p>
+              </div>
+            ) : (
+              queue.map((plugin: any) => (
+                <div
+                  key={plugin.id}
+                  className="card"
+                  style={{
+                    padding: "0",
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden",
+                    borderTop: "4px solid var(--status-warning)",
+                  }}
+                >
                   <div
                     style={{
+                      padding: "var(--space-5)",
                       display: "flex",
+                      flexDirection: "column",
                       gap: "var(--space-3)",
-                      marginTop: "var(--space-5)",
-                      justifyContent: "flex-end",
                     }}
                   >
-                    <button
-                      onClick={() => {
-                        setRejectModal(null);
-                        setRejectReason("");
-                      }}
+                    <div
                       style={{
-                        padding: "0.625rem 1.25rem",
-                        borderRadius: "var(--radius-md)",
-                        fontSize: "0.875rem",
-                        fontWeight: 500,
-                        background: "var(--bg-secondary)",
-                        color: "var(--text-secondary)",
-                        border: "1px solid var(--border-color)",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      onClick={() =>
-                        rejectReason.trim() &&
-                        reviewPlugin(
-                          rejectModal.slug,
-                          "REJECTED",
-                          rejectReason.trim(),
-                        )
-                      }
-                      disabled={!rejectReason.trim() || reviewLoading}
-                      style={{
-                        padding: "0.625rem 1.25rem",
-                        borderRadius: "var(--radius-md)",
-                        fontSize: "0.875rem",
-                        fontWeight: 600,
-                        background: rejectReason.trim()
-                          ? "var(--status-error)"
-                          : "rgba(239,68,68,0.3)",
-                        color: "white",
-                        border: "none",
-                        cursor: rejectReason.trim() ? "pointer" : "not-allowed",
                         display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        opacity: reviewLoading ? 0.7 : 1,
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
                       }}
                     >
-                      {reviewLoading && (
-                        <Loader2
-                          size={14}
-                          style={{ animation: "spin 1s linear infinite" }}
-                        />
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "var(--space-3)",
+                          alignItems: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "48px",
+                            height: "48px",
+                            borderRadius: "var(--radius-md)",
+                            background: "var(--bg-secondary)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            border: "1px solid var(--border-color)",
+                            flexShrink: 0,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <PluginImage
+                            iconUrl={plugin.iconUrl}
+                            repoUrl={plugin.repoUrl}
+                            alt={`${plugin.displayName} icon`}
+                          />
+                        </div>
+                        <div>
+                          <h3
+                            className="heading-3"
+                            style={{
+                              fontSize: "1.125rem",
+                              margin: 0,
+                              color: "var(--text-primary)",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "6px",
+                            }}
+                          >
+                            {plugin.displayName}
+                            {plugin.versions?.[0]?.isPreRelease && (
+                              <span
+                                title="This is a pre-release"
+                                style={{
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  color: "#ef4444",
+                                }}
+                              >
+                                <FlaskConical size={16} />
+                              </span>
+                            )}
+                          </h3>
+                          <p
+                            style={{
+                              color: "var(--text-muted)",
+                              fontSize: "0.8125rem",
+                            }}
+                          >
+                            @{plugin.author?.username}
+                          </p>
+                        </div>
+                      </div>
+                      <span
+                        className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}
+                      >
+                        {plugin.pluginType}
+                      </span>
+                    </div>
+
+                    <p
+                      style={{
+                        color: "var(--text-secondary)",
+                        fontSize: "0.8125rem",
+                        lineHeight: 1.5,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {plugin.description}
+                    </p>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "var(--space-2)",
+                        marginTop: "var(--space-2)",
+                        paddingTop: "var(--space-3)",
+                        borderTop: "1px solid var(--border-color)",
+                      }}
+                    >
+                      <button
+                        onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
+                        style={{
+                          flex: 1,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "6px",
+                          padding: "0.5rem",
+                          borderRadius: "var(--radius-md)",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          background: "var(--status-success)",
+                          color: "white",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <CheckCircle size={16} /> Approve Plugin
+                      </button>
+                      <button
+                        onClick={() =>
+                          setRejectModal({
+                            slug: plugin.slug,
+                            name: plugin.displayName,
+                          })
+                        }
+                        style={{
+                          flex: 1,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "6px",
+                          padding: "0.5rem",
+                          borderRadius: "var(--radius-md)",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          background: "rgba(239,68,68,0.1)",
+                          color: "var(--status-error)",
+                          border: "1px solid rgba(239,68,68,0.2)",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <XCircle size={16} /> Reject Plugin
+                      </button>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "var(--space-2)",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Link
+                        href={`/plugins/${plugin.slug}`}
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "var(--accent-primary)",
+                          textAlign: "center",
+                        }}
+                      >
+                        View Plugin →
+                      </Link>
+                      {plugin.repoUrl && plugin.versions?.[0]?.fileHash && (
+                        <a
+                          href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            fontSize: "0.75rem",
+                            color: "var(--text-muted)",
+                            textAlign: "center",
+                          }}
+                        >
+                          View Commit →
+                        </a>
                       )}
-                      <XCircle size={14} /> Reject & Notify Author
-                    </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+
+            {/* Reject Reason Modal */}
+            {rejectModal && (
+              <div
+                style={{
+                  position: "fixed",
+                  inset: 0,
+                  background: "rgba(0,0,0,0.6)",
+                  backdropFilter: "blur(4px)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  zIndex: 1000,
+                  padding: "var(--space-4)",
+                }}
+                onClick={() => {
+                  setRejectModal(null);
+                  setRejectReason("");
+                }}
+              >
+                <div
+                  className="card"
+                  style={{
+                    width: "100%",
+                    maxWidth: "560px",
+                    padding: "0",
+                    overflow: "hidden",
+                    borderTop: "4px solid var(--status-error)",
+                  }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div style={{ padding: "var(--space-6)" }}>
+                    <h3
+                      style={{
+                        fontSize: "1.125rem",
+                        fontWeight: 700,
+                        color: "var(--text-primary)",
+                        margin: "0 0 var(--space-1)",
+                      }}
+                    >
+                      Reject Plugin
+                    </h3>
+                    <p
+                      style={{
+                        color: "var(--text-muted)",
+                        fontSize: "0.875rem",
+                        margin: "0 0 var(--space-5)",
+                      }}
+                    >
+                      Rejecting{" "}
+                      <strong style={{ color: "var(--text-primary)" }}>
+                        {rejectModal.name}
+                      </strong>
+                      . The author will be notified via email with your reason.
+                    </p>
+
+                    <label
+                      style={{
+                        display: "block",
+                        fontSize: "0.8125rem",
+                        fontWeight: 600,
+                        color: "var(--text-secondary)",
+                        marginBottom: "var(--space-2)",
+                      }}
+                    >
+                      Reason for Rejection *
+                      <textarea
+                        value={rejectReason}
+                        onChange={(e) => setRejectReason(e.target.value)}
+                        placeholder={
+                          "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
+                        }
+                        rows={8}
+                        style={{
+                          width: "100%",
+                          padding: "var(--space-3)",
+                          borderRadius: "var(--radius-md)",
+                          border: "1px solid var(--border-color)",
+                          background: "var(--bg-secondary)",
+                          color: "var(--text-primary)",
+                          fontSize: "0.875rem",
+                          lineHeight: 1.6,
+                          resize: "vertical",
+                          outline: "none",
+                          fontFamily: "inherit",
+                          minHeight: "140px",
+                        }}
+                      />
+                    </label>
+                    <p
+                      style={{
+                        color: "var(--text-muted)",
+                        fontSize: "0.75rem",
+                        marginTop: "var(--space-1)",
+                      }}
+                    >
+                      Supports **bold** and {">"} blockquote formatting in the
+                      email.
+                    </p>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "var(--space-3)",
+                        marginTop: "var(--space-5)",
+                        justifyContent: "flex-end",
+                      }}
+                    >
+                      <button
+                        onClick={() => {
+                          setRejectModal(null);
+                          setRejectReason("");
+                        }}
+                        style={{
+                          padding: "0.625rem 1.25rem",
+                          borderRadius: "var(--radius-md)",
+                          fontSize: "0.875rem",
+                          fontWeight: 500,
+                          background: "var(--bg-secondary)",
+                          color: "var(--text-secondary)",
+                          border: "1px solid var(--border-color)",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() =>
+                          rejectReason.trim() &&
+                          reviewPlugin(
+                            rejectModal.slug,
+                            "REJECTED",
+                            rejectReason.trim(),
+                          )
+                        }
+                        disabled={!rejectReason.trim() || reviewLoading}
+                        style={{
+                          padding: "0.625rem 1.25rem",
+                          borderRadius: "var(--radius-md)",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          background: rejectReason.trim()
+                            ? "var(--status-error)"
+                            : "rgba(239,68,68,0.3)",
+                          color: "white",
+                          border: "none",
+                          cursor: rejectReason.trim()
+                            ? "pointer"
+                            : "not-allowed",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          opacity: reviewLoading ? 0.7 : 1,
+                        }}
+                      >
+                        {reviewLoading && (
+                          <Loader2
+                            size={14}
+                            style={{ animation: "spin 1s linear infinite" }}
+                          />
+                        )}
+                        <XCircle size={14} /> Reject & Notify Author
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      ))}
+            )}
+          </div>
+        ))}
 
       {/* Plugins Tab */}
       {tab === "plugins" &&
@@ -1409,7 +1490,12 @@ export default function AdminPage() {
               {loading ? (
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid var(--border-color)",
+                        textAlign: "left",
+                      }}
+                    >
                       {["Plugin", "Author", "Status", "Actions"].map((h) => (
                         <th
                           key={h}
@@ -1426,9 +1512,20 @@ export default function AdminPage() {
                   </thead>
                   <tbody>
                     {Array.from({ length: 4 }, (_, i) => (
-                      <tr key={i} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                      <tr
+                        key={i}
+                        style={{
+                          borderBottom: "1px solid var(--border-color)",
+                        }}
+                      >
                         <td style={{ padding: "var(--space-4)" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "var(--space-3)",
+                            }}
+                          >
                             <Skeleton width="8rem" height="0.875rem" />
                             <Skeleton width="4rem" height="0.75rem" />
                           </div>
@@ -1437,13 +1534,40 @@ export default function AdminPage() {
                           <Skeleton width="6rem" height="0.875rem" />
                         </td>
                         <td style={{ padding: "var(--space-4)" }}>
-                          <Skeleton width="5rem" height="1.5rem" borderRadius="var(--radius-sm)" />
+                          <Skeleton
+                            width="5rem"
+                            height="1.5rem"
+                            borderRadius="var(--radius-sm)"
+                          />
                         </td>
-                        <td style={{ padding: "var(--space-4)", textAlign: "right" }}>
-                          <div style={{ display: "flex", gap: "var(--space-2)", justifyContent: "flex-end" }}>
-                            <Skeleton width="2rem" height="2rem" borderRadius="var(--radius-sm)" />
-                            <Skeleton width="2rem" height="2rem" borderRadius="var(--radius-sm)" />
-                            <Skeleton width="2.5rem" height="2rem" borderRadius="var(--radius-sm)" />
+                        <td
+                          style={{
+                            padding: "var(--space-4)",
+                            textAlign: "right",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "var(--space-2)",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            <Skeleton
+                              width="2rem"
+                              height="2rem"
+                              borderRadius="var(--radius-sm)"
+                            />
+                            <Skeleton
+                              width="2rem"
+                              height="2rem"
+                              borderRadius="var(--radius-sm)"
+                            />
+                            <Skeleton
+                              width="2.5rem"
+                              height="2rem"
+                              borderRadius="var(--radius-sm)"
+                            />
                           </div>
                         </td>
                       </tr>
@@ -1451,357 +1575,361 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               ) : (
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr
-                    style={{
-                      borderBottom: "1px solid var(--border-color)",
-                      textAlign: "left",
-                    }}
-                  >
-                    <th
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr
                       style={{
-                        padding: "0 var(--space-4) var(--space-3)",
-                        color: "var(--text-muted)",
-                        fontSize: "0.8125rem",
+                        borderBottom: "1px solid var(--border-color)",
+                        textAlign: "left",
                       }}
                     >
-                      Plugin
-                    </th>
-                    <th
-                      style={{
-                        padding: "0 var(--space-4) var(--space-3)",
-                        color: "var(--text-muted)",
-                        fontSize: "0.8125rem",
-                      }}
-                    >
-                      Author
-                    </th>
-                    <th
-                      style={{
-                        padding: "0 var(--space-4) var(--space-3)",
-                        color: "var(--text-muted)",
-                        fontSize: "0.8125rem",
-                      }}
-                    >
-                      Status
-                    </th>
-                    <th
-                      style={{
-                        padding: "0 var(--space-4) var(--space-3)",
-                        color: "var(--text-muted)",
-                        fontSize: "0.8125rem",
-                        textAlign: "right",
-                      }}
-                    >
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((plugin: any) => {
-                    const psc =
-                      STATUS_COLORS[plugin.status] || STATUS_COLORS.DRAFT;
-                    return (
-                      <React.Fragment key={plugin.id}>
-                        <tr
-                          style={{
-                            borderBottom: "1px solid var(--border-color)",
-                          }}
-                        >
-                          <td style={{ padding: "var(--space-4)" }}>
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "var(--space-3)",
-                              }}
-                            >
-                              <div style={{ fontWeight: 600 }}>
-                                {plugin.displayName}
-                              </div>
+                      <th
+                        style={{
+                          padding: "0 var(--space-4) var(--space-3)",
+                          color: "var(--text-muted)",
+                          fontSize: "0.8125rem",
+                        }}
+                      >
+                        Plugin
+                      </th>
+                      <th
+                        style={{
+                          padding: "0 var(--space-4) var(--space-3)",
+                          color: "var(--text-muted)",
+                          fontSize: "0.8125rem",
+                        }}
+                      >
+                        Author
+                      </th>
+                      <th
+                        style={{
+                          padding: "0 var(--space-4) var(--space-3)",
+                          color: "var(--text-muted)",
+                          fontSize: "0.8125rem",
+                        }}
+                      >
+                        Status
+                      </th>
+                      <th
+                        style={{
+                          padding: "0 var(--space-4) var(--space-3)",
+                          color: "var(--text-muted)",
+                          fontSize: "0.8125rem",
+                          textAlign: "right",
+                        }}
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filtered.map((plugin: any) => {
+                      const psc =
+                        STATUS_COLORS[plugin.status] || STATUS_COLORS.DRAFT;
+                      return (
+                        <React.Fragment key={plugin.id}>
+                          <tr
+                            style={{
+                              borderBottom: "1px solid var(--border-color)",
+                            }}
+                          >
+                            <td style={{ padding: "var(--space-4)" }}>
                               <div
                                 style={{
-                                  fontSize: "0.75rem",
-                                  color: "var(--text-muted)",
-                                  fontFamily: "var(--font-mono)",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "var(--space-3)",
                                 }}
                               >
-                                {plugin.slug}
-                              </div>
-                            </div>
-                          </td>
-                          <td
-                            style={{
-                              padding: "var(--space-4)",
-                              fontSize: "0.875rem",
-                            }}
-                          >
-                            {plugin.author?.displayName ||
-                              plugin.author?.username}
-                          </td>
-                          <td style={{ padding: "var(--space-4)" }}>
-                            <select
-                              value={plugin.status}
-                              onChange={(e) =>
-                                handlePluginStatusChange(
-                                  plugin.id,
-                                  plugin.status,
-                                  e.target.value,
-                                  plugin.displayName,
-                                )
-                              }
-                              style={{
-                                padding: "0.25rem 0.5rem",
-                                borderRadius: "var(--radius-sm)",
-                                background: psc.bg,
-                                border: `1px solid ${psc.border}`,
-                                color: psc.color,
-                                fontSize: "0.8125rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                              }}
-                            >
-                              <option value="DRAFT">DRAFT</option>
-                              <option value="PENDING_REVIEW">
-                                PENDING_REVIEW
-                              </option>
-                              <option value="APPROVED">APPROVED</option>
-                              <option value="REJECTED">REJECTED</option>
-                              <option value="SUSPENDED">SUSPENDED</option>
-                              <option value="FLAGGED">FLAGGED</option>
-                            </select>
-                          </td>
-                          <td
-                            style={{
-                              padding: "var(--space-4)",
-                              textAlign: "right",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: "var(--space-2)",
-                                justifyContent: "flex-end",
-                                alignItems: "center",
-                              }}
-                            >
-                              {/* Quick reject button — only shown for approved plugins */}
-                              {plugin.status === "APPROVED" && (
-                                <button
-                                  onClick={() => {
-                                    setPluginRejectModal({
-                                      type: "plugin",
-                                      pluginId: plugin.id,
-                                      name: plugin.displayName,
-                                      currentStatus: plugin.status,
-                                      targetStatus: "REJECTED",
-                                    });
-                                    setPluginRejectReason("");
+                                <div style={{ fontWeight: 600 }}>
+                                  {plugin.displayName}
+                                </div>
+                                <div
+                                  style={{
+                                    fontSize: "0.75rem",
+                                    color: "var(--text-muted)",
+                                    fontFamily: "var(--font-mono)",
                                   }}
-                                  title="Reject this approved plugin"
+                                >
+                                  {plugin.slug}
+                                </div>
+                              </div>
+                            </td>
+                            <td
+                              style={{
+                                padding: "var(--space-4)",
+                                fontSize: "0.875rem",
+                              }}
+                            >
+                              {plugin.author?.displayName ||
+                                plugin.author?.username}
+                            </td>
+                            <td style={{ padding: "var(--space-4)" }}>
+                              <select
+                                value={plugin.status}
+                                onChange={(e) =>
+                                  handlePluginStatusChange(
+                                    plugin.id,
+                                    plugin.status,
+                                    e.target.value,
+                                    plugin.displayName,
+                                  )
+                                }
+                                style={{
+                                  padding: "0.25rem 0.5rem",
+                                  borderRadius: "var(--radius-sm)",
+                                  background: psc.bg,
+                                  border: `1px solid ${psc.border}`,
+                                  color: psc.color,
+                                  fontSize: "0.8125rem",
+                                  fontWeight: 600,
+                                  cursor: "pointer",
+                                }}
+                              >
+                                <option value="DRAFT">DRAFT</option>
+                                <option value="PENDING_REVIEW">
+                                  PENDING_REVIEW
+                                </option>
+                                <option value="APPROVED">APPROVED</option>
+                                <option value="REJECTED">REJECTED</option>
+                                <option value="SUSPENDED">SUSPENDED</option>
+                                <option value="FLAGGED">FLAGGED</option>
+                              </select>
+                            </td>
+                            <td
+                              style={{
+                                padding: "var(--space-4)",
+                                textAlign: "right",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: "var(--space-2)",
+                                  justifyContent: "flex-end",
+                                  alignItems: "center",
+                                }}
+                              >
+                                {/* Quick reject button — only shown for approved plugins */}
+                                {plugin.status === "APPROVED" && (
+                                  <button
+                                    onClick={() => {
+                                      setPluginRejectModal({
+                                        type: "plugin",
+                                        pluginId: plugin.id,
+                                        name: plugin.displayName,
+                                        currentStatus: plugin.status,
+                                        targetStatus: "REJECTED",
+                                      });
+                                      setPluginRejectReason("");
+                                    }}
+                                    title="Reject this approved plugin"
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "center",
+                                      justifyContent: "center",
+                                      gap: "4px",
+                                      height: "32px",
+                                      padding: "0 10px",
+                                      borderRadius: "var(--radius-sm)",
+                                      border: "1px solid rgba(239,68,68,0.3)",
+                                      background: "rgba(239,68,68,0.08)",
+                                      color: "var(--status-error)",
+                                      cursor: "pointer",
+                                      transition: "all 150ms",
+                                      fontSize: "0.6875rem",
+                                      fontWeight: 600,
+                                    }}
+                                  >
+                                    <ShieldAlert size={14} /> Reject
+                                  </button>
+                                )}
+                                <button
+                                  onClick={() => toggleFeatured(plugin.id)}
+                                  title={
+                                    plugin.isFeatured
+                                      ? "Remove Featured"
+                                      : "Mark as Featured"
+                                  }
                                   style={{
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
-                                    gap: "4px",
+                                    width: "32px",
                                     height: "32px",
-                                    padding: "0 10px",
                                     borderRadius: "var(--radius-sm)",
-                                    border: "1px solid rgba(239,68,68,0.3)",
-                                    background: "rgba(239,68,68,0.08)",
-                                    color: "var(--status-error)",
+                                    border: plugin.isFeatured
+                                      ? "1px solid #fbbf24"
+                                      : "1px solid var(--border-color)",
+                                    background: plugin.isFeatured
+                                      ? "rgba(251, 191, 36, 0.15)"
+                                      : "var(--bg-secondary)",
                                     cursor: "pointer",
                                     transition: "all 150ms",
-                                    fontSize: "0.6875rem",
-                                    fontWeight: 600,
                                   }}
                                 >
-                                  <ShieldAlert size={14} /> Reject
+                                  <Star
+                                    size={16}
+                                    color={
+                                      plugin.isFeatured
+                                        ? "#fbbf24"
+                                        : "var(--text-muted)"
+                                    }
+                                    fill={
+                                      plugin.isFeatured ? "#fbbf24" : "none"
+                                    }
+                                  />
                                 </button>
-                              )}
-                              <button
-                                onClick={() => toggleFeatured(plugin.id)}
-                                title={
-                                  plugin.isFeatured
-                                    ? "Remove Featured"
-                                    : "Mark as Featured"
-                                }
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  width: "32px",
-                                  height: "32px",
-                                  borderRadius: "var(--radius-sm)",
-                                  border: plugin.isFeatured
-                                    ? "1px solid #fbbf24"
-                                    : "1px solid var(--border-color)",
-                                  background: plugin.isFeatured
-                                    ? "rgba(251, 191, 36, 0.15)"
-                                    : "var(--bg-secondary)",
-                                  cursor: "pointer",
-                                  transition: "all 150ms",
-                                }}
-                              >
-                                <Star
-                                  size={16}
-                                  color={
-                                    plugin.isFeatured
-                                      ? "#fbbf24"
-                                      : "var(--text-muted)"
-                                  }
-                                  fill={plugin.isFeatured ? "#fbbf24" : "none"}
-                                />
-                              </button>
-                              <a
-                                href={`/plugins/${plugin.slug}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="btn btn-secondary"
-                                style={{
-                                  padding: "0.25rem 0.5rem",
-                                  fontSize: "0.75rem",
-                                }}
-                              >
-                                View
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        {plugin.versions && plugin.versions.length > 0 && (
-                          <tr
-                            style={{
-                              borderBottom: "1px solid var(--border-color)",
-                              background: "rgba(0,0,0,0.04)",
-                            }}
-                          >
-                            <td
-                              colSpan={4}
-                              style={{
-                                padding:
-                                  "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  fontSize: "0.6875rem",
-                                  color: "var(--text-muted)",
-                                  marginBottom: "8px",
-                                  textTransform: "uppercase",
-                                  letterSpacing: "0.05em",
-                                  fontWeight: 600,
-                                }}
-                              >
-                                Versions
-                              </div>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                  flexWrap: "wrap",
-                                }}
-                              >
-                                {plugin.versions.map((v: any) => {
-                                  const vsc =
-                                    STATUS_COLORS[v.status] ||
-                                    STATUS_COLORS.DRAFT;
-                                  return (
-                                    <div
-                                      key={v.id}
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                        background: "var(--bg-card)",
-                                        padding: "6px 10px",
-                                        borderRadius: "var(--radius-sm)",
-                                        border: `1px solid ${vsc.border}`,
-                                        transition: "all 150ms",
-                                      }}
-                                    >
-                                      <span
-                                        style={{
-                                          fontSize: "0.75rem",
-                                          fontWeight: 700,
-                                          color: "var(--text-primary)",
-                                        }}
-                                      >
-                                        v{v.version}
-                                      </span>
-                                      <span
-                                        style={{
-                                          fontSize: "0.75rem",
-                                          fontWeight: 700,
-                                          padding: "1px 6px",
-                                          borderRadius: "var(--radius-full)",
-                                          background: vsc.bg,
-                                          color: vsc.color,
-                                          textTransform: "uppercase",
-                                          letterSpacing: "0.03em",
-                                        }}
-                                      >
-                                        {v.status}
-                                      </span>
-                                      <select
-                                        value={v.status}
-                                        onChange={(e) =>
-                                          handleVersionStatusChange(
-                                            plugin.id,
-                                            v.id,
-                                            v.status,
-                                            e.target.value,
-                                            `${plugin.displayName} v${v.version}`,
-                                          )
-                                        }
-                                        style={{
-                                          padding: "2px 4px",
-                                          borderRadius: "4px",
-                                          background: "var(--bg-secondary)",
-                                          border:
-                                            "1px solid var(--border-color)",
-                                          color: "var(--text-primary)",
-                                          fontSize: "0.6875rem",
-                                          cursor: "pointer",
-                                        }}
-                                      >
-                                        <option value="PENDING">PENDING</option>
-                                        <option value="APPROVED">
-                                          APPROVED
-                                        </option>
-                                        <option value="REJECTED">
-                                          REJECTED
-                                        </option>
-                                      </select>
-                                    </div>
-                                  );
-                                })}
+                                <a
+                                  href={`/plugins/${plugin.slug}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="btn btn-secondary"
+                                  style={{
+                                    padding: "0.25rem 0.5rem",
+                                    fontSize: "0.75rem",
+                                  }}
+                                >
+                                  View
+                                </a>
                               </div>
                             </td>
                           </tr>
-                        )}
-                      </React.Fragment>
-                    );
-                  })}
-                  {filtered.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan={4}
-                        style={{
-                          padding: "var(--space-8)",
-                          textAlign: "center",
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {pluginStatusFilter !== "ALL"
-                          ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
-                          : "No plugins found"}
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                          {plugin.versions && plugin.versions.length > 0 && (
+                            <tr
+                              style={{
+                                borderBottom: "1px solid var(--border-color)",
+                                background: "rgba(0,0,0,0.04)",
+                              }}
+                            >
+                              <td
+                                colSpan={4}
+                                style={{
+                                  padding:
+                                    "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    fontSize: "0.6875rem",
+                                    color: "var(--text-muted)",
+                                    marginBottom: "8px",
+                                    textTransform: "uppercase",
+                                    letterSpacing: "0.05em",
+                                    fontWeight: 600,
+                                  }}
+                                >
+                                  Versions
+                                </div>
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    flexWrap: "wrap",
+                                  }}
+                                >
+                                  {plugin.versions.map((v: any) => {
+                                    const vsc =
+                                      STATUS_COLORS[v.status] ||
+                                      STATUS_COLORS.DRAFT;
+                                    return (
+                                      <div
+                                        key={v.id}
+                                        style={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                          gap: "8px",
+                                          background: "var(--bg-card)",
+                                          padding: "6px 10px",
+                                          borderRadius: "var(--radius-sm)",
+                                          border: `1px solid ${vsc.border}`,
+                                          transition: "all 150ms",
+                                        }}
+                                      >
+                                        <span
+                                          style={{
+                                            fontSize: "0.75rem",
+                                            fontWeight: 700,
+                                            color: "var(--text-primary)",
+                                          }}
+                                        >
+                                          v{v.version}
+                                        </span>
+                                        <span
+                                          style={{
+                                            fontSize: "0.75rem",
+                                            fontWeight: 700,
+                                            padding: "1px 6px",
+                                            borderRadius: "var(--radius-full)",
+                                            background: vsc.bg,
+                                            color: vsc.color,
+                                            textTransform: "uppercase",
+                                            letterSpacing: "0.03em",
+                                          }}
+                                        >
+                                          {v.status}
+                                        </span>
+                                        <select
+                                          value={v.status}
+                                          onChange={(e) =>
+                                            handleVersionStatusChange(
+                                              plugin.id,
+                                              v.id,
+                                              v.status,
+                                              e.target.value,
+                                              `${plugin.displayName} v${v.version}`,
+                                            )
+                                          }
+                                          style={{
+                                            padding: "2px 4px",
+                                            borderRadius: "4px",
+                                            background: "var(--bg-secondary)",
+                                            border:
+                                              "1px solid var(--border-color)",
+                                            color: "var(--text-primary)",
+                                            fontSize: "0.6875rem",
+                                            cursor: "pointer",
+                                          }}
+                                        >
+                                          <option value="PENDING">
+                                            PENDING
+                                          </option>
+                                          <option value="APPROVED">
+                                            APPROVED
+                                          </option>
+                                          <option value="REJECTED">
+                                            REJECTED
+                                          </option>
+                                        </select>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
+                      );
+                    })}
+                    {filtered.length === 0 && (
+                      <tr>
+                        <td
+                          colSpan={4}
+                          style={{
+                            padding: "var(--space-8)",
+                            textAlign: "center",
+                            color: "var(--text-muted)",
+                          }}
+                        >
+                          {pluginStatusFilter !== "ALL"
+                            ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
+                            : "No plugins found"}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               )}
             </div>
           );
@@ -2040,108 +2168,120 @@ export default function AdminPage() {
       )}
 
       {/* System Tab */}
-      {tab === "system" && (loading ? (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "var(--space-4)",
-          }}
-        >
-          {Array.from({ length: 4 }, (_, i) => (
-            <SkeletonCard key={i} style={{ padding: "var(--space-6)" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)" }}>
-                <Skeleton width={40} height={40} borderRadius="var(--radius-md)" />
-                <Skeleton width="5rem" height="0.8125rem" />
-              </div>
-              <Skeleton width="4rem" height="2rem" />
-            </SkeletonCard>
-          ))}
-        </div>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "var(--space-4)",
-          }}
-        >
-          {[
-            {
-              label: "Total Users",
-              value: stats.users,
-              icon: <Users size={20} color="var(--accent-primary)" />,
-              bg: "rgba(139,92,246,0.08)",
-            },
-            {
-              label: "Total Plugins",
-              value: stats.plugins,
-              icon: <Package size={20} color="var(--accent-primary)" />,
-              bg: "rgba(14,165,233,0.08)",
-            },
-            {
-              label: "Total Builds",
-              value: stats.builds,
-              icon: <Activity size={20} color="var(--status-success)" />,
-              bg: "rgba(16,185,129,0.08)",
-            },
-            {
-              label: "Pending Reviews",
-              value: stats.pendingReviews,
-              icon: <AlertTriangle size={20} color="var(--status-warning)" />,
-              bg: "rgba(245,158,11,0.08)",
-            },
-          ].map((s) => (
-            <div
-              key={s.label}
-              className="card"
-              style={{ padding: "var(--space-6)" }}
-            >
+      {tab === "system" &&
+        (loading ? (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "var(--space-4)",
+            }}
+          >
+            {Array.from({ length: 4 }, (_, i) => (
+              <SkeletonCard key={i} style={{ padding: "var(--space-6)" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "var(--space-3)",
+                    marginBottom: "var(--space-3)",
+                  }}
+                >
+                  <Skeleton
+                    width={40}
+                    height={40}
+                    borderRadius="var(--radius-md)"
+                  />
+                  <Skeleton width="5rem" height="0.8125rem" />
+                </div>
+                <Skeleton width="4rem" height="2rem" />
+              </SkeletonCard>
+            ))}
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "var(--space-4)",
+            }}
+          >
+            {[
+              {
+                label: "Total Users",
+                value: stats.users,
+                icon: <Users size={20} color="var(--accent-primary)" />,
+                bg: "rgba(139,92,246,0.08)",
+              },
+              {
+                label: "Total Plugins",
+                value: stats.plugins,
+                icon: <Package size={20} color="var(--accent-primary)" />,
+                bg: "rgba(14,165,233,0.08)",
+              },
+              {
+                label: "Total Builds",
+                value: stats.builds,
+                icon: <Activity size={20} color="var(--status-success)" />,
+                bg: "rgba(16,185,129,0.08)",
+              },
+              {
+                label: "Pending Reviews",
+                value: stats.pendingReviews,
+                icon: <AlertTriangle size={20} color="var(--status-warning)" />,
+                bg: "rgba(245,158,11,0.08)",
+              },
+            ].map((s) => (
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-3)",
-                }}
+                key={s.label}
+                className="card"
+                style={{ padding: "var(--space-6)" }}
               >
                 <div
                   style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "var(--radius-md)",
-                    background: s.bg,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
+                    gap: "var(--space-3)",
+                    marginBottom: "var(--space-3)",
                   }}
                 >
-                  {s.icon}
+                  <div
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "var(--radius-md)",
+                      background: s.bg,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {s.icon}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.8125rem",
+                      color: "var(--text-muted)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    {s.label}
+                  </span>
                 </div>
-                <span
+                <div
                   style={{
-                    fontSize: "0.8125rem",
-                    color: "var(--text-muted)",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
+                    fontSize: "2rem",
+                    fontWeight: 700,
+                    color: "var(--text-primary)",
                   }}
                 >
-                  {s.label}
-                </span>
+                  {s.value}
+                </div>
               </div>
-              <div
-                style={{
-                  fontSize: "2rem",
-                  fontWeight: 700,
-                  color: "var(--text-primary)",
-                }}
-              >
-                {s.value}
-              </div>
-            </div>
-          ))}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
     </div>
   );
 }
