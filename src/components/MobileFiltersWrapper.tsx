@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function MobileFiltersWrapper({
   children,
@@ -14,35 +15,26 @@ export default function MobileFiltersWrapper({
 
   return (
     <>
-      <div
-        className="mobile-only"
-        style={{ marginBottom: "var(--space-4)", width: "100%" }}
-      >
-        <button
+      <div className="mb-4 w-full sm:hidden">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
           onClick={() => setIsOpen(!isOpen)}
-          className="btn btn-secondary"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            width: "100%",
-            justifyContent: "center",
-            padding: "0.75rem",
-          }}
+          className="h-9 w-full gap-2"
         >
-          <SlidersHorizontal size={18} />{" "}
-          {isOpen ? "Hide Filters & Search" : "Show Filters & Search"}
-        </button>
+          <SlidersHorizontal className="size-4" />
+          {isOpen ? "Hide Filters" : "Filters & Search"}
+        </Button>
       </div>
 
-      <div className={`mobile-filters-container ${isOpen ? "open" : ""}`}>
+      <div
+        className={`${
+          isOpen ? "block" : "hidden"
+        } space-y-4 sm:block`}
+      >
         {searchComponent && (
-          <div
-            className="mobile-only mobile-search"
-            style={{ marginBottom: "var(--space-4)", width: "100%" }}
-          >
-            {searchComponent}
-          </div>
+          <div className="mb-4 w-full sm:hidden">{searchComponent}</div>
         )}
         {children}
       </div>

@@ -1,20 +1,12 @@
-import {
-  Star,
-  Download,
-  ShieldCheck,
-  Search,
-  Tag,
-  Zap,
-  Activity,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import PluginSearch from "@/components/PluginSearch";
 import PluginSidebarFilters from "@/components/PluginSidebarFilters";
 import PluginCardGrid from "@/components/PluginCardGrid";
-import { fetchApi } from "@/lib/api";
-
 import MobileFiltersWrapper from "@/components/MobileFiltersWrapper";
+import { fetchApi } from "@/lib/api";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -52,7 +44,6 @@ export default async function PluginsPage({
     pageSize: 10,
   };
 
-  // Build pagination URL helper
   function pageUrl(page: number): string {
     const p = new URLSearchParams();
     p.set("page", page.toString());
@@ -64,7 +55,6 @@ export default async function PluginsPage({
     return `/plugins?${p.toString()}`;
   }
 
-  // Generate page numbers to display
   function getPageNumbers(): (number | "...")[] {
     const totalPages = pagination.totalPages;
     if (totalPages <= 7) {
@@ -85,195 +75,106 @@ export default async function PluginsPage({
   }
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-4)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
-        <div>
-          <h1 className="heading-2">Releases</h1>
-          {pagination.total > 0 && (
-            <p
-              className="text-muted"
-              style={{ fontSize: "0.875rem", marginTop: "var(--space-1)" }}
+    <section className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 pb-16 pt-4 sm:px-6 lg:px-8">
+      <header className="rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur-sm sm:p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-1">
+            <Badge
+              variant="secondary"
+              className="h-6 px-3 text-[0.68rem] tracking-[0.14em] uppercase"
             >
-              Showing {(currentPage - 1) * pagination.pageSize + 1}–
-              {Math.min(currentPage * pagination.pageSize, pagination.total)} of{" "}
-              {pagination.total} plugins
-            </p>
-          )}
+              Endstone Plugins
+            </Badge>
+            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Releases
+            </h1>
+            {pagination.total > 0 && (
+              <p className="text-sm text-muted-foreground">
+                Showing {(currentPage - 1) * pagination.pageSize + 1}–
+                {Math.min(
+                  currentPage * pagination.pageSize,
+                  pagination.total,
+                )}{" "}
+                of {pagination.total} plugins
+              </p>
+            )}
+          </div>
+          <div className="hidden w-full max-w-xs sm:block">
+            <PluginSearch />
+          </div>
         </div>
-        <div className="desktop-only" style={{ maxWidth: "300px" }}>
-          <PluginSearch />
-        </div>
-      </div>
+      </header>
 
-      <div
-        className="plugins-layout"
-        style={{ display: "flex", gap: "var(--space-6)" }}
-      >
-        {/* Sidebar Filters */}
-        <MobileFiltersWrapper searchComponent={<PluginSearch />}>
-          <PluginSidebarFilters />
-        </MobileFiltersWrapper>
+      <div className="grid gap-4 xl:h-[calc(100dvh-11rem)] xl:grid-cols-[240px_minmax(0,1fr)] xl:overflow-hidden">
+        <aside className="space-y-4 xl:h-full xl:overflow-y-auto">
+          <MobileFiltersWrapper searchComponent={<PluginSearch />}>
+            <PluginSidebarFilters />
+          </MobileFiltersWrapper>
+        </aside>
 
-        {/* Plugin Grid */}
-        <div style={{ flex: 1 }}>
+        <main className="flex min-w-0 flex-col gap-4 xl:h-full xl:overflow-y-auto xl:pr-1">
           <PluginCardGrid plugins={realPlugins} />
 
-          {/* Pagination Controls */}
           {pagination.totalPages > 1 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                marginTop: "var(--space-1)",
-                flexWrap: "wrap",
-              }}
-            >
-              {/* Previous */}
+            <div className="flex flex-wrap items-center justify-center gap-1.5 pt-2">
               {currentPage > 1 ? (
-                <a
-                  href={pageUrl(currentPage - 1)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-card)",
-                    color: "var(--text-secondary)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                >
-                  <ChevronLeft size={16} /> Prev
-                </a>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={pageUrl(currentPage - 1)} scroll={false}>
+                    <ChevronLeft className="size-3.5" />
+                    Prev
+                  </Link>
+                </Button>
               ) : (
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    opacity: 0.5,
-                    cursor: "not-allowed",
-                  }}
-                >
-                  <ChevronLeft size={16} /> Prev
-                </span>
+                <Button variant="outline" size="sm" disabled>
+                  <ChevronLeft className="size-3.5" />
+                  Prev
+                </Button>
               )}
 
-              {/* Page Numbers */}
               {getPageNumbers().map((p, i) =>
                 p === "..." ? (
                   <span
                     key={`dots-${i}`}
-                    style={{
-                      padding: "0.5rem 0.25rem",
-                      color: "var(--text-muted)",
-                      fontSize: "0.875rem",
-                    }}
+                    className="px-1 text-xs text-muted-foreground"
                   >
                     …
                   </span>
-                ) : (
-                  <a
-                    key={p}
-                    href={pageUrl(p)}
-                    style={{
-                      padding: "0.5rem 0.75rem",
-                      borderRadius: "var(--radius-md)",
-                      border:
-                        p === currentPage
-                          ? "1px solid var(--accent-primary)"
-                          : "1px solid var(--border-color)",
-                      background:
-                        p === currentPage
-                          ? "rgba(6, 182, 212, 0.1)"
-                          : "var(--bg-card)",
-                      color:
-                        p === currentPage
-                          ? "var(--accent-primary)"
-                          : "var(--text-secondary)",
-                      fontSize: "0.875rem",
-                      fontWeight: p === currentPage ? 700 : 500,
-                      textDecoration: "none",
-                      transition: "all 150ms",
-                      minWidth: "38px",
-                      textAlign: "center",
-                    }}
-                  >
+                ) : p === currentPage ? (
+                  <Button key={p} size="sm" disabled className="min-w-[32px]">
                     {p}
-                  </a>
+                  </Button>
+                ) : (
+                  <Button
+                    key={p}
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="min-w-[32px]"
+                  >
+                    <Link href={pageUrl(p)} scroll={false}>
+                      {p}
+                    </Link>
+                  </Button>
                 ),
               )}
 
-              {/* Next */}
               {currentPage < pagination.totalPages ? (
-                <a
-                  href={pageUrl(currentPage + 1)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-card)",
-                    color: "var(--text-secondary)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                >
-                  Next <ChevronRight size={16} />
-                </a>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={pageUrl(currentPage + 1)} scroll={false}>
+                    Next
+                    <ChevronRight className="size-3.5" />
+                  </Link>
+                </Button>
               ) : (
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    opacity: 0.5,
-                    cursor: "not-allowed",
-                  }}
-                >
-                  Next <ChevronRight size={16} />
-                </span>
+                <Button variant="outline" size="sm" disabled>
+                  Next
+                  <ChevronRight className="size-3.5" />
+                </Button>
               )}
             </div>
           )}
-        </div>
+        </main>
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "endgit — ci/cd & plugin marketplace for endstone",
@@ -50,29 +61,46 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <meta name="theme-color" content="#38BDF8" />
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "h-full antialiased",
+        geistSans.variable,
+        geistMono.variable,
+        "font-sans",
+      )}
+    >
+      <meta name="theme-color" content="#005F5A" />
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
               try {
-                var local = localStorage.getItem('theme');
-                if (local === 'dark' || (local !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
+                var el = document.documentElement;
+                var saved = localStorage.getItem('theme');
+                var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                if (isDark) {
+                  el.classList.add('dark');
+                } else {
+                  el.classList.remove('dark');
                 }
+                el.setAttribute('data-theme', isDark ? 'dark' : 'light');
               } catch (e) {}
             })();
           `,
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className="min-h-full flex flex-col">
         <AuthProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <div className="relative flex min-h-screen flex-col overflow-x-hidden">
+            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,oklch(0.95_0.08_185)_0%,transparent_35%),radial-gradient(circle_at_85%_0%,oklch(0.93_0.12_85)_0%,transparent_30%),linear-gradient(to_bottom,oklch(0.99_0_0),oklch(0.97_0.01_180))] dark:bg-[radial-gradient(circle_at_15%_20%,oklch(0.32_0.08_185)_0%,transparent_35%),radial-gradient(circle_at_85%_0%,oklch(0.34_0.1_85)_0%,transparent_30%),linear-gradient(to_bottom,oklch(0.16_0_0),oklch(0.12_0.01_180))]" />
+            <Navbar />
+            <main className="flex-1 pt-14 sm:pt-16">{children}</main>
+            <Footer />
+          </div>
         </AuthProvider>
         <Analytics />
         <SpeedInsights />
@@ -81,57 +109,9 @@ export default function RootLayout({
   );
 }
 
-import NavbarMobile from "@/components/NavbarMobile";
+import { SiteNavbar } from "@/components/NavbarMobile";
 import Footer from "@/components/Footer";
 
 function Navbar() {
-  return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: "var(--bg-secondary)",
-        borderBottom: "1px solid var(--border-color)",
-        padding: "1rem 0",
-      }}
-    >
-      <div
-        className="container navbar-container"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          position: "relative",
-        }}
-      >
-        <Link
-          href="/"
-          className="navbar-logo"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-            textDecoration: "none",
-            flexShrink: 0,
-          }}
-        >
-          <Image
-            src="/logo.png"
-            alt="EndGit Logo"
-            width={42}
-            height={42}
-            style={{ objectFit: "contain" }}
-            priority
-          />
-          <span style={{ color: "var(--text-primary)" }}>
-            endgit<span style={{ color: "var(--accent-primary)" }}>.</span>{" "}
-          </span>
-        </Link>
-        <NavbarMobile />
-      </div>
-    </header>
-  );
+  return <SiteNavbar />;
 }

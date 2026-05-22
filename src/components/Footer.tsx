@@ -3,296 +3,125 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: "1px solid var(--border-color)",
-        padding: "3rem 0",
-        marginTop: "auto",
-        background: "var(--bg-secondary)",
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          gap: "2rem",
-        }}
-      >
-        {/* Brand */}
-        <div style={{ maxWidth: "280px" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <Image
-              src="/logo.png"
-              alt="EndGit"
-              width={32}
-              height={32}
-              style={{ objectFit: "contain" }}
-            />
-            <span
-              style={{
-                fontWeight: 700,
-                fontSize: "1.125rem",
-                color: "var(--text-primary)",
-              }}
-            >
-              endgit<span style={{ color: "var(--accent-primary)" }}>.</span>
-            </span>
+    <footer className="mt-auto border-t border-white/10 bg-background/35 px-4 py-8 shadow-[0_-8px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:px-6 lg:px-8 dark:border-white/8 dark:bg-black/20 dark:shadow-[0_-8px_30px_rgba(0,0,0,0.2)]">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+        <div className="flex flex-wrap justify-between gap-8">
+          {/* Brand */}
+          <div className="max-w-[280px]">
+            <div className="mb-3 flex items-center gap-2">
+              <Image
+                src="/logo.png"
+                alt="EndGit"
+                width={28}
+                height={28}
+                style={{ objectFit: "contain" }}
+              />
+              <span className="text-base font-semibold text-foreground">
+                endgit<span style={{ color: "#2dd4bf" }}>.</span>
+              </span>
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              The modern CI/CD and plugin marketplace for the Endstone ecosystem.
+            </p>
           </div>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.8125rem",
-              lineHeight: 1.6,
-              margin: 0,
-            }}
-          >
-            The modern CI/CD and plugin marketplace for the Endstone ecosystem.
+
+          {/* Link Columns */}
+          <div className="flex flex-wrap gap-12">
+            <div>
+              <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-foreground">
+                Platform
+              </h4>
+              <div className="flex flex-col gap-2">
+                <Link href="/plugins" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Releases
+                </Link>
+                <Link href="/builds" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Dev Builds
+                </Link>
+                <Link href="/rules" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Submission Rules
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-foreground">
+                Community
+              </h4>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://discord.gg/9eZhP9y26Q"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Discord
+                </a>
+                <a
+                  href="https://github.com/two-tech-dev/endgit-web"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Source code
+                </a>
+                <a
+                  href="https://github.com/apps/endgit-local-dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  GitHub App
+                </a>
+                <Link href="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  FAQ
+                </Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-foreground">
+                Legal
+              </h4>
+              <div className="flex flex-col gap-2">
+                <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
+                </Link>
+                <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/8 pt-6 dark:border-white/6">
+          <p className="text-xs text-muted-foreground" suppressHydrationWarning>
+            &copy; {new Date().getFullYear()} EndGit. All rights reserved.
+            {process.env.VERCEL_GIT_COMMIT_SHA && (
+              <span className="ml-2 font-mono text-[0.65rem] opacity-60">
+                <a
+                  href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
+                </a>
+              </span>
+            )}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Powered by{" "}
+            <a
+              href="https://2tech.studio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-primary hover:underline"
+            >
+              2Tech Studio
+            </a>
           </p>
         </div>
-
-        {/* Links */}
-        <div
-          className="footer-links"
-          style={{ display: "flex", gap: "3rem", flexWrap: "wrap" }}
-        >
-          <div>
-            <h4
-              style={{
-                fontWeight: 600,
-                fontSize: "0.8125rem",
-                color: "var(--text-primary)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "0.75rem",
-              }}
-            >
-              Platform
-            </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
-              <Link
-                href="/plugins"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Releases
-              </Link>
-              <Link
-                href="/builds"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Dev Builds
-              </Link>
-              <Link
-                href="/rules"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Submission Rules
-              </Link>
-            </div>
-          </div>
-          <div>
-            <h4
-              style={{
-                fontWeight: 600,
-                fontSize: "0.8125rem",
-                color: "var(--text-primary)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "0.75rem",
-              }}
-            >
-              Community
-            </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
-              <a
-                href="https://discord.gg/9eZhP9y26Q"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Discord
-              </a>
-              <a
-                href="https://github.com/two-tech-dev/endgit-web"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Source code
-              </a>
-              <a
-                href="https://github.com/apps/endgit-local-dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                GitHub App
-              </a>
-              <Link
-                href="/faq"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                FAQ
-              </Link>
-            </div>
-          </div>
-          <div>
-            <h4
-              style={{
-                fontWeight: 600,
-                fontSize: "0.8125rem",
-                color: "var(--text-primary)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "0.75rem",
-              }}
-            >
-              Legal
-            </h4>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.5rem",
-              }}
-            >
-              <Link
-                href="/terms"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Terms of Service
-              </Link>
-              <Link
-                href="/privacy"
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  textDecoration: "none",
-                }}
-              >
-                Privacy Policy
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom bar */}
-      <div
-        className="container"
-        style={{
-          marginTop: "2rem",
-          paddingTop: "1.5rem",
-          borderTop: "1px solid var(--border-color)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "0.5rem",
-        }}
-      >
-        <p
-          style={{
-            color: "var(--text-muted)",
-            fontSize: "0.75rem",
-            margin: 0,
-          }}
-          suppressHydrationWarning
-        >
-          &copy; {new Date().getFullYear()} EndGit. All rights reserved.
-          {process.env.VERCEL_GIT_COMMIT_SHA && (
-            <span
-              style={{
-                marginLeft: "8px",
-                opacity: 0.7,
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.6875rem",
-              }}
-            >
-              <a
-                href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
-              </a>
-            </span>
-          )}
-        </p>
-        <p
-          style={{
-            color: "var(--text-muted)",
-            fontSize: "0.75rem",
-            margin: 0,
-          }}
-        >
-          Powered by{" "}
-          <a
-            href="https://2tech.studio"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              color: "var(--accent-primary)",
-              textDecoration: "none",
-              fontWeight: 600,
-            }}
-          >
-            2Tech Studio
-          </a>
-        </p>
       </div>
     </footer>
   );

@@ -1,6 +1,15 @@
 "use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
+import { Filter, Zap } from "lucide-react";
 import { PLUGIN_CATEGORIES } from "@/lib/constants";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function PluginSidebarFilters() {
   const router = useRouter();
@@ -20,178 +29,95 @@ export default function PluginSidebarFilters() {
 
   const sortOptions = [
     { value: "trending", label: "Trending" },
-    { value: "downloads", label: "Most Downloaded" },
-    { value: "stars", label: "Highest Rated" },
+    { value: "downloads", label: "Downloads" },
+    { value: "stars", label: "Stars" },
     { value: "date", label: "Newest" },
     { value: "name", label: "A-Z" },
   ];
 
+  const typeOptions = [
+    { value: "", label: "All" },
+    { value: "PYTHON", label: "Python" },
+    { value: "CPP", label: "C++" },
+  ];
+
   return (
-    <aside
-      className="sidebar-filters"
-      style={{
-        width: "250px",
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-6)",
-      }}
-    >
-      <div className="card" style={{ padding: "var(--space-4)" }}>
-        <h3
-          style={{
-            fontWeight: 600,
-            marginBottom: "var(--space-3)",
-            color: "var(--text-primary)",
-          }}
-        >
-          Categories
-        </h3>
-        <select
-          className="input"
-          value={currentCategory}
-          onChange={(e) => updateFilter("category", e.target.value)}
-          style={{
-            width: "100%",
-            padding: "0.5rem",
-            borderRadius: "var(--radius-sm)",
-            border: "1px solid var(--border-color)",
-            background: "var(--bg-secondary)",
-            color: "var(--text-primary)",
-            cursor: "pointer",
-          }}
-        >
-          <option value="">All Categories</option>
-          {PLUGIN_CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
+    <>
+      <Card className="border border-border/70 bg-card/80">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-sm">
+            <Filter className="size-4" />
+            Type
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <div className="grid grid-cols-3 gap-2 xl:grid-cols-1">
+            {typeOptions.map((type) => (
+              <Button
+                key={type.value}
+                type="button"
+                size="sm"
+                variant={currentType === type.value ? "default" : "ghost"}
+                onClick={() => updateFilter("type", type.value)}
+                className="h-8 justify-center xl:justify-start"
+              >
+                {type.label}
+              </Button>
+            ))}
+          </div>
+          <div className="space-y-1 pt-1">
+            <p className="text-xs text-muted-foreground">Sort</p>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-2">
+              {sortOptions.map((opt) => (
+                <Button
+                  key={opt.value}
+                  type="button"
+                  size="sm"
+                  variant={currentSort === opt.value ? "default" : "ghost"}
+                  onClick={() => updateFilter("sort", opt.value)}
+                  className="h-8 justify-center"
+                >
+                  {opt.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="card" style={{ padding: "var(--space-4)" }}>
-        <h3
-          style={{
-            fontWeight: 600,
-            marginBottom: "var(--space-3)",
-            color: "var(--text-primary)",
-          }}
-        >
-          Sort By
-        </h3>
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-2)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          {sortOptions.map((opt) => (
-            <li
-              key={opt.value}
-              onClick={() => updateFilter("sort", opt.value)}
-              style={{
-                color:
-                  currentSort === opt.value
-                    ? "var(--accent-primary)"
-                    : "var(--text-secondary)",
-                cursor: "pointer",
-                fontWeight: currentSort === opt.value ? 600 : 400,
-                transition: "color 0.2s",
-              }}
+      <Card className="border border-border/70 bg-card/80">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-sm">
+            <Zap className="size-4" />
+            Categories
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="max-h-64 space-y-3 overflow-y-auto pr-1">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-1">
+            <Button
+              type="button"
+              size="sm"
+              variant={!currentCategory ? "default" : "ghost"}
+              onClick={() => updateFilter("category", "")}
+              className="h-8 justify-center xl:justify-start"
             >
-              {opt.label}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="card" style={{ padding: "var(--space-4)" }}>
-        <h3
-          style={{
-            fontWeight: 600,
-            marginBottom: "var(--space-3)",
-            color: "var(--text-primary)",
-          }}
-        >
-          Type
-        </h3>
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-2)",
-            listStyle: "none",
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          <li
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              color: "var(--text-secondary)",
-            }}
-          >
-            <input
-              type="radio"
-              name="type"
-              id="type-all"
-              checked={currentType === ""}
-              onChange={() => updateFilter("type", "")}
-              style={{ accentColor: "var(--accent-primary)" }}
-            />
-            <label htmlFor="type-all" style={{ cursor: "pointer" }}>
-              All Types
-            </label>
-          </li>
-          <li
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              color: "var(--text-secondary)",
-            }}
-          >
-            <input
-              type="radio"
-              name="type"
-              id="type-python"
-              checked={currentType === "PYTHON"}
-              onChange={() => updateFilter("type", "PYTHON")}
-              style={{ accentColor: "var(--accent-primary)" }}
-            />
-            <label htmlFor="type-python" style={{ cursor: "pointer" }}>
-              Python (.whl)
-            </label>
-          </li>
-          <li
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              color: "var(--text-secondary)",
-            }}
-          >
-            <input
-              type="radio"
-              name="type"
-              id="type-cpp"
-              checked={currentType === "CPP"}
-              onChange={() => updateFilter("type", "CPP")}
-              style={{ accentColor: "var(--accent-primary)" }}
-            />
-            <label htmlFor="type-cpp" style={{ cursor: "pointer" }}>
-              C++ (.so)
-            </label>
-          </li>
-        </ul>
-      </div>
-    </aside>
+              All
+            </Button>
+            {PLUGIN_CATEGORIES.map((cat) => (
+              <Button
+                key={cat}
+                type="button"
+                size="sm"
+                variant={currentCategory === cat ? "default" : "ghost"}
+                onClick={() => updateFilter("category", cat)}
+                className="h-8 justify-center xl:justify-start"
+              >
+                {cat}
+              </Button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 }

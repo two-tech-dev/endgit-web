@@ -12,20 +12,18 @@ export function useTheme() {
     const systemDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
+    const isDark = saved === "dark" || (!saved && systemDark);
 
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else if (systemDark) {
-      setTheme("dark");
-      document.documentElement.setAttribute("data-theme", "dark");
-    }
+    setTheme(isDark ? "dark" : "light");
+    document.documentElement.classList.toggle("dark", isDark);
+    document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
 
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem("theme")) {
         const next = e.matches ? "dark" : "light";
         setTheme(next);
+        document.documentElement.classList.toggle("dark", next === "dark");
         document.documentElement.setAttribute("data-theme", next);
       }
     };
@@ -39,6 +37,7 @@ export function useTheme() {
     setTheme((prev) => {
       const next = prev === "light" ? "dark" : "light";
       localStorage.setItem("theme", next);
+      document.documentElement.classList.toggle("dark", next === "dark");
       document.documentElement.setAttribute("data-theme", next);
       return next;
     });

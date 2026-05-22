@@ -28,8 +28,8 @@ export default function NavbarClient({
     return (
       <div
         style={{
-          width: mobile ? "100%" : "100px",
-          height: "36px",
+          width: mobile ? "100%" : "80px",
+          height: mobile ? "36px" : "32px",
           borderRadius: mobile ? "var(--radius-md)" : "var(--radius-full)",
           background: "var(--bg-secondary)",
           animation: "pulse 1.5s infinite",
@@ -44,25 +44,33 @@ export default function NavbarClient({
         onClick={() => signIn("github")}
         className="btn btn-primary"
         style={{
-          padding: "0.5rem 1rem",
-          fontSize: "0.875rem",
+          padding: "0.375rem 0.75rem",
+          fontSize: "0.8125rem",
           width: mobile ? "100%" : undefined,
+          height: mobile ? undefined : "32px",
+          borderRadius: "var(--radius-md)",
         }}
       >
-        <LogIn size={16} /> Sign In
+        <LogIn size={14} /> Sign In
       </button>
     );
   }
 
   const user = session.user;
-  const initials = user?.name?.charAt(0) || user?.email?.charAt(0) || "U";
+  const initials =
+    (user?.name ?? "U")
+      .split(" ")
+      .map((s) => s[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
 
   const userAvatar = user?.image ? (
     <Image
       src={user.image}
       alt=""
-      width={mobile ? 32 : 28}
-      height={mobile ? 32 : 28}
+      width={mobile ? 28 : 24}
+      height={mobile ? 28 : 24}
       style={{
         borderRadius: "50%",
         objectFit: "cover",
@@ -71,16 +79,15 @@ export default function NavbarClient({
   ) : (
     <div
       style={{
-        width: mobile ? "32px" : "28px",
-        height: mobile ? "32px" : "28px",
+        width: mobile ? "28px" : "24px",
+        height: mobile ? "28px" : "24px",
         borderRadius: "50%",
-        background:
-          "linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover))",
+        background: "rgba(0,95,90,0.15)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        color: "white",
-        fontSize: "0.75rem",
+        color: "var(--accent-primary)",
+        fontSize: "0.625rem",
         fontWeight: 700,
         flexShrink: 0,
       }}
@@ -101,9 +108,9 @@ export default function NavbarClient({
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
-          padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
+          padding: mobile ? "0.5rem 0.75rem" : "0.375rem 0.75rem",
           borderRadius: "var(--radius-sm)",
-          fontSize: mobile ? "0.9375rem" : "0.875rem",
+          fontSize: "0.8125rem",
           color: "var(--text-secondary)",
           transition: "background 100ms",
         }}
@@ -112,7 +119,7 @@ export default function NavbarClient({
         }
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
-        <LayoutDashboard size={16} /> Dev Dashboard
+        <LayoutDashboard size={14} /> Dev Dashboard
       </Link>
       <Link
         href="/dashboard"
@@ -124,9 +131,9 @@ export default function NavbarClient({
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
-          padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
+          padding: mobile ? "0.5rem 0.75rem" : "0.375rem 0.75rem",
           borderRadius: "var(--radius-sm)",
-          fontSize: mobile ? "0.9375rem" : "0.875rem",
+          fontSize: "0.8125rem",
           color: "var(--text-secondary)",
           transition: "background 100ms",
         }}
@@ -135,7 +142,7 @@ export default function NavbarClient({
         }
         onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
       >
-        <Package size={16} /> My Plugins
+        <Package size={14} /> My Plugins
       </Link>
       {(session?.user as any)?.trustLevel === "ADMIN" ||
       (session?.user as any)?.trustLevel === "TRUSTED" ? (
@@ -149,20 +156,20 @@ export default function NavbarClient({
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
-            padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
+            padding: mobile ? "0.5rem 0.75rem" : "0.375rem 0.75rem",
             borderRadius: "var(--radius-sm)",
-            fontSize: mobile ? "0.9375rem" : "0.875rem",
-            color: "#8b5cf6",
+            fontSize: "0.8125rem",
+            color: "var(--accent-primary)",
             transition: "background 100ms",
           }}
           onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "rgba(139,92,246,0.05)")
+            (e.currentTarget.style.background = "var(--color-brand-light)")
           }
           onMouseLeave={(e) =>
             (e.currentTarget.style.background = "transparent")
           }
         >
-          <Shield size={16} /> Admin Panel
+          <Shield size={14} /> Admin Panel
         </Link>
       ) : null}
     </>
@@ -179,9 +186,9 @@ export default function NavbarClient({
         display: "flex",
         alignItems: "center",
         gap: "0.5rem",
-        padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
+        padding: mobile ? "0.5rem 0.75rem" : "0.375rem 0.75rem",
         borderRadius: "var(--radius-sm)",
-        fontSize: mobile ? "0.9375rem" : "0.875rem",
+        fontSize: "0.8125rem",
         color: "var(--status-error)",
         width: "100%",
         textAlign: "left",
@@ -192,7 +199,7 @@ export default function NavbarClient({
       }
       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
     >
-      <LogOut size={16} /> Sign Out
+      <LogOut size={14} /> Sign Out
     </button>
   );
 
@@ -210,10 +217,10 @@ export default function NavbarClient({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
-            padding: "0.625rem 0.75rem",
+            gap: "0.625rem",
+            padding: "0.5rem 0.75rem",
             borderRadius: "var(--radius-md)",
-            border: "none",
+            border: "1px solid var(--border-color)",
             background: dropdownOpen ? "var(--bg-secondary)" : "transparent",
             cursor: "pointer",
             transition: "all 150ms",
@@ -225,7 +232,7 @@ export default function NavbarClient({
             <div
               style={{
                 fontWeight: 600,
-                fontSize: "0.9375rem",
+                fontSize: "0.8125rem",
                 color: "var(--text-primary)",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -235,14 +242,14 @@ export default function NavbarClient({
               {user?.name || user?.email}
             </div>
             {user?.email && user?.name && (
-              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+              <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)" }}>
                 {user.email}
               </div>
             )}
           </div>
           <ChevronDown
-            size={16}
-            color="#94a3b8"
+            size={14}
+            color="var(--text-muted)"
             style={{
               transition: "transform 200ms",
               transform: dropdownOpen ? "rotate(180deg)" : "none",
@@ -291,22 +298,23 @@ export default function NavbarClient({
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "0.5rem",
-          padding: "0.375rem 0.75rem",
+          gap: "0.375rem",
+          padding: "0.25rem 0.625rem 0.25rem 0.25rem",
           borderRadius: "var(--radius-full)",
           border: "1px solid var(--border-color)",
           background: "var(--bg-card)",
           cursor: "pointer",
           transition: "all 150ms",
+          height: "32px",
         }}
       >
         {userAvatar}
         <span
           style={{
             fontWeight: 500,
-            fontSize: "0.875rem",
+            fontSize: "0.75rem",
             color: "var(--text-primary)",
-            maxWidth: "120px",
+            maxWidth: "100px",
             overflow: "hidden",
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
@@ -315,8 +323,8 @@ export default function NavbarClient({
           {user?.name || user?.email}
         </span>
         <ChevronDown
-          size={14}
-          color="#94a3b8"
+          size={12}
+          color="var(--text-muted)"
           style={{
             transition: "transform 200ms",
             transform: dropdownOpen ? "rotate(180deg)" : "none",
@@ -335,7 +343,7 @@ export default function NavbarClient({
             style={{
               position: "absolute",
               right: 0,
-              top: "calc(100% + 8px)",
+              top: "calc(100% + 6px)",
               zIndex: 50,
               width: "220px",
               maxWidth: "calc(100vw - 2rem)",
@@ -348,30 +356,37 @@ export default function NavbarClient({
           >
             <div
               style={{
-                padding: "0.75rem 1rem",
+                padding: "0.625rem 0.75rem",
                 borderBottom: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
               }}
             >
               <div
                 style={{
+                  fontSize: "0.6875rem",
+                  color: "var(--text-muted)",
+                }}
+              >
+                Signed in as
+              </div>
+              <div
+                style={{
                   fontWeight: 600,
-                  fontSize: "0.875rem",
+                  fontSize: "0.8125rem",
                   color: "var(--text-primary)",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {user?.name}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                {user?.email}
-              </div>
             </div>
 
-            <div style={{ padding: "0.375rem" }}>{menuItems}</div>
+            <div style={{ padding: "0.25rem" }}>{menuItems}</div>
 
             <div
               style={{
-                padding: "0.375rem",
+                padding: "0.25rem",
                 borderTop: "1px solid var(--border-color)",
               }}
             >
