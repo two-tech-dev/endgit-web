@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
-import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
@@ -563,9 +562,6 @@ export default function HomeContent({ stats }: HomeContentProps) {
           ))}
         </StaggerContainer>
       </section>
-
-      {/* ── Recent Releases ── */}
-      <LatestPluginsSection />
 
       {/* ── Features ── */}
       <section
