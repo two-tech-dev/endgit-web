@@ -40,6 +40,17 @@ function TerminalMock() {
   const timerRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("terminal-seen")
+    ) {
+      setTypedChars(COMMAND_TEXT.length);
+      setVisibleLines(OUTPUT_LINES.length);
+      setShowCursor(false);
+      setShowPrompt(true);
+      return;
+    }
+
     const t = timerRef.current;
     t.length = 0;
 
@@ -63,6 +74,7 @@ function TerminalMock() {
       setTimeout(() => {
         setShowCursor(false);
         setShowPrompt(true);
+        sessionStorage.setItem("terminal-seen", "1");
       }, offset),
     );
 

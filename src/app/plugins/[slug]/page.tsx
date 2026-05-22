@@ -14,6 +14,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import dynamic from "next/dynamic";
+import { cache } from "react";
 import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
@@ -60,20 +61,68 @@ const PluginAnalyticsChart = dynamic(
 );
 const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
   ssr: false,
+  loading: () => (
+    <div
+      className="card"
+      style={{
+        padding: "var(--space-6)",
+        height: "200px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+        Loading dependency graph...
+      </p>
+    </div>
+  ),
 });
 const PluginRatings = dynamic(() => import("@/components/PluginRatings"), {
   ssr: false,
+  loading: () => (
+    <div
+      className="card"
+      style={{
+        padding: "var(--space-6)",
+        height: "200px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+        Loading ratings...
+      </p>
+    </div>
+  ),
 });
 const VirusTotalCard = dynamic(() => import("@/components/VirusTotalCard"), {
   ssr: false,
+  loading: () => (
+    <div
+      className="card"
+      style={{
+        padding: "var(--space-6)",
+        height: "200px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+        Loading security scan...
+      </p>
+    </div>
+  ),
 });
 
-async function getPlugin(slug: string) {
+const getPlugin = cache(async function getPlugin(slug: string) {
   const { data } = await fetchApi(`/api/v1/plugins/${slug}`, {
     revalidate: 30,
   });
   return data?.data || null;
-}
+});
 
 export async function generateMetadata({
   params,

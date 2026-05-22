@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Image from "next/image";
 
 interface Props {
   iconUrl?: string | null;
@@ -7,59 +8,38 @@ interface Props {
   alt: string;
 }
 
-export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
-  const [imgSrc, setImgSrc] = useState<string | null>(null);
-
-  useEffect(() => {
-    let targetSrc = iconUrl;
-    if (!targetSrc && repoUrl) {
-      const repoPath = repoUrl
-        .replace("https://github.com/", "")
-        .replace(/\/$/, "");
-      targetSrc = `https://raw.githubusercontent.com/${repoPath}/main/icon.png`;
-    }
-
-    if (!targetSrc) {
-      setImgSrc("/logo.png");
-      return;
-    }
-
-    targetSrc = targetSrc.replace(/\/\.\//g, "/");
-
-    const img = new Image();
-    img.onload = () => setImgSrc(targetSrc as string);
-    img.onerror = () => setImgSrc("/logo.png");
-    img.src = targetSrc;
-  }, [iconUrl, repoUrl]);
-
-  if (!imgSrc) {
-    return (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "var(--bg-secondary)",
-        }}
-      />
-    );
+function getSrc(iconUrl?: string | null, repoUrl?: string | null): string {
+  if (iconUrl) return iconUrl.replace(/\/\.\//g, "/");
+  if (repoUrl) {
+    const repoPath = repoUrl
+      .replace("https://github.com/", "")
+      .replace(/\/$/, "");
+    return `https://raw.githubusercontent.com/${repoPath}/main/icon.png`;
   }
+  return "/logo.png";
+}
 
-  const isFallback = imgSrc === "/logo.png";
+export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
+  const [errored, setErrored] = useState(false);
+  const src = errored ? "/logo.png" : getSrc(iconUrl, repoUrl);
+  const isFallback = src === "/logo.png";
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={imgSrc}
+    <Image
+      src={src}
       alt={isFallback ? "EndGit Logo" : alt}
+      width={64}
+      height={64}
       loading="lazy"
       decoding="async"
+      unoptimized
+      onError={() => setErrored(true)}
       style={{
         width: "100%",
         height: "100%",
         borderRadius: "var(--radius-lg)",
         objectFit: "cover",
         padding: "0",
-        transition: "opacity 0.2s",
       }}
     />
   );

@@ -61,7 +61,7 @@ export default async function PluginsPage({
       p.set("category", searchParams.category as string);
     if (searchParams.sort) p.set("sort", searchParams.sort as string);
     if (searchParams.type) p.set("type", searchParams.type as string);
-    return `/plugins?${p.toString()}`;
+    return `/plugins?${p.toString()}#plugin-grid`;
   }
 
   // Generate page numbers to display
@@ -127,7 +127,7 @@ export default async function PluginsPage({
         </MobileFiltersWrapper>
 
         {/* Plugin Grid */}
-        <div style={{ flex: 1 }}>
+        <div id="plugin-grid" style={{ flex: 1 }}>
           <PluginCardGrid plugins={realPlugins} />
 
           {/* Pagination Controls */}
@@ -151,6 +151,7 @@ export default async function PluginsPage({
                     alignItems: "center",
                     gap: "4px",
                     padding: "0.5rem 0.75rem",
+                    minHeight: "44px",
                     borderRadius: "var(--radius-md)",
                     border: "1px solid var(--border-color)",
                     background: "var(--bg-card)",
@@ -170,6 +171,7 @@ export default async function PluginsPage({
                     alignItems: "center",
                     gap: "4px",
                     padding: "0.5rem 0.75rem",
+                    minHeight: "44px",
                     borderRadius: "var(--radius-md)",
                     border: "1px solid var(--border-color)",
                     background: "var(--bg-secondary)",
@@ -203,6 +205,10 @@ export default async function PluginsPage({
                     href={pageUrl(p)}
                     style={{
                       padding: "0.5rem 0.75rem",
+                      minHeight: "44px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                       borderRadius: "var(--radius-md)",
                       border:
                         p === currentPage
@@ -220,7 +226,7 @@ export default async function PluginsPage({
                       fontWeight: p === currentPage ? 700 : 500,
                       textDecoration: "none",
                       transition: "all 150ms",
-                      minWidth: "38px",
+                      minWidth: "44px",
                       textAlign: "center",
                     }}
                   >
@@ -238,6 +244,7 @@ export default async function PluginsPage({
                     alignItems: "center",
                     gap: "4px",
                     padding: "0.5rem 0.75rem",
+                    minHeight: "44px",
                     borderRadius: "var(--radius-md)",
                     border: "1px solid var(--border-color)",
                     background: "var(--bg-card)",
@@ -257,6 +264,7 @@ export default async function PluginsPage({
                     alignItems: "center",
                     gap: "4px",
                     padding: "0.5rem 0.75rem",
+                    minHeight: "44px",
                     borderRadius: "var(--radius-md)",
                     border: "1px solid var(--border-color)",
                     background: "var(--bg-secondary)",

@@ -18,7 +18,7 @@ export default function PluginSearch() {
         params.delete("page");
         router.push(`?${params.toString()}`, { scroll: false });
       }
-    }, 500);
+    }, 300);
     return () => clearTimeout(timeoutId);
   }, [search, router, searchParams]);
 

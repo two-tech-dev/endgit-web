@@ -21,32 +21,36 @@ interface AnalyticsData {
 export default function PluginAnalyticsChart({ slug }: { slug: string }) {
   const [data, setData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  const fetchAnalytics = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/v1/plugins/${slug}/analytics`,
+      );
+      const json = await res.json();
+      if (json.success && json.data?.length > 0) {
+        setData(
+          json.data.map((d: any) => ({
+            date: new Date(d.date).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            }),
+            downloads: d.downloads,
+            views: d.views || 0,
+          })),
+        );
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function fetchAnalytics() {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/v1/plugins/${slug}/analytics`,
-        );
-        const json = await res.json();
-        if (json.success && json.data?.length > 0) {
-          setData(
-            json.data.map((d: any) => ({
-              date: new Date(d.date).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              }),
-              downloads: d.downloads,
-              views: d.views || 0,
-            })),
-          );
-        }
-      } catch {
-        // No data available
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchAnalytics();
   }, [slug]);
 
@@ -81,8 +85,23 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
           style={{ margin: "0 auto var(--space-2)" }}
         />
         <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
-          No download analytics available yet
+          {error
+            ? "Failed to load analytics data."
+            : "No download analytics available yet"}
         </p>
+        {error && (
+          <button
+            onClick={fetchAnalytics}
+            className="btn btn-secondary"
+            style={{
+              marginTop: "var(--space-3)",
+              fontSize: "0.8125rem",
+              padding: "0.375rem 1rem",
+            }}
+          >
+            Retry
+          </button>
+        )}
       </div>
     );
   }
