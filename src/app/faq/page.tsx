@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
@@ -84,37 +83,37 @@ function FAQItem({ item }: { item: { q: string; a: string } }) {
         >
           {item.q}
         </span>
-        <motion.div
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          style={{ flexShrink: 0, display: "flex" }}
+        <div
+          style={{
+            flexShrink: 0,
+            display: "flex",
+            transition: "transform 0.2s ease",
+            transform: open ? "rotate(180deg)" : "none",
+          }}
         >
           <ChevronDown size={18} color="var(--text-muted)" />
-        </motion.div>
+        </div>
       </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{ overflow: "hidden" }}
-          >
-            <div
-              style={{
-                padding: "0 var(--space-5) var(--space-5)",
-                fontSize: "0.875rem",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-                whiteSpace: "pre-line",
-              }}
-            >
-              {item.a}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        style={{
+          maxHeight: open ? "500px" : "0",
+          opacity: open ? 1 : 0,
+          overflow: "hidden",
+          transition: "max-height 0.25s ease, opacity 0.25s ease",
+        }}
+      >
+        <div
+          style={{
+            padding: "0 var(--space-5) var(--space-5)",
+            fontSize: "0.875rem",
+            color: "var(--text-secondary)",
+            lineHeight: 1.7,
+            whiteSpace: "pre-line",
+          }}
+        >
+          {item.a}
+        </div>
+      </div>
     </div>
   );
 }

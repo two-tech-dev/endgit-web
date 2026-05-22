@@ -10,7 +10,6 @@ import {
   Shield,
 } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -251,35 +250,32 @@ export default function NavbarClient({
           />
         </button>
 
-        <AnimatePresence>
-          {dropdownOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-              style={{ overflow: "hidden" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "var(--space-1)",
-                  padding: "0 0.25rem",
-                }}
-              >
-                {menuItems}
-                <div
-                  style={{
-                    borderTop: "1px solid var(--border-color)",
-                    margin: "0.25rem 0",
-                  }}
-                />
-                {signOutButton}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div
+          style={{
+            overflow: "hidden",
+            maxHeight: dropdownOpen ? "300px" : "0",
+            opacity: dropdownOpen ? 1 : 0,
+            transition: "max-height 0.2s ease, opacity 0.2s ease",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-1)",
+              padding: "0 0.25rem",
+            }}
+          >
+            {menuItems}
+            <div
+              style={{
+                borderTop: "1px solid var(--border-color)",
+                margin: "0.25rem 0",
+              }}
+            />
+            {signOutButton}
+          </div>
+        </div>
       </div>
     );
   }
@@ -344,6 +340,7 @@ export default function NavbarClient({
               borderRadius: "var(--radius-lg)",
               boxShadow: "var(--shadow-lg)",
               overflow: "hidden",
+              animation: "fadeIn 0.15s ease",
             }}
           >
             <div

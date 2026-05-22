@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/useInView";
 import type { ReactNode } from "react";
 
 interface FadeInProps {
@@ -13,12 +13,12 @@ interface FadeInProps {
   style?: React.CSSProperties;
 }
 
-const directionMap = {
-  up: { y: 20, x: 0 },
-  down: { y: -20, x: 0 },
-  left: { x: 20, y: 0 },
-  right: { x: -20, y: 0 },
-  none: { x: 0, y: 0 },
+const directionStyles = {
+  up: (d: number) => ({ transform: `translateY(${d}px)` }),
+  down: (d: number) => ({ transform: `translateY(-${d}px)` }),
+  left: (d: number) => ({ transform: `translateX(${d}px)` }),
+  right: (d: number) => ({ transform: `translateX(-${d}px)` }),
+  none: () => ({ transform: "scale(0.97)" }),
 };
 
 export default function FadeIn({
@@ -30,37 +30,23 @@ export default function FadeIn({
   className,
   style,
 }: FadeInProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const offset = directionMap[direction];
-  const scale = direction === "none" ? 0.97 : 1;
+  const { ref, inView } = useInView();
 
-  if (prefersReducedMotion) {
-    return (
-      <div className={className} style={style}>
-        {children}
-      </div>
-    );
-  }
+  const initialTransform = directionStyles[direction](distance);
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: offset.x !== 0 ? (offset.x > 0 ? distance : -distance) : 0,
-        y: offset.y !== 0 ? (offset.y > 0 ? distance : -distance) : 0,
-        scale,
-      }}
-      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.25, 0.1, 0.25, 1],
-      }}
+    <div
+      ref={ref}
       className={className}
-      style={style}
+      style={{
+        ...style,
+        opacity: inView ? 1 : 0,
+        transform: inView ? "none" : initialTransform.transform,
+        transition: `opacity ${duration}s cubic-bezier(0.25, 0.1, 0.25, 1) ${delay}s, transform ${duration}s cubic-bezier(0.25, 0.1, 0.25, 1) ${delay}s`,
+        willChange: "opacity, transform",
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

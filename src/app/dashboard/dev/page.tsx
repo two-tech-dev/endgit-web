@@ -1558,7 +1558,9 @@ export default function DevDashboardPage() {
             <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
               <button
                 className="btn btn-secondary"
-                onClick={() => fetchRepos(page + 1, selectedOrg, debouncedSearch)}
+                onClick={() =>
+                  fetchRepos(page + 1, selectedOrg, debouncedSearch)
+                }
                 disabled={isFetchingMore}
                 style={{
                   minWidth: "150px",

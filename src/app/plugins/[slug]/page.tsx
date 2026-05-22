@@ -1103,7 +1103,6 @@ export default async function PluginDetailPage({
 
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />
-
         </aside>
       </div>
     </div>
