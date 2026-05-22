@@ -267,7 +267,7 @@ export default function SubmitReviewForm({
         <ArrowLeft size={16} /> Back to Build
       </button>
 
-      <div className="card p-6">
+      <div className="card p-4 md:p-6">
         <h1 className="heading-2 mb-2">Publish Plugin</h1>
         <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
@@ -343,7 +343,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <div className="flex justify-between items-end mb-0.5">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-0.5 gap-2">
               <label className="block text-sm font-medium">
                 Long Description (Markdown)
               </label>
@@ -578,7 +578,7 @@ export default function SubmitReviewForm({
 
             <div className="flex flex-col gap-2">
               {producers.map((producer, index) => (
-                <div key={index} className="flex gap-2 items-center">
+                <div key={index} className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                   <input
                     type="text"
                     placeholder="GitHub Username"
@@ -603,7 +603,7 @@ export default function SubmitReviewForm({
                       newProducers[index].role = e.target.value;
                       setProducers(newProducers);
                     }}
-                    className={`px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent w-[140px] ${
+                    className={`px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent sm:w-[140px] ${
                       index === 0
                         ? "opacity-60 cursor-not-allowed bg-black/20"
                         : ""
@@ -660,13 +660,13 @@ export default function SubmitReviewForm({
             />
           </div>
 
-          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border">
+          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border flex-col sm:flex-row">
             {isPending && (
               <button
                 type="button"
                 onClick={(e) => handleSubmit(e as any, true)}
                 disabled={submitting}
-                className="btn btn-secondary px-8 py-3 text-base disabled:opacity-60"
+                className="btn btn-secondary px-8 py-3 text-base disabled:opacity-60 w-full sm:w-auto justify-center"
               >
                 Save Draft
               </button>
@@ -675,7 +675,7 @@ export default function SubmitReviewForm({
               type="button"
               onClick={(e) => handleSubmit(e as any, false)}
               disabled={submitting}
-              className="btn btn-primary px-8 py-3 text-base disabled:opacity-60"
+              className="btn btn-primary px-8 py-3 text-base disabled:opacity-60 w-full sm:w-auto justify-center"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Submitting..." : "Submit Plugin for Review"}

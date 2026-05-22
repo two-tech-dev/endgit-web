@@ -281,7 +281,13 @@
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 3rem;
+    padding: 0 1.25rem;
+  }
+
+  @media (min-width: 480px) {
+    .container {
+      padding: 0 2rem;
+    }
   }
 
   @media (min-width: 768px) {
@@ -691,7 +697,6 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .container {
-    padding: 0 3rem;
     overflow-x: clip;
   }
 
@@ -813,11 +818,11 @@
   }
 
   .rating-comment {
-    margin-left: 28px;
+    margin-left: 16px;
   }
 
   .rating-reply {
-    margin-left: 40px;
+    margin-left: 24px;
   }
 
   .license-select-wrapper button {
@@ -992,10 +997,6 @@
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-
   .heading-1 {
     font-size: 1.75rem;
   }

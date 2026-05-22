@@ -56,7 +56,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
 
   if (loading) {
     return (
-      <div className="card p-6 h-[280px] flex items-center justify-center">
+      <div className="card p-4 md:p-6 h-[280px] flex items-center justify-center">
         <p className="text-text-muted text-sm">Loading analytics...</p>
       </div>
     );
@@ -64,7 +64,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
 
   if (data.length === 0) {
     return (
-      <div className="card p-6 text-center">
+      <div className="card p-4 md:p-6 text-center">
         <BarChart3 size={24} className="text-text-muted mx-auto mb-2" />
         <p className="text-text-muted text-sm">
           {error
@@ -86,7 +86,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
   const totalDownloads = data.reduce((sum, d) => sum + d.downloads, 0);
 
   return (
-    <div className="card p-6">
+    <div className="card p-4 md:p-6">
       <div className="chart-header flex justify-between items-center mb-5 flex-wrap gap-2">
         <h3 className="text-base font-semibold flex items-center gap-2 text-text-primary">
           <BarChart3 size={18} className="text-accent" /> Downloads (Last 30

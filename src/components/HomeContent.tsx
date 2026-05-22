@@ -87,7 +87,7 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      className="w-full max-w-[520px] h-[260px] shrink-0"
+      className="w-full max-w-[520px] h-[220px] md:h-[260px] shrink-0"
     >
       <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
@@ -98,7 +98,7 @@ function TerminalMock() {
             endgit-cli
           </span>
         </div>
-        <div className="p-5 font-mono text-sm leading-relaxed h-[200px]">
+        <div className="p-4 md:p-5 font-mono text-sm leading-relaxed h-[160px] md:h-[200px] overflow-hidden">
           <div className="flex gap-2 items-center">
             <span className="text-[#f38ba8] select-none">$</span>
             <span className="text-[#cdd6f4]">
@@ -177,9 +177,9 @@ export default function HomeContent({ stats }: HomeContentProps) {
       {/* ── Hero ── */}
       <section className="py-10 md:py-10 lg:py-20 relative overflow-hidden">
         <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
-        <div className="container flex items-center gap-10 md:gap-16 flex-wrap">
+        <div className="container flex items-center gap-8 md:gap-16 flex-col md:flex-row">
           {/* Left: Copy */}
-          <div className="flex-[1_1_420px] min-w-0">
+          <div className="flex-1 min-w-0">
             <FadeIn delay={0} direction="down">
               <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-flex items-center gap-1.5 mb-5">
                 <Zap size={11} fill="currentColor" /> Public Beta
@@ -208,7 +208,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="flex gap-4 flex-wrap items-center">
+              <div className="flex gap-3 md:gap-4 flex-col sm:flex-row items-stretch sm:items-center">
                 <Link
                   href="/plugins"
                   className="btn btn-primary text-base font-semibold py-3 px-6 inline-flex items-center gap-2 no-underline"
@@ -228,7 +228,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="flex gap-8 mt-8 pt-5 border-t border-border flex-wrap">
+              <div className="flex gap-6 md:gap-8 mt-8 pt-5 border-t border-border flex-wrap">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
@@ -248,7 +248,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
           </div>
 
           {/* Right: Terminal */}
-          <div className="flex-[1_1_400px] flex justify-center min-w-0">
+          <div className="w-full md:flex-[1_1_400px] flex justify-center min-w-0">
             <TerminalMock />
           </div>
         </div>
@@ -304,7 +304,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
 
         {/* CI/CD hero feature */}
         <FadeIn className="mb-5">
-          <div className="card p-6 md:p-8 flex gap-6 items-center flex-wrap">
+          <div className="card p-5 md:p-8 flex gap-5 md:gap-6 items-center flex-wrap">
             <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-brand shrink-0">
               <Activity size={26} />
             </div>
@@ -342,7 +342,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
       {/* ── CTA ── */}
       <section className="container pb-16 lg:pb-24">
         <FadeIn direction="none">
-          <div className="bg-slate-900 dark:bg-zinc-900 rounded-xl p-8 md:p-12 text-center flex flex-col items-center gap-4 relative overflow-hidden">
+          <div className="bg-slate-900 dark:bg-zinc-900 rounded-xl p-6 md:p-12 text-center flex flex-col items-center gap-4 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.08)_0%,transparent_60%)] pointer-events-none" />
             <h2 className="text-xl md:text-3xl font-bold m-0 text-white relative">
               Ready to publish your plugin?

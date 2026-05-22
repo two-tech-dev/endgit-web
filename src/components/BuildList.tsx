@@ -124,7 +124,7 @@ export default function BuildsList({
 
       {/* Search */}
       <div className="mb-6">
-        <div className="card flex items-center gap-3 px-4 py-0">
+        <div className="card flex items-center gap-3 px-3 md:px-4 py-0">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -138,7 +138,7 @@ export default function BuildsList({
       </div>
 
       {/* Warning */}
-      <div className="card p-4 md:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+      <div className="card p-3 md:p-4 md:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
         <AlertTriangle size={20} className="text-warning shrink-0" />
 
         <div>
@@ -160,7 +160,7 @@ export default function BuildsList({
             <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
-              className="card p-4 md:px-5 flex items-center gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
+              className="card p-3 md:p-4 md:px-5 flex items-center gap-3 md:gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
             >
               <div
                 className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`}

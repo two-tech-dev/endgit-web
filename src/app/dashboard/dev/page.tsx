@@ -444,12 +444,12 @@ export default function DevDashboardPage() {
       "https://github.com/apps/endgit-app/installations/new";
     return (
       <div className="container py-12 min-h-[60vh] flex items-center justify-center">
-        <div className="card max-w-[600px] p-10 text-center border border-border-highlight shadow-lg">
+        <div className="card max-w-[600px] p-6 md:p-10 text-center border border-border-highlight shadow-lg">
           <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
           <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
-          <p className="text-text-secondary text-lg leading-relaxed mb-8">
+          <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8">
             To enable CI/CD pipelines, you must install the EndGit GitHub App on
             your repositories. The app will automatically detect your Bedrock
             plugins, build them, and publish them to the marketplace.
@@ -467,9 +467,9 @@ export default function DevDashboardPage() {
   }
 
   return (
-    <div className="container py-8 ">
+    <div className="container py-6 md:py-8 ">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-start md:items-center mb-6 flex-wrap gap-3">
         <div>
           <h1 className="heading-2 flex items-center gap-3">
             <Settings size={28} className="text-accent" /> Dev Dashboard
@@ -783,7 +783,7 @@ export default function DevDashboardPage() {
             return (
               <div
                 key={repo.id}
-                className={`card p-5 border-l-[3px] transition-all duration-200 ${
+                className={`card p-4 md:p-5 border-l-[3px] transition-all duration-200 ${
                   repo.ciEnabled ? "border-l-success" : "border-l-border"
                 }`}
               >

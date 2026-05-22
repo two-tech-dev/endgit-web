@@ -93,7 +93,7 @@ export function BuildsTableClient({
     plugin.status === "PENDING_REVIEW";
 
   return (
-    <div className="container py-8">
+    <div className="container py-6 md:py-8">
       <Link
         href="/dashboard/dev"
         className="inline-flex items-center gap-1.5 text-text-muted no-underline text-sm font-medium mb-6 hover:text-brand transition-colors"
@@ -110,7 +110,7 @@ export function BuildsTableClient({
         </p>
       </div>
 
-      <div className="card p-6">
+      <div className="card p-4 md:p-6">
         {builds.length === 0 ? (
           <div className="text-center p-8 text-text-muted">
             <GitBranch size={32} className="mx-auto mb-4 opacity-50" />

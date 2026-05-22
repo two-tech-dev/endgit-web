@@ -180,9 +180,9 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
         <ArrowLeft size={16} /> Back to Plugin
       </button>
 
-      <div className="card p-6">
+      <div className="card p-4 md:p-6">
         <h1 className="heading-2 mb-2">Edit Plugin Details</h1>
-        <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
+        <div className="mb-6 p-3 md:p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Updating {plugin.name}
           </p>
@@ -246,7 +246,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </div>
 
           <div>
-            <div className="flex justify-between items-end mb-0.5">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-0.5 gap-2">
               <label className="block text-sm font-medium">
                 Long Description (Markdown)
               </label>
@@ -293,7 +293,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(200px,100%),1fr))] gap-2 bg-surface-secondary p-4 rounded-md border border-border">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(160px,100%),1fr))] gap-2 bg-surface-secondary p-3 md:p-4 rounded-md border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
@@ -405,11 +405,11 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             />
           </div>
 
-          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border">
+          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border flex-col sm:flex-row">
             <button
               type="submit"
               disabled={submitting}
-              className="btn btn-primary px-8 py-3 text-base flex items-center justify-center gap-1.5 disabled:opacity-60"
+              className="btn btn-primary px-8 py-3 text-base flex items-center justify-center gap-1.5 disabled:opacity-60 w-full sm:w-auto"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Saving..." : "Save Changes"}

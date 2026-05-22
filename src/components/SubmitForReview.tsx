@@ -26,7 +26,7 @@ export default function SubmitForReview({
 
   if (isSubmitted) {
     return (
-      <div className="card px-5 py-4 mt-6 flex items-center justify-between border-l-4 border-warning bg-warning/5">
+      <div className="card px-4 md:px-5 py-4 mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-l-4 border-warning bg-warning/5">
         <div className="flex items-center gap-3">
           <Clock size={20} className="text-warning shrink-0" />
           <div>
@@ -40,7 +40,7 @@ export default function SubmitForReview({
         </div>
         <Link
           href={`/builds/${buildId}/submit`}
-          className="btn btn-secondary px-3 py-1.5 text-xs no-underline"
+          className="btn btn-secondary px-3 py-1.5 text-xs no-underline w-full sm:w-auto justify-center"
         >
           Edit Submission
         </Link>
@@ -51,8 +51,8 @@ export default function SubmitForReview({
   if (!canSubmit) return null;
 
   return (
-    <div className="card p-5 mt-6">
-      <div className="flex justify-between items-center">
+    <div className="card p-4 md:p-5 mt-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <h3 className="font-semibold text-[0.9375rem] flex items-center gap-2">
             <Send size={16} className="text-brand" /> Submit for Review
@@ -64,7 +64,7 @@ export default function SubmitForReview({
         </div>
         <Link
           href={`/builds/${buildId}/submit`}
-          className="btn btn-primary px-5 py-2 text-sm no-underline flex items-center gap-1.5"
+          className="btn btn-primary px-5 py-2 text-sm no-underline flex items-center gap-1.5 w-full sm:w-auto justify-center"
         >
           <Send size={14} /> Publish Plugin
         </Link>

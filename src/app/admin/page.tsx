@@ -485,7 +485,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="pt-8 pb-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <div className="container py-6 md:py-8">
       <div className="mb-6">
         <h1 className="heading-2 flex items-center gap-3">
           <Shield size={28} className="text-[#8b5cf6]" /> Admin Panel
@@ -496,7 +496,7 @@ export default function AdminPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit">
+      <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit flex-wrap">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -563,8 +563,8 @@ export default function AdminPage() {
             };
 
             return loading ? (
-              <div className="card overflow-hidden">
-                <table className="w-full border-collapse">
+              <div className="card overflow-x-auto">
+                <table className="w-full border-collapse min-w-[600px]">
                   <thead>
                     <tr className="bg-surface-secondary border-b border-border">
                       {[
@@ -633,8 +633,8 @@ export default function AdminPage() {
                 <p className="text-text-muted">No users found</p>
               </div>
             ) : (
-              <div className="card overflow-hidden">
-                <table className="w-full border-collapse">
+              <div className="card overflow-x-auto">
+                <table className="w-full border-collapse min-w-[600px]">
                   <thead>
                     <tr className="bg-surface-secondary border-b border-border">
                       {[
@@ -984,7 +984,7 @@ export default function AdminPage() {
               ? plugins
               : plugins.filter((p) => p.status === pluginStatusFilter);
           return (
-            <div className="card p-6">
+            <div className="card p-4 md:p-6">
               {/* Search + Filter Bar */}
               <div className="flex gap-4 mb-4 flex-wrap">
                 <div className="flex-1 relative min-w-[240px]">

@@ -21,7 +21,7 @@ export default async function TopPluginsPage() {
   }
 
   return (
-    <div className="container py-8">
+    <div className="container py-6 md:py-8">
       <div className="mb-8">
         <Link
           href="/plugins"

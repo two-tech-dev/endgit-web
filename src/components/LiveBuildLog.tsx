@@ -114,7 +114,7 @@ export default function LiveBuildLog({
   return (
     <div className="card overflow-hidden border border-white/5 shadow-2xl bg-[#09090b]">
       {/* Header */}
-      <div className="live-build-header flex justify-between items-center px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md flex-wrap gap-3">
+      <div className="live-build-header flex justify-between items-center px-3 md:px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md flex-wrap gap-3">
         <div className="flex items-center gap-3">
           <Terminal size={16} className="text-accent" />
           <span className="font-semibold text-sm text-[#f8fafc] tracking-wide">

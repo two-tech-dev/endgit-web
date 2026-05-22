@@ -86,7 +86,7 @@ export default async function BuildDetailPage({
 
   if (!build) {
     return (
-      <div className="container pt-16 text-center mx-auto px-4">
+      <div className="container pt-16 text-center">
         <h1 className="heading-2">Build not found</h1>
         <p className="text-text-muted mt-2">
           This build may have been deleted or doesn't exist.
@@ -107,7 +107,7 @@ export default async function BuildDetailPage({
   }
 
   return (
-    <div className="container pt-8 pb-16 max-w-[960px] mx-auto px-4">
+    <div className="container pt-6 md:pt-8 pb-16 max-w-[960px]">
       {/* Breadcrumb */}
       <Link
         href="/builds"
@@ -117,7 +117,7 @@ export default async function BuildDetailPage({
       </Link>
 
       {/* Header Card */}
-      <div className="card p-6 mb-6">
+      <div className="card p-4 md:p-6 mb-6">
         <div className="flex justify-between items-start flex-wrap gap-4">
           <div>
             <div className="build-title-row flex items-center gap-3 mb-2 flex-wrap">
@@ -278,7 +278,7 @@ export default async function BuildDetailPage({
 
       {/* Not Reviewed Warning */}
       {!build.isRelease ? (
-        <div className="card px-5 py-4 mt-6 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+        <div className="card px-4 md:px-5 py-4 mt-6 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
           <AlertTriangle size={18} className="text-warning shrink-0" />
           <span className="text-text-secondary text-sm">
             <strong className="text-text-primary">NOT REVIEWED</strong> — This

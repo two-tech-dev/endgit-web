@@ -24,7 +24,7 @@ export default async function SubmitReviewPage({
 
   if (!build) {
     return (
-      <div className="container pt-10 text-center mx-auto px-4">
+      <div className="container pt-10 text-center">
         <h1 className="heading-2">Build not found</h1>
         <p className="text-text-muted mt-2">
           The build you are looking for does not exist.
@@ -35,7 +35,7 @@ export default async function SubmitReviewPage({
 
   if (build.status !== "SUCCESS") {
     return (
-      <div className="container pt-10 text-center mx-auto px-4">
+      <div className="container pt-10 text-center">
         <h1 className="heading-2">Build not successful</h1>
         <p className="text-text-muted mt-2">
           Only successful builds can be submitted for review.
@@ -47,7 +47,7 @@ export default async function SubmitReviewPage({
   // Allow editing the submission even if already submitted
 
   return (
-    <div className="container pt-10 pb-16 mx-auto px-4">
+    <div className="container pt-8 md:pt-10 pb-16">
       <SubmitReviewForm
         buildId={build.id}
         buildNumber={build.buildNumber}

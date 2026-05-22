@@ -181,9 +181,9 @@ export default async function PluginDetailPage({
     plugin.description;
 
   return (
-    <div className="container !py-8">
+    <div className="container !py-6 md:!py-8">
       {/* Header Section */}
-      <div className="card p-6 mb-6">
+      <div className="card p-4 md:p-6 mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:flex-nowrap">
           <div className="plugin-header-inner flex gap-4 min-w-0 flex-1">
             <div className="w-[72px] h-[72px] rounded-lg bg-surface-secondary flex items-center justify-center border border-border shrink-0 overflow-hidden">
@@ -331,7 +331,7 @@ export default async function PluginDetailPage({
               pluginType={plugin.pluginType}
               versions={displayVersions}
             />
-            <div className="flex gap-6 mt-2">
+            <div className="flex gap-4 md:gap-6 mt-2 flex-wrap">
               <div className="flex items-center gap-1 font-semibold">
                 <Star size={16} className="text-warning" />{" "}
                 {(plugin.averageRating || 0).toLocaleString(undefined, {
@@ -358,16 +358,16 @@ export default async function PluginDetailPage({
       </div>
 
       {/* Two Column Layout */}
-      <div className="plugin-layout flex gap-6 flex-wrap">
+      <div className="plugin-layout flex gap-4 md:gap-6 flex-wrap">
         {/* Main Content */}
         <div className="plugin-main-content flex-[1_1_min(400px,100%)] min-w-0 flex flex-col gap-6">
           {/* Quick Install */}
-          <div className="card p-5">
+          <div className="card p-4 md:p-5">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
-            <div className="bg-[#0f172a] text-[#e2e8f0] px-4 py-3 rounded-md font-mono text-sm flex justify-between items-center">
-              <code>endgit install {plugin.slug}</code>
+            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 md:px-4 py-3 rounded-md font-mono text-xs md:text-sm flex justify-between items-center gap-2 overflow-x-auto">
+              <code className="whitespace-nowrap">endgit install {plugin.slug}</code>
               <button className="touch-target bg-transparent border-none cursor-pointer p-3 flex items-center justify-center">
                 <Copy size={16} className="text-text-muted" />
               </button>
@@ -376,7 +376,7 @@ export default async function PluginDetailPage({
 
           {/* What's New — based on active version */}
           {activeVersion && activeVersion.changelog && (
-            <div className="card p-5">
+            <div className="card p-4 md:p-5">
               <h3 className="font-semibold mb-3 text-base">
                 What's New in v{activeVersion.version}
               </h3>
@@ -436,7 +436,7 @@ export default async function PluginDetailPage({
           {activeVersion &&
             activeVersion.producers &&
             activeVersion.producers.length > 0 && (
-              <div className="card p-5">
+              <div className="card p-4 md:p-5">
                 <h3 className="text-sm font-semibold mb-3 flex items-center gap-1.5">
                   Producers{" "}
                   <span className="text-[11px] text-text-muted font-normal">
@@ -480,7 +480,7 @@ export default async function PluginDetailPage({
             )}
 
           {/* Details */}
-          <div className="card p-5">
+          <div className="card p-4 md:p-5">
             <h3 className="font-semibold mb-4">Details</h3>
             <div className="flex flex-col gap-3">
               <div className="flex justify-between text-sm">
@@ -536,7 +536,7 @@ export default async function PluginDetailPage({
 
           {/* Badges for Markdown */}
           {isAuthor && (
-            <div className="card p-5">
+            <div className="card p-4 md:p-5">
               <h3 className="font-semibold mb-4 text-sm">Markdown Badges</h3>
               <p className="text-xs text-text-muted mb-3">
                 Show off your plugin stats in your README.

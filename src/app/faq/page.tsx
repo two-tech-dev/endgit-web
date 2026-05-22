@@ -304,7 +304,7 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="container py-12 md:py-16">
+    <div className="container py-8 md:py-12 lg:py-16">
       {/* Header */}
       <FadeIn>
         <div className="text-center mb-10">

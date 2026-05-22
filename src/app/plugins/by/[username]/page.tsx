@@ -30,7 +30,7 @@ export default async function AuthorPluginsPage({
   const realPlugins = responseData?.data?.plugins || [];
 
   return (
-    <div className="container py-8">
+    <div className="container py-6 md:py-8">
       <div className="mb-8">
         <h1 className="heading-2 flex items-center gap-2">
           Plugins by <span className="text-brand">{username}</span>

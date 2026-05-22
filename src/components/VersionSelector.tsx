@@ -50,8 +50,8 @@ export default function VersionSelector({
   };
 
   return (
-    <div className="flex flex-col gap-3 w-full max-w-[360px]">
-      <div className="flex items-stretch gap-2.5 flex-wrap w-full">
+    <div className="flex flex-col gap-3 w-full md:max-w-[360px]">
+      <div className="flex items-stretch gap-2.5 flex-col sm:flex-row w-full">
         <select
           value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
@@ -64,7 +64,7 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="flex gap-2 flex-wrap flex-[1_1_auto] min-w-0">
+          <div className="flex gap-2 flex-col sm:flex-row flex-[1_1_auto] min-w-0">
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
               className="btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 bg-slate-800 dark:bg-slate-900 border border-slate-700 rounded-md font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-800 transition-colors duration-150 no-underline flex-[1_1_auto] min-w-[120px] justify-center"
@@ -87,14 +87,14 @@ export default function VersionSelector({
           </a>
         )}
       </div>
-      <div className="text-xs text-text-muted text-right">
+      <div className="version-info-text text-xs text-text-muted text-left md:text-right flex flex-wrap gap-x-3 gap-y-0.5">
         <span>
           Size:{" "}
           {selectedVersion.fileSize
             ? `${(selectedVersion.fileSize / 1024).toFixed(0)} KB`
             : "—"}
         </span>
-        <span className="ml-3">
+        <span>
           Uploaded: {new Date(selectedVersion.createdAt).toLocaleDateString()}
         </span>
       </div>
