@@ -1,7 +1,7 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 interface FadeInProps {
   children: ReactNode;
@@ -21,6 +21,18 @@ const directionStyles = {
   none: () => ({ transform: "scale(0.97)" }),
 };
 
+function usePrefersReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return prefersReduced;
+}
+
 export default function FadeIn({
   children,
   delay = 0,
@@ -31,6 +43,15 @@ export default function FadeIn({
   style,
 }: FadeInProps) {
   const { ref, inView } = useInView();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div ref={ref} className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
 
   const initialTransform = directionStyles[direction](distance);
 

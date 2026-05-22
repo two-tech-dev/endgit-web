@@ -1,13 +1,32 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-import { Children, cloneElement, isValidElement, type ReactNode } from "react";
+import {
+  Children,
+  cloneElement,
+  useEffect,
+  useState,
+  isValidElement,
+  type ReactNode,
+} from "react";
 
 interface StaggerContainerProps {
   children: ReactNode;
   staggerDelay?: number;
   className?: string;
   style?: React.CSSProperties;
+}
+
+function usePrefersReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return prefersReduced;
 }
 
 export default function StaggerContainer({
@@ -17,6 +36,15 @@ export default function StaggerContainer({
   style,
 }: StaggerContainerProps) {
   const { ref, inView } = useInView();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  if (prefersReducedMotion) {
+    return (
+      <div ref={ref} className={className} style={style}>
+        {children}
+      </div>
+    );
+  }
 
   const indexedChildren = inView
     ? Children.map(children, (child, i) => {
