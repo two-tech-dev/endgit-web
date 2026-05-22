@@ -114,7 +114,7 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="flex gap-2 flex-wrap w-full">
+          <div className="flex gap-2 flex-wrap flex-[1_1_auto] min-w-0">
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
               onClick={(e) =>
