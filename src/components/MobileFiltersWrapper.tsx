@@ -24,11 +24,11 @@ export default function MobileFiltersWrapper({
         </button>
       </div>
 
-      <div className={`${isOpen ? "block" : "hidden"} md:block w-full md:w-[250px] shrink-0`}>
+      <div
+        className={`${isOpen ? "block" : "hidden"} md:block w-full md:w-[250px] shrink-0`}
+      >
         {searchComponent && (
-          <div className="md:hidden mb-4 w-full">
-            {searchComponent}
-          </div>
+          <div className="md:hidden mb-4 w-full">{searchComponent}</div>
         )}
         {children}
       </div>

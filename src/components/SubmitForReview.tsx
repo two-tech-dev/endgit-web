@@ -28,10 +28,7 @@ export default function SubmitForReview({
     return (
       <div className="card px-5 py-4 mt-6 flex items-center justify-between border-l-4 border-warning bg-warning/5">
         <div className="flex items-center gap-3">
-          <Clock
-            size={20}
-            className="text-warning shrink-0"
-          />
+          <Clock size={20} className="text-warning shrink-0" />
           <div>
             <div className="font-semibold text-sm text-text-primary">
               ⏳ Submitted for Review

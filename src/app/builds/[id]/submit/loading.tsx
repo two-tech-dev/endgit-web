@@ -4,24 +4,12 @@ export default function SubmitReviewLoading() {
   return (
     <div className="container pt-10 pb-16 mx-auto px-4">
       <SkeletonCard className="p-6 max-w-[700px] mx-auto">
-        <Skeleton
-          width="14rem"
-          height="1.5rem"
-          className="mb-2"
-        />
-        <Skeleton
-          width="18rem"
-          height="0.875rem"
-          className="mb-6"
-        />
+        <Skeleton width="14rem" height="1.5rem" className="mb-2" />
+        <Skeleton width="18rem" height="0.875rem" className="mb-6" />
 
         <div className="flex flex-col gap-5">
           <div>
-            <Skeleton
-              width="6rem"
-              height="0.875rem"
-              className="mb-2"
-            />
+            <Skeleton width="6rem" height="0.875rem" className="mb-2" />
             <Skeleton
               width="100%"
               height="2.5rem"
@@ -30,11 +18,7 @@ export default function SubmitReviewLoading() {
           </div>
 
           <div>
-            <Skeleton
-              width="8rem"
-              height="0.875rem"
-              className="mb-2"
-            />
+            <Skeleton width="8rem" height="0.875rem" className="mb-2" />
             <Skeleton
               width="100%"
               height="6rem"
@@ -43,11 +27,7 @@ export default function SubmitReviewLoading() {
           </div>
 
           <div>
-            <Skeleton
-              width="4rem"
-              height="0.875rem"
-              className="mb-2"
-            />
+            <Skeleton width="4rem" height="0.875rem" className="mb-2" />
             <div className="flex gap-2">
               {Array.from({ length: 3 }, (_, i) => (
                 <Skeleton

@@ -467,10 +467,7 @@ export default function AdminPage() {
   if (sessionStatus === "loading") {
     return (
       <div className="container py-16 text-center">
-        <Loader2
-          size={32}
-          className="text-[#8b5cf6] animate-spin mx-auto"
-        />
+        <Loader2 size={32} className="text-[#8b5cf6] animate-spin mx-auto" />
       </div>
     );
   }
@@ -478,10 +475,7 @@ export default function AdminPage() {
   if (sessionStatus === "unauthenticated") {
     return (
       <div className="container py-16 text-center">
-        <Shield
-          size={48}
-          className="mx-auto mb-4 text-[#8b5cf6]"
-        />
+        <Shield size={48} className="mx-auto mb-4 text-[#8b5cf6]" />
         <h2 className="heading-3">Admin Access Required</h2>
         <p className="text-text-muted mt-2">
           Please sign in with an admin account.
@@ -528,9 +522,7 @@ export default function AdminPage() {
       {/* Error */}
       {error && (
         <div className="card p-5 mb-4 border-l-4 border-l-error">
-          <p className="text-error text-sm">
-            {error}
-          </p>
+          <p className="text-error text-sm">{error}</p>
         </div>
       )}
 
@@ -768,10 +760,7 @@ export default function AdminPage() {
         (loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Array.from({ length: 3 }, (_, i) => (
-              <SkeletonCard
-                key={i}
-                className="p-0 border-t-4 border-t-border"
-              >
+              <SkeletonCard key={i} className="p-0 border-t-4 border-t-border">
                 <div className="p-5 flex flex-col gap-3">
                   <div className="flex justify-between items-start">
                     <div className="flex gap-3 items-center">
@@ -816,11 +805,10 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {queue.length === 0 ? (
               <div className="card p-12 text-center col-span-full">
-                <CheckCircle
-                  size={40}
-                  className="text-success mx-auto mb-3"
-                />
-                <p className="font-semibold text-text-primary">All caught up!</p>
+                <CheckCircle size={40} className="text-success mx-auto mb-3" />
+                <p className="font-semibold text-text-primary">
+                  All caught up!
+                </p>
                 <p className="text-text-muted text-sm">
                   No plugins pending review
                 </p>
@@ -976,10 +964,7 @@ export default function AdminPage() {
                         className="px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer flex items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
                       >
                         {reviewLoading && (
-                          <Loader2
-                            size={14}
-                            className="animate-spin"
-                          />
+                          <Loader2 size={14} className="animate-spin" />
                         )}
                         <XCircle size={14} /> Reject & Notify Author
                       </button>
@@ -1023,10 +1008,7 @@ export default function AdminPage() {
 
               {/* Status Filter Pills */}
               <div className="flex gap-1.5 mb-5 flex-wrap items-center">
-                <Filter
-                  size={14}
-                  className="mr-1 text-text-muted"
-                />
+                <Filter size={14} className="mr-1 text-text-muted" />
                 {PLUGIN_STATUSES.map((s) => {
                   const isActive = pluginStatusFilter === s;
                   const count =
@@ -1254,10 +1236,7 @@ export default function AdminPage() {
                             plugin.versions &&
                             plugin.versions.length > 0 && (
                               <tr className="border-b border-border bg-surface-secondary/10">
-                                <td
-                                  colSpan={4}
-                                  className="p-3 px-4 pl-8"
-                                >
+                                <td colSpan={4} className="p-3 px-4 pl-8">
                                   <div className="flex flex-col gap-1.5">
                                     {plugin.versions.map((v: any) => {
                                       return (
@@ -1270,7 +1249,9 @@ export default function AdminPage() {
                                           <span className="text-[13px] font-bold text-text-primary min-w-[56px]">
                                             v{v.version}
                                           </span>
-                                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}>
+                                          <span
+                                            className={`text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}
+                                          >
                                             {v.status}
                                           </span>
                                           <select
@@ -1440,10 +1421,7 @@ export default function AdminPage() {
                   }`}
                 >
                   {pluginRejectLoading && (
-                    <Loader2
-                      size={14}
-                      className="animate-spin"
-                    />
+                    <Loader2 size={14} className="animate-spin" />
                   )}
                   <ShieldAlert size={14} />
                   {pluginRejectModal.targetStatus === "SUSPENDED"
@@ -1510,7 +1488,9 @@ export default function AdminPage() {
                 className="card p-6 flex flex-col bg-surface-card border border-border rounded-xl shadow-sm"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className={`w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 ${s.bg}`}>
+                  <div
+                    className={`w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 ${s.bg}`}
+                  >
                     {s.icon}
                   </div>
                   <span className="text-xs text-text-muted uppercase tracking-wider font-medium">

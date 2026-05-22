@@ -176,15 +176,14 @@ export default function PluginRatings({
     <div className="card p-6">
       <div className="flex justify-between items-center mb-5 flex-wrap gap-3">
         <h3 className="text-lg font-semibold flex items-center gap-2 m-0">
-          <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings & Reviews
+          <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings &
+          Reviews
         </h3>
 
         {/* Star Selector in Header */}
         {session && (
           <div className="flex items-center gap-2">
-            <span className="text-[13px] text-text-muted">
-              Your rating:
-            </span>
+            <span className="text-[13px] text-text-muted">Your rating:</span>
             <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((i) => (
                 <button

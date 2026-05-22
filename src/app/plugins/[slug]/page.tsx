@@ -27,9 +27,7 @@ import Link from "next/link";
 
 const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
   loading: () => (
-    <div className="p-6 text-text-muted text-sm">
-      Loading description...
-    </div>
+    <div className="p-6 text-text-muted text-sm">Loading description...</div>
   ),
 });
 const PluginAnalyticsChart = dynamic(
@@ -366,8 +364,7 @@ export default async function PluginDetailPage({
           {/* Quick Install */}
           <div className="card p-5">
             <h3 className="font-semibold mb-3 flex items-center gap-2">
-              <Terminal size={18} className="text-accent" /> Quick Install
-              (CLI)
+              <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
             <div className="bg-[#0f172a] text-[#e2e8f0] px-4 py-3 rounded-md font-mono text-sm flex justify-between items-center">
               <code>endgit install {plugin.slug}</code>

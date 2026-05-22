@@ -3,11 +3,7 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 export default function PluginBuildsLoading() {
   return (
     <div className="container py-8">
-      <Skeleton
-        width="10rem"
-        height="0.875rem"
-        className="mb-6"
-      />
+      <Skeleton width="10rem" height="0.875rem" className="mb-6" />
 
       <div className="mb-6">
         <Skeleton width="14rem" height="2rem" className="mb-1" />
@@ -22,11 +18,7 @@ export default function PluginBuildsLoading() {
               className={`flex items-center p-4 gap-4 ${i < 5 ? "border-b border-border" : ""}`}
             >
               <div className="w-[100px] shrink-0">
-                <Skeleton
-                  width="4rem"
-                  height="0.875rem"
-                  className="mb-[2px]"
-                />
+                <Skeleton width="4rem" height="0.875rem" className="mb-[2px]" />
                 <Skeleton width="3rem" height="0.75rem" />
               </div>
               <div className="w-20 shrink-0">

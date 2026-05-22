@@ -125,7 +125,9 @@ export default function VersionSelector({
                 )
               }
               className={`btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 bg-slate-800 dark:bg-slate-900 border border-slate-700 rounded-md font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-800 transition-colors duration-150 no-underline flex-[1_1_auto] min-w-[120px] justify-center ${
-                downloading ? "opacity-60 cursor-not-allowed pointer-events-none" : ""
+                downloading
+                  ? "opacity-60 cursor-not-allowed pointer-events-none"
+                  : ""
               }`}
             >
               {downloading === "linux" ? (
@@ -145,7 +147,9 @@ export default function VersionSelector({
                 )
               }
               className={`btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 rounded-md font-semibold no-underline flex-[1_1_auto] min-w-[120px] justify-center ${
-                downloading ? "opacity-60 cursor-not-allowed pointer-events-none" : ""
+                downloading
+                  ? "opacity-60 cursor-not-allowed pointer-events-none"
+                  : ""
               }`}
             >
               {downloading === "windows" ? (
@@ -167,7 +171,9 @@ export default function VersionSelector({
               )
             }
             className={`btn btn-primary flex items-center justify-center gap-2 text-base px-6 py-2.5 font-semibold no-underline flex-[1_1_auto] ${
-              downloading ? "opacity-60 cursor-not-allowed pointer-events-none" : ""
+              downloading
+                ? "opacity-60 cursor-not-allowed pointer-events-none"
+                : ""
             }`}
           >
             {downloading === "default" ? (

@@ -259,25 +259,16 @@ export default function SubmitReviewForm({
   };
 
   if (!session)
-    return (
-      <div className="card p-6 text-center">
-        Please sign in.
-      </div>
-    );
+    return <div className="card p-6 text-center">Please sign in.</div>;
 
   return (
     <div>
-      <button
-        onClick={() => router.back()}
-        className="btn btn-secondary mb-6"
-      >
+      <button onClick={() => router.back()} className="btn btn-secondary mb-6">
         <ArrowLeft size={16} /> Back to Build
       </button>
 
       <div className="card p-6">
-        <h1 className="heading-2 mb-2">
-          Publish Plugin
-        </h1>
+        <h1 className="heading-2 mb-2">Publish Plugin</h1>
         <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Submit Build #{buildNumber} for Review
@@ -296,10 +287,7 @@ export default function SubmitReviewForm({
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-5"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           {/* ── Section: About this plugin ── */}
           <h2 className="heading-3 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this plugin...
@@ -341,9 +329,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-0.5">
-              Keywords
-            </label>
+            <label className="block text-sm font-medium mb-0.5">Keywords</label>
             <p className="text-xs text-text-muted mb-1.5">
               Comma-separated keywords to help users find your plugin in search.
             </p>
@@ -392,9 +378,7 @@ export default function SubmitReviewForm({
             <label className="flex justify-between items-baseline text-sm font-medium mb-2">
               <span>
                 Categories{" "}
-                <span className="text-text-muted font-normal">
-                  (Max 5)
-                </span>
+                <span className="text-text-muted font-normal">(Max 5)</span>
               </span>
               <span
                 className={`text-xs ${
@@ -473,9 +457,7 @@ export default function SubmitReviewForm({
           </h2>
 
           <div>
-            <label className="block text-sm font-medium mb-0.5">
-              Version
-            </label>
+            <label className="block text-sm font-medium mb-0.5">Version</label>
             <p className="text-xs text-text-muted mb-1.5">
               Follow Semantic Versioning (e.g., 1.0.0, 2.0.0-beta).
             </p>
@@ -579,9 +561,7 @@ export default function SubmitReviewForm({
 
           <div>
             <div className="flex justify-between items-baseline mb-2">
-              <label className="text-sm font-medium">
-                Producers
-              </label>
+              <label className="text-sm font-medium">Producers</label>
               <button
                 type="button"
                 onClick={() =>
@@ -598,10 +578,7 @@ export default function SubmitReviewForm({
 
             <div className="flex flex-col gap-2">
               {producers.map((producer, index) => (
-                <div
-                  key={index}
-                  className="flex gap-2 items-center"
-                >
+                <div key={index} className="flex gap-2 items-center">
                   <input
                     type="text"
                     placeholder="GitHub Username"
@@ -613,7 +590,9 @@ export default function SubmitReviewForm({
                       setProducers(newProducers);
                     }}
                     className={`flex-1 px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
-                      index === 0 ? "opacity-60 cursor-not-allowed bg-black/20" : ""
+                      index === 0
+                        ? "opacity-60 cursor-not-allowed bg-black/20"
+                        : ""
                     }`}
                   />
                   <select
@@ -625,7 +604,9 @@ export default function SubmitReviewForm({
                       setProducers(newProducers);
                     }}
                     className={`px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent w-[140px] ${
-                      index === 0 ? "opacity-60 cursor-not-allowed bg-black/20" : ""
+                      index === 0
+                        ? "opacity-60 cursor-not-allowed bg-black/20"
+                        : ""
                     }`}
                   >
                     <option value="COLLABORATOR">Collaborator</option>

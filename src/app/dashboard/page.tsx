@@ -42,9 +42,7 @@ export default async function DashboardPage() {
           <div className="w-20 h-20 bg-warning/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertCircle size={40} className="text-warning" />
           </div>
-          <h1 className="heading-2 mb-4">
-            GitHub Session Expired
-          </h1>
+          <h1 className="heading-2 mb-4">GitHub Session Expired</h1>
           <p className="text-text-secondary text-lg leading-relaxed mb-8">
             For security reasons, your connection to GitHub has expired. Please
             re-authenticate to sync your App installation status and continue
@@ -68,9 +66,7 @@ export default async function DashboardPage() {
           <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
-          <h1 className="heading-2 mb-4">
-            Welcome to EndGit!
-          </h1>
+          <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
           <p className="text-text-secondary text-lg leading-relaxed mb-8">
             To get started with the Developer Dashboard, you need to install the
             EndGit GitHub App on your repositories. The app will automatically
@@ -125,9 +121,7 @@ export default async function DashboardPage() {
             <PackagePlus size={24} />
           </div>
           <div>
-            <div className="text-text-muted text-sm mb-1">
-              Total Plugins
-            </div>
+            <div className="text-text-muted text-sm mb-1">Total Plugins</div>
             <div className="heading-2">
               {stats.totalPlugins?.toLocaleString() ?? 0}
             </div>
@@ -139,9 +133,7 @@ export default async function DashboardPage() {
             <Activity size={24} />
           </div>
           <div>
-            <div className="text-text-muted text-sm mb-1">
-              Total Downloads
-            </div>
+            <div className="text-text-muted text-sm mb-1">Total Downloads</div>
             <div className="heading-2">
               {stats.totalDownloads?.toLocaleString() ?? 0}
             </div>
@@ -153,9 +145,7 @@ export default async function DashboardPage() {
             <AlertCircle size={24} />
           </div>
           <div>
-            <div className="text-text-muted text-sm mb-1">
-              Pending Review
-            </div>
+            <div className="text-text-muted text-sm mb-1">Pending Review</div>
             <div className="heading-2">
               {stats.pendingReviews?.toLocaleString() ?? 0}
             </div>
@@ -164,15 +154,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Plugins List */}
-      <h2 className="heading-3 mb-6">
-        My Plugins
-      </h2>
+      <h2 className="heading-3 mb-6">My Plugins</h2>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-6">
         {myPlugins.map((plugin) => (
-          <div
-            key={plugin.id}
-            className="card flex flex-col overflow-hidden"
-          >
+          <div key={plugin.id} className="card flex flex-col overflow-hidden">
             {/* Status Bar */}
             <div
               className={`h-1 w-full ${

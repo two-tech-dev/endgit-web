@@ -93,7 +93,9 @@ export default async function TopPluginsPage() {
                     )}
                   </h3>
                   <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
-                    <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">v{plugin.latestVersion || "1.0.0"}</span>
+                    <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
+                      v{plugin.latestVersion || "1.0.0"}
+                    </span>
                     <span>•</span>
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                       {repoOwner ||

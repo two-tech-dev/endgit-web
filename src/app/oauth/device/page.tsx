@@ -96,10 +96,7 @@ export default function DeviceAuthPage() {
   if (status === "loading") {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2
-          size={32}
-          className="animate-spin text-brand"
-        />
+        <Loader2 size={32} className="animate-spin text-brand" />
       </div>
     );
   }
@@ -112,9 +109,7 @@ export default function DeviceAuthPage() {
           <Terminal size={36} className="text-brand" />
         </div>
 
-        <h1 className="heading-2 mb-2">
-          Device Authorization
-        </h1>
+        <h1 className="heading-2 mb-2">Device Authorization</h1>
         <p className="text-text-secondary text-[0.9375rem] leading-relaxed mb-8">
           Authorize the EndGit CLI to access your account
         </p>
@@ -149,10 +144,7 @@ export default function DeviceAuthPage() {
           </div>
         ) : (
           /* Signed in — show code entry form */
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-6"
-          >
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div>
               <p className="text-sm font-medium mb-3 text-text-secondary">
                 Enter the code shown in your terminal
@@ -173,9 +165,7 @@ export default function DeviceAuthPage() {
                     error ? "border-error" : "border-border"
                   }`}
                 />
-                <span className="text-2xl font-bold text-text-muted">
-                  —
-                </span>
+                <span className="text-2xl font-bold text-text-muted">—</span>
                 <input
                   ref={secondRef}
                   type="text"
@@ -208,11 +198,7 @@ export default function DeviceAuthPage() {
             >
               {loading ? (
                 <>
-                  <Loader2
-                    size={16}
-                    className="animate-spin"
-                  />{" "}
-                  Authorizing...
+                  <Loader2 size={16} className="animate-spin" /> Authorizing...
                 </>
               ) : (
                 "Authorize Device"

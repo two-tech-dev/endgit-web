@@ -98,14 +98,13 @@ export default function LiveBuildLog({
     }
 
     return (
-      <div
-        key={index}
-        className="flex gap-4 min-h-[1.5rem]"
-      >
+      <div key={index} className="flex gap-4 min-h-[1.5rem]">
         <span className="text-[#334155] min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
-        <span className={`whitespace-pre-wrap break-words flex-1 font-mono ${colorClass} ${fontWeightClass}`}>
+        <span
+          className={`whitespace-pre-wrap break-words flex-1 font-mono ${colorClass} ${fontWeightClass}`}
+        >
           {line}
         </span>
       </div>
@@ -181,20 +180,22 @@ export default function LiveBuildLog({
             <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
               {logs ? allLines.length + 1 : 2}
             </span>
-            <span className="text-accent animate-pulse font-mono">
-              ▋
-            </span>
+            <span className="text-accent animate-pulse font-mono">▋</span>
           </div>
         )}
       </div>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
         /* Custom scrollbar for the terminal */
         .scrollbar-terminal::-webkit-scrollbar { width: 8px; }
         .scrollbar-terminal::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         .scrollbar-terminal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
         .scrollbar-terminal::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-      `}} />
+      `,
+        }}
+      />
     </div>
   );
 }

@@ -172,25 +172,16 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
   };
 
   if (!session)
-    return (
-      <div className="card p-6 text-center">
-        Please sign in.
-      </div>
-    );
+    return <div className="card p-6 text-center">Please sign in.</div>;
 
   return (
     <div>
-      <button
-        onClick={() => router.back()}
-        className="btn btn-secondary mb-6"
-      >
+      <button onClick={() => router.back()} className="btn btn-secondary mb-6">
         <ArrowLeft size={16} /> Back to Plugin
       </button>
 
       <div className="card p-6">
-        <h1 className="heading-2 mb-2">
-          Edit Plugin Details
-        </h1>
+        <h1 className="heading-2 mb-2">Edit Plugin Details</h1>
         <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Updating {plugin.name}
@@ -202,10 +193,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-5"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           {/* ── Section: About this plugin ── */}
           <h2 className="heading-3 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this plugin...
@@ -225,7 +213,9 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               onChange={(e) => setDisplayName(e.target.value)}
               disabled={(session?.user as any)?.trustLevel !== "ADMIN"}
               className={`w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
-                (session?.user as any)?.trustLevel !== "ADMIN" ? "opacity-60 cursor-not-allowed" : "cursor-text"
+                (session?.user as any)?.trustLevel !== "ADMIN"
+                  ? "opacity-60 cursor-not-allowed"
+                  : "cursor-text"
               }`}
             />
             {(session?.user as any)?.trustLevel !== "ADMIN" && (
@@ -291,13 +281,13 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             <label className="flex justify-between items-baseline text-sm font-medium mb-2">
               <span>
                 Categories{" "}
-                <span className="text-text-muted font-normal">
-                  (Max 5)
-                </span>
+                <span className="text-text-muted font-normal">(Max 5)</span>
               </span>
               <span
                 className={`text-xs ${
-                  selectedCategories.length > 5 ? "text-error" : "text-text-muted"
+                  selectedCategories.length > 5
+                    ? "text-error"
+                    : "text-text-muted"
                 }`}
               >
                 {selectedCategories.length}/5

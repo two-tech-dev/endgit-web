@@ -71,10 +71,7 @@ export default function PluginPagination({
 
       {getPageNumbers(currentPage, totalPages).map((p, i) =>
         p === "..." ? (
-          <span
-            key={`dots-${i}`}
-            className="px-2 py-2 text-text-muted text-sm"
-          >
+          <span key={`dots-${i}`} className="px-2 py-2 text-text-muted text-sm">
             …
           </span>
         ) : (

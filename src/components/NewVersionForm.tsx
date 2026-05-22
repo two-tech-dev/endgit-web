@@ -119,11 +119,12 @@ export default function NewVersionForm({
               </div>
 
               <div className="border-t border-border mt-2 pt-4">
-                <p className="text-sm font-semibold mb-2">
-                  Artifact Source
-                </p>
+                <p className="text-sm font-semibold mb-2">Artifact Source</p>
                 <div className="text-[13px] text-text-muted mb-3 flex items-start gap-1.5">
-                  <Info size={14} className="shrink-0 mt-0.5" /> <span>Provide either a successful Build ID or a direct file URL.</span>
+                  <Info size={14} className="shrink-0 mt-0.5" />{" "}
+                  <span>
+                    Provide either a successful Build ID or a direct file URL.
+                  </span>
                 </div>
 
                 <div className="flex flex-col gap-3">
@@ -142,7 +143,9 @@ export default function NewVersionForm({
                       placeholder="e.g. clt3x..."
                       disabled={!!fileUrl}
                       className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
-                        fileUrl ? "opacity-50 cursor-not-allowed bg-surface-secondary" : ""
+                        fileUrl
+                          ? "opacity-50 cursor-not-allowed bg-surface-secondary"
+                          : ""
                       }`}
                     />
                   </div>
@@ -163,7 +166,9 @@ export default function NewVersionForm({
                       placeholder="https://example.com/plugin.zip"
                       disabled={!!buildId}
                       className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
-                        buildId ? "opacity-50 cursor-not-allowed bg-surface-secondary" : ""
+                        buildId
+                          ? "opacity-50 cursor-not-allowed bg-surface-secondary"
+                          : ""
                       }`}
                     />
                   </div>

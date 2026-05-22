@@ -88,15 +88,15 @@ export default function BuildsList({
       const author = build.plugin?.author?.username || "";
 
       const matchesSearch =
-          plugin.toLowerCase().includes(q) ||
-          author.toLowerCase().includes(q) ||
-          build.branch?.toLowerCase().includes(q) ||
-          build.status?.toLowerCase().includes(q);
+        plugin.toLowerCase().includes(q) ||
+        author.toLowerCase().includes(q) ||
+        build.branch?.toLowerCase().includes(q) ||
+        build.status?.toLowerCase().includes(q);
 
       if (!q) {
         // If no search query, only show today's builds
         const isToday =
-            new Date(build.createdAt).toISOString().slice(0, 10) === today;
+          new Date(build.createdAt).toISOString().slice(0, 10) === today;
         return isToday && matchesSearch;
       }
 
@@ -106,108 +106,105 @@ export default function BuildsList({
   }, [builds, query, today]);
 
   return (
-      <>
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <h1 className="heading-2">Dev Builds</h1>
+    <>
+      {/* Header */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-2">
+          <h1 className="heading-2">Dev Builds</h1>
 
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
             Today ({today})
           </span>
-          </div>
-
-          <p className="text-text-muted max-w-[600px]">
-            CI builds from developer pushes today (UTC).
-          </p>
         </div>
 
-        {/* Search */}
-        <div className="mb-6">
-          <div className="card flex items-center gap-3 px-4 py-0">
-            <Search size={18} className="text-text-muted shrink-0" />
+        <p className="text-text-muted max-w-[600px]">
+          CI builds from developer pushes today (UTC).
+        </p>
+      </div>
 
-            <input
-                type="text"
-                placeholder="Search builds..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full h-12 border-none outline-none bg-transparent text-text-primary text-[0.95rem]"
-            />
-          </div>
-        </div>
+      {/* Search */}
+      <div className="mb-6">
+        <div className="card flex items-center gap-3 px-4 py-0">
+          <Search size={18} className="text-text-muted shrink-0" />
 
-        {/* Warning */}
-        <div className="card p-4 md:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
-          <AlertTriangle
-              size={20}
-              className="text-warning shrink-0"
+          <input
+            type="text"
+            placeholder="Search builds..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full h-12 border-none outline-none bg-transparent text-text-primary text-[0.95rem]"
           />
-
-          <div>
-            <span className="font-semibold">Caution:</span> Development builds
-            may be unstable.
-          </div>
         </div>
+      </div>
 
-        {/* Builds */}
-        {filteredBuilds.length === 0 ? (
-            <div className="card p-12 text-center">
-              <Package
-                  size={48}
-                  className="text-text-muted mx-auto mb-4"
+      {/* Warning */}
+      <div className="card p-4 md:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+        <AlertTriangle size={20} className="text-warning shrink-0" />
+
+        <div>
+          <span className="font-semibold">Caution:</span> Development builds may
+          be unstable.
+        </div>
+      </div>
+
+      {/* Builds */}
+      {filteredBuilds.length === 0 ? (
+        <div className="card p-12 text-center">
+          <Package size={48} className="text-text-muted mx-auto mb-4" />
+
+          <p>No matching builds</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-4">
+          {filteredBuilds.map((build: any) => (
+            <Link
+              key={build.id}
+              href={`/plugins/${build.plugin?.slug}/builds`}
+              className="card p-4 md:px-5 flex items-center gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
+            >
+              <div
+                className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`}
               />
 
-              <p>No matching builds</p>
-            </div>
-        ) : (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-4">
-              {filteredBuilds.map((build: any) => (
-                  <Link
-                      key={build.id}
-                      href={`/plugins/${build.plugin?.slug}/builds`}
-                      className="card p-4 md:px-5 flex items-center gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
-                  >
-                    <div className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`} />
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-text-primary truncate">
+                  {build.plugin?.displayName || build.plugin?.name}
+                </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-text-primary truncate">
-                        {build.plugin?.displayName || build.plugin?.name}
-                      </div>
-
-                      <div className="flex gap-3 text-[0.8125rem] text-text-muted">
-                    <span className="flex items-center gap-[3px]">
-                      <User size={12} />
-                      {build.plugin?.author?.username || "unknown"}
-                    </span>
-
-                        <span className="flex items-center gap-[3px]">
-                      <GitBranch size={12} />
-                      {build.branch}
-                    </span>
-
-                        <span>#{build.buildNumber}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-0.5 shrink-0">
-                      <div className="flex items-center gap-2">
-                        <StatusIcon status={build.status} />
-
-                        <span className={`text-[0.8125rem] font-medium ${statusTextClass(build.status)}`}>
-                          {build.status}
-                        </span>
-                      </div>
-
-                      <span className="text-xs text-text-muted">
-                    {timeAgo(build.createdAt)}
+                <div className="flex gap-3 text-[0.8125rem] text-text-muted">
+                  <span className="flex items-center gap-[3px]">
+                    <User size={12} />
+                    {build.plugin?.author?.username || "unknown"}
                   </span>
-                    </div>
-                  </Link>
-              ))}
-            </div>
-        )}
-      </>
+
+                  <span className="flex items-center gap-[3px]">
+                    <GitBranch size={12} />
+                    {build.branch}
+                  </span>
+
+                  <span>#{build.buildNumber}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end gap-0.5 shrink-0">
+                <div className="flex items-center gap-2">
+                  <StatusIcon status={build.status} />
+
+                  <span
+                    className={`text-[0.8125rem] font-medium ${statusTextClass(build.status)}`}
+                  >
+                    {build.status}
+                  </span>
+                </div>
+
+                <span className="text-xs text-text-muted">
+                  {timeAgo(build.createdAt)}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
-

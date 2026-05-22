@@ -16,11 +16,7 @@ export default function PluginDetailLoading() {
                   borderRadius="var(--radius-full)"
                 />
               </div>
-              <Skeleton
-                width="10rem"
-                height="0.875rem"
-                className="mb-2"
-              />
+              <Skeleton width="10rem" height="0.875rem" className="mb-2" />
               <Skeleton width="20rem" height="0.875rem" />
             </div>
           </div>
@@ -42,11 +38,7 @@ export default function PluginDetailLoading() {
       <div className="plugin-layout flex gap-6 flex-wrap">
         <div className="plugin-main-content flex-[1_1_min(400px,100%)] min-w-0 flex flex-col gap-6">
           <SkeletonCard className="p-5">
-            <Skeleton
-              width="10rem"
-              height="1rem"
-              className="mb-3"
-            />
+            <Skeleton width="10rem" height="1rem" className="mb-3" />
             <Skeleton
               width="100%"
               height="2.75rem"
@@ -69,11 +61,7 @@ export default function PluginDetailLoading() {
           </div>
 
           <SkeletonCard className="p-5">
-            <Skeleton
-              width="10rem"
-              height="1rem"
-              className="mb-4"
-            />
+            <Skeleton width="10rem" height="1rem" className="mb-4" />
             <Skeleton
               width="100%"
               height="10rem"
@@ -82,21 +70,13 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
 
           <SkeletonCard className="p-5">
-            <Skeleton
-              width="8rem"
-              height="1rem"
-              className="mb-4"
-            />
+            <Skeleton width="8rem" height="1rem" className="mb-4" />
             <div className="flex flex-col gap-4">
               {Array.from({ length: 3 }, (_, i) => (
                 <div key={i} className="flex gap-3">
                   <Skeleton circle width={32} height={32} />
                   <div className="flex-1">
-                    <Skeleton
-                      width="40%"
-                      height="0.875rem"
-                      className="mb-1"
-                    />
+                    <Skeleton width="40%" height="0.875rem" className="mb-1" />
                     <Skeleton width="100%" height="0.75rem" />
                   </div>
                 </div>
@@ -114,17 +94,10 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
 
           <SkeletonCard className="p-5">
-            <Skeleton
-              width="4rem"
-              height="1rem"
-              className="mb-4"
-            />
+            <Skeleton width="4rem" height="1rem" className="mb-4" />
             <div className="flex flex-col gap-3">
               {Array.from({ length: 4 }, (_, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between"
-                >
+                <div key={i} className="flex justify-between">
                   <Skeleton width="5rem" height="0.875rem" />
                   <Skeleton width="5rem" height="0.875rem" />
                 </div>
@@ -133,24 +106,13 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
 
           <SkeletonCard className="p-5">
-            <Skeleton
-              width="8rem"
-              height="1rem"
-              className="mb-3"
-            />
+            <Skeleton width="8rem" height="1rem" className="mb-3" />
             <div className="flex flex-col gap-3">
               {Array.from({ length: 3 }, (_, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3"
-                >
+                <div key={i} className="flex items-center gap-3">
                   <Skeleton circle width={32} height={32} />
                   <div>
-                    <Skeleton
-                      width="7rem"
-                      height="0.875rem"
-                      className="mb-1"
-                    />
+                    <Skeleton width="7rem" height="0.875rem" className="mb-1" />
                     <Skeleton width="5rem" height="0.625rem" />
                   </div>
                 </div>

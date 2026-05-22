@@ -1,10 +1,4 @@
-import {
-  Shield,
-  BookOpen,
-  Code,
-  FileText,
-  Lock,
-} from "lucide-react";
+import { Shield, BookOpen, Code, FileText, Lock } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -288,9 +282,7 @@ export default function RulesPage() {
         <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 flex items-center justify-center mx-auto mb-5 border border-purple-500/15">
           <Shield size={32} className="text-accent" />
         </div>
-        <h1 className="heading-1 mb-3">
-          Plugin Submission Rules
-        </h1>
+        <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>
         <p className="text-text-secondary max-w-2xl mx-auto text-[17px] leading-relaxed">
           All plugins submitted to the EndGit Marketplace must comply with the
           following rules. Violations may result in rejection during review.
@@ -389,9 +381,7 @@ export default function RulesPage() {
 
       {/* Footer Note */}
       <div className="mt-12 p-6 bg-error/5 rounded-lg border border-error/15 text-center">
-        <p className="font-semibold text-text-primary mb-2">
-          ⚠️ Enforcement
-        </p>
+        <p className="font-semibold text-text-primary mb-2">⚠️ Enforcement</p>
         <p className="text-text-secondary text-sm max-w-xl mx-auto leading-relaxed m-0">
           Violations of these rules may result in the plugin being rejected
           during review. Repeated or severe violations may lead to submission

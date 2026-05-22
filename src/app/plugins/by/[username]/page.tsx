@@ -33,8 +33,7 @@ export default async function AuthorPluginsPage({
     <div className="container py-8">
       <div className="mb-8">
         <h1 className="heading-2 flex items-center gap-2">
-          Plugins by{" "}
-          <span className="text-brand">{username}</span>
+          Plugins by <span className="text-brand">{username}</span>
         </h1>
         <p className="text-text-muted mt-1.5 text-sm">
           Viewing all {realPlugins.length} plugins created by this author.
@@ -61,7 +60,8 @@ export default async function AuthorPluginsPage({
               ? Math.round((plugin.stars / 20) * 10) / 10
               : 0;
             const isFeatured = plugin.isFeatured;
-            const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+            const repoOwner =
+              plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
             const isVerified = repoOwner
               ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
               : false;
@@ -96,7 +96,9 @@ export default async function AuthorPluginsPage({
                       )}
                     </h3>
                     <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
-                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">v{plugin.latestVersion || "1.0.0"}</span>
+                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
+                        v{plugin.latestVersion || "1.0.0"}
+                      </span>
                       <span>•</span>
                       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                         {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||

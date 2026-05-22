@@ -29,9 +29,7 @@ export default function PluginSidebarFilters() {
   return (
     <aside className="sidebar-filters w-[250px] shrink-0 flex flex-col gap-6">
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">
-          Categories
-        </h3>
+        <h3 className="font-semibold mb-3 text-text-primary">Categories</h3>
         <select
           className="input w-full p-2 rounded-sm border border-border bg-surface-secondary text-text-primary cursor-pointer"
           value={currentCategory}
@@ -47,9 +45,7 @@ export default function PluginSidebarFilters() {
       </div>
 
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">
-          Sort By
-        </h3>
+        <h3 className="font-semibold mb-3 text-text-primary">Sort By</h3>
         <ul className="flex flex-col gap-2 p-0 m-0">
           {sortOptions.map((opt) => (
             <li
@@ -68,9 +64,7 @@ export default function PluginSidebarFilters() {
       </div>
 
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">
-          Type
-        </h3>
+        <h3 className="font-semibold mb-3 text-text-primary">Type</h3>
         <ul className="flex flex-col gap-2 p-0 m-0">
           <li className="flex items-center gap-2 text-text-secondary">
             <input

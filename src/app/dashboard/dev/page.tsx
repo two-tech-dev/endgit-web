@@ -365,32 +365,20 @@ export default function DevDashboardPage() {
     return (
       <div className="container py-8">
         <div className="mb-6">
-          <Skeleton
-            width="14rem"
-            height="2rem"
-            className="mb-2"
-          />
+          <Skeleton width="14rem" height="2rem" className="mb-2" />
           <Skeleton width="20rem" height="0.875rem" />
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 mb-6">
           {Array.from({ length: 3 }, (_, i) => (
             <SkeletonCard key={i} className="p-5">
-              <Skeleton
-                width="5rem"
-                height="0.6875rem"
-                className="mb-1.5"
-              />
+              <Skeleton width="5rem" height="0.6875rem" className="mb-1.5" />
               <Skeleton width="3rem" height="1.75rem" />
             </SkeletonCard>
           ))}
         </div>
         <SkeletonCard className="p-4 md:px-5 mb-5">
           <div className="flex items-center gap-3">
-            <Skeleton
-              width={20}
-              height={20}
-              borderRadius="9999px"
-            />
+            <Skeleton width={20} height={20} borderRadius="9999px" />
             <Skeleton width="10rem" height="0.875rem" />
           </div>
         </SkeletonCard>
@@ -401,25 +389,14 @@ export default function DevDashboardPage() {
             borderRadius="10px"
             className="flex-1"
           />
-          <Skeleton
-            width="14rem"
-            height="2.5rem"
-            borderRadius="10px"
-          />
+          <Skeleton width="14rem" height="2.5rem" borderRadius="10px" />
         </div>
         <div className="flex flex-col gap-3">
           {Array.from({ length: 5 }, (_, i) => (
-            <SkeletonCard
-              key={i}
-              className="p-5 border-l-[3px] border-border"
-            >
+            <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
               <div className="flex justify-between items-start">
                 <div className="flex items-start gap-4 flex-1">
-                  <Skeleton
-                    width={40}
-                    height={40}
-                    borderRadius="6px"
-                  />
+                  <Skeleton width={40} height={40} borderRadius="6px" />
                   <div className="flex-1">
                     <div className="flex gap-2 mb-1 flex-wrap">
                       <Skeleton width="8rem" height="0.9375rem" />
@@ -441,11 +418,7 @@ export default function DevDashboardPage() {
                     </div>
                   </div>
                 </div>
-                <Skeleton
-                  width="6rem"
-                  height="2rem"
-                  borderRadius="10px"
-                />
+                <Skeleton width="6rem" height="2rem" borderRadius="10px" />
               </div>
             </SkeletonCard>
           ))}
@@ -475,9 +448,7 @@ export default function DevDashboardPage() {
           <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
-          <h1 className="heading-2 mb-4">
-            Welcome to EndGit!
-          </h1>
+          <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
           <p className="text-text-secondary text-lg leading-relaxed mb-8">
             To enable CI/CD pipelines, you must install the EndGit GitHub App on
             your repositories. The app will automatically detect your Bedrock
@@ -544,7 +515,9 @@ export default function DevDashboardPage() {
             <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
               Weekly Builds
             </div>
-            <div className={`text-lg font-bold ${quota.used >= quota.limit ? "text-error" : "text-text-primary"}`}>
+            <div
+              className={`text-lg font-bold ${quota.used >= quota.limit ? "text-error" : "text-text-primary"}`}
+            >
               {quota.used}/{quota.limit}
             </div>
           </div>
@@ -585,18 +558,10 @@ export default function DevDashboardPage() {
         <SkeletonCard className="p-5 mb-5">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <Skeleton
-                width="5rem"
-                height="0.6875rem"
-                className="mb-1"
-              />
+              <Skeleton width="5rem" height="0.6875rem" className="mb-1" />
               <Skeleton width="10rem" height="0.875rem" />
             </div>
-            <Skeleton
-              width="4rem"
-              height="2rem"
-              borderRadius="10px"
-            />
+            <Skeleton width="4rem" height="2rem" borderRadius="10px" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {Array.from({ length: 3 }, (_, i) => (
@@ -644,7 +609,9 @@ export default function DevDashboardPage() {
                   <button
                     onClick={() => handleOrgChange(null)}
                     className={`flex items-center gap-3 w-full py-3 px-4 border-none text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
-                      selectedOrg === null ? "bg-surface-secondary" : "bg-transparent"
+                      selectedOrg === null
+                        ? "bg-surface-secondary"
+                        : "bg-transparent"
                     }`}
                   >
                     <Building2 size={18} className="text-text-muted" />
@@ -655,7 +622,9 @@ export default function DevDashboardPage() {
                       key={org.id}
                       onClick={() => handleOrgChange(org.login)}
                       className={`flex items-center gap-3 w-full py-3 px-4 border-none border-t border-border text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
-                        selectedOrg === org.login ? "bg-surface-secondary" : "bg-transparent"
+                        selectedOrg === org.login
+                          ? "bg-surface-secondary"
+                          : "bg-transparent"
                       }`}
                     >
                       <Image
@@ -759,17 +728,10 @@ export default function DevDashboardPage() {
       {loading && (
         <div className="flex flex-col gap-3">
           {Array.from({ length: 5 }, (_, i) => (
-            <SkeletonCard
-              key={i}
-              className="p-5 border-l-[3px] border-border"
-            >
+            <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
               <div className="flex justify-between items-start">
                 <div className="flex items-start gap-4 flex-1">
-                  <Skeleton
-                    width={40}
-                    height={40}
-                    borderRadius="6px"
-                  />
+                  <Skeleton width={40} height={40} borderRadius="6px" />
                   <div className="flex-1">
                     <div className="flex gap-2 mb-1 flex-wrap">
                       <Skeleton width="8rem" height="0.9375rem" />
@@ -796,11 +758,7 @@ export default function DevDashboardPage() {
                     </div>
                   </div>
                 </div>
-                <Skeleton
-                  width="6rem"
-                  height="2rem"
-                  borderRadius="10px"
-                />
+                <Skeleton width="6rem" height="2rem" borderRadius="10px" />
               </div>
             </SkeletonCard>
           ))}
@@ -809,9 +767,7 @@ export default function DevDashboardPage() {
 
       {error && (
         <div className="card p-6 text-center border-l-4 border-error">
-          <p className="text-error font-semibold">
-            {error}
-          </p>
+          <p className="text-error font-semibold">{error}</p>
           <p className="text-text-muted text-sm mt-2">
             Make sure the API server is running and you are signed in with
             GitHub OAuth.
@@ -840,7 +796,10 @@ export default function DevDashboardPage() {
                         border: `1px solid ${langColor(repo.language)}30`,
                       }}
                     >
-                      <Code size={18} style={{ color: langColor(repo.language) }} />
+                      <Code
+                        size={18}
+                        style={{ color: langColor(repo.language) }}
+                      />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -912,7 +871,9 @@ export default function DevDashboardPage() {
                       onClick={() => toggleCI(repo)}
                       disabled={toggling === repo.id}
                       className={`flex items-center gap-1.5 py-1.5 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
-                        toggling === repo.id ? "cursor-wait opacity-50" : "cursor-pointer"
+                        toggling === repo.id
+                          ? "cursor-wait opacity-50"
+                          : "cursor-pointer"
                       } ${
                         repo.ciEnabled
                           ? "bg-error/8 text-error"

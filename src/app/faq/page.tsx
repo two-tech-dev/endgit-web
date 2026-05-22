@@ -19,10 +19,10 @@ const FAQ_ITEMS: FAQItemType[] = [
     a: (
       <p>
         EndGit is a modern CI/CD platform and plugin marketplace for the{" "}
-        <strong className="text-text-primary">Endstone</strong> ecosystem. It automates building, reviewing,
-        and distributing C++ and Python plugins for Bedrock Dedicated Servers.
-        Think of it as a replacement for Poggit, built with GitHub-native
-        workflows.
+        <strong className="text-text-primary">Endstone</strong> ecosystem. It
+        automates building, reviewing, and distributing C++ and Python plugins
+        for Bedrock Dedicated Servers. Think of it as a replacement for Poggit,
+        built with GitHub-native workflows.
       </p>
     ),
   },
@@ -34,22 +34,30 @@ const FAQ_ITEMS: FAQItemType[] = [
         <p>Publishing a plugin is fully automated via GitHub integration:</p>
         <ol className="flex flex-col gap-2 list-decimal pl-5">
           <li>
-            Install the <strong className="text-text-primary">EndGit GitHub App</strong> on your repository.
+            Install the{" "}
+            <strong className="text-text-primary">EndGit GitHub App</strong> on
+            your repository.
           </li>
           <li>
-            Enable CI for your repo in the <strong className="text-text-primary">Dev Dashboard</strong>.
+            Enable CI for your repo in the{" "}
+            <strong className="text-text-primary">Dev Dashboard</strong>.
           </li>
           <li>
-            Push code to GitHub — our runner pipelines will automatically build your plugin.
+            Push code to GitHub — our runner pipelines will automatically build
+            your plugin.
           </li>
           <li>
-            Once the build succeeds, click <strong className="text-text-primary">"Submit for Review"</strong> on the build detail page.
+            Once the build succeeds, click{" "}
+            <strong className="text-text-primary">"Submit for Review"</strong>{" "}
+            on the build detail page.
           </li>
           <li>
-            Fill out the submission form with your metadata, categories, and license.
+            Fill out the submission form with your metadata, categories, and
+            license.
           </li>
           <li>
-            A repository reviewer will verify it against the rules and approve it.
+            A repository reviewer will verify it against the rules and approve
+            it.
           </li>
         </ol>
       </div>
@@ -60,9 +68,12 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "publishing",
     a: (
       <p>
-        When you push code to a GitHub repository with CI enabled, EndGit receives a
-        webhook notification. It queues a runner build job that compiles your C++
-        code (using CMake) or packages your Python plugin. Build artifacts (<code>.whl</code> for Python, <code>.dll</code>/<code>.so</code> for C++) are stored and available for download immediately as development builds.
+        When you push code to a GitHub repository with CI enabled, EndGit
+        receives a webhook notification. It queues a runner build job that
+        compiles your C++ code (using CMake) or packages your Python plugin.
+        Build artifacts (<code>.whl</code> for Python, <code>.dll</code>/
+        <code>.so</code> for C++) are stored and available for download
+        immediately as development builds.
       </p>
     ),
   },
@@ -71,8 +82,10 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "publishing",
     a: (
       <p>
-        Each user starts with a weekly build quota (default: 50 builds/week) to manage
-        shared compute resources. The quota resets every 7 days. You can track your usage in the Dev Dashboard. If you require more resources, feel free to open a ticket or contact an admin to request an extension.
+        Each user starts with a weekly build quota (default: 50 builds/week) to
+        manage shared compute resources. The quota resets every 7 days. You can
+        track your usage in the Dev Dashboard. If you require more resources,
+        feel free to open a ticket or contact an admin to request an extension.
       </p>
     ),
   },
@@ -81,7 +94,11 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "publishing",
     a: (
       <p>
-        Go to the Dev Dashboard and click <strong className="text-text-primary">"Install GitHub App"</strong>. You will be redirected to GitHub where you can grant access to select repositories. The app only requests read access to repository contents and write access to commit status checks.
+        Go to the Dev Dashboard and click{" "}
+        <strong className="text-text-primary">"Install GitHub App"</strong>. You
+        will be redirected to GitHub where you can grant access to select
+        repositories. The app only requests read access to repository contents
+        and write access to commit status checks.
       </p>
     ),
   },
@@ -90,7 +107,18 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "publishing",
     a: (
       <p>
-        All marketplace listings must comply with our submission standards. Key guidelines include: plugins must be purposeful, code cannot be obfuscated, documentation and descriptions must be in English, and a recognized open source license must be present. Read the complete checklist at our <Link href="/rules" className="text-accent hover:underline font-semibold">Rules Page</Link>.
+        All marketplace listings must comply with our submission standards. Key
+        guidelines include: plugins must be purposeful, code cannot be
+        obfuscated, documentation and descriptions must be in English, and a
+        recognized open source license must be present. Read the complete
+        checklist at our{" "}
+        <Link
+          href="/rules"
+          className="text-accent hover:underline font-semibold"
+        >
+          Rules Page
+        </Link>
+        .
       </p>
     ),
   },
@@ -101,23 +129,36 @@ const FAQ_ITEMS: FAQItemType[] = [
       <div className="flex flex-col gap-3">
         <p>Install the CLI utility with the following setup commands:</p>
         <div>
-          <div className="text-xs font-semibold text-text-primary mb-1">Windows (PowerShell):</div>
+          <div className="text-xs font-semibold text-text-primary mb-1">
+            Windows (PowerShell):
+          </div>
           <pre className="p-3 bg-surface-secondary border border-border rounded-md font-mono text-xs overflow-x-auto text-brand">
             irm https://endgit.dev/installer.ps1 | iex
           </pre>
         </div>
         <div>
-          <div className="text-xs font-semibold text-text-primary mb-1">Linux / macOS (Bash):</div>
+          <div className="text-xs font-semibold text-text-primary mb-1">
+            Linux / macOS (Bash):
+          </div>
           <pre className="p-3 bg-surface-secondary border border-border rounded-md font-mono text-xs overflow-x-auto text-brand">
             curl -sSL https://endgit.dev/installer.sh | bash
           </pre>
         </div>
         <p className="mt-2">Common cli commands available:</p>
         <ul className="flex flex-col gap-1 list-disc pl-5">
-          <li><code>endgit install &lt;plugin&gt;</code> — Download and install a plugin</li>
-          <li><code>endgit search &lt;query&gt;</code> — Search the directory</li>
-          <li><code>endgit list</code> — List currently installed plugins</li>
-          <li><code>endgit update</code> — Update all packages on your server</li>
+          <li>
+            <code>endgit install &lt;plugin&gt;</code> — Download and install a
+            plugin
+          </li>
+          <li>
+            <code>endgit search &lt;query&gt;</code> — Search the directory
+          </li>
+          <li>
+            <code>endgit list</code> — List currently installed plugins
+          </li>
+          <li>
+            <code>endgit update</code> — Update all packages on your server
+          </li>
         </ul>
       </div>
     ),
@@ -127,16 +168,24 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "general",
     a: (
       <div className="flex flex-col gap-2">
-        <p>EndGit offers native support for two Endstone plugin architectures:</p>
+        <p>
+          EndGit offers native support for two Endstone plugin architectures:
+        </p>
         <ul className="flex flex-col gap-1.5 list-disc pl-5">
           <li>
-            <strong>Python plugins</strong> — Packaged as <code>.whl</code> wheels and built using standard pip packaging.
+            <strong>Python plugins</strong> — Packaged as <code>.whl</code>{" "}
+            wheels and built using standard pip packaging.
           </li>
           <li>
-            <strong>C++ plugins</strong> — Compiled natively using CMake for ultimate performance, generating Windows <code>.dll</code> and Linux <code>.so</code> binaries.
+            <strong>C++ plugins</strong> — Compiled natively using CMake for
+            ultimate performance, generating Windows <code>.dll</code> and Linux{" "}
+            <code>.so</code> binaries.
           </li>
         </ul>
-        <p className="mt-1">Both models have first-class marketplace representation and automated CI runners.</p>
+        <p className="mt-1">
+          Both models have first-class marketplace representation and automated
+          CI runners.
+        </p>
       </div>
     ),
   },
@@ -145,7 +194,9 @@ const FAQ_ITEMS: FAQItemType[] = [
     category: "general",
     a: (
       <p>
-        Yes, EndGit is completely free. We do not charge developers for build minutes, hosting, or hosting resources. All marketplace packages are open source and freely downloadable for server administrators.
+        Yes, EndGit is completely free. We do not charge developers for build
+        minutes, hosting, or hosting resources. All marketplace packages are
+        open source and freely downloadable for server administrators.
       </p>
     ),
   },
@@ -157,17 +208,30 @@ const FAQ_ITEMS: FAQItemType[] = [
         <p>Get in touch or join community discussion on our chat servers:</p>
         <ul className="flex flex-col gap-1.5 list-disc pl-5">
           <li>
-            <a href="https://discord.gg/TcY9vxx9fE" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-semibold">
+            <a
+              href="https://discord.gg/TcY9vxx9fE"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:underline font-semibold"
+            >
               Discord: 2Tech Studio Support
             </a>
           </li>
           <li>
-            <a href="https://discord.gg/JPNrk7Bgeb" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-semibold">
+            <a
+              href="https://discord.gg/JPNrk7Bgeb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent hover:underline font-semibold"
+            >
               Discord: Endstone Official
             </a>
           </li>
         </ul>
-        <p className="mt-1">For software issues, pull requests, and features, visit our GitHub repositories.</p>
+        <p className="mt-1">
+          For software issues, pull requests, and features, visit our GitHub
+          repositories.
+        </p>
       </div>
     ),
   },
@@ -184,7 +248,9 @@ function FAQItem({ item }: { item: FAQItemType }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={`card overflow-hidden transition-all duration-200 ${open ? "border-brand/40 bg-surface-secondary/40 shadow-sm" : ""}`}>
+    <div
+      className={`card overflow-hidden transition-all duration-200 ${open ? "border-brand/40 bg-surface-secondary/40 shadow-sm" : ""}`}
+    >
       <button
         onClick={() => setOpen(!open)}
         className="w-full p-5 flex justify-between items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
@@ -194,7 +260,11 @@ function FAQItem({ item }: { item: FAQItemType }) {
             {item.q}
           </span>
           <span className="text-[10px] uppercase font-bold tracking-wider text-text-muted px-2 py-0.5 rounded bg-surface-secondary border border-border w-fit">
-            {item.category === "cli" ? "CLI & Setup" : item.category === "publishing" ? "CI & Publishing" : item.category}
+            {item.category === "cli"
+              ? "CLI & Setup"
+              : item.category === "publishing"
+                ? "CI & Publishing"
+                : item.category}
           </span>
         </div>
         <div
@@ -241,9 +311,7 @@ export default function FAQPage() {
           <div className="w-14 h-14 rounded-lg bg-cyan-500/10 flex items-center justify-center mx-auto mb-4 border border-cyan-500/15">
             <HelpCircle size={28} className="text-accent" />
           </div>
-          <h1 className="heading-1 mb-2">
-            Frequently Asked Questions
-          </h1>
+          <h1 className="heading-1 mb-2">Frequently Asked Questions</h1>
           <p className="text-text-secondary text-[17px]">
             Find answers to commonly asked questions about EndGit.
           </p>
@@ -287,20 +355,21 @@ export default function FAQPage() {
       {filteredItems.length === 0 ? (
         <FadeIn delay={0.2}>
           <div className="card p-8 text-center mt-6">
-            <Search size={32} className="text-text-muted mx-auto mb-3 opacity-50" />
+            <Search
+              size={32}
+              className="text-text-muted mx-auto mb-3 opacity-50"
+            />
             <h3 className="text-base font-semibold text-text-primary">
               No matching questions found
             </h3>
             <p className="text-text-muted mt-1 text-sm">
-              Try searching for something else, or select another category tab above.
+              Try searching for something else, or select another category tab
+              above.
             </p>
           </div>
         </FadeIn>
       ) : (
-        <StaggerContainer
-          staggerDelay={0.04}
-          className="flex flex-col gap-3"
-        >
+        <StaggerContainer staggerDelay={0.04} className="flex flex-col gap-3">
           {filteredItems.map((item) => (
             <StaggerItem key={item.q}>
               <FAQItem item={item} />
@@ -316,7 +385,8 @@ export default function FAQPage() {
             Still have questions?
           </p>
           <p className="text-text-muted text-sm mb-4">
-            Join our active Discord communities for direct developer help and server support.
+            Join our active Discord communities for direct developer help and
+            server support.
           </p>
           <a
             href="https://discord.gg/9eZhP9y26Q"

@@ -65,15 +65,10 @@ export default function DependencyGraph({ slug }: { slug: string }) {
 
       {loading ? (
         <div className="text-center py-4">
-          <Loader2
-            size={20}
-            className="text-text-muted animate-spin mx-auto"
-          />
+          <Loader2 size={20} className="text-text-muted animate-spin mx-auto" />
         </div>
       ) : error ? (
-        <p className="text-text-muted text-sm">
-          {error}
-        </p>
+        <p className="text-text-muted text-sm">{error}</p>
       ) : (
         <div className="font-mono text-[0.8125rem]">
           {deps.map((dep, i) => (
@@ -102,7 +97,9 @@ function TreeNode({
       <div
         onClick={() => hasChildren && setOpen(!open)}
         className={`flex items-center gap-1.5 px-2 py-1 rounded-sm ${
-          hasChildren ? "cursor-pointer hover:bg-surface-secondary" : "cursor-default"
+          hasChildren
+            ? "cursor-pointer hover:bg-surface-secondary"
+            : "cursor-default"
         } transition-colors duration-100 mb-[2px]`}
       >
         {hasChildren ? (
@@ -127,13 +124,15 @@ function TreeNode({
           }
         />
         <span
-          className={isRoot ? "text-accent font-semibold" : "text-text-primary font-normal"}
+          className={
+            isRoot
+              ? "text-accent font-semibold"
+              : "text-text-primary font-normal"
+          }
         >
           {node.name}
         </span>
-        <span className="text-text-muted text-xs">
-          {node.version}
-        </span>
+        <span className="text-text-muted text-xs">{node.version}</span>
         {!node.required ? (
           <span className="text-xs text-text-muted bg-surface-secondary px-1 py-0 rounded border border-border">
             optional

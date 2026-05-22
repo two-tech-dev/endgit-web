@@ -3,11 +3,7 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 export default function BuildDetailLoading() {
   return (
     <div className="container pt-8 pb-16 max-w-[960px] mx-auto px-4">
-      <Skeleton
-        width="10rem"
-        height="0.875rem"
-        className="mb-6"
-      />
+      <Skeleton width="10rem" height="0.875rem" className="mb-6" />
 
       <SkeletonCard className="p-6 mb-6">
         <div className="flex justify-between items-start flex-wrap gap-4">
@@ -32,11 +28,7 @@ export default function BuildDetailLoading() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-5 pt-5 border-t border-border">
           {Array.from({ length: 4 }, (_, i) => (
             <div key={i}>
-              <Skeleton
-                width="4rem"
-                height="0.625rem"
-                className="mb-1.5"
-              />
+              <Skeleton width="4rem" height="0.625rem" className="mb-1.5" />
               <Skeleton width="6rem" height="0.875rem" />
             </div>
           ))}

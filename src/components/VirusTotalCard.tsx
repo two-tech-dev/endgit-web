@@ -62,15 +62,10 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
           <Shield size={18} color={statusColor} /> VirusTotal Scan
         </h3>
         {!vt.status && (
-          <span className="text-xs text-text-muted font-normal">
-            Pending
-          </span>
+          <span className="text-xs text-text-muted font-normal">Pending</span>
         )}
         {(vt.status === "queued" || vt.status === "scanning") && (
-          <Loader2
-            size={16}
-            className="text-warning animate-spin"
-          />
+          <Loader2 size={16} className="text-warning animate-spin" />
         )}
       </div>
 
@@ -91,7 +86,9 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
           {formattedDate && (
             <div className="flex justify-between text-sm">
               <span className="text-text-muted">Scanned</span>
-              <span className="font-medium text-text-primary">{formattedDate}</span>
+              <span className="font-medium text-text-primary">
+                {formattedDate}
+              </span>
             </div>
           )}
           {vt.permalink && (
@@ -109,10 +106,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
 
       {(vt.status === "queued" || vt.status === "scanning") && (
         <p className="text-[0.8125rem] text-warning flex items-center gap-1.5">
-          <Loader2
-            size={14}
-            className="animate-spin shrink-0"
-          />
+          <Loader2 size={14} className="animate-spin shrink-0" />
           Scan in progress — this may take a few minutes.
         </p>
       )}

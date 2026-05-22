@@ -113,10 +113,7 @@ export function BuildsTableClient({
       <div className="card p-6">
         {builds.length === 0 ? (
           <div className="text-center p-8 text-text-muted">
-            <GitBranch
-              size={32}
-              className="mx-auto mb-4 opacity-50"
-            />
+            <GitBranch size={32} className="mx-auto mb-4 opacity-50" />
             <p className="font-medium text-text-primary">No builds found.</p>
             <p className="text-sm mt-1 text-text-muted">
               Push to your repository to trigger the first build.
@@ -170,9 +167,7 @@ export function BuildsTableClient({
                           </span>
                         )}
                         {build.triggerType === "WEBHOOK" && (
-                          <span className="badge text-xs w-fit mt-1">
-                            AUTO
-                          </span>
+                          <span className="badge text-xs w-fit mt-1">AUTO</span>
                         )}
                       </div>
                     </td>
@@ -187,21 +182,13 @@ export function BuildsTableClient({
                     </td>
                     <td className="p-4 border-r border-border align-top">
                       {build.status === "SUCCESS" ? (
-                        <span className="text-success font-medium">
-                          OK
-                        </span>
+                        <span className="text-success font-medium">OK</span>
                       ) : build.status === "FAILED" ? (
-                        <span className="text-error font-medium">
-                          Failed
-                        </span>
+                        <span className="text-error font-medium">Failed</span>
                       ) : build.status === "RUNNING" ? (
-                        <span className="text-brand font-medium">
-                          Running
-                        </span>
+                        <span className="text-brand font-medium">Running</span>
                       ) : (
-                        <span className="text-text-muted">
-                          Queued
-                        </span>
+                        <span className="text-text-muted">Queued</span>
                       )}
                     </td>
                     <td className="p-4 border-r border-border align-top">
@@ -279,10 +266,7 @@ export function BuildsTableClient({
 
             {isLoading && (
               <div className="flex justify-center p-4">
-                <Loader2
-                  size={20}
-                  className="animate-spin text-brand"
-                />
+                <Loader2 size={20} className="animate-spin text-brand" />
               </div>
             )}
 

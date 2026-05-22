@@ -4,11 +4,7 @@ export default function BuildsLoading() {
   return (
     <div className="container pt-10 pb-16 mx-auto px-4">
       <div className="mb-8">
-        <Skeleton
-          width="10rem"
-          height="2rem"
-          className="mb-2"
-        />
+        <Skeleton width="10rem" height="2rem" className="mb-2" />
         <Skeleton width="16rem" height="0.875rem" />
       </div>
 
@@ -22,16 +18,8 @@ export default function BuildsLoading() {
               }`}
             >
               <div className="flex-1">
-                <Skeleton
-                  width="60%"
-                  height="0.875rem"
-                  className="mb-1"
-                />
-                <Skeleton
-                  width="30%"
-                  height="0.75rem"
-                  className="mb-1"
-                />
+                <Skeleton width="60%" height="0.875rem" className="mb-1" />
+                <Skeleton width="30%" height="0.75rem" className="mb-1" />
                 <Skeleton width="40%" height="0.75rem" />
               </div>
               <Skeleton width="5rem" height="0.875rem" />

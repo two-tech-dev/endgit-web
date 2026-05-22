@@ -111,7 +111,9 @@ function TerminalMock() {
 
           {OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
             <div key={i}>
-              <span className={line.success ? "text-[#a6e3a1]" : "text-[#89dceb]"}>
+              <span
+                className={line.success ? "text-[#a6e3a1]" : "text-[#89dceb]"}
+              >
                 {line.text}
               </span>
             </div>
@@ -322,10 +324,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
         {/* Smaller feature cards */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {FEATURES.map((f, i) => (
-            <StaggerItem
-              key={i}
-              className="card p-6 flex flex-col gap-3"
-            >
+            <StaggerItem key={i} className="card p-6 flex flex-col gap-3">
               <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand">
                 {f.icon}
               </div>

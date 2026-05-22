@@ -112,10 +112,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="container mt-8 pt-6 border-t border-border flex justify-between items-center flex-wrap gap-2">
-        <p
-          className="text-text-muted text-xs m-0"
-          suppressHydrationWarning
-        >
+        <p className="text-text-muted text-xs m-0" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
           {process.env.VERCEL_GIT_COMMIT_SHA && (
             <span className="ml-2 opacity-70 font-mono text-[11px]">
