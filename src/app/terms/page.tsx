@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <div className="container max-w-3xl py-12 md:py-20">
+    <div className="container py-12 md:py-20">
       <h1 className="heading-1 mb-8 text-text-primary">
         TERMS OF WEBSITE USE FOR ENDGIT
       </h1>
