@@ -8,7 +8,6 @@ import {
   Terminal,
   Activity,
   Copy,
-  Shield,
   Zap,
   Pencil,
   FlaskConical,
@@ -149,14 +148,6 @@ export default async function PluginDetailPage({
   const plugin = await getPlugin(params.slug);
 
   if (!plugin) return notFound();
-
-  const safeScore = plugin.trustScore || 0;
-  const scoreClass =
-    safeScore >= 90
-      ? "var(--status-success)"
-      : safeScore >= 60
-        ? "var(--status-warning)"
-        : "var(--status-error)";
 
   const isAuthor = session?.user?.id === plugin.authorId;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
@@ -718,58 +709,6 @@ export default async function PluginDetailPage({
             gap: "var(--space-6)",
           }}
         >
-          {/* Safe Score Card */}
-          <div
-            className="card"
-            style={{
-              padding: "var(--space-5)",
-              background: "var(--bg-secondary)",
-              borderColor: "var(--border-highlight)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: "var(--space-4)",
-              }}
-            >
-              <h3
-                style={{
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-2)",
-                }}
-              >
-                <Shield size={18} color={scoreClass} /> Safe Score
-              </h3>
-              <div
-                style={{
-                  background: "var(--bg-card)",
-                  border: `2px solid ${scoreClass}`,
-                  color: scoreClass,
-                  fontWeight: 700,
-                  fontSize: "1.25rem",
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: `0 0 15px rgba(16, 185, 129, 0.1)`,
-                }}
-              >
-                {safeScore.toLocaleString()}
-              </div>
-            </div>
-
-            <p style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-              Based on automated CI tests and static analysis.
-            </p>
-          </div>
-
           {/* VirusTotal Scan */}
           <VirusTotalCard version={activeVersion} />
 

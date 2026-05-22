@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Terminal, CheckCircle, XCircle, Shield, Clock } from "lucide-react";
+import { Terminal, CheckCircle, XCircle, Clock } from "lucide-react";
 
 const INITIAL_LINE_LIMIT = 500;
 
@@ -18,7 +18,6 @@ export default function LiveBuildLog({
 }: Props) {
   const [logs, setLogs] = useState(initialLogs || "");
   const [status, setStatus] = useState(initialStatus || "RUNNING");
-  const [safeScore, setSafeScore] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
   const [autoScroll, setAutoScroll] = useState(true);
@@ -39,7 +38,6 @@ export default function LiveBuildLog({
         setLogs((prev) => prev + data.content);
       } else if (data.type === "finish") {
         setStatus(data.status);
-        setSafeScore(data.safeScore);
         setDuration(data.duration);
         eventSource.close();
       } else if (data.type === "error") {
@@ -95,7 +93,7 @@ export default function LiveBuildLog({
       fontWeight = "600";
     } else if (line.includes("->"))
       color = "#94a3b8"; // muted slate-400 for sub-steps
-    else if (line.includes("Safe Score") || line.includes("Security Scan"))
+    else if (line.includes("Security Scan"))
       color = "#c084fc"; // purple for security
 
     return (
@@ -204,19 +202,6 @@ export default function LiveBuildLog({
             fontSize: "0.8125rem",
           }}
         >
-          {safeScore !== null && (
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                color: safeScore >= 80 ? "#10b981" : "#f59e0b",
-                fontWeight: 500,
-              }}
-            >
-              <Shield size={14} /> {safeScore}/100
-            </span>
-          )}
           {duration !== null && (
             <span
               style={{

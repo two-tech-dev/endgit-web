@@ -455,35 +455,6 @@ ol {
   letter-spacing: normal;
 }
 
-.safe-score {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.875rem;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-full);
-}
-
-.safe-score-high {
-  background: rgba(16, 185, 129, 0.1);
-  color: var(--status-success);
-  border: 2px solid var(--status-success);
-}
-
-.safe-score-med {
-  background: rgba(245, 158, 11, 0.1);
-  color: var(--status-warning);
-  border: 2px solid var(--status-warning);
-}
-
-.safe-score-low {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--status-error);
-  border: 2px solid var(--status-error);
-}
-
 /* Forms */
 .input {
   width: 100%;
