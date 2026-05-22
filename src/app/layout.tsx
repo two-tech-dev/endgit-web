@@ -96,9 +96,8 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <AuthProvider>
           <div className="relative flex min-h-screen flex-col overflow-x-hidden">
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,oklch(0.95_0.08_185)_0%,transparent_35%),radial-gradient(circle_at_85%_0%,oklch(0.93_0.12_85)_0%,transparent_30%),linear-gradient(to_bottom,oklch(0.99_0_0),oklch(0.97_0.01_180))] dark:bg-[radial-gradient(circle_at_15%_20%,oklch(0.32_0.08_185)_0%,transparent_35%),radial-gradient(circle_at_85%_0%,oklch(0.34_0.1_85)_0%,transparent_30%),linear-gradient(to_bottom,oklch(0.16_0_0),oklch(0.12_0.01_180))]" />
             <Navbar />
-            <main className="flex-1 pt-14 sm:pt-16">{children}</main>
+            <main className="flex-1 pt-16 sm:pt-20">{children}</main>
             <Footer />
           </div>
         </AuthProvider>

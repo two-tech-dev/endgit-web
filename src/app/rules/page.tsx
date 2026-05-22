@@ -7,6 +7,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Submission Rules - EndGit",
@@ -327,92 +328,37 @@ export default function RulesPage() {
   );
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
+    <div className="mx-auto w-full max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       {/* Hero Header */}
-      <div style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "var(--radius-lg)",
-            background:
-              "linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.15))",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto var(--space-5)",
-            border: "1px solid rgba(124,58,237,0.2)",
-          }}
-        >
-          <Shield size={32} color="var(--accent-primary)" />
-        </div>
-        <h1 className="heading-1" style={{ marginBottom: "var(--space-3)" }}>
+      <div className="mb-12 text-center">
+        <h1 className="mb-3 text-2xl font-bold tracking-tight sm:text-3xl">
           Plugin Submission Rules
         </h1>
-        <p
-          className="text-muted"
-          style={{
-            maxWidth: "640px",
-            margin: "0 auto",
-            fontSize: "1.0625rem",
-            lineHeight: 1.7,
-          }}
-        >
+        <p className="mx-auto max-w-[640px] text-[1.0625rem]/7 text-muted-foreground">
           All plugins submitted to the EndGit Marketplace must comply with the
           following rules. Violations may result in rejection during review.
         </p>
       </div>
 
       {/* Quick Navigation */}
-      <div
-        className="card"
-        style={{
-          padding: "var(--space-5) var(--space-6)",
-          marginBottom: "var(--space-10)",
-          display: "flex",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "var(--space-3)",
-        }}
-      >
-        <span
-          style={{
-            fontWeight: 600,
-            fontSize: "0.875rem",
-            color: "var(--text-muted)",
-            marginRight: "var(--space-2)",
-          }}
-        >
+      <div className="mb-10 flex flex-wrap items-center gap-3 rounded-2xl border border-border/70 bg-card/80 px-6 py-5">
+        <span className="mr-2 text-sm font-semibold text-muted-foreground">
           Jump to:
         </span>
         {RULE_CATEGORIES.map((cat) => (
           <a
             key={cat.id}
             href={`#${cat.id}`}
+            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.8125rem] font-semibold no-underline transition-all duration-150"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "0.375rem 0.75rem",
-              borderRadius: "var(--radius-full)",
               background: `${cat.color}10`,
               color: cat.color,
-              fontSize: "0.8125rem",
-              fontWeight: 600,
-              textDecoration: "none",
-              border: `1px solid ${cat.color}25`,
-              transition: "all 150ms",
+              borderColor: `${cat.color}25`,
             }}
           >
             <CategoryIcon icon={cat.icon} color={cat.color} />
             {cat.label}
-            <span style={{ opacity: 0.6, fontSize: "0.75rem" }}>
+            <span className="text-xs opacity-60">
               ({cat.rules.length})
             </span>
           </a>
@@ -420,132 +366,61 @@ export default function RulesPage() {
       </div>
 
       {/* Rule Categories */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-10)",
-        }}
-      >
+      <div className="flex flex-col gap-10">
         {RULE_CATEGORIES.map((cat) => (
           <section key={cat.id} id={cat.id}>
             {/* Category Header */}
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-3)",
-                marginBottom: "var(--space-5)",
-                paddingBottom: "var(--space-3)",
-                borderBottom: `2px solid ${cat.color}30`,
-              }}
+              className="mb-5 flex items-center gap-3 pb-3"
+              style={{ borderBottom: `2px solid ${cat.color}30` }}
             >
               <div
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "var(--radius-md)",
-                  background: `${cat.color}15`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="flex h-9 w-9 items-center justify-center rounded-md"
+                style={{ background: `${cat.color}15` }}
               >
                 <CategoryIcon icon={cat.icon} color={cat.color} />
               </div>
               <div>
-                <h2
-                  className="heading-3"
-                  style={{
-                    margin: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                  }}
-                >
+                <h2 className="m-0 flex items-center gap-2 text-lg font-semibold">
                   <span
-                    style={{
-                      color: cat.color,
-                      fontFamily: "var(--font-mono, monospace)",
-                      fontSize: "0.875rem",
-                    }}
+                    className="font-mono text-sm"
+                    style={{ color: cat.color }}
                   >
                     {cat.prefix}
                   </span>
                   {cat.label}
                 </h2>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: "0.8125rem",
-                    color: "var(--text-muted)",
-                  }}
-                >
+                <p className="m-0 text-[0.8125rem] text-muted-foreground">
                   {cat.description}
                 </p>
               </div>
             </div>
 
             {/* Rules List */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
-            >
+            <div className="flex flex-col gap-3">
               {cat.rules.map((rule) => (
                 <div
                   key={rule.id}
-                  className="card"
-                  style={{
-                    padding: "var(--space-4) var(--space-5)",
-                    borderLeft: `3px solid ${cat.color}60`,
-                    transition: "all 200ms",
-                  }}
+                  className="rounded-2xl border border-border/70 bg-card/80 px-5 py-4 transition-all duration-200"
+                  style={{ borderLeft: `3px solid ${cat.color}60` }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "var(--space-3)",
-                    }}
-                  >
-                    <span
+                  <div className="flex items-start gap-3">
+                    <Badge
+                      variant="outline"
+                      className="mt-0.5 shrink-0 font-mono text-[0.75rem] font-bold"
                       style={{
-                        fontFamily: "var(--font-mono, monospace)",
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        padding: "2px 8px",
-                        borderRadius: "var(--radius-sm)",
                         background: `${cat.color}12`,
                         color: cat.color,
-                        whiteSpace: "nowrap",
-                        flexShrink: 0,
-                        marginTop: "2px",
+                        borderColor: `${cat.color}25`,
                       }}
                     >
                       {rule.id}
-                    </span>
-                    <div style={{ flex: 1 }}>
-                      <h3
-                        style={{
-                          margin: "0 0 4px 0",
-                          fontSize: "0.9375rem",
-                          fontWeight: 600,
-                          color: "var(--text-primary)",
-                        }}
-                      >
+                    </Badge>
+                    <div className="flex-1">
+                      <h3 className="mb-1 text-[0.9375rem] font-semibold text-foreground">
                         {rule.title}
                       </h3>
-                      <p
-                        style={{
-                          margin: 0,
-                          fontSize: "0.875rem",
-                          color: "var(--text-secondary)",
-                          lineHeight: 1.65,
-                        }}
-                      >
+                      <p className="m-0 text-sm/relaxed text-foreground">
                         {rule.text}
                       </p>
                     </div>
@@ -558,36 +433,11 @@ export default function RulesPage() {
       </div>
 
       {/* Footer Note */}
-      <div
-        style={{
-          marginTop: "var(--space-12)",
-          padding: "var(--space-6)",
-          background: "rgba(239, 68, 68, 0.04)",
-          borderRadius: "var(--radius-lg)",
-          border: "1px solid rgba(239, 68, 68, 0.15)",
-          textAlign: "center",
-        }}
-      >
-        <p
-          style={{
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginBottom: "var(--space-2)",
-          }}
-        >
+      <div className="mt-12 rounded-2xl border border-destructive/20 bg-destructive/5 p-6 text-center">
+        <p className="mb-2 font-semibold text-foreground">
           ⚠️ Enforcement
         </p>
-        <p
-          style={{
-            color: "var(--text-secondary)",
-            fontSize: "0.875rem",
-            margin: 0,
-            maxWidth: "600px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: 1.6,
-          }}
-        >
+        <p className="mx-auto m-0 max-w-[600px] text-sm/6 text-foreground">
           Violations of these rules may result in the plugin being rejected
           during review. Repeated or severe violations may lead to submission
           privileges being restricted. If you have questions about a specific

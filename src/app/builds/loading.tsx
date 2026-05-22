@@ -1,37 +1,25 @@
-import { Skeleton, SkeletonCard } from "@/components/Skeleton";
+import { Skeleton } from "@/components/Skeleton";
 
 export default function BuildsLoading() {
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
-      <div style={{ marginBottom: "var(--space-8)" }}>
+    <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="mb-8">
         <Skeleton
           width="10rem"
           height="2rem"
-          style={{ marginBottom: "var(--space-2)" }}
+          style={{ marginBottom: "0.5rem" }}
         />
         <Skeleton width="16rem" height="0.875rem" />
       </div>
 
-      <SkeletonCard style={{ padding: 0 }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+      <div className="rounded-2xl border border-border/70 bg-card/80">
+        <div className="flex flex-col p-0">
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "var(--space-4)",
-                gap: "var(--space-4)",
-                borderBottom: i < 7 ? "1px solid var(--border-color)" : "none",
-              }}
+              className={`flex items-center gap-4 px-4 py-4 ${i < 7 ? "border-b border-border" : ""}`}
             >
-              <div style={{ flex: 1 }}>
+              <div className="flex-1">
                 <Skeleton
                   width="60%"
                   height="0.875rem"
@@ -49,7 +37,7 @@ export default function BuildsLoading() {
             </div>
           ))}
         </div>
-      </SkeletonCard>
+      </div>
     </div>
   );
 }

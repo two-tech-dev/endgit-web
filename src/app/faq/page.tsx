@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
@@ -52,44 +53,20 @@ const FAQ_ITEMS = [
 function FAQItem({ item }: { item: { q: string; a: string } }) {
   const [open, setOpen] = useState(false);
   return (
-    <div
-      className="card"
-      style={{
-        overflow: "hidden",
-        transition: "all 200ms",
-      }}
-    >
+    <div className="overflow-hidden rounded-2xl border border-border/70 bg-card/80">
       <button
         onClick={() => setOpen(!open)}
-        style={{
-          width: "100%",
-          padding: "var(--space-5)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "var(--space-4)",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          textAlign: "left",
-        }}
+        className="flex w-full cursor-pointer items-center justify-between gap-4 bg-transparent p-5 text-left"
       >
-        <span
-          style={{
-            fontWeight: 600,
-            fontSize: "0.9375rem",
-            color: "var(--text-primary)",
-            lineHeight: 1.4,
-          }}
-        >
+        <span className="text-[0.9375rem] font-semibold leading-snug text-foreground">
           {item.q}
         </span>
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          style={{ flexShrink: 0, display: "flex" }}
+          className="flex shrink-0"
         >
-          <ChevronDown size={18} color="var(--text-muted)" />
+          <ChevronDown size={18} className="text-muted-foreground" />
         </motion.div>
       </button>
       <AnimatePresence initial={false}>
@@ -99,17 +76,9 @@ function FAQItem({ item }: { item: { q: string; a: string } }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{ overflow: "hidden" }}
+            className="overflow-hidden"
           >
-            <div
-              style={{
-                padding: "0 var(--space-5) var(--space-5)",
-                fontSize: "0.875rem",
-                color: "var(--text-secondary)",
-                lineHeight: 1.7,
-                whiteSpace: "pre-line",
-              }}
-            >
+            <div className="px-5 pb-5 text-sm leading-7 text-foreground whitespace-pre-line">
               {item.a}
             </div>
           </motion.div>
@@ -121,36 +90,14 @@ function FAQItem({ item }: { item: { q: string; a: string } }) {
 
 export default function FAQPage() {
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-        maxWidth: "780px",
-      }}
-    >
+    <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
       {/* Header */}
       <FadeIn>
-        <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
-          <div
-            style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "var(--radius-lg)",
-              background: "rgba(6,182,212,0.1)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-4)",
-              border: "1px solid rgba(6,182,212,0.15)",
-            }}
-          >
-            <HelpCircle size={28} color="var(--accent-primary)" />
-          </div>
-          <h1 className="heading-1" style={{ marginBottom: "var(--space-2)" }}>
+        <div className="mb-10 text-center">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl mb-2">
             Frequently Asked Questions
           </h1>
-          <p className="text-muted" style={{ fontSize: "1.0625rem" }}>
+          <p className="text-muted-foreground text-[1.0625rem]">
             Everything you need to know about EndGit.
           </p>
         </div>
@@ -159,11 +106,7 @@ export default function FAQPage() {
       {/* FAQ List */}
       <StaggerContainer
         staggerDelay={0.06}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-3)",
-        }}
+        className="flex flex-col gap-3"
       >
         {FAQ_ITEMS.map((item, i) => (
           <StaggerItem key={i}>
@@ -174,43 +117,22 @@ export default function FAQPage() {
 
       {/* Still have questions? */}
       <FadeIn delay={0.2}>
-        <div
-          style={{
-            marginTop: "var(--space-10)",
-            padding: "var(--space-6)",
-            textAlign: "center",
-            background: "rgba(6,182,212,0.04)",
-            borderRadius: "var(--radius-lg)",
-            border: "1px solid rgba(6,182,212,0.12)",
-          }}
-        >
-          <p
-            style={{
-              fontWeight: 600,
-              color: "var(--text-primary)",
-              marginBottom: "var(--space-2)",
-            }}
-          >
+        <div className="mt-10 rounded-2xl border border-primary/20 bg-primary/5 p-6 text-center">
+          <p className="mb-2 font-semibold text-foreground">
             Still have questions?
           </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.875rem",
-              marginBottom: "var(--space-4)",
-            }}
-          >
+          <p className="mb-4 text-sm text-muted-foreground">
             Join our Discord community for help and discussion.
           </p>
-          <a
-            href="https://discord.gg/9eZhP9y26Q"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
-          >
-            Join Discord
-          </a>
+          <Button asChild size="sm">
+            <a
+              href="https://discord.gg/9eZhP9y26Q"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Join Discord
+            </a>
+          </Button>
         </div>
       </FadeIn>
     </div>

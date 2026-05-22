@@ -2,13 +2,15 @@ import {
   PackagePlus,
   Settings,
   Activity,
-  Upload,
   AlertCircle,
   ExternalLink,
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 import { fetchApi } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
@@ -22,7 +24,6 @@ export default async function DashboardPage() {
     redirect("/api/auth/signin");
   }
 
-  // Fetch real data from backend
   const [pluginsRes, statsRes, statusRes] = await Promise.all([
     fetchApi("/api/v1/dashboard/plugins"),
     fetchApi("/api/v1/dashboard/stats"),
@@ -37,69 +38,21 @@ export default async function DashboardPage() {
 
   if (githubTokenExpired) {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-12)",
-          paddingBottom: "var(--space-12)",
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            maxWidth: "600px",
-            padding: "var(--space-10)",
-            textAlign: "center",
-            border: "1px solid var(--border-highlight)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              background: "rgba(255, 170, 0, 0.1)",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-6)",
-            }}
-          >
-            <AlertCircle size={40} color="var(--accent-orange)" />
-          </div>
-          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
+      <div className="mx-auto flex min-h-[60vh] w-full max-w-7xl items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[600px] rounded-2xl border border-border/70 bg-card/70 p-10 text-center shadow-lg backdrop-blur-sm">
+           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
             GitHub Session Expired
           </h1>
-          <p
-            className="text-secondary"
-            style={{
-              fontSize: "1.125rem",
-              lineHeight: 1.6,
-              marginBottom: "var(--space-8)",
-            }}
-          >
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             For security reasons, your connection to GitHub has expired. Please
             re-authenticate to sync your App installation status and continue
             using the Developer Dashboard.
           </p>
-          <a
-            href="/api/auth/signin?callbackUrl=/dashboard"
-            className="btn btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "1.125rem",
-              padding: "0.75rem 2rem",
-            }}
-          >
-            Re-authenticate with GitHub
-          </a>
+          <Button asChild size="sm" className="mt-8 text-lg">
+            <a href="/api/auth/signin?callbackUrl=/dashboard">
+              Re-authenticate with GitHub
+            </a>
+          </Button>
         </div>
       </div>
     );
@@ -107,71 +60,23 @@ export default async function DashboardPage() {
 
   if (!hasAppInstalled) {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-12)",
-          paddingBottom: "var(--space-12)",
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            maxWidth: "600px",
-            padding: "var(--space-10)",
-            textAlign: "center",
-            border: "1px solid var(--border-highlight)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              background: "rgba(124, 58, 237, 0.1)",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-6)",
-            }}
-          >
-            <PackagePlus size={40} color="var(--accent-primary)" />
-          </div>
-          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
+      <div className="mx-auto flex min-h-[60vh] w-full max-w-7xl items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[600px] rounded-2xl border border-border/70 bg-card/70 p-10 text-center shadow-lg backdrop-blur-sm">
+           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
             Welcome to EndGit!
           </h1>
-          <p
-            className="text-secondary"
-            style={{
-              fontSize: "1.125rem",
-              lineHeight: 1.6,
-              marginBottom: "var(--space-8)",
-            }}
-          >
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
             To get started with the Developer Dashboard, you need to install the
             EndGit GitHub App on your repositories. The app will automatically
             detect your Bedrock plugins, build them using our CI/CD pipeline,
             and publish them to the marketplace.
           </p>
-          <a
-            href={installUrl}
-            className="btn btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "1.125rem",
-              padding: "0.75rem 2rem",
-            }}
-          >
-            <ExternalLink size={20} /> Install GitHub App{" "}
-            <ArrowRight size={20} />
-          </a>
+          <Button asChild size="sm" className="mt-8 text-lg">
+            <a href={installUrl}>
+              <ExternalLink size={20} /> Install GitHub App{" "}
+              <ArrowRight size={20} />
+            </a>
+          </Button>
         </div>
       </div>
     );
@@ -187,235 +92,86 @@ export default async function DashboardPage() {
   const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: "var(--space-8)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
+    <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="heading-2">Developer Dashboard</h1>
-          <p className="text-muted">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            Developer Dashboard
+          </h1>
+          <p className="text-muted-foreground">
             Manage your plugins and track performance.
           </p>
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "var(--space-4)",
-            flexWrap: "wrap",
-          }}
-        >
-          <a
-            href={installUrl}
-            target="_blank"
-            className="btn btn-secondary"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
-            <Settings size={18} /> Manage App Installation
-          </a>
+        <div className="flex flex-wrap gap-4">
+          <Button asChild variant="outline" size="sm">
+            <a href={installUrl} target="_blank" rel="noopener noreferrer">
+              <Settings size={18} /> Manage App Installation
+            </a>
+          </Button>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
-          gap: "var(--space-6)",
-          marginBottom: "var(--space-10)",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(124, 58, 237, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--accent-primary)",
-            }}
-          >
+      <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6">
+        <Card className="flex-row items-center gap-4 rounded-2xl border border-border/70 bg-card/80 p-6">
+          <div className="rounded-md bg-primary/10 p-3 text-primary">
             <PackagePlus size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="mb-0.5 text-sm text-muted-foreground">
               Total Plugins
             </div>
-            <div className="heading-2">
+            <div className="text-2xl font-bold tracking-tight sm:text-3xl">
               {stats.totalPlugins?.toLocaleString() ?? 0}
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(6, 182, 212, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--accent-primary)",
-            }}
-          >
+        <Card className="flex-row items-center gap-4 rounded-2xl border border-border/70 bg-card/80 p-6">
+          <div className="rounded-md bg-cyan-500/10 p-3 text-primary">
             <Activity size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="mb-0.5 text-sm text-muted-foreground">
               Total Downloads
             </div>
-            <div className="heading-2">
+            <div className="text-2xl font-bold tracking-tight sm:text-3xl">
               {stats.totalDownloads?.toLocaleString() ?? 0}
             </div>
           </div>
-        </div>
+        </Card>
 
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(245, 158, 11, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--status-warning)",
-            }}
-          >
+        <Card className="flex-row items-center gap-4 rounded-2xl border border-border/70 bg-card/80 p-6">
+          <div className="rounded-md bg-yellow-500/10 p-3 text-yellow-500">
             <AlertCircle size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="mb-0.5 text-sm text-muted-foreground">
               Pending Review
             </div>
-            <div className="heading-2">
+            <div className="text-2xl font-bold tracking-tight sm:text-3xl">
               {stats.pendingReviews?.toLocaleString() ?? 0}
             </div>
           </div>
-        </div>
+        </Card>
       </div>
 
-      {/* Plugins List */}
-      <h2 className="heading-3" style={{ marginBottom: "var(--space-6)" }}>
-        My Plugins
-      </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(320px, 100%), 1fr))",
-          gap: "var(--space-6)",
-        }}
-      >
+      <h2 className="mt-10 text-lg font-semibold">My Plugins</h2>
+      <div className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-6">
         {myPlugins.map((plugin) => (
-          <div
+          <Card
             key={plugin.id}
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
+            className="flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-card/80"
           >
-            {/* Status Bar */}
             <div
-              style={{
-                height: "4px",
-                width: "100%",
-                background:
-                  plugin.status === "APPROVED"
-                    ? "var(--status-success)"
-                    : "var(--status-warning)",
-              }}
+              className={`h-1 w-full ${
+                plugin.status === "APPROVED" ? "bg-green-500" : "bg-yellow-500"
+              }`}
             />
 
-            <div
-              style={{
-                padding: "var(--space-5)",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                gap: "var(--space-4)",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "var(--space-3)",
-                    alignItems: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "var(--radius-sm)",
-                      background: "var(--bg-secondary)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "1px solid var(--border-color)",
-                      flexShrink: 0,
-                      overflow: "hidden",
-                    }}
-                  >
+            <div className="flex flex-1 flex-col gap-4 p-5">
+              <div className="flex justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-muted">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}
@@ -425,150 +181,79 @@ export default async function DashboardPage() {
                   <div>
                     <Link
                       href={`/plugins/${plugin.slug}`}
-                      className="heading-3"
-                      style={{
-                        fontSize: "1.25rem",
-                        color: "var(--text-primary)",
-                        display: "block",
-                        marginBottom: "var(--space-1)",
-                      }}
+                      className="block text-lg font-semibold text-foreground"
                     >
                       {plugin.displayName}
                     </Link>
-                    <span
-                      style={{
-                        fontSize: "0.875rem",
-                        color: "var(--text-muted)",
-                      }}
-                    >
+                    <span className="text-sm text-muted-foreground">
                       v{plugin.latestVersion || "0.0.0"}
                     </span>
                   </div>
                 </div>
-                <span
-                  className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}
+                <Badge
+                  className={
+                    plugin.pluginType === "PYTHON"
+                      ? "bg-green-500/10 text-green-500"
+                      : "bg-purple-500/10 text-purple-500"
+                  }
                 >
                   {plugin.pluginType}
-                </span>
+                </Badge>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "var(--space-4)",
-                  padding: "var(--space-4) 0",
-                  borderTop: "1px solid var(--border-color)",
-                  borderBottom: "1px solid var(--border-color)",
-                  color: "var(--text-secondary)",
-                  fontSize: "0.875rem",
-                }}
-              >
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+              <div className="flex flex-wrap gap-4 border-y border-border py-4 text-sm text-foreground">
+                <div className="flex-1">
+                  <div className="mb-0.5 text-[0.75rem] uppercase tracking-wider text-muted-foreground">
                     Downloads
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.25rem",
-                      fontWeight: 500,
-                      color: "var(--text-primary)",
-                    }}
-                  >
-                    <Activity size={14} color="var(--accent-primary)" />{" "}
+                  <div className="flex items-center gap-0.5 font-medium text-foreground">
+                    <Activity size={14} className="text-primary" />{" "}
                     {plugin.downloads?.toLocaleString() ?? 0}
                   </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                <div className="flex-1">
+                  <div className="mb-0.5 text-[0.75rem] uppercase tracking-wider text-muted-foreground">
                     Latest Version
                   </div>
-                  <div
-                    style={{
-                      fontWeight: 500,
-                      color: "var(--text-primary)",
-                    }}
-                  >
+                  <div className="font-medium text-foreground">
                     {plugin.latestVersion
                       ? `v${plugin.latestVersion}`
                       : "No versions"}
                   </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                <div className="flex-1">
+                  <div className="mb-0.5 text-[0.75rem] uppercase tracking-wider text-muted-foreground">
                     Status
                   </div>
                   <div
-                    style={{
-                      fontWeight: 500,
-                      color:
-                        plugin.status === "APPROVED"
-                          ? "var(--status-success)"
-                          : "var(--status-warning)",
-                    }}
+                    className={`font-medium ${
+                      plugin.status === "APPROVED"
+                        ? "text-green-500"
+                        : "text-yellow-500"
+                    }`}
                   >
                     {plugin.status}
                   </div>
                 </div>
               </div>
 
-              <div style={{ marginTop: "auto" }}>
+              <div className="mt-auto">
                 {plugin.status === "PENDING_REVIEW" ? (
-                  <div
-                    style={{
-                      width: "100%",
-                      background: "var(--status-warning)",
-                      color: "#000",
-                      fontWeight: 600,
-                      padding: "0.5rem",
-                      borderRadius: "var(--radius-sm)",
-                      textAlign: "center",
-                    }}
-                  >
+                  <div className="w-full rounded-sm bg-yellow-500 py-2 text-center font-semibold text-black">
                     Submitted
                   </div>
                 ) : (
-                  <button
-                    className="btn btn-secondary"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "0.5rem",
-                    }}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-center"
                   >
                     <Settings size={16} /> Manage Plugin
-                  </button>
+                  </Button>
                 )}
               </div>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

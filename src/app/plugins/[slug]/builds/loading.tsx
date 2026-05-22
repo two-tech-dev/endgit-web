@@ -1,36 +1,31 @@
-import { Skeleton, SkeletonCard } from "@/components/Skeleton";
+import { Skeleton } from "@/components/Skeleton";
 
 export default function PluginBuildsLoading() {
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
+    <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Skeleton
         width="10rem"
         height="0.875rem"
-        style={{ marginBottom: "var(--space-6)" }}
+        style={{ marginBottom: "1.5rem" }}
       />
 
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <Skeleton width="14rem" height="2rem" style={{ marginBottom: "4px" }} />
+      <div className="mb-6">
+        <Skeleton
+          width="14rem"
+          height="2rem"
+          style={{ marginBottom: "4px" }}
+        />
         <Skeleton width="16rem" height="0.875rem" />
       </div>
 
-      <SkeletonCard style={{ padding: "var(--space-6)" }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+      <div className="rounded-2xl border border-border/70 bg-card/80 p-6">
+        <div className="flex flex-col">
           {Array.from({ length: 6 }, (_, i) => (
             <div
               key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "var(--space-4)",
-                gap: "var(--space-4)",
-                borderBottom: i < 5 ? "1px solid var(--border-color)" : "none",
-              }}
+              className={`flex items-center gap-4 px-4 py-4 ${i < 5 ? "border-b border-border" : ""}`}
             >
-              <div style={{ flex: "0 0 100px" }}>
+              <div className="shrink-0 basis-[100px]">
                 <Skeleton
                   width="4rem"
                   height="0.875rem"
@@ -38,26 +33,19 @@ export default function PluginBuildsLoading() {
                 />
                 <Skeleton width="3rem" height="0.75rem" />
               </div>
-              <div style={{ flex: "0 0 80px" }}>
+              <div className="shrink-0 basis-[80px]">
                 <Skeleton width="4rem" height="0.875rem" />
               </div>
-              <div style={{ flex: "0 0 60px" }}>
+              <div className="shrink-0 basis-[60px]">
                 <Skeleton width="3rem" height="0.875rem" />
               </div>
-              <div style={{ flex: 1 }}>
+              <div className="flex-1">
                 <Skeleton width="70%" height="0.875rem" />
               </div>
-              <div style={{ flex: "0 0 80px" }}>
+              <div className="shrink-0 basis-[80px]">
                 <Skeleton width="4rem" height="0.875rem" />
               </div>
-              <div
-                style={{
-                  flex: "0 0 100px",
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: "var(--space-2)",
-                }}
-              >
+              <div className="flex shrink-0 basis-[100px] justify-end gap-2">
                 <Skeleton
                   width="3rem"
                   height="1.75rem"
@@ -72,7 +60,7 @@ export default function PluginBuildsLoading() {
             </div>
           ))}
         </div>
-      </SkeletonCard>
+      </div>
     </div>
   );
 }

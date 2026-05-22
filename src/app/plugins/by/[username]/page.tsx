@@ -1,8 +1,15 @@
-import { Search } from "lucide-react";
+import { Search, Star, Download } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export async function generateMetadata({
   params,
@@ -15,6 +22,13 @@ export async function generateMetadata({
   };
 }
 
+function formatDownloads(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(value);
+}
+
 export default async function AuthorPluginsPage({
   params,
 }: {
@@ -22,7 +36,6 @@ export default async function AuthorPluginsPage({
 }) {
   const { username } = params;
 
-  // Fetch plugins by this author
   const { data: responseData } = await fetchApi(
     `/api/v1/plugins?author=${username}`,
     { revalidate: 120 },
@@ -30,210 +43,100 @@ export default async function AuthorPluginsPage({
   const realPlugins = responseData?.data?.plugins || [];
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div style={{ marginBottom: "var(--space-8)" }}>
-        <h1
-          className="heading-2"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-2)",
-          }}
-        >
+    <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+      <div className="mb-8">
+        <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight sm:text-3xl">
           Plugins by{" "}
-          <span style={{ color: "var(--accent-primary)" }}>{username}</span>
+          <span className="text-primary">{username}</span>
         </h1>
-        <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
+        <p className="mt-1 text-muted-foreground">
           Viewing all {realPlugins.length} plugins created by this author.
         </p>
       </div>
 
       {realPlugins.length === 0 ? (
-        <div
-          className="card"
-          style={{ padding: "var(--space-8)", textAlign: "center" }}
-        >
-          <Search
-            size={32}
-            color="var(--text-muted)"
-            style={{ margin: "0 auto var(--space-4)", opacity: 0.5 }}
-          />
-          <h3 style={{ fontSize: "1.125rem", fontWeight: 600 }}>
-            No plugins found
-          </h3>
-          <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
-            This author has not published any plugins yet.
-          </p>
-        </div>
+        <Card className="rounded-2xl border border-border/70 bg-card/80">
+          <CardContent className="flex flex-col items-center gap-2 p-8 text-center">
+            <Search size={32} className="text-muted-foreground opacity-50" />
+            <h3 className="text-lg font-semibold">No plugins found</h3>
+            <p className="text-muted-foreground">
+              This author has not published any plugins yet.
+            </p>
+          </CardContent>
+        </Card>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(340px, 100%), 1fr))",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="grid min-w-0 auto-rows-min content-start gap-4">
           {realPlugins.map((plugin: any) => {
-            const avgRating = plugin.stars
-              ? Math.round((plugin.stars / 20) * 10) / 10
-              : 0;
-            const isFeatured = plugin.isFeatured;
+            const repoOwner = plugin.repoUrl?.match(
+              /github\.com\/([^/]+)/,
+            )?.[1];
 
             return (
               <Link
-                href={`/plugins/${plugin.slug}`}
                 key={plugin.id}
-                className="card"
-                style={{
-                  padding: "0",
-                  display: "flex",
-                  flexDirection: "column",
-                  textDecoration: "none",
-                  background: "var(--bg-card)",
-                  overflow: "hidden",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                }}
+                href={`/plugins/${plugin.slug}`}
+                className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <div
-                  style={{
-                    padding: "var(--space-4)",
-                    display: "flex",
-                    gap: "var(--space-4)",
-                    flexWrap: "wrap",
-                  }}
-                >
-                  {/* Left: Icon */}
-                  <div
-                    style={{
-                      width: "64px",
-                      height: "64px",
-                      flexShrink: 0,
-                      borderRadius: "var(--radius-md)",
-                      overflow: "hidden",
-                      background: "var(--bg-secondary)",
-                      border: "1px solid var(--border-color)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <PluginImage
-                      iconUrl={plugin.iconUrl}
-                      repoUrl={plugin.repoUrl}
-                      alt={`${plugin.displayName} icon`}
-                    />
-                  </div>
-
-                  {/* Middle: Title, Version, Author */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <h3
-                      className="heading-3"
-                      style={{
-                        fontSize: "1.125rem",
-                        margin: "0 0 4px 0",
-                        color: "var(--accent-primary)",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {plugin.displayName}
-                    </h3>
-                    <div
-                      style={{
-                        fontSize: "0.8125rem",
-                        color: "var(--text-muted)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "2px",
-                      }}
-                    >
-                      <span>v{plugin.latestVersion || "1.0.0"}</span>
+                <Card className="flex h-full cursor-pointer flex-col rounded-2xl border border-border/70 bg-card/85 transition-all hover:-translate-y-0.5 hover:border-primary/35">
+                  <CardHeader className="gap-2">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+                      <div className="flex items-center gap-2">
+                        {plugin.iconUrl ? (
+                          <div className="size-7 shrink-0 overflow-hidden rounded-md border border-border">
+                            <PluginImage
+                              iconUrl={plugin.iconUrl}
+                              repoUrl={plugin.repoUrl}
+                              alt={`${plugin.displayName} icon`}
+                            />
+                          </div>
+                        ) : null}
+                        <CardTitle className="wrap-break-word text-balance text-base sm:text-lg">
+                          {plugin.displayName}
+                        </CardTitle>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {plugin.latestVersion && (
+                          <Badge variant="outline">
+                            v{plugin.latestVersion}
+                          </Badge>
+                        )}
+                        {plugin.isFeatured && (
+                          <Badge variant="default">Featured</Badge>
+                        )}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="mt-auto flex flex-row items-center justify-between gap-3">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground sm:gap-4 sm:text-sm">
                       <span>
-                        {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
+                        {repoOwner ||
                           plugin.author?.displayName ||
                           plugin.author?.username}
                       </span>
-                    </div>
-                  </div>
-
-                  {/* Right: Date & Stats */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                      gap: "4px",
-                      fontSize: "0.75rem",
-                      color: "var(--text-muted)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    <span>
-                      {new Date(plugin.createdAt).toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </span>
-                    <span>
-                      {plugin.downloads?.toLocaleString() ?? 0} downloads
-                    </span>
-                    {avgRating > 0 && (
-                      <span
-                        style={{
-                          color: "#f59e0b",
-                          fontSize: "0.8125rem",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "3px",
-                        }}
-                      >
-                        {"★".repeat(Math.round(avgRating))}
-                        {"☆".repeat(5 - Math.round(avgRating))}
-                        <span
-                          style={{
-                            color: "var(--text-muted)",
-                            fontSize: "0.6875rem",
-                            marginLeft: "2px",
-                          }}
-                        >
-                          ({avgRating})
-                        </span>
+                      <span>
+                        {new Date(plugin.createdAt).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          },
+                        )}
                       </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Bottom: Featured Banner */}
-                {isFeatured && (
-                  <div
-                    style={{
-                      padding: "0 var(--space-4) var(--space-4)",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        padding: "6px 0",
-                        textAlign: "center",
-                        background: "#008000",
-                        color: "white",
-                        fontSize: "0.875rem",
-                        fontWeight: 500,
-                        borderRadius: "var(--radius-sm)",
-                      }}
-                    >
-                      Featured
+                      <span className="inline-flex items-center gap-1">
+                        <Star className="size-3.5" />
+                        {plugin.stars ?? 0}
+                      </span>
+                      <span className="inline-flex items-center gap-1">
+                        <Download className="size-3.5" />
+                        {formatDownloads(plugin.downloads ?? 0)}
+                      </span>
                     </div>
-                  </div>
-                )}
+                    <span className="text-sm font-medium text-primary">
+                      Open
+                    </span>
+                  </CardContent>
+                </Card>
               </Link>
             );
           })}

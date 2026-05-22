@@ -1,263 +1,113 @@
-import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
+function SkeletonBlock({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return <div className={`skeleton ${className ?? ""}`} style={style} />;
+}
 
 export default function PluginDetailLoading() {
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <SkeletonCard
-        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            className="plugin-header-inner"
-            style={{
-              display: "flex",
-              gap: "var(--space-4)",
-              minWidth: 0,
-              flex: "1 1 auto",
-            }}
-          >
-            <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" />
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-2)",
-                }}
-              >
-                <Skeleton width="14rem" height="2rem" />
-                <Skeleton
-                  width="5rem"
-                  height="1.25rem"
-                  borderRadius="var(--radius-full)"
-                />
-              </div>
-              <Skeleton
-                width="10rem"
-                height="0.875rem"
-                style={{ marginBottom: "var(--space-2)" }}
-              />
-              <Skeleton width="20rem" height="0.875rem" />
-            </div>
-          </div>
+    <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+      <div className="mb-6">
+        <SkeletonBlock className="h-8 w-32 rounded-md" />
+      </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-2)",
-              alignItems: "flex-end",
-            }}
-          >
-            <Skeleton
-              width="10rem"
-              height="2.5rem"
-              borderRadius="var(--radius-md)"
-            />
-            <div style={{ display: "flex", gap: "var(--space-6)" }}>
-              <Skeleton width="4rem" height="1rem" />
-              <Skeleton width="5rem" height="1rem" />
+      {/* Header */}
+      <header className="mb-6 rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur-sm sm:p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0 flex-1 space-y-3">
+            <div className="flex items-center gap-2">
+              <SkeletonBlock className="size-10 rounded-lg" />
+              <SkeletonBlock className="h-8 w-56" />
+              <SkeletonBlock className="h-5 w-16 rounded-full" />
+            </div>
+            <SkeletonBlock className="h-4 w-28" />
+            <SkeletonBlock className="h-4 w-96 max-w-full" />
+          </div>
+          <div className="flex shrink-0 flex-col items-end gap-3">
+            <SkeletonBlock className="h-9 w-40 rounded-md" />
+            <div className="flex gap-4">
+              <SkeletonBlock className="h-5 w-14" />
+              <SkeletonBlock className="h-5 w-20" />
             </div>
           </div>
         </div>
-      </SkeletonCard>
+      </header>
 
-      <div
-        className="plugin-layout"
-        style={{ display: "flex", gap: "var(--space-6)", flexWrap: "wrap" }}
-      >
-        <div
-          className="plugin-main-content"
-          style={{
-            flex: "1 1 min(400px, 100%)",
-            minWidth: 0,
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton
-              width="10rem"
-              height="1rem"
-              style={{ marginBottom: "var(--space-3)" }}
-            />
-            <Skeleton
-              width="100%"
-              height="2.75rem"
-              borderRadius="var(--radius-md)"
-            />
-          </SkeletonCard>
-
-          <div
-            style={{
-              border: "1px solid var(--border-color)",
-              borderRadius: "var(--radius-md)",
-              background: "var(--bg-secondary)",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                gap: "var(--space-4)",
-                padding: "10px 16px",
-                borderBottom: "1px solid var(--border-color)",
-              }}
-            >
-              <Skeleton width="8rem" height="0.875rem" />
-              <Skeleton width="3rem" height="0.875rem" />
-            </div>
-            <div style={{ padding: "12px" }}>
-              <Skeleton
-                width="100%"
-                height="12rem"
-                borderRadius="var(--radius-sm)"
-              />
-            </div>
+      {/* Two Column */}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <div className="flex min-w-0 flex-col gap-5">
+          {/* Quick Install */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <SkeletonBlock className="mb-3 h-4 w-32" />
+            <SkeletonBlock className="h-10 w-full rounded-lg" />
           </div>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton
-              width="10rem"
-              height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
-            />
-            <Skeleton
-              width="100%"
-              height="10rem"
-              borderRadius="var(--radius-sm)"
-            />
-          </SkeletonCard>
+          {/* Description */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <SkeletonBlock className="h-4 w-36" />
+              <SkeletonBlock className="h-6 w-14 rounded-sm" />
+            </div>
+            <SkeletonBlock className="h-48 w-full rounded-lg" />
+          </div>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton
-              width="8rem"
-              height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-4)",
-              }}
-            >
+          {/* Analytics */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <SkeletonBlock className="mb-3 h-4 w-24" />
+            <SkeletonBlock className="h-64 w-full rounded-lg" />
+          </div>
+
+          {/* Ratings */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <SkeletonBlock className="mb-3 h-4 w-32" />
+            <div className="space-y-3">
               {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} style={{ display: "flex", gap: "var(--space-3)" }}>
-                  <Skeleton circle width={32} height={32} />
-                  <div style={{ flex: 1 }}>
-                    <Skeleton
-                      width="40%"
-                      height="0.875rem"
-                      style={{ marginBottom: "var(--space-1)" }}
-                    />
-                    <Skeleton width="100%" height="0.75rem" />
+                <div key={i} className="flex gap-3">
+                  <SkeletonBlock className="size-8 shrink-0 rounded-full" />
+                  <div className="flex-1 space-y-1.5">
+                    <SkeletonBlock className="h-3.5 w-28" />
+                    <SkeletonBlock className="h-3 w-full" />
                   </div>
                 </div>
               ))}
             </div>
-          </SkeletonCard>
+          </div>
         </div>
 
-        <aside
-          className="plugin-sidebar"
-          style={{
-            flex: "0 0 100%",
-            maxWidth: "320px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
-          <SkeletonCard
-            style={{
-              padding: "var(--space-5)",
-              background: "var(--bg-secondary)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Skeleton width="6rem" height="1rem" />
-              <Skeleton circle width={48} height={48} />
+        <aside className="flex flex-col gap-5">
+          {/* VirusTotal */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <div className="flex items-center justify-between">
+              <SkeletonBlock className="h-4 w-24" />
+              <SkeletonBlock className="size-12 rounded-full" />
             </div>
-          </SkeletonCard>
+          </div>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton
-              width="4rem"
-              height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
-            >
+          {/* Details */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <SkeletonBlock className="mb-3 h-4 w-16" />
+            <div className="space-y-3">
               {Array.from({ length: 4 }, (_, i) => (
-                <div
-                  key={i}
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Skeleton width="5rem" height="0.875rem" />
-                  <Skeleton width="5rem" height="0.875rem" />
+                <div key={i} className="flex justify-between">
+                  <SkeletonBlock className="h-3.5 w-20" />
+                  <SkeletonBlock className="h-3.5 w-24" />
                 </div>
               ))}
             </div>
-          </SkeletonCard>
+          </div>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
-            <Skeleton
-              width="8rem"
-              height="1rem"
-              style={{ marginBottom: "var(--space-3)" }}
-            />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
-            >
+          {/* Badges */}
+          <div className="rounded-2xl border border-border/70 bg-card/80 p-4">
+            <SkeletonBlock className="mb-3 h-4 w-28" />
+            <div className="space-y-3">
               {Array.from({ length: 3 }, (_, i) => (
-                <div
-                  key={i}
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
-                  <Skeleton circle width={32} height={32} />
-                  <div>
-                    <Skeleton
-                      width="7rem"
-                      height="0.875rem"
-                      style={{ marginBottom: "4px" }}
-                    />
-                    <Skeleton width="5rem" height="0.625rem" />
-                  </div>
+                <div key={i} className="space-y-1.5">
+                  <SkeletonBlock className="h-5 w-28 rounded" />
+                  <SkeletonBlock className="h-7 w-full rounded-md" />
                 </div>
               ))}
             </div>
-          </SkeletonCard>
+          </div>
         </aside>
       </div>
-    </div>
+    </main>
   );
 }

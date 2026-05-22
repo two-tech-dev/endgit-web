@@ -25,7 +25,11 @@ import {
   ChevronDown,
   ChevronRight,
 } from "lucide-react";
-import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
+import { Skeleton, SkeletonText } from "@/components/Skeleton";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 
 const PLUGIN_STATUSES = [
   "ALL",
@@ -36,54 +40,56 @@ const PLUGIN_STATUSES = [
   "FLAGGED",
   "DRAFT",
 ] as const;
-const STATUS_COLORS: Record<
+
+const STATUS_STYLES: Record<
   string,
-  { bg: string; color: string; border: string }
+  { bg: string; text: string; border: string }
 > = {
   APPROVED: {
-    bg: "rgba(16,185,129,0.1)",
-    color: "var(--status-success)",
-    border: "rgba(16,185,129,0.3)",
+    bg: "bg-green-500/10",
+    text: "text-green-500",
+    border: "border-green-500/30",
   },
   PENDING_REVIEW: {
-    bg: "rgba(245,158,11,0.1)",
-    color: "var(--status-warning)",
-    border: "rgba(245,158,11,0.3)",
+    bg: "bg-yellow-500/10",
+    text: "text-yellow-500",
+    border: "border-yellow-500/30",
   },
   PENDING: {
-    bg: "rgba(245,158,11,0.1)",
-    color: "var(--status-warning)",
-    border: "rgba(245,158,11,0.3)",
+    bg: "bg-yellow-500/10",
+    text: "text-yellow-500",
+    border: "border-yellow-500/30",
   },
   REJECTED: {
-    bg: "rgba(239,68,68,0.1)",
-    color: "var(--status-error)",
-    border: "rgba(239,68,68,0.3)",
+    bg: "bg-red-500/10",
+    text: "text-red-500",
+    border: "border-red-500/30",
   },
   SUSPENDED: {
-    bg: "rgba(239,68,68,0.08)",
-    color: "#f87171",
-    border: "rgba(248,113,113,0.3)",
+    bg: "bg-red-500/10",
+    text: "text-red-400",
+    border: "border-red-400/30",
   },
   FLAGGED: {
-    bg: "rgba(251,146,60,0.1)",
-    color: "#fb923c",
-    border: "rgba(251,146,60,0.3)",
+    bg: "bg-orange-500/10",
+    text: "text-orange-500",
+    border: "border-orange-500/30",
   },
   DRAFT: {
-    bg: "rgba(100,116,139,0.1)",
-    color: "var(--text-muted)",
-    border: "rgba(100,116,139,0.3)",
+    bg: "bg-slate-500/10",
+    text: "text-muted-foreground",
+    border: "border-slate-500/30",
   },
 };
+
 const NEGATIVE_STATUSES = ["REJECTED", "SUSPENDED", "FLAGGED"];
 
 const TRUST_LEVELS = ["NEW", "TRUSTED", "FLAGGED", "ADMIN"];
-const TRUST_COLORS: Record<string, { bg: string; color: string }> = {
-  ADMIN: { bg: "rgba(139,92,246,0.1)", color: "#8b5cf6" },
-  TRUSTED: { bg: "rgba(16,185,129,0.1)", color: "var(--status-success)" },
-  NEW: { bg: "rgba(100,116,139,0.1)", color: "var(--text-muted)" },
-  FLAGGED: { bg: "rgba(239,68,68,0.1)", color: "var(--status-error)" },
+const TRUST_STYLES: Record<string, { bg: string; text: string }> = {
+  ADMIN: { bg: "bg-purple-500/10", text: "text-purple-500" },
+  TRUSTED: { bg: "bg-green-500/10", text: "text-green-500" },
+  NEW: { bg: "bg-slate-500/10", text: "text-muted-foreground" },
+  FLAGGED: { bg: "bg-red-500/10", text: "text-red-500" },
 };
 
 export default function AdminPage() {
@@ -106,7 +112,6 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Modal for rejecting plugins/versions from the Plugins tab
   const [pluginRejectModal, setPluginRejectModal] = useState<{
     type: "plugin" | "version";
     pluginId: string;
@@ -339,7 +344,6 @@ export default function AdminPage() {
     }
   };
 
-  // Intercept status changes: if changing TO a negative status, open rejection reason modal
   const handlePluginStatusChange = (
     pluginId: string,
     currentStatus: string,
@@ -434,40 +438,18 @@ export default function AdminPage() {
 
   if (sessionStatus === "loading") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
-        }}
-      >
-        <Loader2
-          size={32}
-          color="#8b5cf6"
-          style={{ animation: "spin 1s linear infinite" }}
-        />
+      <div className="mx-auto w-full max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+        <Loader2 size={32} className="mx-auto animate-spin text-purple-500" />
       </div>
     );
   }
 
   if (sessionStatus === "unauthenticated") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
-        }}
-      >
-        <Shield
-          size={48}
-          color="#8b5cf6"
-          style={{ margin: "0 auto var(--space-4)" }}
-        />
-        <h2 className="heading-3">Admin Access Required</h2>
-        <p style={{ color: "var(--text-muted)", marginTop: "var(--space-2)" }}>
+      <div className="mx-auto w-full max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+        <Shield size={48} className="mx-auto mb-4 text-purple-500" />
+        <h2 className="text-lg font-semibold">Admin Access Required</h2>
+        <p className="mt-1 text-muted-foreground">
           Please sign in with an admin account.
         </p>
       </div>
@@ -475,42 +457,18 @@ export default function AdminPage() {
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-8)",
-        paddingBottom: "var(--space-8)",
-        maxWidth: "1100px",
-      }}
-    >
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <h1
-          className="heading-2"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-          }}
-        >
-          <Shield size={28} color="#8b5cf6" /> Admin Panel
+    <div className="mx-auto w-full max-w-[1100px] px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mb-6">
+        <h1 className="flex items-center gap-3 text-2xl font-bold tracking-tight sm:text-3xl">
+          Admin Panel
         </h1>
-        <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
+        <p className="mt-1 text-muted-foreground">
           Manage users, review queue, and system settings
         </p>
       </div>
 
       {/* Tabs */}
-      <div
-        style={{
-          display: "flex",
-          gap: "2px",
-          background: "var(--bg-secondary)",
-          padding: "3px",
-          borderRadius: "var(--radius-md)",
-          marginBottom: "var(--space-6)",
-          width: "fit-content",
-        }}
-      >
+      <div className="mb-6 inline-flex gap-0.5 rounded-md bg-muted p-0.5">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -519,62 +477,34 @@ export default function AdminPage() {
             { key: "system", label: "System", icon: <BarChart3 size={14} /> },
           ] as const
         ).map((t) => (
-          <button
+          <Button
             key={t.key}
+            variant={tab === t.key ? "default" : "ghost"}
+            size="lg"
+            className="px-4"
             onClick={() => setTab(t.key)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "0.5rem 1rem",
-              borderRadius: "var(--radius-sm)",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
-              border: "none",
-              cursor: "pointer",
-              background: tab === t.key ? "var(--bg-card)" : "transparent",
-              color:
-                tab === t.key ? "var(--text-primary)" : "var(--text-muted)",
-              boxShadow: tab === t.key ? "var(--shadow-sm)" : "none",
-              transition: "all 150ms",
-            }}
           >
             {t.icon} {t.label}
-          </button>
+          </Button>
         ))}
       </div>
 
       {/* Error */}
       {error && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-5)",
-            marginBottom: "var(--space-4)",
-            borderLeft: "4px solid var(--status-error)",
-          }}
-        >
-          <p style={{ color: "var(--status-error)", fontSize: "0.875rem" }}>
-            {error}
-          </p>
+        <div className="mb-4 rounded-2xl border border-border/70 border-l-4 border-l-red-500 bg-card/80 p-5">
+          <p className="text-sm text-red-500">{error}</p>
         </div>
       )}
 
       {/* Users Tab */}
       {tab === "users" && (
         <div>
-          <div style={{ marginBottom: "var(--space-4)", position: "relative" }}>
+          <div className="relative mb-4">
             <Search
               size={16}
-              style={{
-                position: "absolute",
-                left: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--text-muted)",
-              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             />
-            <input
+            <Input
               type="text"
               placeholder="Search users..."
               value={userSearch}
@@ -584,30 +514,15 @@ export default function AdminPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") loadData();
               }}
-              style={{
-                width: "100%",
-                maxWidth: "400px",
-                padding: "0.625rem 0.75rem 0.625rem 2.25rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-card)",
-                color: "var(--text-primary)",
-                fontSize: "0.875rem",
-                outline: "none",
-              }}
+              className="max-w-[400px] pl-9"
             />
           </div>
 
           {loading ? (
-            <div className="card" style={{ overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <div className="rounded-2xl border border-border/70 bg-card/80 overflow-hidden">
+              <table className="w-full border-collapse">
                 <thead>
-                  <tr
-                    style={{
-                      background: "var(--bg-secondary)",
-                      borderBottom: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <tr className="border-b border-border bg-muted">
                     {[
                       "User",
                       "Trust Level",
@@ -618,15 +533,7 @@ export default function AdminPage() {
                     ].map((h) => (
                       <th
                         key={h}
-                        style={{
-                          padding: "0.75rem 1rem",
-                          textAlign: "left",
-                          fontSize: "0.6875rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                          color: "var(--text-muted)",
-                          fontWeight: 600,
-                        }}
+                        className="p-3 px-4 text-left text-[0.6875rem] font-semibold uppercase tracking-wider text-muted-foreground"
                       >
                         {h}
                       </th>
@@ -635,19 +542,14 @@ export default function AdminPage() {
                 </thead>
                 <tbody>
                   {Array.from({ length: 5 }, (_, i) => (
-                    <tr
-                      key={i}
-                      style={{ borderBottom: "1px solid var(--border-color)" }}
-                    >
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "var(--space-3)",
-                          }}
-                        >
-                          <Skeleton circle width={32} height={32} />
+                    <tr key={i} className="border-b border-border">
+                      <td className="p-3 px-4">
+                        <div className="flex items-center gap-3">
+                          <Skeleton
+                            circle
+                            width={32}
+                            height={32}
+                          />
                           <div>
                             <Skeleton
                               width="7rem"
@@ -658,27 +560,27 @@ export default function AdminPage() {
                           </div>
                         </div>
                       </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
+                      <td className="p-3 px-4">
                         <Skeleton
                           width="4rem"
                           height="1.25rem"
-                          borderRadius="var(--radius-full)"
+                          borderRadius="9999px"
                         />
                       </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
+                      <td className="p-3 px-4">
                         <Skeleton width="3.5rem" height="0.875rem" />
                       </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
+                      <td className="p-3 px-4">
                         <Skeleton width="1.5rem" height="0.875rem" />
                       </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
+                      <td className="p-3 px-4">
                         <Skeleton width="5rem" height="0.8125rem" />
                       </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
+                      <td className="p-3 px-4">
                         <Skeleton
                           width="5rem"
                           height="1.5rem"
-                          borderRadius="var(--radius-sm)"
+                          borderRadius="0.25rem"
                         />
                       </td>
                     </tr>
@@ -687,22 +589,14 @@ export default function AdminPage() {
               </table>
             </div>
           ) : users.length === 0 ? (
-            <div
-              className="card"
-              style={{ padding: "var(--space-12)", textAlign: "center" }}
-            >
-              <p style={{ color: "var(--text-muted)" }}>No users found</p>
+            <div className="rounded-2xl border border-border/70 bg-card/80 p-12 text-center">
+              <p className="text-muted-foreground">No users found</p>
             </div>
           ) : (
-            <div className="card" style={{ overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <div className="rounded-2xl border border-border/70 bg-card/80 overflow-hidden">
+              <table className="w-full border-collapse">
                 <thead>
-                  <tr
-                    style={{
-                      background: "var(--bg-secondary)",
-                      borderBottom: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <tr className="border-b border-border bg-muted">
                     {[
                       "User",
                       "Trust Level",
@@ -713,15 +607,7 @@ export default function AdminPage() {
                     ].map((h) => (
                       <th
                         key={h}
-                        style={{
-                          padding: "0.75rem 1rem",
-                          textAlign: "left",
-                          fontSize: "0.6875rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                          color: "var(--text-muted)",
-                          fontWeight: 600,
-                        }}
+                        className="p-3 px-4 text-left text-[0.6875rem] font-semibold uppercase tracking-wider text-muted-foreground"
                       >
                         {h}
                       </th>
@@ -729,172 +615,98 @@ export default function AdminPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user: any) => (
-                    <tr
-                      key={user.id}
-                      style={{ borderBottom: "1px solid var(--border-color)" }}
-                    >
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "var(--space-3)",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "32px",
-                              height: "32px",
-                              borderRadius: "50%",
-                              background:
-                                "linear-gradient(135deg, var(--accent-primary), var(--accent-primary))",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "white",
-                              fontSize: "0.75rem",
-                              fontWeight: 700,
-                              overflow: "hidden",
-                            }}
+                  {users.map((user: any) => {
+                    const ts =
+                      TRUST_STYLES[user.trustLevel] || TRUST_STYLES.NEW;
+                    return (
+                      <tr key={user.id} className="border-b border-border">
+                        <td className="p-3 px-4">
+                          <div className="flex items-center gap-3">
+                            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-primary to-primary text-xs font-bold text-white">
+                              {user.avatarUrl ? (
+                                <Image
+                                  src={user.avatarUrl}
+                                  alt=""
+                                  width={32}
+                                  height={32}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                user.username.charAt(0).toUpperCase()
+                              )}
+                            </div>
+                            <div>
+                              <div className="text-sm font-semibold">
+                                {user.displayName || user.username}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                @{user.username}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-3 px-4">
+                          <Badge
+                            variant="secondary"
+                            className={`${ts.bg} ${ts.text}`}
                           >
-                            {user.avatarUrl ? (
-                              <Image
-                                src={user.avatarUrl}
-                                alt=""
-                                width={32}
-                                height={32}
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "cover",
-                                }}
-                              />
-                            ) : (
-                              user.username.charAt(0).toUpperCase()
-                            )}
-                          </div>
-                          <div>
-                            <div
-                              style={{ fontWeight: 600, fontSize: "0.875rem" }}
-                            >
-                              {user.displayName || user.username}
-                            </div>
-                            <div
-                              style={{
-                                fontSize: "0.75rem",
-                                color: "var(--text-muted)",
-                              }}
-                            >
-                              @{user.username}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <span
-                          style={{
-                            padding: "2px 8px",
-                            borderRadius: "var(--radius-full)",
-                            fontSize: "0.6875rem",
-                            fontWeight: 600,
-                            ...(TRUST_COLORS[user.trustLevel] ||
-                              TRUST_COLORS.NEW),
-                          }}
-                        >
-                          {user.trustLevel}
-                        </span>
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "0.8125rem",
-                              color:
+                            {user.trustLevel}
+                          </Badge>
+                        </td>
+                        <td className="p-3 px-4">
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className={`text-[0.8125rem] ${
                                 user.weeklyBuildCount >= user.weeklyBuildQuota
-                                  ? "var(--status-error)"
-                                  : "var(--text-secondary)",
-                            }}
+                                  ? "text-red-500"
+                                  : "text-foreground"
+                              }`}
+                            >
+                              {user.weeklyBuildCount || 0}/
+                              {user.weeklyBuildQuota || 50}
+                            </span>
+                            <input
+                              type="number"
+                              min="1"
+                              max="10000"
+                              defaultValue={user.weeklyBuildQuota || 50}
+                              onBlur={(e) => {
+                                const v = parseInt(e.target.value);
+                                if (v && v !== user.weeklyBuildQuota)
+                                  changeQuota(user.id, v);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter")
+                                  (e.target as HTMLInputElement).blur();
+                              }}
+                              className="w-15 rounded-sm border border-border bg-muted px-1.5 py-0.5 text-center text-xs text-foreground"
+                            />
+                          </div>
+                        </td>
+                        <td className="p-3 px-4 text-sm text-foreground">
+                          {user._count?.plugins || 0}
+                        </td>
+                        <td className="p-3 px-4 text-[0.8125rem] text-muted-foreground">
+                          {new Date(user.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="p-3 px-4">
+                          <select
+                            value={user.trustLevel}
+                            onChange={(e) =>
+                              changeTrustLevel(user.id, e.target.value)
+                            }
+                            className="cursor-pointer rounded-sm border border-border bg-muted px-2 py-1 text-xs text-foreground"
                           >
-                            {user.weeklyBuildCount || 0}/
-                            {user.weeklyBuildQuota || 50}
-                          </span>
-                          <input
-                            type="number"
-                            min="1"
-                            max="10000"
-                            defaultValue={user.weeklyBuildQuota || 50}
-                            onBlur={(e) => {
-                              const v = parseInt(e.target.value);
-                              if (v && v !== user.weeklyBuildQuota)
-                                changeQuota(user.id, v);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter")
-                                (e.target as HTMLInputElement).blur();
-                            }}
-                            style={{
-                              width: "60px",
-                              padding: "2px 6px",
-                              borderRadius: "var(--radius-sm)",
-                              border: "1px solid var(--border-color)",
-                              background: "var(--bg-secondary)",
-                              color: "var(--text-primary)",
-                              fontSize: "0.75rem",
-                              textAlign: "center",
-                            }}
-                          />
-                        </div>
-                      </td>
-                      <td
-                        style={{
-                          padding: "0.75rem 1rem",
-                          fontSize: "0.875rem",
-                          color: "var(--text-secondary)",
-                        }}
-                      >
-                        {user._count?.plugins || 0}
-                      </td>
-                      <td
-                        style={{
-                          padding: "0.75rem 1rem",
-                          fontSize: "0.8125rem",
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <select
-                          value={user.trustLevel}
-                          onChange={(e) =>
-                            changeTrustLevel(user.id, e.target.value)
-                          }
-                          style={{
-                            padding: "4px 8px",
-                            borderRadius: "var(--radius-sm)",
-                            border: "1px solid var(--border-color)",
-                            background: "var(--bg-secondary)",
-                            color: "var(--text-primary)",
-                            fontSize: "0.75rem",
-                            cursor: "pointer",
-                          }}
-                        >
-                          {TRUST_LEVELS.map((l) => (
-                            <option key={l} value={l}>
-                              {l}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                    </tr>
-                  ))}
+                            {TRUST_LEVELS.map((l) => (
+                              <option key={l} value={l}>
+                                {l}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -905,47 +717,19 @@ export default function AdminPage() {
       {/* Review Queue Tab — shows pending PLUGINS */}
       {tab === "queue" &&
         (loading ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-              gap: "var(--space-6)",
-            }}
-          >
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(380px,1fr))] gap-6">
             {Array.from({ length: 3 }, (_, i) => (
-              <SkeletonCard
+              <div
                 key={i}
-                style={{
-                  padding: 0,
-                  borderTop: "4px solid var(--border-color)",
-                }}
+                className="rounded-2xl border border-border/70 bg-card/80"
               >
-                <div
-                  style={{
-                    padding: "var(--space-5)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "var(--space-3)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-3)",
-                        alignItems: "center",
-                      }}
-                    >
+                <div className="flex flex-col gap-3 border-t-4 border-t-border p-5">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
                       <Skeleton
                         width={48}
                         height={48}
-                        borderRadius="var(--radius-md)"
+                        borderRadius="0.375rem"
                       />
                       <div>
                         <Skeleton
@@ -959,58 +743,36 @@ export default function AdminPage() {
                     <Skeleton
                       width="3.5rem"
                       height="1.25rem"
-                      borderRadius="var(--radius-full)"
+                      borderRadius="9999px"
                     />
                   </div>
                   <SkeletonText lines={2} />
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-2)",
-                      marginTop: "var(--space-2)",
-                      paddingTop: "var(--space-3)",
-                      borderTop: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <div className="mt-2 flex gap-2 border-t border-border pt-3">
                     <Skeleton
                       width="100%"
                       height="2.25rem"
-                      borderRadius="var(--radius-md)"
+                      borderRadius="0.375rem"
                     />
                     <Skeleton
                       width="100%"
                       height="2.25rem"
-                      borderRadius="var(--radius-md)"
+                      borderRadius="0.375rem"
                     />
                   </div>
                 </div>
-              </SkeletonCard>
+              </div>
             ))}
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-              gap: "var(--space-6)",
-            }}
-          >
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(380px,1fr))] gap-6">
             {queue.length === 0 ? (
-              <div
-                className="card"
-                style={{
-                  padding: "var(--space-12)",
-                  textAlign: "center",
-                  gridColumn: "1 / -1",
-                }}
-              >
+              <div className="col-span-full rounded-2xl border border-border/70 bg-card/80 p-12 text-center">
                 <CheckCircle
                   size={40}
-                  color="var(--status-success)"
-                  style={{ margin: "0 auto var(--space-3)" }}
+                  className="mx-auto mb-3 text-green-500"
                 />
-                <p style={{ fontWeight: 600 }}>All caught up!</p>
-                <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+                <p className="font-semibold">All caught up!</p>
+                <p className="text-sm text-muted-foreground">
                   No plugins pending review
                 </p>
               </div>
@@ -1018,51 +780,12 @@ export default function AdminPage() {
               queue.map((plugin: any) => (
                 <div
                   key={plugin.id}
-                  className="card"
-                  style={{
-                    padding: "0",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                    borderTop: "4px solid var(--status-warning)",
-                  }}
+                  className="flex flex-col overflow-hidden rounded-2xl border border-border/70 border-t-4 border-t-yellow-500 bg-card/80"
                 >
-                  <div
-                    style={{
-                      padding: "var(--space-5)",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "var(--space-3)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "var(--space-3)",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "48px",
-                            height: "48px",
-                            borderRadius: "var(--radius-md)",
-                            background: "var(--bg-secondary)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            border: "1px solid var(--border-color)",
-                            flexShrink: 0,
-                            overflow: "hidden",
-                          }}
-                        >
+                  <div className="flex flex-col gap-3 p-5">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-muted">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
@@ -1070,131 +793,66 @@ export default function AdminPage() {
                           />
                         </div>
                         <div>
-                          <h3
-                            className="heading-3"
-                            style={{
-                              fontSize: "1.125rem",
-                              margin: 0,
-                              color: "var(--text-primary)",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "6px",
-                            }}
-                          >
+                          <h3 className="flex items-center gap-1.5 text-lg font-semibold text-foreground">
                             {plugin.displayName}
                             {plugin.versions?.[0]?.isPreRelease && (
                               <span
                                 title="This is a pre-release"
-                                style={{
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  color: "#ef4444",
-                                }}
+                                className="inline-flex items-center text-red-500"
                               >
                                 <FlaskConical size={16} />
                               </span>
                             )}
                           </h3>
-                          <p
-                            style={{
-                              color: "var(--text-muted)",
-                              fontSize: "0.8125rem",
-                            }}
-                          >
+                          <p className="text-[0.8125rem] text-muted-foreground">
                             @{plugin.author?.username}
                           </p>
                         </div>
                       </div>
-                      <span
-                        className={`badge ${plugin.pluginType === "PYTHON" ? "badge-green" : "badge-purple"}`}
+                      <Badge
+                        variant="secondary"
+                        className={
+                          plugin.pluginType === "PYTHON"
+                            ? "bg-green-500/10 text-green-500"
+                            : "bg-purple-500/10 text-purple-500"
+                        }
                       >
                         {plugin.pluginType}
-                      </span>
+                      </Badge>
                     </div>
 
-                    <p
-                      style={{
-                        color: "var(--text-secondary)",
-                        fontSize: "0.8125rem",
-                        lineHeight: 1.5,
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
+                    <p className="line-clamp-2 text-[0.8125rem] leading-[1.5] text-foreground">
                       {plugin.description}
                     </p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        marginTop: "var(--space-2)",
-                        paddingTop: "var(--space-3)",
-                        borderTop: "1px solid var(--border-color)",
-                      }}
-                    >
-                      <button
-                        onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
-                        style={{
-                          flex: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "6px",
-                          padding: "0.5rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: "var(--status-success)",
-                          color: "white",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
+                    <div className="mt-2 flex gap-2 border-t border-border pt-3">
+                      <Button
+                        className="flex-1 bg-green-600 text-white hover:bg-green-700"
+                        size="sm"
+                        onClick={() =>
+                          reviewPlugin(plugin.slug, "APPROVED")
+                        }
                       >
                         <CheckCircle size={16} /> Approve Plugin
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        className="flex-1"
+                        size="sm"
                         onClick={() =>
                           setRejectModal({
                             slug: plugin.slug,
                             name: plugin.displayName,
                           })
                         }
-                        style={{
-                          flex: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "6px",
-                          padding: "0.5rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: "rgba(239,68,68,0.1)",
-                          color: "var(--status-error)",
-                          border: "1px solid rgba(239,68,68,0.2)",
-                          cursor: "pointer",
-                        }}
                       >
                         <XCircle size={16} /> Reject Plugin
-                      </button>
+                      </Button>
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        justifyContent: "center",
-                      }}
-                    >
+                    <div className="flex justify-center gap-2">
                       <Link
                         href={`/plugins/${plugin.slug}`}
-                        style={{
-                          fontSize: "0.75rem",
-                          color: "var(--accent-primary)",
-                          textAlign: "center",
-                        }}
+                        className="text-center text-xs text-primary"
                       >
                         View Plugin →
                       </Link>
@@ -1203,11 +861,7 @@ export default function AdminPage() {
                           href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{
-                            fontSize: "0.75rem",
-                            color: "var(--text-muted)",
-                            textAlign: "center",
-                          }}
+                          className="text-center text-xs text-muted-foreground"
                         >
                           View Commit →
                         </a>
@@ -1221,67 +875,29 @@ export default function AdminPage() {
             {/* Reject Reason Modal */}
             {rejectModal && (
               <div
-                style={{
-                  position: "fixed",
-                  inset: 0,
-                  background: "rgba(0,0,0,0.6)",
-                  backdropFilter: "blur(4px)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 1000,
-                  padding: "var(--space-4)",
-                }}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
                 onClick={() => {
                   setRejectModal(null);
                   setRejectReason("");
                 }}
               >
                 <div
-                  className="card"
-                  style={{
-                    width: "100%",
-                    maxWidth: "560px",
-                    padding: "0",
-                    overflow: "hidden",
-                    borderTop: "4px solid var(--status-error)",
-                  }}
+                  className="w-full max-w-[560px] overflow-hidden rounded-2xl border border-border/70 border-t-4 border-t-red-500 bg-card/80 shadow-lg backdrop-blur-xl"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div style={{ padding: "var(--space-6)" }}>
-                    <h3
-                      style={{
-                        fontSize: "1.125rem",
-                        fontWeight: 700,
-                        color: "var(--text-primary)",
-                        margin: "0 0 var(--space-1)",
-                      }}
-                    >
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-foreground">
                       Reject Plugin
                     </h3>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "0.875rem",
-                        margin: "0 0 var(--space-5)",
-                      }}
-                    >
+                    <p className="mb-5 mt-1 text-sm text-muted-foreground">
                       Rejecting{" "}
-                      <strong style={{ color: "var(--text-primary)" }}>
+                      <strong className="text-foreground">
                         {rejectModal.name}
                       </strong>
                       . The author will be notified via email with your reason.
                     </p>
 
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "0.8125rem",
-                        fontWeight: 600,
-                        color: "var(--text-secondary)",
-                        marginBottom: "var(--space-2)",
-                      }}
-                    >
+                    <label className="block text-[0.8125rem] font-semibold text-foreground">
                       Reason for Rejection *
                       <textarea
                         value={rejectReason}
@@ -1290,60 +906,27 @@ export default function AdminPage() {
                           "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
                         }
                         rows={8}
-                        style={{
-                          width: "100%",
-                          padding: "var(--space-3)",
-                          borderRadius: "var(--radius-md)",
-                          border: "1px solid var(--border-color)",
-                          background: "var(--bg-secondary)",
-                          color: "var(--text-primary)",
-                          fontSize: "0.875rem",
-                          lineHeight: 1.6,
-                          resize: "vertical",
-                          outline: "none",
-                          fontFamily: "inherit",
-                          minHeight: "140px",
-                        }}
+                        className="mt-2 w-full resize-y rounded-md border border-border bg-muted p-3 font-[inherit] text-sm leading-[1.6] text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
                       />
                     </label>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "0.75rem",
-                        marginTop: "var(--space-1)",
-                      }}
-                    >
+                    <p className="mt-1 text-xs text-muted-foreground">
                       Supports **bold** and {">"} blockquote formatting in the
                       email.
                     </p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-3)",
-                        marginTop: "var(--space-5)",
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <button
+                    <div className="mt-5 flex justify-end gap-3">
+                      <Button
+                        variant="outline"
                         onClick={() => {
                           setRejectModal(null);
                           setRejectReason("");
                         }}
-                        style={{
-                          padding: "0.625rem 1.25rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 500,
-                          background: "var(--bg-secondary)",
-                          color: "var(--text-secondary)",
-                          border: "1px solid var(--border-color)",
-                          cursor: "pointer",
-                        }}
                       >
                         Cancel
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                        className="bg-red-500 text-white hover:bg-red-600"
+                        disabled={!rejectReason.trim() || reviewLoading}
                         onClick={() =>
                           rejectReason.trim() &&
                           reviewPlugin(
@@ -1352,34 +935,12 @@ export default function AdminPage() {
                             rejectReason.trim(),
                           )
                         }
-                        disabled={!rejectReason.trim() || reviewLoading}
-                        style={{
-                          padding: "0.625rem 1.25rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: rejectReason.trim()
-                            ? "var(--status-error)"
-                            : "rgba(239,68,68,0.3)",
-                          color: "white",
-                          border: "none",
-                          cursor: rejectReason.trim()
-                            ? "pointer"
-                            : "not-allowed",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          opacity: reviewLoading ? 0.7 : 1,
-                        }}
                       >
                         {reviewLoading && (
-                          <Loader2
-                            size={14}
-                            style={{ animation: "spin 1s linear infinite" }}
-                          />
+                          <Loader2 size={14} className="animate-spin" />
                         )}
                         <XCircle size={14} /> Reject & Notify Author
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -1396,128 +957,73 @@ export default function AdminPage() {
               ? plugins
               : plugins.filter((p) => p.status === pluginStatusFilter);
           return (
-            <div className="card" style={{ padding: "var(--space-6)" }}>
+            <div className="rounded-2xl border border-border/70 bg-card/80 p-6">
               {/* Search + Filter Bar */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-4)",
-                  marginBottom: "var(--space-4)",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{ flex: 1, position: "relative", minWidth: "240px" }}
-                >
+              <div className="mb-4 flex flex-wrap gap-4">
+                <div className="relative min-w-[240px] flex-1">
                   <Search
                     size={16}
-                    color="var(--text-muted)"
-                    style={{
-                      position: "absolute",
-                      left: "var(--space-3)",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                   />
-                  <input
+                  <Input
                     type="text"
                     placeholder="Search plugins by name or slug..."
-                    className="input"
-                    style={{ paddingLeft: "var(--space-10)" }}
+                    className="pl-10"
                     value={pluginSearch}
                     onChange={(e) => setPluginSearch(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && loadData()}
                   />
                 </div>
-                <button onClick={loadData} className="btn btn-secondary">
+                <Button variant="outline" size="sm" onClick={loadData}>
                   Search
-                </button>
+                </Button>
               </div>
 
               {/* Status Filter Pills */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "6px",
-                  marginBottom: "var(--space-5)",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
-                <Filter
-                  size={14}
-                  color="var(--text-muted)"
-                  style={{ marginRight: "4px" }}
-                />
+              <div className="mb-5 flex flex-wrap items-center gap-1.5">
+                <Filter size={14} className="mr-1 text-muted-foreground" />
                 {PLUGIN_STATUSES.map((s) => {
                   const isActive = pluginStatusFilter === s;
-                  const sc = s !== "ALL" ? STATUS_COLORS[s] : null;
+                  const sc = s !== "ALL" ? STATUS_STYLES[s] : null;
                   const count =
                     s === "ALL"
                       ? plugins.length
                       : plugins.filter((p) => p.status === s).length;
                   return (
-                    <button
+                    <Button
                       key={s}
+                      variant={isActive ? "default" : "ghost"}
+                      size="xs"
+                      className={`rounded-full ${
+                        isActive && sc
+                          ? `${sc.bg} ${sc.text} border ${sc.border}`
+                          : ""
+                      }`}
                       onClick={() => setPluginStatusFilter(s)}
-                      style={{
-                        padding: "4px 12px",
-                        borderRadius: "var(--radius-full)",
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        border: isActive
-                          ? `1px solid ${sc?.border || "var(--border-highlight)"}`
-                          : "1px solid var(--border-color)",
-                        background: isActive
-                          ? sc?.bg || "var(--bg-secondary)"
-                          : "transparent",
-                        color: isActive
-                          ? sc?.color || "var(--text-primary)"
-                          : "var(--text-muted)",
-                        cursor: "pointer",
-                        transition: "all 150ms",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
                     >
                       {s === "ALL" ? "All" : s.replace("_", " ")}
                       <span
-                        style={{
-                          background: isActive
-                            ? "rgba(255,255,255,0.15)"
-                            : "var(--bg-secondary)",
-                          padding: "0 6px",
-                          borderRadius: "var(--radius-full)",
-                          fontSize: "0.6875rem",
-                          minWidth: "20px",
-                          textAlign: "center",
-                        }}
+                        className={`ml-1 min-w-[20px] rounded-full px-1.5 text-[0.6875rem] ${
+                          isActive
+                            ? "bg-white/15"
+                            : "bg-muted"
+                        }`}
                       >
                         {count}
                       </span>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>
 
               {loading ? (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className="w-full border-collapse">
                   <thead>
-                    <tr
-                      style={{
-                        borderBottom: "1px solid var(--border-color)",
-                        textAlign: "left",
-                      }}
-                    >
+                    <tr className="border-b border-border text-left">
                       {["Plugin", "Author", "Status", "Actions"].map((h) => (
                         <th
                           key={h}
-                          style={{
-                            padding: "0 var(--space-4) var(--space-3)",
-                            color: "var(--text-muted)",
-                            fontSize: "0.8125rem",
-                          }}
+                          className="pb-3 pl-0 pr-4 text-[0.8125rem] text-muted-foreground"
                         >
                           {h}
                         </th>
@@ -1526,61 +1032,39 @@ export default function AdminPage() {
                   </thead>
                   <tbody>
                     {Array.from({ length: 4 }, (_, i) => (
-                      <tr
-                        key={i}
-                        style={{
-                          borderBottom: "1px solid var(--border-color)",
-                        }}
-                      >
-                        <td style={{ padding: "var(--space-4)" }}>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "var(--space-3)",
-                            }}
-                          >
+                      <tr key={i} className="border-b border-border">
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
                             <Skeleton width="8rem" height="0.875rem" />
                             <Skeleton width="4rem" height="0.75rem" />
                           </div>
                         </td>
-                        <td style={{ padding: "var(--space-4)" }}>
+                        <td className="p-4">
                           <Skeleton width="6rem" height="0.875rem" />
                         </td>
-                        <td style={{ padding: "var(--space-4)" }}>
+                        <td className="p-4">
                           <Skeleton
                             width="5rem"
                             height="1.5rem"
-                            borderRadius="var(--radius-sm)"
+                            borderRadius="0.25rem"
                           />
                         </td>
-                        <td
-                          style={{
-                            padding: "var(--space-4)",
-                            textAlign: "right",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "var(--space-2)",
-                              justifyContent: "flex-end",
-                            }}
-                          >
+                        <td className="p-4 text-right">
+                          <div className="flex justify-end gap-2">
                             <Skeleton
                               width="2rem"
                               height="2rem"
-                              borderRadius="var(--radius-sm)"
+                              borderRadius="0.25rem"
                             />
                             <Skeleton
                               width="2rem"
                               height="2rem"
-                              borderRadius="var(--radius-sm)"
+                              borderRadius="0.25rem"
                             />
                             <Skeleton
                               width="2.5rem"
                               height="2rem"
-                              borderRadius="var(--radius-sm)"
+                              borderRadius="0.25rem"
                             />
                           </div>
                         </td>
@@ -1589,49 +1073,19 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               ) : (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className="w-full border-collapse">
                   <thead>
-                    <tr
-                      style={{
-                        borderBottom: "1px solid var(--border-color)",
-                        textAlign: "left",
-                      }}
-                    >
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                    <tr className="border-b border-border text-left">
+                      <th className="pb-3 pl-0 pr-4 text-[0.8125rem] text-muted-foreground">
                         Plugin
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                      <th className="pb-3 pl-0 pr-4 text-[0.8125rem] text-muted-foreground">
                         Author
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                      <th className="pb-3 pl-0 pr-4 text-[0.8125rem] text-muted-foreground">
                         Status
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                          textAlign: "right",
-                        }}
-                      >
+                      <th className="pb-3 pl-0 pr-4 text-right text-[0.8125rem] text-muted-foreground">
                         Actions
                       </th>
                     </tr>
@@ -1639,58 +1093,31 @@ export default function AdminPage() {
                   <tbody>
                     {filtered.map((plugin: any) => {
                       const psc =
-                        STATUS_COLORS[plugin.status] || STATUS_COLORS.DRAFT;
+                        STATUS_STYLES[plugin.status] || STATUS_STYLES.DRAFT;
                       return (
                         <React.Fragment key={plugin.id}>
-                          <tr
-                            style={{
-                              borderBottom: "1px solid var(--border-color)",
-                            }}
-                          >
-                            <td style={{ padding: "var(--space-4)" }}>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "var(--space-3)",
-                                }}
-                              >
-                                <div style={{ fontWeight: 600 }}>
+                          <tr className="border-b border-border">
+                            <td className="p-4">
+                              <div className="flex items-center gap-3">
+                                <div className="font-semibold">
                                   {plugin.displayName}
                                 </div>
-                                <div
-                                  style={{
-                                    fontSize: "0.75rem",
-                                    color: "var(--text-muted)",
-                                    fontFamily: "var(--font-mono)",
-                                  }}
-                                >
+                                <div className="font-mono text-xs text-muted-foreground">
                                   {plugin.slug}
                                 </div>
                                 {plugin.versions &&
                                   plugin.versions.length > 0 && (
-                                    <button
+                                    <Button
+                                      variant="outline"
+                                      size="xs"
+                                      className={`gap-1 ${
+                                        expandedPlugins.has(plugin.id)
+                                          ? "bg-muted"
+                                          : ""
+                                      }`}
                                       onClick={() =>
                                         togglePluginExpanded(plugin.id)
                                       }
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "4px",
-                                        padding: "2px 8px",
-                                        borderRadius: "var(--radius-sm)",
-                                        border: "1px solid var(--border-color)",
-                                        background: expandedPlugins.has(
-                                          plugin.id,
-                                        )
-                                          ? "var(--bg-secondary)"
-                                          : "transparent",
-                                        cursor: "pointer",
-                                        fontSize: "0.75rem",
-                                        color: "var(--text-muted)",
-                                        fontWeight: 600,
-                                        transition: "all 150ms",
-                                      }}
                                     >
                                       {expandedPlugins.has(plugin.id) ? (
                                         <ChevronDown size={14} />
@@ -1698,20 +1125,15 @@ export default function AdminPage() {
                                         <ChevronRight size={14} />
                                       )}
                                       Releases ({plugin.versions.length})
-                                    </button>
+                                    </Button>
                                   )}
                               </div>
                             </td>
-                            <td
-                              style={{
-                                padding: "var(--space-4)",
-                                fontSize: "0.875rem",
-                              }}
-                            >
+                            <td className="p-4 text-sm">
                               {plugin.author?.displayName ||
                                 plugin.author?.username}
                             </td>
-                            <td style={{ padding: "var(--space-4)" }}>
+                            <td className="p-4">
                               <select
                                 value={plugin.status}
                                 onChange={(e) =>
@@ -1722,16 +1144,7 @@ export default function AdminPage() {
                                     plugin.displayName,
                                   )
                                 }
-                                style={{
-                                  padding: "0.25rem 0.5rem",
-                                  borderRadius: "var(--radius-sm)",
-                                  background: psc.bg,
-                                  border: `1px solid ${psc.border}`,
-                                  color: psc.color,
-                                  fontSize: "0.8125rem",
-                                  fontWeight: 600,
-                                  cursor: "pointer",
-                                }}
+                                className={`cursor-pointer rounded-sm border bg-transparent px-2 py-1 text-[0.8125rem] font-semibold ${psc.bg} ${psc.text} ${psc.border}`}
                               >
                                 <option value="DRAFT">DRAFT</option>
                                 <option value="PENDING_REVIEW">
@@ -1743,23 +1156,13 @@ export default function AdminPage() {
                                 <option value="FLAGGED">FLAGGED</option>
                               </select>
                             </td>
-                            <td
-                              style={{
-                                padding: "var(--space-4)",
-                                textAlign: "right",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  gap: "var(--space-2)",
-                                  justifyContent: "flex-end",
-                                  alignItems: "center",
-                                }}
-                              >
-                                {/* Quick reject button — only shown for approved plugins */}
+                            <td className="p-4 text-right">
+                              <div className="flex items-center justify-end gap-2">
                                 {plugin.status === "APPROVED" && (
-                                  <button
+                                  <Button
+                                    variant="destructive"
+                                    size="sm"
+                                    className="gap-1"
                                     onClick={() => {
                                       setPluginRejectModal({
                                         type: "plugin",
@@ -1771,142 +1174,80 @@ export default function AdminPage() {
                                       setPluginRejectReason("");
                                     }}
                                     title="Reject this approved plugin"
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      gap: "4px",
-                                      height: "32px",
-                                      padding: "0 10px",
-                                      borderRadius: "var(--radius-sm)",
-                                      border: "1px solid rgba(239,68,68,0.3)",
-                                      background: "rgba(239,68,68,0.08)",
-                                      color: "var(--status-error)",
-                                      cursor: "pointer",
-                                      transition: "all 150ms",
-                                      fontSize: "0.6875rem",
-                                      fontWeight: 600,
-                                    }}
                                   >
                                     <ShieldAlert size={14} /> Reject
-                                  </button>
+                                  </Button>
                                 )}
-                                <button
+                                <Button
+                                  variant="outline"
+                                  size="icon-sm"
+                                  className={
+                                    plugin.isFeatured
+                                      ? "border-yellow-400 bg-yellow-400/15"
+                                      : "bg-muted"
+                                  }
                                   onClick={() => toggleFeatured(plugin.id)}
                                   title={
                                     plugin.isFeatured
                                       ? "Remove Featured"
                                       : "Mark as Featured"
                                   }
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "32px",
-                                    height: "32px",
-                                    borderRadius: "var(--radius-sm)",
-                                    border: plugin.isFeatured
-                                      ? "1px solid #fbbf24"
-                                      : "1px solid var(--border-color)",
-                                    background: plugin.isFeatured
-                                      ? "rgba(251, 191, 36, 0.15)"
-                                      : "var(--bg-secondary)",
-                                    cursor: "pointer",
-                                    transition: "all 150ms",
-                                  }}
                                 >
                                   <Star
                                     size={16}
-                                    color={
+                                    className={
                                       plugin.isFeatured
-                                        ? "#fbbf24"
-                                        : "var(--text-muted)"
+                                        ? "text-yellow-400"
+                                        : "text-muted-foreground"
                                     }
                                     fill={
                                       plugin.isFeatured ? "#fbbf24" : "none"
                                     }
                                   />
-                                </button>
-                                <a
-                                  href={`/plugins/${plugin.slug}`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="btn btn-secondary"
-                                  style={{
-                                    padding: "0.25rem 0.5rem",
-                                    fontSize: "0.75rem",
-                                  }}
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  asChild
                                 >
-                                  View
-                                </a>
+                                  <a
+                                    href={`/plugins/${plugin.slug}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                  >
+                                    View
+                                  </a>
+                                </Button>
                               </div>
                             </td>
                           </tr>
                           {expandedPlugins.has(plugin.id) &&
                             plugin.versions &&
                             plugin.versions.length > 0 && (
-                              <tr
-                                style={{
-                                  borderBottom: "1px solid var(--border-color)",
-                                  background: "rgba(0,0,0,0.02)",
-                                }}
-                              >
+                              <tr className="border-b border-border bg-black/[0.02]">
                                 <td
                                   colSpan={4}
-                                  style={{
-                                    padding:
-                                      "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
-                                  }}
+                                  className="px-8 pb-4 pl-8 pr-4 pt-3"
                                 >
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      gap: "6px",
-                                    }}
-                                  >
+                                  <div className="flex flex-col gap-1.5">
                                     {plugin.versions.map((v: any) => {
                                       const vsc =
-                                        STATUS_COLORS[v.status] ||
-                                        STATUS_COLORS.DRAFT;
+                                        STATUS_STYLES[v.status] ||
+                                        STATUS_STYLES.DRAFT;
                                       return (
                                         <div
                                           key={v.id}
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "10px",
-                                            padding: "6px 10px",
-                                            borderRadius: "var(--radius-sm)",
-                                            border: `1px solid ${vsc.border}`,
-                                            background: "var(--bg-card)",
-                                          }}
+                                          className={`flex items-center gap-2.5 rounded-sm border bg-card px-2.5 py-1.5 ${vsc.border}`}
                                         >
-                                          <span
-                                            style={{
-                                              fontSize: "0.8125rem",
-                                              fontWeight: 700,
-                                              color: "var(--text-primary)",
-                                              minWidth: "56px",
-                                            }}
-                                          >
+                                          <span className="min-w-[56px] text-[0.8125rem] font-bold text-foreground">
                                             v{v.version}
                                           </span>
-                                          <span
-                                            style={{
-                                              fontSize: "0.6875rem",
-                                              fontWeight: 700,
-                                              padding: "2px 8px",
-                                              borderRadius:
-                                                "var(--radius-full)",
-                                              background: vsc.bg,
-                                              color: vsc.color,
-                                              textTransform: "uppercase",
-                                              letterSpacing: "0.03em",
-                                            }}
+                                          <Badge
+                                            variant="secondary"
+                                            className={`${vsc.bg} ${vsc.text} uppercase tracking-wide`}
                                           >
                                             {v.status}
-                                          </span>
+                                          </Badge>
                                           <select
                                             value={v.status}
                                             onChange={(e) =>
@@ -1918,17 +1259,7 @@ export default function AdminPage() {
                                                 `${plugin.displayName} v${v.version}`,
                                               )
                                             }
-                                            style={{
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              background: "var(--bg-secondary)",
-                                              border:
-                                                "1px solid var(--border-color)",
-                                              color: "var(--text-primary)",
-                                              fontSize: "0.6875rem",
-                                              cursor: "pointer",
-                                              marginLeft: "auto",
-                                            }}
+                                            className="ml-auto cursor-pointer rounded border border-border bg-muted text-[0.6875rem] text-foreground"
                                           >
                                             <option value="PENDING">
                                               PENDING
@@ -1954,11 +1285,7 @@ export default function AdminPage() {
                       <tr>
                         <td
                           colSpan={4}
-                          style={{
-                            padding: "var(--space-8)",
-                            textAlign: "center",
-                            color: "var(--text-muted)",
-                          }}
+                          className="p-8 text-center text-muted-foreground"
                         >
                           {pluginStatusFilter !== "ALL"
                             ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
@@ -1976,58 +1303,33 @@ export default function AdminPage() {
       {/* Plugin/Version Rejection Reason Modal */}
       {pluginRejectModal && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.6)",
-            backdropFilter: "blur(4px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-            padding: "var(--space-4)",
-          }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
           onClick={() => {
             setPluginRejectModal(null);
             setPluginRejectReason("");
           }}
         >
           <div
-            className="card"
-            style={{
-              width: "100%",
-              maxWidth: "560px",
-              padding: "0",
-              overflow: "hidden",
-              borderTop: `4px solid ${pluginRejectModal.targetStatus === "SUSPENDED" ? "#f87171" : pluginRejectModal.targetStatus === "FLAGGED" ? "#fb923c" : "var(--status-error)"}`,
-            }}
+            className={`w-full max-w-[560px] overflow-hidden rounded-2xl border border-border/70 bg-card/80 shadow-lg backdrop-blur-xl border-t-4 ${
+              pluginRejectModal.targetStatus === "SUSPENDED"
+                ? "border-t-red-400"
+                : pluginRejectModal.targetStatus === "FLAGGED"
+                  ? "border-t-orange-500"
+                  : "border-t-red-500"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ padding: "var(--space-6)" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-1)",
-                }}
-              >
+            <div className="p-6">
+              <div className="mb-1 flex items-center gap-3">
                 <ShieldAlert
                   size={22}
-                  color={
+                  className={
                     pluginRejectModal.targetStatus === "FLAGGED"
-                      ? "#fb923c"
-                      : "var(--status-error)"
+                      ? "text-orange-500"
+                      : "text-red-500"
                   }
                 />
-                <h3
-                  style={{
-                    fontSize: "1.125rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    margin: 0,
-                  }}
-                >
+                <h3 className="text-lg font-bold text-foreground">
                   {pluginRejectModal.targetStatus === "SUSPENDED"
                     ? "Suspend"
                     : pluginRejectModal.targetStatus === "FLAGGED"
@@ -2036,59 +1338,35 @@ export default function AdminPage() {
                   {pluginRejectModal.type === "version" ? "Version" : "Plugin"}
                 </h3>
               </div>
-              <p
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  margin: "var(--space-2) 0 var(--space-4)",
-                }}
-              >
+              <p className="mb-4 mt-2 text-sm text-muted-foreground">
                 Changing{" "}
-                <strong style={{ color: "var(--text-primary)" }}>
+                <strong className="text-foreground">
                   {pluginRejectModal.name}
                 </strong>{" "}
                 from{" "}
                 <span
-                  style={{
-                    fontWeight: 600,
-                    color:
-                      STATUS_COLORS[pluginRejectModal.currentStatus]?.color ||
-                      "var(--text-primary)",
-                  }}
+                  className={`font-semibold ${
+                    STATUS_STYLES[pluginRejectModal.currentStatus]?.text ||
+                    "text-foreground"
+                  }`}
                 >
                   {pluginRejectModal.currentStatus}
                 </span>
                 {" → "}
                 <span
-                  style={{
-                    fontWeight: 600,
-                    color:
-                      STATUS_COLORS[pluginRejectModal.targetStatus]?.color ||
-                      "var(--status-error)",
-                  }}
+                  className={`font-semibold ${
+                    STATUS_STYLES[pluginRejectModal.targetStatus]?.text ||
+                    "text-red-500"
+                  }`}
                 >
                   {pluginRejectModal.targetStatus}
                 </span>
                 .
                 {pluginRejectModal.currentStatus === "APPROVED" && (
-                  <span
-                    style={{
-                      display: "block",
-                      marginTop: "var(--space-2)",
-                      padding: "var(--space-2) var(--space-3)",
-                      background: "rgba(245,158,11,0.08)",
-                      borderRadius: "var(--radius-sm)",
-                      borderLeft: "3px solid var(--status-warning)",
-                      fontSize: "0.8125rem",
-                    }}
-                  >
+                  <span className="mt-2 block rounded-sm border-l-[3px] border-l-yellow-500 bg-yellow-500/[0.08] px-3 py-2 text-[0.8125rem]">
                     <AlertTriangle
                       size={12}
-                      style={{
-                        display: "inline",
-                        verticalAlign: "middle",
-                        marginRight: "4px",
-                      }}
+                      className="mr-1 inline align-middle"
                     />
                     This plugin/version is currently{" "}
                     <strong>live and approved</strong>. This action will remove
@@ -2097,15 +1375,7 @@ export default function AdminPage() {
                 )}
               </p>
 
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  color: "var(--text-secondary)",
-                  marginBottom: "var(--space-2)",
-                }}
-              >
+              <label className="mb-2 block text-[0.8125rem] font-semibold text-foreground">
                 Reason for{" "}
                 {pluginRejectModal.targetStatus === "SUSPENDED"
                   ? "Suspension"
@@ -2120,76 +1390,41 @@ export default function AdminPage() {
                 autoFocus
                 placeholder={`Explain why this ${pluginRejectModal.type} is being ${pluginRejectModal.targetStatus.toLowerCase()}...\n\nExample:\nSecurity concern — Suspicious network calls detected in decompiled code.\n\nThe plugin will be reverted to non-public status.`}
                 rows={7}
-                style={{
-                  width: "100%",
-                  padding: "var(--space-3)",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.6,
-                  resize: "vertical",
-                  outline: "none",
-                  fontFamily: "inherit",
-                  minHeight: "120px",
-                }}
+                className="w-full resize-y rounded-md border border-border bg-muted p-3 font-[inherit] text-sm leading-[1.6] text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/30"
               />
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-3)",
-                  marginTop: "var(--space-5)",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <button
+              <div className="mt-5 flex justify-end gap-3">
+                <Button
+                  variant="outline"
                   onClick={() => {
                     setPluginRejectModal(null);
                     setPluginRejectReason("");
                   }}
-                  style={{
-                    padding: "0.625rem 1.25rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-secondary)",
-                    border: "1px solid var(--border-color)",
-                    cursor: "pointer",
-                  }}
                 >
                   Cancel
-                </button>
-                <button
-                  onClick={confirmPluginReject}
+                </Button>
+                <Button
+                  className={`text-white ${
+                    pluginRejectReason.trim()
+                      ? STATUS_STYLES[pluginRejectModal.targetStatus]?.text ===
+                        "text-red-500"
+                        ? "bg-red-500 hover:bg-red-600"
+                        : STATUS_STYLES[pluginRejectModal.targetStatus]?.text ===
+                            "text-red-400"
+                          ? "bg-red-400 hover:bg-red-500"
+                          : STATUS_STYLES[pluginRejectModal.targetStatus]?.text ===
+                              "text-orange-500"
+                            ? "bg-orange-500 hover:bg-orange-600"
+                            : "bg-red-500 hover:bg-red-600"
+                      : "bg-red-500/30"
+                  } ${
+                    !pluginRejectReason.trim() ? "cursor-not-allowed" : ""
+                  } ${pluginRejectLoading ? "opacity-70" : ""}`}
                   disabled={!pluginRejectReason.trim() || pluginRejectLoading}
-                  style={{
-                    padding: "0.625rem 1.25rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    background: pluginRejectReason.trim()
-                      ? STATUS_COLORS[pluginRejectModal.targetStatus]?.color ||
-                        "var(--status-error)"
-                      : "rgba(239,68,68,0.3)",
-                    color: "white",
-                    border: "none",
-                    cursor: pluginRejectReason.trim()
-                      ? "pointer"
-                      : "not-allowed",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    opacity: pluginRejectLoading ? 0.7 : 1,
-                  }}
+                  onClick={confirmPluginReject}
                 >
                   {pluginRejectLoading && (
-                    <Loader2
-                      size={14}
-                      style={{ animation: "spin 1s linear infinite" }}
-                    />
+                    <Loader2 size={14} className="animate-spin" />
                   )}
                   <ShieldAlert size={14} />
                   {pluginRejectModal.targetStatus === "SUSPENDED"
@@ -2198,7 +1433,7 @@ export default function AdminPage() {
                       ? "Flag"
                       : "Reject"}{" "}
                   & Save
-                </button>
+                </Button>
               </div>
             </div>
           </div>
@@ -2208,112 +1443,71 @@ export default function AdminPage() {
       {/* System Tab */}
       {tab === "system" &&
         (loading ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="grid grid-cols-2 gap-4">
             {Array.from({ length: 4 }, (_, i) => (
-              <SkeletonCard key={i} style={{ padding: "var(--space-6)" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-3)",
-                    marginBottom: "var(--space-3)",
-                  }}
-                >
-                  <Skeleton
-                    width={40}
-                    height={40}
-                    borderRadius="var(--radius-md)"
-                  />
-                  <Skeleton width="5rem" height="0.8125rem" />
+              <div
+                key={i}
+                className="rounded-2xl border border-border/70 bg-card/80"
+              >
+                <div className="p-6">
+                  <div className="mb-3 flex items-center gap-3">
+                    <Skeleton
+                      width={40}
+                      height={40}
+                      borderRadius="0.375rem"
+                    />
+                    <Skeleton width="5rem" height="0.8125rem" />
+                  </div>
+                  <Skeleton width="4rem" height="2rem" />
                 </div>
-                <Skeleton width="4rem" height="2rem" />
-              </SkeletonCard>
+              </div>
             ))}
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="grid grid-cols-2 gap-4">
             {[
               {
                 label: "Total Users",
                 value: stats.users,
-                icon: <Users size={20} color="var(--accent-primary)" />,
-                bg: "rgba(139,92,246,0.08)",
+                icon: <Users size={20} className="text-primary" />,
+                bg: "bg-purple-500/[0.08]",
               },
               {
                 label: "Total Plugins",
                 value: stats.plugins,
-                icon: <Package size={20} color="var(--accent-primary)" />,
-                bg: "rgba(14,165,233,0.08)",
+                icon: <Package size={20} className="text-primary" />,
+                bg: "bg-sky-500/[0.08]",
               },
               {
                 label: "Total Builds",
                 value: stats.builds,
-                icon: <Activity size={20} color="var(--status-success)" />,
-                bg: "rgba(16,185,129,0.08)",
+                icon: <Activity size={20} className="text-green-500" />,
+                bg: "bg-green-500/[0.08]",
               },
               {
                 label: "Pending Reviews",
                 value: stats.pendingReviews,
-                icon: <AlertTriangle size={20} color="var(--status-warning)" />,
-                bg: "rgba(245,158,11,0.08)",
+                icon: (
+                  <AlertTriangle size={20} className="text-yellow-500" />
+                ),
+                bg: "bg-yellow-500/[0.08]",
               },
             ].map((s) => (
               <div
                 key={s.label}
-                className="card"
-                style={{ padding: "var(--space-6)" }}
+                className="rounded-2xl border border-border/70 bg-card/80 p-6"
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-3)",
-                    marginBottom: "var(--space-3)",
-                  }}
-                >
+                <div className="mb-3 flex items-center gap-3">
                   <div
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "var(--radius-md)",
-                      background: s.bg,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className={`flex h-10 w-10 items-center justify-center rounded-md ${s.bg}`}
                   >
                     {s.icon}
                   </div>
-                  <span
-                    style={{
-                      fontSize: "0.8125rem",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                  <span className="text-[0.8125rem] uppercase tracking-wider text-muted-foreground">
                     {s.label}
                   </span>
                 </div>
-                <div
-                  style={{
-                    fontSize: "2rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                  }}
-                >
+                <div className="text-2xl font-bold text-foreground">
                   {s.value}
                 </div>
               </div>

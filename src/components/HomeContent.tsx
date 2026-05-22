@@ -58,7 +58,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
   return (
     <div className="flex flex-col">
       {/* ── Header card ── */}
-      <section className="mx-auto w-full max-w-7xl px-4 pb-6 pt-8 sm:px-6 sm:pt-12 lg:px-8">
+      <section className="mx-auto w-full max-w-7xl px-4 pb-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
         <header className="rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur-sm sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div className="space-y-2">

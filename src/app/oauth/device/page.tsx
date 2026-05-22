@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { CheckCircle, Terminal, Loader2, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DeviceAuthPage() {
   const { data: session, status } = useSession();
@@ -18,7 +19,6 @@ export default function DeviceAuthPage() {
     segments[0] && segments[1] ? `${segments[0]}-${segments[1]}` : "";
 
   function handleSegmentChange(index: number, value: string) {
-    // Only uppercase alphanumeric, no ambiguous chars
     const clean = value
       .toUpperCase()
       .replace(/[^A-Z2-9]/g, "")
@@ -28,7 +28,6 @@ export default function DeviceAuthPage() {
     setSegments(next);
     setError("");
 
-    // Auto-advance to second segment when first is full
     if (index === 0 && clean.length === 4) {
       secondRef.current?.focus();
     }
@@ -38,7 +37,6 @@ export default function DeviceAuthPage() {
     index: number,
     e: React.KeyboardEvent<HTMLInputElement>,
   ) {
-    // Backspace on empty second segment moves focus back to first
     if (index === 1 && e.key === "Backspace" && segments[1] === "") {
       const input = e.currentTarget
         .previousElementSibling as HTMLInputElement | null;
@@ -49,14 +47,12 @@ export default function DeviceAuthPage() {
   function handlePaste(e: React.ClipboardEvent<HTMLInputElement>) {
     e.preventDefault();
     const pasted = e.clipboardData.getData("text").toUpperCase();
-    // Strip everything except allowed chars and the separator
     const clean = pasted.replace(/[^A-Z2-9-]/g, "");
     const parts = clean.split("-");
     const first = (parts[0] || "").slice(0, 4);
     const second = (parts[1] || "").slice(0, 4);
     setSegments([first, second]);
     setError("");
-    // Focus second input if first is complete
     if (first.length === 4) {
       secondRef.current?.focus();
     }
@@ -95,179 +91,57 @@ export default function DeviceAuthPage() {
 
   if (status === "loading") {
     return (
-      <div
-        style={{
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Loader2
-          size={32}
-          style={{
-            animation: "spin 1s linear infinite",
-            color: "var(--accent-primary)",
-          }}
-        />
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <Loader2 size={32} className="animate-spin text-primary" />
       </div>
     );
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-12)",
-        paddingBottom: "var(--space-12)",
-        minHeight: "60vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        className="card"
-        style={{
-          maxWidth: "480px",
-          width: "100%",
-          padding: "var(--space-10)",
-          textAlign: "center",
-        }}
-      >
-        {/* Icon */}
-        <div
-          style={{
-            width: "72px",
-            height: "72px",
-            background: "rgba(14, 165, 233, 0.1)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto var(--space-6)",
-          }}
-        >
-          <Terminal size={36} color="var(--accent-primary)" />
-        </div>
-
-        <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>
+    <div className="flex min-h-[60vh] items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[480px] rounded-2xl border border-border/70 bg-card/80 p-10 text-center">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Device Authorization
         </h1>
-        <p
-          className="text-secondary"
-          style={{
-            fontSize: "0.9375rem",
-            lineHeight: 1.6,
-            marginBottom: "var(--space-8)",
-          }}
-        >
+        <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted-foreground">
           Authorize the EndGit CLI to access your account
         </p>
 
-        {/* Success state */}
         {success ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-4)",
-            }}
-          >
-            <CheckCircle size={48} color="var(--status-success)" />
-            <p
-              style={{
-                fontSize: "1.125rem",
-                fontWeight: 600,
-                color: "var(--text-primary)",
-              }}
-            >
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <CheckCircle size={48} className="text-green-500" />
+            <p className="text-lg font-semibold text-foreground">
               Device authorized!
             </p>
-            <p className="text-secondary" style={{ fontSize: "0.9375rem" }}>
+            <p className="text-[0.9375rem] text-muted-foreground">
               You can close this page. The CLI will complete login
               automatically.
             </p>
           </div>
         ) : !session ? (
-          /* Not signed in */
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-6)",
-            }}
-          >
-            <div
-              style={{
-                padding: "var(--space-4)",
-                background: "rgba(251, 191, 36, 0.1)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid rgba(251, 191, 36, 0.2)",
-                width: "100%",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  color: "var(--accent-orange)",
-                  fontWeight: 500,
-                  justifyContent: "center",
-                }}
-              >
+          <div className="mt-8 flex flex-col items-center gap-6">
+            <div className="w-full rounded-md border border-yellow-500/20 bg-yellow-500/10 p-4">
+              <div className="flex items-center justify-center gap-2 font-medium text-orange-500">
                 <AlertCircle size={16} />
                 You must be signed in to authorize a device
               </div>
             </div>
-            <a
-              href={`/api/auth/signin?callbackUrl=${encodeURIComponent("/oauth/device")}`}
-              className="btn btn-primary"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                width: "100%",
-                justifyContent: "center",
-              }}
-            >
-              Sign in with GitHub
-            </a>
+            <Button asChild size="sm" className="w-full">
+              <a
+                href={`/api/auth/signin?callbackUrl=${encodeURIComponent("/oauth/device")}`}
+              >
+                Sign in with GitHub
+              </a>
+            </Button>
           </div>
         ) : (
-          /* Signed in — show code entry form */
-          <form
-            onSubmit={handleSubmit}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-6)",
-            }}
-          >
+          <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-6">
             <div>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  marginBottom: "var(--space-3)",
-                  color: "var(--text-secondary)",
-                }}
-              >
+              <p className="mb-3 text-sm font-medium text-foreground">
                 Enter the code shown in your terminal
               </p>
 
-              {/* Two-segment code input */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "12px",
-                }}
-              >
+              <div className="flex items-center justify-center gap-3">
                 <input
                   type="text"
                   value={segments[0]}
@@ -277,29 +151,11 @@ export default function DeviceAuthPage() {
                   placeholder="XXXX"
                   autoFocus
                   autoComplete="off"
-                  style={{
-                    width: "120px",
-                    textAlign: "center",
-                    letterSpacing: "0.25em",
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    fontFamily: "var(--font-mono)",
-                    padding: "0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: `2px solid ${error ? "var(--status-error)" : "var(--border-color)"}`,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    textTransform: "uppercase",
-                  }}
+                  className={`w-[120px] rounded-md border-2 bg-muted p-3 text-center font-mono text-2xl font-bold uppercase tracking-widest text-foreground outline-none ${
+                    error ? "border-red-500" : "border-border"
+                  }`}
                 />
-                <span
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: "var(--text-muted)",
-                  }}
-                >
+                <span className="text-2xl font-bold text-muted-foreground">
                   —
                 </span>
                 <input
@@ -312,93 +168,46 @@ export default function DeviceAuthPage() {
                   maxLength={4}
                   placeholder="XXXX"
                   autoComplete="off"
-                  style={{
-                    width: "120px",
-                    textAlign: "center",
-                    letterSpacing: "0.25em",
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    fontFamily: "var(--font-mono)",
-                    padding: "0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: `2px solid ${error ? "var(--status-error)" : "var(--border-color)"}`,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    textTransform: "uppercase",
-                  }}
+                  className={`w-[120px] rounded-md border-2 bg-muted p-3 text-center font-mono text-2xl font-bold uppercase tracking-widest text-foreground outline-none ${
+                    error ? "border-red-500" : "border-border"
+                  }`}
                 />
               </div>
             </div>
 
-            {/* Error message */}
             {error && (
-              <div
-                style={{
-                  padding: "var(--space-3)",
-                  background: "rgba(239, 68, 68, 0.1)",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid rgba(239, 68, 68, 0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  color: "var(--status-error)",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <div className="flex items-center gap-2 rounded-md border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-500">
                 <AlertCircle size={14} />
                 {error}
               </div>
             )}
 
-            <button
+            <Button
               type="submit"
+              size="sm"
               disabled={userCode.length !== 9 || loading}
-              className="btn btn-primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                fontSize: "1rem",
-                padding: "0.75rem",
-                opacity: userCode.length !== 9 || loading ? 0.5 : 1,
-                cursor:
-                  userCode.length !== 9 || loading ? "not-allowed" : "pointer",
-              }}
+              className={`w-full text-base ${
+                userCode.length !== 9 || loading
+                  ? "cursor-not-allowed opacity-50"
+                  : ""
+              }`}
             >
               {loading ? (
                 <>
-                  <Loader2
-                    size={16}
-                    style={{
-                      animation: "spin 1s linear infinite",
-                    }}
-                  />{" "}
-                  Authorizing...
+                  <Loader2 size={16} className="animate-spin" /> Authorizing...
                 </>
               ) : (
                 "Authorize Device"
               )}
-            </button>
+            </Button>
 
-            <p
-              style={{
-                fontSize: "0.8125rem",
-                color: "var(--text-muted)",
-                lineHeight: 1.5,
-              }}
-            >
+            <p className="text-[0.8125rem] leading-relaxed text-muted-foreground">
               Authorizing as{" "}
-              <strong style={{ color: "var(--text-primary)" }}>
+              <strong className="text-foreground">
                 @{(session.user as any)?.username || session.user?.name}
               </strong>
               . Not you?{" "}
-              <a
-                href="/api/auth/signout"
-                style={{ color: "var(--accent-primary)" }}
-              >
+              <a href="/api/auth/signout" className="text-primary">
                 Sign out
               </a>
             </p>

@@ -1,42 +1,18 @@
-import { Skeleton, SkeletonCard } from "@/components/Skeleton";
+import { Skeleton } from "@/components/Skeleton";
 
 export default function BuildDetailLoading() {
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-8)",
-        paddingBottom: "var(--space-16)",
-        maxWidth: "960px",
-      }}
-    >
+    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
       <Skeleton
         width="10rem"
         height="0.875rem"
-        style={{ marginBottom: "var(--space-6)" }}
+        style={{ marginBottom: "1.5rem" }}
       />
 
-      <SkeletonCard
-        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "var(--space-4)",
-          }}
-        >
+      <div className="rounded-2xl border border-border/70 bg-card/70 p-4 backdrop-blur-sm sm:p-5 mb-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-3)",
-                marginBottom: "var(--space-2)",
-              }}
-            >
+            <div className="flex items-center gap-3 mb-2">
               <Skeleton width="14rem" height="1.5rem" />
               <Skeleton
                 width="5rem"
@@ -53,16 +29,7 @@ export default function BuildDetailLoading() {
           />
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-            gap: "var(--space-4)",
-            marginTop: "var(--space-5)",
-            paddingTop: "var(--space-5)",
-            borderTop: "1px solid var(--border-color)",
-          }}
-        >
+        <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 border-t border-border pt-5">
           {Array.from({ length: 4 }, (_, i) => (
             <div key={i}>
               <Skeleton
@@ -74,21 +41,19 @@ export default function BuildDetailLoading() {
             </div>
           ))}
         </div>
-      </SkeletonCard>
+      </div>
 
-      <SkeletonCard style={{ padding: "var(--space-5)" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "var(--space-3)",
-          }}
-        >
+      <div className="rounded-2xl border border-border/70 bg-card/80 p-5">
+        <div className="flex justify-between mb-3">
           <Skeleton width="6rem" height="1rem" />
           <Skeleton width="4rem" height="0.875rem" />
         </div>
-        <Skeleton width="100%" height="16rem" borderRadius="var(--radius-sm)" />
-      </SkeletonCard>
+        <Skeleton
+          width="100%"
+          height="16rem"
+          borderRadius="var(--radius-sm)"
+        />
+      </div>
     </div>
   );
 }

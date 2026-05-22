@@ -24,12 +24,11 @@ export default async function SubmitReviewPage({
 
   if (!build) {
     return (
-      <div
-        className="container"
-        style={{ paddingTop: "var(--space-10)", textAlign: "center" }}
-      >
-        <h1 className="heading-2">Build not found</h1>
-        <p className="text-muted">
+      <div className="mx-auto w-full max-w-4xl px-4 py-10 text-center sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          Build not found
+        </h1>
+        <p className="text-muted-foreground">
           The build you are looking for does not exist.
         </p>
       </div>
@@ -38,28 +37,19 @@ export default async function SubmitReviewPage({
 
   if (build.status !== "SUCCESS") {
     return (
-      <div
-        className="container"
-        style={{ paddingTop: "var(--space-10)", textAlign: "center" }}
-      >
-        <h1 className="heading-2">Build not successful</h1>
-        <p className="text-muted">
+      <div className="mx-auto w-full max-w-4xl px-4 py-10 text-center sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          Build not successful
+        </h1>
+        <p className="text-muted-foreground">
           Only successful builds can be submitted for review.
         </p>
       </div>
     );
   }
 
-  // Allow editing the submission even if already submitted
-
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
+    <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <SubmitReviewForm
         buildId={build.id}
         buildNumber={build.buildNumber}
