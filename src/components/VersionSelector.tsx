@@ -100,7 +100,7 @@ export default function VersionSelector({
   };
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-3 w-full max-w-[360px]">
       <div className="flex items-stretch gap-2.5 flex-wrap w-full">
         <select
           value={selectedVersion.version}
