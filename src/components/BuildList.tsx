@@ -10,6 +10,7 @@ import {
   Loader2,
   Package,
   Search,
+  User,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -80,9 +81,11 @@ export default function BuildsList({
 
     return builds.filter((build) => {
       const plugin = build.plugin?.displayName || build.plugin?.name || "";
+      const author = build.plugin?.author?.username || "";
 
       const matchesSearch =
         plugin.toLowerCase().includes(q) ||
+        author.toLowerCase().includes(q) ||
         build.branch?.toLowerCase().includes(q) ||
         build.status?.toLowerCase().includes(q);
 
@@ -254,6 +257,17 @@ export default function BuildsList({
                     color: "var(--text-muted)",
                   }}
                 >
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "3px",
+                    }}
+                  >
+                    <User size={12} />
+                    {build.plugin?.author?.username || "unknown"}
+                  </span>
+
                   <span
                     style={{
                       display: "flex",

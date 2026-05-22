@@ -37,6 +37,11 @@ export default function BuildsLoading() {
                   height="0.875rem"
                   style={{ marginBottom: "4px" }}
                 />
+                <Skeleton
+                  width="30%"
+                  height="0.75rem"
+                  style={{ marginBottom: "4px" }}
+                />
                 <Skeleton width="40%" height="0.75rem" />
               </div>
               <Skeleton width="5rem" height="0.875rem" />
