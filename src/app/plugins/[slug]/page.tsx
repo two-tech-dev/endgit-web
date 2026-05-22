@@ -770,6 +770,9 @@ export default async function PluginDetailPage({
             </p>
           </div>
 
+          {/* VirusTotal Scan */}
+          <VirusTotalCard version={activeVersion} />
+
           {/* Producers — based on active version */}
           {activeVersion &&
             activeVersion.producers &&
@@ -1162,8 +1165,6 @@ export default async function PluginDetailPage({
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />
 
-          {/* VirusTotal Scan */}
-          <VirusTotalCard version={activeVersion} />
         </aside>
       </div>
     </div>
