@@ -24,7 +24,6 @@ const COMMON_LICENSES = [
   "MPL-2.0",
   "AGPL-3.0",
   "Unlicense",
-  "Proprietary",
   "Other",
 ];
 const ENDSTONE_APIS = ["0.11.x", "0.10.x", "0.9.x", "0.8.x", "0.7.x"];

@@ -16,7 +16,6 @@ const COMMON_LICENSES = [
   "MPL-2.0",
   "AGPL-3.0",
   "Unlicense",
-  "Proprietary",
   "Other",
 ];
 
