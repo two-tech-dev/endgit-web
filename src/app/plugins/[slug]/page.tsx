@@ -181,7 +181,7 @@ export default async function PluginDetailPage({
     plugin.description;
 
   return (
-    <div className="container py-8">
+    <div className="container !py-8">
       {/* Header Section */}
       <div className="card p-6 mb-6">
         <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:flex-nowrap">
