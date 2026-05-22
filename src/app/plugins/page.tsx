@@ -1,21 +1,12 @@
-import {
-  Star,
-  Download,
-  ShieldCheck,
-  Search,
-  Tag,
-  Zap,
-  Activity,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
 import PluginSearch from "@/components/PluginSearch";
 import PluginSidebarFilters from "@/components/PluginSidebarFilters";
 import PluginCardGrid from "@/components/PluginCardGrid";
+import PluginPagination from "@/components/PluginPagination";
 import { fetchApi } from "@/lib/api";
 
 import MobileFiltersWrapper from "@/components/MobileFiltersWrapper";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Endstone Plugins — EndGit",
@@ -51,38 +42,6 @@ export default async function PluginsPage({
     total: 0,
     pageSize: 10,
   };
-
-  // Build pagination URL helper
-  function pageUrl(page: number): string {
-    const p = new URLSearchParams();
-    p.set("page", page.toString());
-    if (searchParams.q) p.set("q", searchParams.q as string);
-    if (searchParams.category)
-      p.set("category", searchParams.category as string);
-    if (searchParams.sort) p.set("sort", searchParams.sort as string);
-    if (searchParams.type) p.set("type", searchParams.type as string);
-    return `/plugins?${p.toString()}#plugin-grid`;
-  }
-
-  // Generate page numbers to display
-  function getPageNumbers(): (number | "...")[] {
-    const totalPages = pagination.totalPages;
-    if (totalPages <= 7) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-    const pages: (number | "...")[] = [1];
-    if (currentPage > 3) pages.push("...");
-    for (
-      let i = Math.max(2, currentPage - 1);
-      i <= Math.min(totalPages - 1, currentPage + 1);
-      i++
-    ) {
-      pages.push(i);
-    }
-    if (currentPage < totalPages - 2) pages.push("...");
-    pages.push(totalPages);
-    return pages;
-  }
 
   return (
     <div
@@ -130,155 +89,13 @@ export default async function PluginsPage({
         <div id="plugin-grid" style={{ flex: 1 }}>
           <PluginCardGrid plugins={realPlugins} />
 
-          {/* Pagination Controls */}
           {pagination.totalPages > 1 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                marginTop: "var(--space-1)",
-                flexWrap: "wrap",
-              }}
-            >
-              {/* Previous */}
-              {currentPage > 1 ? (
-                <a
-                  href={pageUrl(currentPage - 1)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    minHeight: "44px",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-card)",
-                    color: "var(--text-secondary)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                >
-                  <ChevronLeft size={16} /> Prev
-                </a>
-              ) : (
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    minHeight: "44px",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    opacity: 0.5,
-                    cursor: "not-allowed",
-                  }}
-                >
-                  <ChevronLeft size={16} /> Prev
-                </span>
-              )}
-
-              {/* Page Numbers */}
-              {getPageNumbers().map((p, i) =>
-                p === "..." ? (
-                  <span
-                    key={`dots-${i}`}
-                    style={{
-                      padding: "0.5rem 0.25rem",
-                      color: "var(--text-muted)",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    …
-                  </span>
-                ) : (
-                  <a
-                    key={p}
-                    href={pageUrl(p)}
-                    style={{
-                      padding: "0.5rem 0.75rem",
-                      minHeight: "44px",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: "var(--radius-md)",
-                      border:
-                        p === currentPage
-                          ? "1px solid var(--accent-primary)"
-                          : "1px solid var(--border-color)",
-                      background:
-                        p === currentPage
-                          ? "rgba(6, 182, 212, 0.1)"
-                          : "var(--bg-card)",
-                      color:
-                        p === currentPage
-                          ? "var(--accent-primary)"
-                          : "var(--text-secondary)",
-                      fontSize: "0.875rem",
-                      fontWeight: p === currentPage ? 700 : 500,
-                      textDecoration: "none",
-                      transition: "all 150ms",
-                      minWidth: "44px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {p}
-                  </a>
-                ),
-              )}
-
-              {/* Next */}
-              {currentPage < pagination.totalPages ? (
-                <a
-                  href={pageUrl(currentPage + 1)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    minHeight: "44px",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-card)",
-                    color: "var(--text-secondary)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    textDecoration: "none",
-                    transition: "all 150ms",
-                  }}
-                >
-                  Next <ChevronRight size={16} />
-                </a>
-              ) : (
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    padding: "0.5rem 0.75rem",
-                    minHeight: "44px",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-muted)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    opacity: 0.5,
-                    cursor: "not-allowed",
-                  }}
-                >
-                  Next <ChevronRight size={16} />
-                </span>
-              )}
-            </div>
+            <Suspense>
+              <PluginPagination
+                currentPage={currentPage}
+                totalPages={pagination.totalPages}
+              />
+            </Suspense>
           )}
         </div>
       </div>
