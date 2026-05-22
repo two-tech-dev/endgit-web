@@ -50,22 +50,12 @@ export function useTheme() {
 export default function ThemeToggle() {
   const { theme, mounted, toggleTheme } = useTheme();
 
-  if (!mounted) return <div style={{ width: 32, height: 32 }} />;
+  if (!mounted) return <div className="w-8 h-8" />;
 
   return (
     <button
       onClick={toggleTheme}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 32,
-        height: 32,
-        borderRadius: "var(--radius-full)",
-        background: "var(--bg-secondary)",
-        color: "var(--text-secondary)",
-        transition: "all var(--transition-fast)",
-      }}
+      className="flex items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}

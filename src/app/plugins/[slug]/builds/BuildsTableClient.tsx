@@ -93,150 +93,59 @@ export function BuildsTableClient({
     plugin.status === "PENDING_REVIEW";
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
+    <div className="container py-8">
       <Link
         href="/dashboard/dev"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          color: "var(--text-muted)",
-          textDecoration: "none",
-          fontSize: "0.875rem",
-          fontWeight: 500,
-          marginBottom: "var(--space-6)",
-        }}
+        className="inline-flex items-center gap-1.5 text-text-muted no-underline text-sm font-medium mb-6 hover:text-brand transition-colors"
       >
         <ArrowLeft size={16} /> Back to Dev Dashboard
       </Link>
 
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <h1
-          style={{
-            fontSize: "clamp(1.5rem, 5vw, 2rem)",
-            fontWeight: 700,
-            margin: 0,
-            wordBreak: "break-word",
-          }}
-        >
+      <div className="mb-6">
+        <h1 className="heading-2 m-0 break-words">
           {plugin.displayName} CI Builds
         </h1>
-        <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
+        <p className="text-text-muted mt-1">
           View build history and logs for this plugin.
         </p>
       </div>
 
-      <div className="card" style={{ padding: "var(--space-6)" }}>
+      <div className="card p-6">
         {builds.length === 0 ? (
-          <div
-            style={{
-              textAlign: "center",
-              padding: "var(--space-8)",
-              color: "var(--text-muted)",
-            }}
-          >
+          <div className="text-center p-8 text-text-muted">
             <GitBranch
               size={32}
-              style={{ margin: "0 auto var(--space-4)", opacity: 0.5 }}
+              className="mx-auto mb-4 opacity-50"
             />
-            <p style={{ fontWeight: 500 }}>No builds found.</p>
-            <p style={{ fontSize: "0.875rem", marginTop: "4px" }}>
+            <p className="font-medium text-text-primary">No builds found.</p>
+            <p className="text-sm mt-1 text-text-muted">
               Push to your repository to trigger the first build.
             </p>
           </div>
         ) : (
           <div
             ref={wrapperRef}
-            className="builds-table-wrapper"
-            style={{
-              overflowX: "auto",
-              overflowY: "auto",
-              maxHeight: "600px",
-            }}
+            className="builds-table-wrapper overflow-auto max-h-[600px]"
           >
-            <table
-              className="builds-table"
-              style={{
-                width: "100%",
-                borderCollapse: "collapse",
-                fontSize: "0.875rem",
-              }}
-            >
-              <thead
-                style={{
-                  background: "var(--bg-secondary)",
-                  position: "sticky",
-                  top: 0,
-                  zIndex: 1,
-                }}
-              >
-                <tr
-                  style={{
-                    borderBottom: "1px solid var(--border-color)",
-                    textAlign: "left",
-                  }}
-                >
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      borderRight: "1px solid var(--border-color)",
-                    }}
-                  >
+            <table className="builds-table w-full border-collapse text-sm">
+              <thead className="bg-surface-secondary sticky top-0 z-10">
+                <tr className="border-b border-border text-left">
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
                     Build #
                   </th>
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      borderRight: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
                     Date
                   </th>
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      borderRight: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
                     Lint
                   </th>
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      borderRight: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
                     Commit
                   </th>
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      borderRight: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
                     Branch or Pull Request number
                   </th>
-                  <th
-                    style={{
-                      padding: "var(--space-3) var(--space-4)",
-                      color: "var(--text-primary)",
-                      fontWeight: 600,
-                      textAlign: "right",
-                    }}
-                  >
+                  <th className="px-4 py-3 text-text-primary font-semibold text-right">
                     Action
                   </th>
                 </tr>
@@ -245,228 +154,107 @@ export function BuildsTableClient({
                 {builds.map((build: any) => (
                   <tr
                     key={build.id}
-                    style={{
-                      borderBottom: "1px solid var(--border-color)",
-                      background: "var(--bg-primary)",
-                    }}
+                    className="border-b border-border bg-surface-card hover:bg-surface-secondary/30 transition-colors"
                   >
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        borderRight: "1px solid var(--border-color)",
-                        verticalAlign: "top",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "2px",
-                        }}
-                      >
+                    <td className="p-4 border-r border-border align-top">
+                      <div className="flex flex-col gap-[2px]">
                         <Link
                           href={`/builds/${build.id}`}
-                          style={{
-                            color: "var(--accent-blue)",
-                            textDecoration: "none",
-                          }}
+                          className="text-accent no-underline font-medium hover:underline"
                         >
                           Dev #{build.buildNumber}
                         </Link>
                         {build.commitHash && (
-                          <span
-                            style={{
-                              color: "var(--accent-blue)",
-                              fontSize: "0.8125rem",
-                            }}
-                          >
+                          <span className="text-accent text-[13px]">
                             (&amp;{build.commitHash.slice(0, 5)})
                           </span>
                         )}
                         {build.triggerType === "WEBHOOK" && (
-                          <span
-                            className="badge"
-                            style={{
-                              fontSize: "0.75rem",
-                              width: "fit-content",
-                              marginTop: "4px",
-                            }}
-                          >
+                          <span className="badge text-xs w-fit mt-1">
                             AUTO
                           </span>
                         )}
                       </div>
                     </td>
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        color: "var(--text-secondary)",
-                        borderRight: "1px solid var(--border-color)",
-                        verticalAlign: "top",
-                      }}
-                    >
+                    <td className="p-4 border-r border-border align-top text-text-secondary">
                       {timeAgo(build.createdAt)}
                       {build.duration ? (
-                        <span
-                          style={{
-                            fontSize: "0.8125rem",
-                            color: "var(--text-muted)",
-                          }}
-                        >
+                        <span className="text-[13px] text-text-muted">
                           {" "}
                           (in {build.duration}s)
                         </span>
                       ) : null}
                     </td>
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        borderRight: "1px solid var(--border-color)",
-                        verticalAlign: "top",
-                      }}
-                    >
+                    <td className="p-4 border-r border-border align-top">
                       {build.status === "SUCCESS" ? (
-                        <span style={{ color: "var(--status-success)" }}>
+                        <span className="text-success font-medium">
                           OK
                         </span>
                       ) : build.status === "FAILED" ? (
-                        <span style={{ color: "var(--status-error)" }}>
+                        <span className="text-error font-medium">
                           Failed
                         </span>
                       ) : build.status === "RUNNING" ? (
-                        <span style={{ color: "var(--accent-primary)" }}>
+                        <span className="text-brand font-medium">
                           Running
                         </span>
                       ) : (
-                        <span style={{ color: "var(--text-muted)" }}>
+                        <span className="text-text-muted">
                           Queued
                         </span>
                       )}
                     </td>
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        borderRight: "1px solid var(--border-color)",
-                        verticalAlign: "top",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "6px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            wordBreak: "break-word",
-                          }}
-                        >
+                    <td className="p-4 border-r border-border align-top">
+                      <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-1.5 break-all">
                           {build.commitHash && (
                             <a
                               href={`${plugin.repoUrl}/commit/${build.commitHash}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                color: "var(--accent-blue)",
-                                fontFamily: "var(--font-mono)",
-                                textDecoration: "none",
-                              }}
+                              className="text-accent font-mono no-underline hover:underline shrink-0"
                             >
                               {build.commitHash.slice(0, 7)}
                             </a>
                           )}
-                          <span style={{ color: "var(--text-primary)" }}>
+                          <span className="text-text-primary">
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>
-                        <div style={{ display: "flex", gap: "6px" }}>
+                        <div className="flex gap-1.5">
                           {isOwner && build.versionStatus === "PENDING" && (
-                            <span
-                              className="badge badge-warning"
-                              style={{
-                                fontSize: "0.75rem",
-                                background: "rgba(245, 158, 11, 0.2)",
-                                color: "var(--status-warning)",
-                              }}
-                            >
+                            <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
                               PENDING REVIEW
                             </span>
                           )}
                           {isOwner && build.versionStatus === "APPROVED" && (
-                            <span
-                              className="badge badge-success"
-                              style={{
-                                fontSize: "0.75rem",
-                                background: "rgba(16, 185, 129, 0.2)",
-                                color: "var(--status-success)",
-                              }}
-                            >
+                            <span className="badge bg-success/10 text-success border border-success/20 text-xs font-semibold">
                               APPROVED
                             </span>
                           )}
                           {isOwner && build.versionStatus === "REJECTED" && (
-                            <span
-                              className="badge badge-error"
-                              style={{
-                                fontSize: "0.75rem",
-                                background: "rgba(239, 68, 68, 0.2)",
-                                color: "var(--status-error)",
-                              }}
-                            >
+                            <span className="badge bg-error/10 text-error border border-error/20 text-xs font-semibold">
                               REJECTED
                             </span>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        borderRight: "1px solid var(--border-color)",
-                        verticalAlign: "top",
-                      }}
-                    >
+                    <td className="p-4 border-r border-border align-top">
                       <a
                         href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{
-                          color: "var(--accent-blue)",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "4px",
-                          textDecoration: "none",
-                        }}
+                        className="text-accent flex items-center gap-1 no-underline hover:underline font-mono"
                       >
                         {build.branch || "master"}
                       </a>
                     </td>
-                    <td
-                      style={{
-                        padding: "var(--space-4)",
-                        textAlign: "right",
-                        verticalAlign: "top",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "var(--space-2)",
-                          justifyContent: "flex-end",
-                        }}
-                      >
+                    <td className="p-4 text-right align-top">
+                      <div className="flex gap-2 justify-end">
                         <Link
                           href={`/builds/${build.id}`}
-                          className="btn btn-secondary"
-                          style={{
-                            padding: "0.375rem 0.75rem",
-                            fontSize: "0.8125rem",
-                            whiteSpace: "nowrap",
-                          }}
+                          className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
                         >
                           Logs
                         </Link>
@@ -477,13 +265,7 @@ export function BuildsTableClient({
                           !hasPendingVersion && (
                             <Link
                               href={`/builds/${build.id}/submit`}
-                              className="btn btn-primary"
-                              style={{
-                                padding: "0.375rem 0.75rem",
-                                fontSize: "0.8125rem",
-                                gap: "4px",
-                                whiteSpace: "nowrap",
-                              }}
+                              className="btn btn-primary py-1.5 px-3 text-[13px] flex items-center gap-1 whitespace-nowrap"
                             >
                               <Send size={14} /> Submit
                             </Link>
@@ -496,32 +278,16 @@ export function BuildsTableClient({
             </table>
 
             {isLoading && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  padding: "var(--space-4)",
-                }}
-              >
+              <div className="flex justify-center p-4">
                 <Loader2
                   size={20}
-                  style={{
-                    animation: "spin 1s linear infinite",
-                    color: "var(--accent-primary)",
-                  }}
+                  className="animate-spin text-brand"
                 />
               </div>
             )}
 
             {!hasMore && builds.length > 0 && (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "var(--space-4)",
-                  color: "var(--text-muted)",
-                  fontSize: "0.8125rem",
-                }}
-              >
+              <div className="text-center p-4 text-text-muted text-[13px]">
                 All builds loaded
               </div>
             )}

@@ -24,12 +24,9 @@ export default async function SubmitReviewPage({
 
   if (!build) {
     return (
-      <div
-        className="container"
-        style={{ paddingTop: "var(--space-10)", textAlign: "center" }}
-      >
+      <div className="container pt-10 text-center mx-auto px-4">
         <h1 className="heading-2">Build not found</h1>
-        <p className="text-muted">
+        <p className="text-text-muted mt-2">
           The build you are looking for does not exist.
         </p>
       </div>
@@ -38,12 +35,9 @@ export default async function SubmitReviewPage({
 
   if (build.status !== "SUCCESS") {
     return (
-      <div
-        className="container"
-        style={{ paddingTop: "var(--space-10)", textAlign: "center" }}
-      >
+      <div className="container pt-10 text-center mx-auto px-4">
         <h1 className="heading-2">Build not successful</h1>
-        <p className="text-muted">
+        <p className="text-text-muted mt-2">
           Only successful builds can be submitted for review.
         </p>
       </div>
@@ -53,13 +47,7 @@ export default async function SubmitReviewPage({
   // Allow editing the submission even if already submitted
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
+    <div className="container pt-10 pb-16 mx-auto px-4">
       <SubmitReviewForm
         buildId={build.id}
         buildNumber={build.buildNumber}

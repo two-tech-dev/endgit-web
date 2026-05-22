@@ -49,45 +49,27 @@ function timeAgo(dateStr: string) {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const config: Record<string, { color: string; bg: string; icon: any }> = {
+  const config: Record<string, { badgeClass: string; icon: any }> = {
     SUCCESS: {
-      color: "var(--status-success)",
-      bg: "rgba(16, 185, 129, 0.1)",
+      badgeClass: "bg-success/10 text-success border-success/20",
       icon: <CheckCircle size={14} />,
     },
     FAILED: {
-      color: "var(--status-error)",
-      bg: "rgba(239, 68, 68, 0.1)",
+      badgeClass: "bg-error/10 text-error border-error/20",
       icon: <XCircle size={14} />,
     },
     RUNNING: {
-      color: "var(--accent-primary)",
-      bg: "rgba(14, 165, 233, 0.1)",
-      icon: (
-        <Loader2 size={14} style={{ animation: "spin 1s linear infinite" }} />
-      ),
+      badgeClass: "bg-brand/10 text-brand border-brand/20",
+      icon: <Loader2 size={14} className="animate-spin" />,
     },
     QUEUED: {
-      color: "var(--text-muted)",
-      bg: "rgba(100, 116, 139, 0.1)",
+      badgeClass: "bg-surface-secondary text-text-muted border-border",
       icon: <Clock size={14} />,
     },
   };
   const c = config[status] || config.QUEUED;
   return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "4px",
-        padding: "4px 10px",
-        borderRadius: "var(--radius-full)",
-        fontSize: "0.8125rem",
-        fontWeight: 600,
-        color: c.color,
-        background: c.bg,
-      }}
-    >
+    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[0.8125rem] font-semibold border ${c.badgeClass}`}>
       {c.icon} {status}
     </span>
   );
@@ -102,18 +84,14 @@ export default async function BuildDetailPage({
 
   if (!build) {
     return (
-      <div
-        className="container"
-        style={{ paddingTop: "var(--space-16)", textAlign: "center" }}
-      >
+      <div className="container pt-16 text-center mx-auto px-4">
         <h1 className="heading-2">Build not found</h1>
-        <p className="text-muted" style={{ marginTop: "var(--space-2)" }}>
+        <p className="text-text-muted mt-2">
           This build may have been deleted or doesn't exist.
         </p>
         <Link
           href="/builds"
-          className="btn btn-secondary"
-          style={{ marginTop: "var(--space-6)" }}
+          className="btn btn-secondary mt-6"
         >
           <ArrowLeft size={16} /> Back to Live Builds
         </Link>
@@ -130,96 +108,44 @@ export default async function BuildDetailPage({
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-8)",
-        paddingBottom: "var(--space-16)",
-        maxWidth: "960px",
-      }}
-    >
+    <div className="container pt-8 pb-16 max-w-[960px] mx-auto px-4">
       {/* Breadcrumb */}
       <Link
         href="/builds"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "var(--space-2)",
-          color: "var(--text-muted)",
-          fontSize: "0.875rem",
-          marginBottom: "var(--space-6)",
-        }}
+        className="inline-flex items-center gap-2 text-text-muted text-sm mb-6 hover:text-text-primary transition-colors no-underline"
       >
         <ArrowLeft size={14} /> Back to Live Builds
       </Link>
 
       {/* Header Card */}
-      <div
-        className="card"
-        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "var(--space-4)",
-          }}
-        >
+      <div className="card p-6 mb-6">
+        <div className="flex justify-between items-start flex-wrap gap-4">
           <div>
-            <div
-              className="build-title-row"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-3)",
-                marginBottom: "var(--space-2)",
-              }}
-            >
-              <h1 className="heading-3" style={{ margin: 0 }}>
+            <div className="build-title-row flex items-center gap-3 mb-2 flex-wrap">
+              <h1 className="heading-3 m-0">
                 {build.plugin?.displayName} — Build #{build.buildNumber}
               </h1>
               <StatusBadge status={build.status} />
               {!build.isRelease && (
-                <span
-                  style={{
-                    fontSize: "0.6875rem",
-                    padding: "2px 8px",
-                    borderRadius: "var(--radius-sm)",
-                    background: "rgba(245, 158, 11, 0.1)",
-                    color: "var(--status-warning)",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                  }}
-                >
+                <span className="text-[0.6875rem] px-2 py-0.5 rounded-sm bg-warning/10 text-warning font-bold uppercase tracking-wider">
                   ⚠️ Unstable
                 </span>
               )}
             </div>
-            <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+            <p className="text-text-muted text-sm">
               by {build.plugin?.author?.username || "unknown"}
             </p>
           </div>
 
           {build.status === "SUCCESS" && (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-2)",
-                alignItems: "flex-end",
-              }}
-            >
+            <div className="flex flex-col gap-2 items-end">
               {/* Python or fallback single artifact */}
               {build.artifactUrl &&
                 !build.artifactUrlLinux &&
                 !build.artifactUrlWin && (
                   <a
                     href={build.artifactUrl}
-                    className="btn btn-primary"
-                    style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}
+                    className="btn btn-primary px-5 py-2 text-sm flex items-center gap-2 no-underline"
                   >
                     <Download size={16} /> Download Artifact
                   </a>
@@ -228,8 +154,7 @@ export default async function BuildDetailPage({
               {build.artifactUrlLinux && (
                 <a
                   href={build.artifactUrlLinux}
-                  className="btn btn-primary"
-                  style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}
+                  className="btn btn-primary px-5 py-2 text-sm flex items-center gap-2 no-underline"
                 >
                   <Download size={16} /> 🐧 Linux (.so)
                 </a>
@@ -237,8 +162,7 @@ export default async function BuildDetailPage({
               {build.artifactUrlWin && (
                 <a
                   href={build.artifactUrlWin}
-                  className="btn btn-secondary"
-                  style={{ padding: "0.5rem 1.25rem", fontSize: "0.875rem" }}
+                  className="btn btn-secondary px-5 py-2 text-sm flex items-center gap-2 no-underline"
                 >
                   <Download size={16} /> 🪟 Windows (.dll)
                 </a>
@@ -248,25 +172,16 @@ export default async function BuildDetailPage({
           {/* C++ build in progress indicators */}
           {build.status === "RUNNING" &&
             (build.winBuildStatus || build.linuxBuildStatus) && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                  alignItems: "flex-end",
-                  fontSize: "0.75rem",
-                }}
-              >
+              <div className="flex flex-col gap-1 items-end text-xs">
                 {build.linuxBuildStatus && (
                   <span
-                    style={{
-                      color:
-                        build.linuxBuildStatus === "SUCCESS"
-                          ? "var(--status-success)"
-                          : build.linuxBuildStatus === "FAILED"
-                            ? "var(--status-error)"
-                            : "var(--accent-primary)",
-                    }}
+                    className={
+                      build.linuxBuildStatus === "SUCCESS"
+                        ? "text-success"
+                        : build.linuxBuildStatus === "FAILED"
+                          ? "text-error"
+                          : "text-brand"
+                    }
                   >
                     🐧 Linux:{" "}
                     {build.linuxBuildStatus === "PENDING"
@@ -278,14 +193,13 @@ export default async function BuildDetailPage({
                 )}
                 {build.winBuildStatus && (
                   <span
-                    style={{
-                      color:
-                        build.winBuildStatus === "SUCCESS"
-                          ? "var(--status-success)"
-                          : build.winBuildStatus === "FAILED"
-                            ? "var(--status-error)"
-                            : "var(--accent-primary)",
-                    }}
+                    className={
+                      build.winBuildStatus === "SUCCESS"
+                        ? "text-success"
+                        : build.winBuildStatus === "FAILED"
+                          ? "text-error"
+                          : "text-brand"
+                    }
                   >
                     🪟 Windows:{" "}
                     {build.winBuildStatus === "PENDING"
@@ -300,131 +214,47 @@ export default async function BuildDetailPage({
         </div>
 
         {/* Metadata Grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-            gap: "var(--space-4)",
-            marginTop: "var(--space-5)",
-            paddingTop: "var(--space-5)",
-            borderTop: "1px solid var(--border-color)",
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-5 pt-5 border-t border-border">
           <div>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "4px",
-              }}
-            >
+            <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Branch
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                fontWeight: 500,
-                color: "var(--text-primary)",
-              }}
-            >
-              <GitBranch size={14} color="var(--accent-primary)" />{" "}
+            <div className="flex items-center gap-1 font-medium text-text-primary text-sm">
+              <GitBranch size={14} className="text-brand" />{" "}
               {build.branch}
             </div>
           </div>
           <div>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "4px",
-              }}
-            >
+            <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Commit
             </div>
-            <div
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                color: "var(--text-primary)",
-              }}
-            >
+            <div className="font-mono text-sm font-medium text-text-primary">
               {build.commitHash ? build.commitHash.slice(0, 7) : "—"}
             </div>
           </div>
           <div>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "4px",
-              }}
-            >
+            <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Duration
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                fontWeight: 500,
-                color: "var(--text-primary)",
-              }}
-            >
-              <Clock size={14} color="var(--accent-primary)" />{" "}
+            <div className="flex items-center gap-1 font-medium text-text-primary text-sm">
+              <Clock size={14} className="text-brand" />{" "}
               {build.duration ? `${build.duration}s` : "—"}
             </div>
           </div>
           <div>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                color: "var(--text-muted)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                marginBottom: "4px",
-              }}
-            >
+            <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Created
             </div>
-            <div
-              style={{
-                fontWeight: 500,
-                color: "var(--text-primary)",
-                fontSize: "0.875rem",
-              }}
-            >
+            <div className="font-medium text-text-primary text-sm">
               {timeAgo(build.createdAt)}
             </div>
           </div>
           {build.artifactSize && (
             <div>
-              <div
-                style={{
-                  fontSize: "0.6875rem",
-                  color: "var(--text-muted)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  marginBottom: "4px",
-                }}
-              >
+              <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
                 Artifact Size
               </div>
-              <div
-                style={{
-                  fontWeight: 500,
-                  color: "var(--text-primary)",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <div className="font-medium text-text-primary text-sm">
                 {(build.artifactSize / 1024).toFixed(1)} KB
               </div>
             </div>
@@ -450,27 +280,13 @@ export default async function BuildDetailPage({
 
       {/* Not Reviewed Warning */}
       {!build.isRelease ? (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-4) var(--space-5)",
-            marginTop: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-            borderLeft: "4px solid var(--status-warning)",
-            background: "rgba(245, 158, 11, 0.04)",
-          }}
-        >
+        <div className="card px-5 py-4 mt-6 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
           <AlertTriangle
             size={18}
-            color="var(--status-warning)"
-            style={{ flexShrink: 0 }}
+            className="text-warning shrink-0"
           />
-          <span
-            style={{ color: "var(--text-secondary)", fontSize: "0.875rem" }}
-          >
-            <strong style={{ color: "var(--text-primary)" }}>
+          <span className="text-text-secondary text-sm">
+            <strong className="text-text-primary">
               NOT REVIEWED
             </strong>{" "}
             — This is a development build. It has not been reviewed for safety

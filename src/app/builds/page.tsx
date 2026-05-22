@@ -37,13 +37,7 @@ export default async function BuildsPage() {
   const today = todayUTC();
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
+    <div className="container pt-10 pb-16 mx-auto px-4">
       <BuildsList builds={allBuilds} today={today} />
     </div>
   );

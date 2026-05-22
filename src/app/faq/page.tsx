@@ -51,66 +51,28 @@ const FAQ_ITEMS = [
 function FAQItem({ item }: { item: { q: string; a: string } }) {
   const [open, setOpen] = useState(false);
   return (
-    <div
-      className="card"
-      style={{
-        overflow: "hidden",
-        transition: "all 200ms",
-      }}
-    >
+    <div className="card overflow-hidden transition-all duration-200">
       <button
         onClick={() => setOpen(!open)}
-        style={{
-          width: "100%",
-          padding: "var(--space-5)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "var(--space-4)",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          textAlign: "left",
-        }}
+        className="w-full p-5 flex justify-between items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
       >
-        <span
-          style={{
-            fontWeight: 600,
-            fontSize: "0.9375rem",
-            color: "var(--text-primary)",
-            lineHeight: 1.4,
-          }}
-        >
+        <span className="font-semibold text-[15px] text-text-primary leading-snug">
           {item.q}
         </span>
         <div
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            transition: "transform 0.2s ease",
-            transform: open ? "rotate(180deg)" : "none",
-          }}
+          className={`flex shrink-0 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
         >
-          <ChevronDown size={18} color="var(--text-muted)" />
+          <ChevronDown size={18} className="text-text-muted" />
         </div>
       </button>
       <div
-        style={{
-          maxHeight: open ? "500px" : "0",
-          opacity: open ? 1 : 0,
-          overflow: "hidden",
-          transition: "max-height 0.25s ease, opacity 0.25s ease",
-        }}
+        className={`overflow-hidden transition-all duration-250 ease-in-out ${
+          open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
-        <div
-          style={{
-            padding: "0 var(--space-5) var(--space-5)",
-            fontSize: "0.875rem",
-            color: "var(--text-secondary)",
-            lineHeight: 1.7,
-            whiteSpace: "pre-line",
-          }}
-        >
+        <div className="px-5 pb-5 text-sm text-text-secondary leading-relaxed whitespace-pre-line">
           {item.a}
         </div>
       </div>
@@ -120,36 +82,17 @@ function FAQItem({ item }: { item: { q: string; a: string } }) {
 
 export default function FAQPage() {
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-        maxWidth: "780px",
-      }}
-    >
+    <div className="container max-w-3xl py-12 md:py-20">
       {/* Header */}
       <FadeIn>
-        <div style={{ textAlign: "center", marginBottom: "var(--space-10)" }}>
-          <div
-            style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "var(--radius-lg)",
-              background: "rgba(6,182,212,0.1)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-4)",
-              border: "1px solid rgba(6,182,212,0.15)",
-            }}
-          >
-            <HelpCircle size={28} color="var(--accent-primary)" />
+        <div className="text-center mb-10">
+          <div className="w-14 h-14 rounded-lg bg-cyan-500/10 flex items-center justify-center mx-auto mb-4 border border-cyan-500/15">
+            <HelpCircle size={28} className="text-accent" />
           </div>
-          <h1 className="heading-1" style={{ marginBottom: "var(--space-2)" }}>
+          <h1 className="heading-1 mb-2">
             Frequently Asked Questions
           </h1>
-          <p className="text-muted" style={{ fontSize: "1.0625rem" }}>
+          <p className="text-text-secondary text-[17px]">
             Everything you need to know about EndGit.
           </p>
         </div>
@@ -158,11 +101,7 @@ export default function FAQPage() {
       {/* FAQ List */}
       <StaggerContainer
         staggerDelay={0.06}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-3)",
-        }}
+        className="flex flex-col gap-3"
       >
         {FAQ_ITEMS.map((item, i) => (
           <StaggerItem key={i}>
@@ -173,40 +112,18 @@ export default function FAQPage() {
 
       {/* Still have questions? */}
       <FadeIn delay={0.2}>
-        <div
-          style={{
-            marginTop: "var(--space-10)",
-            padding: "var(--space-6)",
-            textAlign: "center",
-            background: "rgba(6,182,212,0.04)",
-            borderRadius: "var(--radius-lg)",
-            border: "1px solid rgba(6,182,212,0.12)",
-          }}
-        >
-          <p
-            style={{
-              fontWeight: 600,
-              color: "var(--text-primary)",
-              marginBottom: "var(--space-2)",
-            }}
-          >
+        <div className="mt-10 p-6 text-center bg-cyan-500/5 rounded-lg border border-cyan-500/10">
+          <p className="font-semibold text-text-primary mb-2">
             Still have questions?
           </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.875rem",
-              marginBottom: "var(--space-4)",
-            }}
-          >
+          <p className="text-text-muted text-sm mb-4">
             Join our Discord community for help and discussion.
           </p>
           <a
             href="https://discord.gg/9eZhP9y26Q"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
+            className="btn btn-primary inline-flex items-center gap-2"
           >
             Join Discord
           </a>

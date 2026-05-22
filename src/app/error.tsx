@@ -8,20 +8,12 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div style={{ padding: "2rem", textAlign: "center" }}>
-      <h2 style={{ color: "var(--text-primary)" }}>Something went wrong</h2>
-      <p style={{ color: "var(--text-muted)" }}>{error.message}</p>
+    <div className="p-8 text-center max-w-md mx-auto my-16 bg-surface-card border border-border rounded-lg shadow-sm">
+      <h2 className="text-text-primary text-xl font-semibold mb-2">Something went wrong</h2>
+      <p className="text-text-muted text-sm break-words">{error.message}</p>
       <button
         onClick={reset}
-        style={{
-          marginTop: "1rem",
-          padding: "0.5rem 1rem",
-          background: "var(--accent-cyan)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "0.5rem",
-          cursor: "pointer",
-        }}
+        className="mt-4 px-4 py-2 bg-brand hover:bg-brand-dark text-white font-medium rounded-md shadow-sm transition-all"
       >
         Try again
       </button>

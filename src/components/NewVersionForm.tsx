@@ -74,91 +74,27 @@ export default function NewVersionForm({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          padding: "0.5rem 1rem",
-          borderRadius: "var(--radius-md)",
-          background: "var(--accent-primary)",
-          color: "white",
-          border: "none",
-          fontSize: "0.875rem",
-          fontWeight: 600,
-          cursor: "pointer",
-          alignSelf: "flex-start",
-          marginTop: "var(--space-2)",
-        }}
+        className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-accent text-white hover:bg-accent-hover font-semibold text-sm cursor-pointer mt-2"
       >
         <Plus size={16} /> Submit New Version
       </button>
 
       {isOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: "rgba(0,0,0,0.5)",
-            zIndex: 100,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "var(--space-4)",
-          }}
-        >
-          <div
-            className="card"
-            style={{
-              width: "100%",
-              maxWidth: "500px",
-              padding: "var(--space-6)",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: 600,
-                marginBottom: "var(--space-4)",
-              }}
-            >
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+          <div className="card p-6 w-full max-w-[500px]">
+            <h3 className="text-xl font-semibold text-text-primary mb-4">
               Submit New Version
             </h3>
 
             {error && (
-              <div
-                style={{
-                  background: "rgba(239, 68, 68, 0.1)",
-                  color: "var(--status-error)",
-                  padding: "0.75rem",
-                  borderRadius: "var(--radius-md)",
-                  marginBottom: "var(--space-4)",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <div className="bg-error/10 text-error p-3 rounded-md mb-4 text-sm">
                 {error}
               </div>
             )}
 
-            <form
-              onSubmit={handleSubmit}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-4)",
-              }}
-            >
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    marginBottom: "4px",
-                  }}
-                >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-text-secondary">
                   Version Number (e.g. 1.0.0)
                 </label>
                 <input
@@ -166,92 +102,33 @@ export default function NewVersionForm({
                   required
                   value={version}
                   onChange={(e) => setVersion(e.target.value)}
-                  style={{
-                    width: "100%",
-                    padding: "0.625rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                  }}
+                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
                 />
               </div>
 
-              <div>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    marginBottom: "4px",
-                  }}
-                >
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-text-secondary">
                   Changelog (Optional)
                 </label>
                 <textarea
                   value={changelog}
                   onChange={(e) => setChangelog(e.target.value)}
                   rows={3}
-                  style={{
-                    width: "100%",
-                    padding: "0.625rem",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    resize: "vertical",
-                  }}
+                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
                 />
               </div>
 
-              <div
-                style={{
-                  borderTop: "1px solid var(--border-color)",
-                  margin: "var(--space-2) 0",
-                  paddingTop: "var(--space-4)",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    marginBottom: "var(--space-2)",
-                  }}
-                >
+              <div className="border-t border-border mt-2 pt-4">
+                <p className="text-sm font-semibold mb-2">
                   Artifact Source
                 </p>
-                <div
-                  style={{
-                    fontSize: "0.8125rem",
-                    color: "var(--text-muted)",
-                    marginBottom: "var(--space-3)",
-                    display: "flex",
-                    gap: "4px",
-                  }}
-                >
-                  <Info size={14} /> Provide either a successful Build ID or a
-                  direct file URL.
+                <div className="text-[13px] text-text-muted mb-3 flex items-start gap-1.5">
+                  <Info size={14} className="shrink-0 mt-0.5" /> <span>Provide either a successful Build ID or a direct file URL.</span>
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "var(--space-3)",
-                  }}
-                >
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "0.8125rem",
-                        fontWeight: 500,
-                        marginBottom: "4px",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-text-secondary">
                       From Build ID
                     </label>
                     <input
@@ -264,38 +141,16 @@ export default function NewVersionForm({
                       }}
                       placeholder="e.g. clt3x..."
                       disabled={!!fileUrl}
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem",
-                        borderRadius: "var(--radius-md)",
-                        border: "1px solid var(--border-color)",
-                        background: "var(--bg-card)",
-                        color: "var(--text-primary)",
-                        outline: "none",
-                        opacity: fileUrl ? 0.5 : 1,
-                      }}
+                      className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                        fileUrl ? "opacity-50 cursor-not-allowed bg-surface-secondary" : ""
+                      }`}
                     />
                   </div>
-                  <div
-                    style={{
-                      textAlign: "center",
-                      fontSize: "0.75rem",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                    }}
-                  >
+                  <div className="text-center text-[10px] font-bold text-text-muted tracking-wider">
                     — OR —
                   </div>
-                  <div>
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "0.8125rem",
-                        fontWeight: 500,
-                        marginBottom: "4px",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-xs font-medium text-text-secondary">
                       Manual File URL
                     </label>
                     <input
@@ -307,29 +162,14 @@ export default function NewVersionForm({
                       }}
                       placeholder="https://example.com/plugin.zip"
                       disabled={!!buildId}
-                      style={{
-                        width: "100%",
-                        padding: "0.5rem",
-                        borderRadius: "var(--radius-md)",
-                        border: "1px solid var(--border-color)",
-                        background: "var(--bg-card)",
-                        color: "var(--text-primary)",
-                        outline: "none",
-                        opacity: buildId ? 0.5 : 1,
-                      }}
+                      className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                        buildId ? "opacity-50 cursor-not-allowed bg-surface-secondary" : ""
+                      }`}
                     />
                   </div>
                   {fileUrl && (
-                    <div>
-                      <label
-                        style={{
-                          display: "block",
-                          fontSize: "0.8125rem",
-                          fontWeight: 500,
-                          marginBottom: "4px",
-                          color: "var(--text-secondary)",
-                        }}
-                      >
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-xs font-medium text-text-secondary">
                         File Name
                       </label>
                       <input
@@ -338,70 +178,32 @@ export default function NewVersionForm({
                         value={fileName}
                         onChange={(e) => setFileName(e.target.value)}
                         placeholder="plugin-1.0.0.zip"
-                        style={{
-                          width: "100%",
-                          padding: "0.5rem",
-                          borderRadius: "var(--radius-md)",
-                          border: "1px solid var(--border-color)",
-                          background: "var(--bg-card)",
-                          color: "var(--text-primary)",
-                          outline: "none",
-                        }}
+                        className="w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none focus:border-accent transition-all duration-150"
                       />
                     </div>
                   )}
                 </div>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: "var(--space-3)",
-                  marginTop: "var(--space-2)",
-                }}
-              >
+              <div className="flex justify-end gap-3 mt-2">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  style={{
-                    padding: "0.625rem 1rem",
-                    borderRadius: "var(--radius-md)",
-                    background: "transparent",
-                    color: "var(--text-primary)",
-                    border: "1px solid var(--border-color)",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                  }}
+                  className="px-4 py-2 rounded-md bg-transparent text-text-primary border border-border hover:bg-surface-secondary cursor-pointer text-sm font-medium transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting || (!buildId && !fileUrl)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "0.625rem 1.25rem",
-                    borderRadius: "var(--radius-md)",
-                    background: "var(--accent-primary)",
-                    color: "white",
-                    border: "none",
-                    cursor:
-                      submitting || (!buildId && !fileUrl)
-                        ? "not-allowed"
-                        : "pointer",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    opacity: submitting || (!buildId && !fileUrl) ? 0.6 : 1,
-                  }}
+                  className={`flex items-center gap-1.5 px-5 py-2 rounded-md bg-accent text-white font-semibold text-sm transition-all ${
+                    submitting || (!buildId && !fileUrl)
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-accent-hover cursor-pointer"
+                  }`}
                 >
                   {submitting ? (
-                    <Loader2
-                      size={16}
-                      style={{ animation: "spin 1s linear infinite" }}
-                    />
+                    <Loader2 size={16} className="animate-spin" />
                   ) : (
                     <Upload size={16} />
                   )}

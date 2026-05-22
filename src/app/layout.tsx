@@ -57,13 +57,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
             (function() {
-              try {
-                var local = localStorage.getItem('theme');
-                if (local === 'dark' || (local !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
-              } catch (e) {}
-            })();
+               try {
+                 var local = localStorage.getItem('theme');
+                 if (local === 'dark' || (local !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                   document.documentElement.setAttribute('data-theme', 'dark');
+                 }
+               } catch (e) {}
+             })();
           `,
           }}
         />
@@ -71,7 +71,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Navbar />
-          <main>{children}</main>
+          <main className="">{children}</main>
           <Footer />
         </AuthProvider>
         <Analytics />
@@ -86,48 +86,22 @@ import Footer from "@/components/Footer";
 
 function Navbar() {
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: "var(--bg-secondary)",
-        borderBottom: "1px solid var(--border-color)",
-        padding: "1rem 0",
-      }}
-    >
-      <div
-        className="container navbar-container"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          position: "relative",
-        }}
-      >
+    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-5">
+      <div className="container flex justify-between items-center relative">
         <Link
           href="/"
-          className="navbar-logo"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-            textDecoration: "none",
-            flexShrink: 0,
-          }}
+          className="text-2xl font-bold flex items-center gap-3 no-underline shrink-0"
         >
           <Image
             src="/logo.png"
             alt="EndGit Logo"
             width={42}
             height={42}
-            style={{ objectFit: "contain" }}
+            className="object-contain"
             priority
           />
-          <span style={{ color: "var(--text-primary)" }}>
-            endgit<span style={{ color: "var(--accent-primary)" }}>.</span>{" "}
+          <span className="text-text-primary">
+            endgit<span className="text-brand">.</span>{" "}
           </span>
         </Link>
         <NavbarMobile />

@@ -32,38 +32,42 @@ function timeAgo(dateStr: string) {
 function StatusIcon({ status }: { status: string }) {
   switch (status) {
     case "SUCCESS":
-      return <CheckCircle size={16} color="var(--status-success)" />;
+      return <CheckCircle size={16} className="text-success" />;
 
     case "FAILED":
-      return <XCircle size={16} color="var(--status-error)" />;
+      return <XCircle size={16} className="text-error" />;
 
     case "RUNNING":
-      return (
-        <Loader2
-          size={16}
-          color="var(--accent-primary)"
-          style={{ animation: "spin 1s linear infinite" }}
-        />
-      );
+      return <Loader2 size={16} className="text-accent animate-spin" />;
 
     default:
-      return <Clock size={16} color="var(--text-muted)" />;
+      return <Clock size={16} className="text-text-muted" />;
   }
 }
 
-function statusColor(status: string) {
+function statusBgClass(status: string) {
   switch (status) {
     case "SUCCESS":
-      return "var(--status-success)";
-
+      return "bg-success";
     case "FAILED":
-      return "var(--status-error)";
-
+      return "bg-error";
     case "RUNNING":
-      return "var(--accent-primary)";
-
+      return "bg-accent";
     default:
-      return "var(--text-muted)";
+      return "bg-text-muted";
+  }
+}
+
+function statusTextClass(status: string) {
+  switch (status) {
+    case "SUCCESS":
+      return "text-success";
+    case "FAILED":
+      return "text-error";
+    case "RUNNING":
+      return "text-accent";
+    default:
+      return "text-text-muted";
   }
 }
 
@@ -84,15 +88,15 @@ export default function BuildsList({
       const author = build.plugin?.author?.username || "";
 
       const matchesSearch =
-        plugin.toLowerCase().includes(q) ||
-        author.toLowerCase().includes(q) ||
-        build.branch?.toLowerCase().includes(q) ||
-        build.status?.toLowerCase().includes(q);
+          plugin.toLowerCase().includes(q) ||
+          author.toLowerCase().includes(q) ||
+          build.branch?.toLowerCase().includes(q) ||
+          build.status?.toLowerCase().includes(q);
 
       if (!q) {
         // If no search query, only show today's builds
         const isToday =
-          new Date(build.createdAt).toISOString().slice(0, 10) === today;
+            new Date(build.createdAt).toISOString().slice(0, 10) === today;
         return isToday && matchesSearch;
       }
 
@@ -102,228 +106,108 @@ export default function BuildsList({
   }, [builds, query, today]);
 
   return (
-    <>
-      {/* Header */}
-      <div style={{ marginBottom: "var(--space-8)" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-            marginBottom: "var(--space-2)",
-          }}
-        >
-          <h1 className="heading-2">Dev Builds</h1>
+      <>
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="heading-2">Dev Builds</h1>
 
-          <span
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 600,
-              padding: "2px 10px",
-              borderRadius: "var(--radius-full)",
-              background: "rgba(6, 182, 212, 0.1)",
-              color: "var(--accent-primary)",
-              border: "1px solid rgba(6, 182, 212, 0.2)",
-            }}
-          >
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
             Today ({today})
           </span>
+          </div>
+
+          <p className="text-text-muted max-w-[600px]">
+            CI builds from developer pushes today (UTC).
+          </p>
         </div>
 
-        <p className="text-muted" style={{ maxWidth: "600px" }}>
-          CI builds from developer pushes today (UTC).
-        </p>
-      </div>
+        {/* Search */}
+        <div className="mb-6">
+          <div className="card flex items-center gap-3 px-4 py-0">
+            <Search size={18} className="text-text-muted shrink-0" />
 
-      {/* Search */}
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <div
-          className="card"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-            padding: "0 var(--space-4)",
-          }}
-        >
-          <Search size={18} color="var(--text-muted)" />
-
-          <input
-            type="text"
-            placeholder="Search builds..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            style={{
-              width: "100%",
-              height: "48px",
-              border: "none",
-              outline: "none",
-              background: "transparent",
-              color: "var(--text-primary)",
-              fontSize: "0.95rem",
-            }}
-          />
+            <input
+                type="text"
+                placeholder="Search builds..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full h-12 border-none outline-none bg-transparent text-text-primary text-[0.95rem]"
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Warning */}
-      <div
-        className="card"
-        style={{
-          padding: "var(--space-4) var(--space-5)",
-          marginBottom: "var(--space-8)",
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--space-3)",
-          borderLeft: "4px solid var(--status-warning)",
-          background: "rgba(245, 158, 11, 0.04)",
-        }}
-      >
-        <AlertTriangle
-          size={20}
-          color="var(--status-warning)"
-          style={{ flexShrink: 0 }}
-        />
-
-        <div>
-          <span style={{ fontWeight: 600 }}>Caution:</span> Development builds
-          may be unstable.
-        </div>
-      </div>
-
-      {/* Builds */}
-      {filteredBuilds.length === 0 ? (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-12)",
-            textAlign: "center",
-          }}
-        >
-          <Package
-            size={48}
-            color="var(--text-muted)"
-            style={{ margin: "0 auto var(--space-4)" }}
+        {/* Warning */}
+        <div className="card p-4 md:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+          <AlertTriangle
+              size={20}
+              className="text-warning shrink-0"
           />
 
-          <p>No matching builds</p>
+          <div>
+            <span className="font-semibold">Caution:</span> Development builds
+            may be unstable.
+          </div>
         </div>
-      ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
-            gap: "var(--space-4)",
-          }}
-        >
-          {filteredBuilds.map((build: any) => (
-            <Link
-              key={build.id}
-              href={`/plugins/${build.plugin?.slug}/builds`}
-              className="card"
-              style={{
-                padding: "var(--space-4) var(--space-5)",
-                display: "flex",
-                alignItems: "center",
-                gap: "var(--space-4)",
-                textDecoration: "none",
-              }}
-            >
-              <div
-                style={{
-                  width: "4px",
-                  height: "40px",
-                  borderRadius: "2px",
-                  background: statusColor(build.status),
-                }}
+
+        {/* Builds */}
+        {filteredBuilds.length === 0 ? (
+            <div className="card p-12 text-center">
+              <Package
+                  size={48}
+                  className="text-text-muted mx-auto mb-4"
               />
 
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    fontWeight: 600,
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  {build.plugin?.displayName || build.plugin?.name}
-                </div>
-
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "var(--space-3)",
-                    fontSize: "0.8125rem",
-                    color: "var(--text-muted)",
-                  }}
-                >
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "3px",
-                    }}
+              <p>No matching builds</p>
+            </div>
+        ) : (
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-4">
+              {filteredBuilds.map((build: any) => (
+                  <Link
+                      key={build.id}
+                      href={`/plugins/${build.plugin?.slug}/builds`}
+                      className="card p-4 md:px-5 flex items-center gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
                   >
-                    <User size={12} />
-                    {build.plugin?.author?.username || "unknown"}
+                    <div className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`} />
+
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-text-primary truncate">
+                        {build.plugin?.displayName || build.plugin?.name}
+                      </div>
+
+                      <div className="flex gap-3 text-[0.8125rem] text-text-muted">
+                    <span className="flex items-center gap-[3px]">
+                      <User size={12} />
+                      {build.plugin?.author?.username || "unknown"}
+                    </span>
+
+                        <span className="flex items-center gap-[3px]">
+                      <GitBranch size={12} />
+                      {build.branch}
+                    </span>
+
+                        <span>#{build.buildNumber}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-0.5 shrink-0">
+                      <div className="flex items-center gap-2">
+                        <StatusIcon status={build.status} />
+
+                        <span className={`text-[0.8125rem] font-medium ${statusTextClass(build.status)}`}>
+                          {build.status}
+                        </span>
+                      </div>
+
+                      <span className="text-xs text-text-muted">
+                    {timeAgo(build.createdAt)}
                   </span>
-
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "3px",
-                    }}
-                  >
-                    <GitBranch size={12} />
-                    {build.branch}
-                  </span>
-
-                  <span>#{build.buildNumber}</span>
-                </div>
-              </div>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-end",
-                  gap: "2px",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                  }}
-                >
-                  <StatusIcon status={build.status} />
-
-                  <span
-                    style={{
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      color: statusColor(build.status),
-                    }}
-                  >
-                    {build.status}
-                  </span>
-                </div>
-
-                <span
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "var(--text-muted)",
-                  }}
-                >
-                  {timeAgo(build.createdAt)}
-                </span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </>
+                    </div>
+                  </Link>
+              ))}
+            </div>
+        )}
+      </>
   );
 }
+

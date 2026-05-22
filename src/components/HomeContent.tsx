@@ -17,6 +17,7 @@ import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import LatestPluginsSection from "@/components/LatestPluginsSection";
 
 interface HomeContentProps {
   stats: {
@@ -86,127 +87,40 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      style={{
-        width: "100%",
-        maxWidth: "520px",
-        height: "260px",
-        flexShrink: 0,
-      }}
+      className="w-full max-w-[520px] h-[260px] shrink-0"
     >
-      <div
-        style={{
-          background: "#0c0c14",
-          borderRadius: "var(--radius-xl)",
-          border: "1px solid #1e1e2e",
-          overflow: "hidden",
-          boxShadow: "var(--shadow-lg)",
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "12px 16px",
-            borderBottom: "1px solid #1e1e2e",
-            background: "#11111b",
-          }}
-        >
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "var(--radius-full)",
-              background: "#f38ba8",
-            }}
-          />
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "var(--radius-full)",
-              background: "#f9e2af",
-            }}
-          />
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "var(--radius-full)",
-              background: "#a6e3a1",
-            }}
-          />
-          <span
-            style={{
-              marginLeft: "8px",
-              fontSize: "var(--text-xs)",
-              color: "#585b70",
-              fontFamily: "var(--font-mono)",
-            }}
-          >
+      <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
+          <div className="w-3 h-3 rounded-full bg-[#f38ba8]" />
+          <div className="w-3 h-3 rounded-full bg-[#f9e2af]" />
+          <div className="w-3 h-3 rounded-full bg-[#a6e3a1]" />
+          <span className="ml-2 text-xs text-[#585b70] font-mono">
             endgit-cli
           </span>
         </div>
-        <div
-          style={{
-            padding: "20px",
-            fontFamily: "var(--font-mono)",
-            fontSize: "var(--text-sm)",
-            lineHeight: 1.8,
-            height: "200px",
-          }}
-        >
-          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-            <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
-            <span style={{ color: "#cdd6f4" }}>
+        <div className="p-5 font-mono text-sm leading-relaxed h-[200px]">
+          <div className="flex gap-2 items-center">
+            <span className="text-[#f38ba8] select-none">$</span>
+            <span className="text-[#cdd6f4]">
               {COMMAND_TEXT.slice(0, typedChars)}
             </span>
             {showCursor && (
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "8px",
-                  height: "1.2em",
-                  background: "#cdd6f4",
-                  animation: "blink 1s step-end infinite",
-                }}
-              />
+              <span className="inline-block w-2 h-[1.2em] bg-[#cdd6f4] animate-[blink_1s_step-end_infinite]" />
             )}
           </div>
 
           {OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
             <div key={i}>
-              <span
-                style={{
-                  color: line.success ? "#a6e3a1" : "#89dceb",
-                }}
-              >
+              <span className={line.success ? "text-[#a6e3a1]" : "text-[#89dceb]"}>
                 {line.text}
               </span>
             </div>
           ))}
 
           {showPrompt && (
-            <div
-              style={{
-                marginTop: "4px",
-                display: "flex",
-                gap: "8px",
-                alignItems: "center",
-              }}
-            >
-              <span style={{ color: "#f38ba8", userSelect: "none" }}>$</span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: "8px",
-                  height: "1.2em",
-                  background: "#cdd6f4",
-                  animation: "blink 1s step-end infinite",
-                }}
-              />
+            <div className="mt-1 flex gap-2 items-center">
+              <span className="text-[#f38ba8] select-none">$</span>
+              <span className="inline-block w-2 h-[1.2em] bg-[#cdd6f4] animate-[blink_1s_step-end_infinite]" />
             </div>
           )}
         </div>
@@ -257,80 +171,23 @@ const STEPS = [
 
 export default function HomeContent({ stats }: HomeContentProps) {
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div className="flex flex-col">
       {/* ── Hero ── */}
-      <section
-        style={{
-          padding: "clamp(3.5rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-30%",
-            right: "-10%",
-            width: "800px",
-            height: "600px",
-            background:
-              "radial-gradient(ellipse at center, rgba(99,102,241,0.04) 0%, transparent 60%)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "clamp(2.5rem, 6vw, 5rem)",
-            flexWrap: "wrap",
-          }}
-        >
+      <section className="py-10 md:py-10 lg:py-20 relative overflow-hidden">
+        <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
+        <div className="container flex items-center gap-10 md:gap-16 flex-wrap">
           {/* Left: Copy */}
-          <div style={{ flex: "1 1 420px", minWidth: 0 }}>
+          <div className="flex-[1_1_420px] min-w-0">
             <FadeIn delay={0} direction="down">
-              <span
-                style={{
-                  fontSize: "var(--text-xs)",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
-                  textTransform: "uppercase",
-                  padding: "0.3rem 0.875rem",
-                  borderRadius: "var(--radius-full)",
-                  background: "rgba(99,102,241,0.08)",
-                  color: "var(--accent-primary)",
-                  border: "1px solid rgba(99,102,241,0.2)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  marginBottom: "var(--space-5)",
-                }}
-              >
+              <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-flex items-center gap-1.5 mb-5">
                 <Zap size={11} fill="currentColor" /> Public Beta
               </span>
             </FadeIn>
 
             <FadeIn delay={0.1} direction="none">
-              <h1
-                style={{
-                  fontSize: "clamp(2rem, 4.5vw, 3.25rem)",
-                  fontWeight: 800,
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.03em",
-                  margin: "0 0 var(--space-4) 0",
-                  color: "var(--text-primary)",
-                }}
-              >
+              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
                 Ship plugins for{" "}
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #0ea5e9, #0284c7)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
+                <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent">
                   Endstone
                 </span>{" "}
                 in minutes
@@ -338,25 +195,10 @@ export default function HomeContent({ stats }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <p
-                style={{
-                  fontSize: "var(--text-md)",
-                  color: "var(--text-secondary)",
-                  lineHeight: 1.65,
-                  maxWidth: "480px",
-                  margin: "0 0 var(--space-6) 0",
-                }}
-              >
+              <p className="text-base text-text-secondary leading-relaxed max-w-[480px] mb-6">
                 The{" "}
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #0ea5e9, #0284c7)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  <b>official</b>
+                <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent font-bold">
+                  official
                 </span>{" "}
                 plugin registry for Endstone - push to GitHub, get compiled
                 builds, and install with one command.
@@ -364,25 +206,10 @@ export default function HomeContent({ stats }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-3)",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
+              <div className="flex gap-4 flex-wrap items-center">
                 <Link
                   href="/plugins"
-                  className="btn btn-primary"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "0.75rem 1.75rem",
-                    fontSize: "var(--text-base)",
-                    fontWeight: 600,
-                  }}
+                  className="btn btn-primary text-base font-semibold py-3 px-6 inline-flex items-center gap-2 no-underline"
                 >
                   Browse Plugins <ArrowRight size={16} />
                 </Link>
@@ -390,14 +217,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "0.75rem 1.5rem",
-                    fontSize: "var(--text-base)",
-                  }}
+                  className="btn btn-secondary text-base py-3 px-6 inline-flex items-center gap-2 no-underline"
                 >
                   <Terminal size={16} /> Install CLI
                 </a>
@@ -406,42 +226,17 @@ export default function HomeContent({ stats }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-8)",
-                  marginTop: "var(--space-8)",
-                  paddingTop: "var(--space-5)",
-                  borderTop: "1px solid var(--border-color)",
-                  flexWrap: "wrap",
-                }}
-              >
+              <div className="flex gap-8 mt-8 pt-5 border-t border-border flex-wrap">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
                   { label: "Builds", value: stats.builds },
                 ].map((s, i) => (
                   <div key={i}>
-                    <div
-                      style={{
-                        fontSize: "var(--text-xl)",
-                        fontWeight: 700,
-                        color: "var(--text-primary)",
-                        lineHeight: 1,
-                        marginBottom: "4px",
-                      }}
-                    >
+                    <div className="text-2xl font-bold text-text-primary leading-none mb-1">
                       <AnimatedNumber value={s.value} />
                     </div>
-                    <div
-                      style={{
-                        fontSize: "var(--text-xs)",
-                        fontWeight: 600,
-                        color: "var(--text-muted)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.06em",
-                      }}
-                    >
+                    <div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
                       {s.label}
                     </div>
                   </div>
@@ -451,122 +246,39 @@ export default function HomeContent({ stats }: HomeContentProps) {
           </div>
 
           {/* Right: Terminal */}
-          <div
-            style={{
-              flex: "1 1 400px",
-              display: "flex",
-              justifyContent: "center",
-              minWidth: 0,
-            }}
-          >
+          <div className="flex-[1_1_400px] flex justify-center min-w-0">
             <TerminalMock />
           </div>
         </div>
       </section>
-
+      <LatestPluginsSection />
       {/* ── How it works ── */}
-      <section
-        className="container"
-        style={{ paddingBottom: "var(--space-16)" }}
-      >
+      <section className="container pb-10 lg:pb-16">
         <FadeIn>
-          <div
-            style={{
-              textAlign: "center",
-              marginBottom: "var(--space-10)",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "var(--text-xs)",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                display: "block",
-                marginBottom: "var(--space-2)",
-              }}
-            >
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold tracking-wider uppercase text-text-muted block mb-2">
               How it works
             </span>
-            <h2
-              style={{
-                fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                margin: 0,
-                color: "var(--text-primary)",
-              }}
-            >
+            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-text-primary m-0">
               From code to users in three steps
             </h2>
           </div>
         </FadeIn>
 
-        <StaggerContainer
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "var(--space-5)",
-            justifyContent: "center",
-          }}
-        >
+        <StaggerContainer className="flex flex-wrap gap-5 justify-center">
           {STEPS.map((step) => (
             <StaggerItem
               key={step.number}
-              style={{
-                flex: "1 1 280px",
-                maxWidth: "360px",
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "var(--space-4)",
-                padding: "var(--space-5) var(--space-6)",
-                background: "var(--bg-card)",
-                border: "1px solid var(--border-color)",
-                borderRadius: "var(--radius-lg)",
-                boxShadow: "var(--shadow-sm)",
-                transition:
-                  "transform var(--transition-base), box-shadow var(--transition-base)",
-                cursor: "default",
-              }}
-              className="step-card"
+              className="step-card flex-[1_1_280px] max-w-[360px] flex items-start gap-4 p-5 md:p-6 bg-surface-card border border-border rounded-lg shadow-sm transition-all cursor-default"
             >
-              <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "var(--radius-md)",
-                  background: "var(--color-brand-light)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-primary)",
-                  flexShrink: 0,
-                  fontWeight: 700,
-                  fontSize: "var(--text-sm)",
-                }}
-              >
+              <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h3
-                  style={{
-                    fontSize: "var(--text-base)",
-                    fontWeight: 600,
-                    color: "var(--text-primary)",
-                    margin: "0 0 var(--space-1) 0",
-                  }}
-                >
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>
-                <p
-                  style={{
-                    color: "var(--text-secondary)",
-                    fontSize: "var(--text-sm)",
-                    lineHeight: 1.6,
-                    margin: 0,
-                  }}
-                >
+                <p className="text-text-secondary text-sm leading-relaxed m-0">
                   {step.desc}
                 </p>
               </div>
@@ -576,91 +288,29 @@ export default function HomeContent({ stats }: HomeContentProps) {
       </section>
 
       {/* ── Features ── */}
-      <section
-        className="container"
-        style={{ paddingBottom: "var(--space-16)" }}
-      >
+      <section className="container pb-10 lg:pb-16">
         <FadeIn>
-          <div
-            style={{
-              textAlign: "center",
-              marginBottom: "var(--space-10)",
-            }}
-          >
-            <span
-              style={{
-                fontSize: "var(--text-xs)",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                display: "block",
-                marginBottom: "var(--space-2)",
-              }}
-            >
+          <div className="text-center mb-10">
+            <span className="text-xs font-bold tracking-wider uppercase text-text-muted block mb-2">
               Why EndGit
             </span>
-            <h2
-              style={{
-                fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)",
-                fontWeight: 700,
-                letterSpacing: "-0.01em",
-                margin: 0,
-                color: "var(--text-primary)",
-              }}
-            >
+            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-text-primary m-0">
               Built for the Endstone ecosystem
             </h2>
           </div>
         </FadeIn>
 
         {/* CI/CD hero feature */}
-        <FadeIn style={{ marginBottom: "var(--space-5)" }}>
-          <div
-            className="card"
-            style={{
-              padding: "var(--space-8)",
-              display: "flex",
-              gap: "var(--space-6)",
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            <div
-              style={{
-                width: "56px",
-                height: "56px",
-                borderRadius: "var(--radius-lg)",
-                background: "var(--color-brand-light)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "var(--accent-primary)",
-                flexShrink: 0,
-              }}
-            >
+        <FadeIn className="mb-5">
+          <div className="card p-6 md:p-8 flex gap-6 items-center flex-wrap">
+            <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-brand shrink-0">
               <Activity size={26} />
             </div>
-            <div style={{ flex: 1, minWidth: "240px" }}>
-              <h3
-                style={{
-                  fontSize: "var(--text-lg)",
-                  fontWeight: 600,
-                  color: "var(--text-primary)",
-                  margin: "0 0 var(--space-2) 0",
-                }}
-              >
+            <div className="flex-1 min-w-[240px]">
+              <h3 className="text-lg font-semibold text-text-primary mb-2">
                 Automated CI/CD Pipeline
               </h3>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  fontSize: "var(--text-base)",
-                  lineHeight: 1.6,
-                  margin: 0,
-                  maxWidth: "560px",
-                }}
-              >
+              <p className="text-text-secondary text-base leading-relaxed m-0 max-w-[560px]">
                 Push to GitHub and our workers compile your C++ or Python code
                 into ready-to-use artifacts automatically. No manual builds, no
                 configuration files to maintain — just push and ship.
@@ -670,57 +320,19 @@ export default function HomeContent({ stats }: HomeContentProps) {
         </FadeIn>
 
         {/* Smaller feature cards */}
-        <StaggerContainer
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
-            gap: "var(--space-5)",
-          }}
-        >
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {FEATURES.map((f, i) => (
             <StaggerItem
               key={i}
-              className="card"
-              style={{
-                padding: "var(--space-6)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
+              className="card p-6 flex flex-col gap-3"
             >
-              <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "var(--radius-md)",
-                  background: "var(--color-brand-light)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-primary)",
-                }}
-              >
+              <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand">
                 {f.icon}
               </div>
-              <h3
-                style={{
-                  fontSize: "var(--text-base)",
-                  fontWeight: 600,
-                  color: "var(--text-primary)",
-                  margin: 0,
-                }}
-              >
+              <h3 className="text-base font-semibold text-text-primary m-0">
                 {f.title}
               </h3>
-              <p
-                style={{
-                  color: "var(--text-secondary)",
-                  fontSize: "var(--text-sm)",
-                  lineHeight: 1.6,
-                  margin: 0,
-                }}
-              >
+              <p className="text-text-secondary text-sm leading-relaxed m-0">
                 {f.desc}
               </p>
             </StaggerItem>
@@ -729,100 +341,27 @@ export default function HomeContent({ stats }: HomeContentProps) {
       </section>
 
       {/* ── CTA ── */}
-      <section
-        className="container"
-        style={{ paddingBottom: "var(--space-16)" }}
-      >
+      <section className="container pb-16 lg:pb-24">
         <FadeIn direction="none">
-          <div
-            style={{
-              background: "#0f172a",
-              borderRadius: "var(--radius-xl)",
-              padding: "var(--space-10) var(--space-8)",
-              textAlign: "center",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-4)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "600px",
-                height: "300px",
-                background:
-                  "radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 60%)",
-                pointerEvents: "none",
-              }}
-            />
-            <h2
-              style={{
-                fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-                fontWeight: 700,
-                margin: 0,
-                color: "#ffffff",
-                position: "relative",
-              }}
-            >
+          <div className="bg-slate-900 dark:bg-zinc-900 rounded-xl p-8 md:p-12 text-center flex flex-col items-center gap-4 relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.08)_0%,transparent_60%)] pointer-events-none" />
+            <h2 className="text-xl md:text-3xl font-bold m-0 text-white relative">
               Ready to publish your plugin?
             </h2>
-            <p
-              style={{
-                color: "#94a3b8",
-                fontSize: "var(--text-base)",
-                maxWidth: "420px",
-                margin: 0,
-                lineHeight: 1.5,
-                position: "relative",
-              }}
-            >
+            <p className="text-slate-300 dark:text-zinc-300 text-base max-w-[420px] m-0 leading-relaxed relative">
               Connect your GitHub, push your code, and let EndGit handle the
               rest.
             </p>
-            <div
-              style={{
-                display: "flex",
-                gap: "var(--space-3)",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                marginTop: "var(--space-2)",
-                position: "relative",
-              }}
-            >
+            <div className="flex gap-3 flex-wrap justify-center mt-2 relative">
               <Link
                 href="/dashboard/dev"
-                className="btn"
-                style={{
-                  background: "#ffffff",
-                  color: "#0f172a",
-                  border: "none",
-                  fontWeight: 600,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "0.75rem 1.75rem",
-                }}
+                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-flex items-center gap-2 no-underline"
               >
                 <GitFork size={16} /> Start Publishing
               </Link>
               <Link
                 href="/plugins"
-                className="btn"
-                style={{
-                  background: "rgba(255,255,255,0.08)",
-                  color: "#ffffff",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  padding: "0.75rem 1.5rem",
-                }}
+                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 inline-flex items-center gap-2 no-underline"
               >
                 Explore Plugins
               </Link>
@@ -832,6 +371,9 @@ export default function HomeContent({ stats }: HomeContentProps) {
       </section>
 
       <style>{`
+        .step-card {
+          transition: transform 180ms ease, box-shadow 180ms ease;
+        }
         .step-card:hover {
           transform: translateY(-2px);
           box-shadow: var(--shadow-md);

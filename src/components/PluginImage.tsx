@@ -33,14 +33,8 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
       loading="lazy"
       decoding="async"
       unoptimized
+      className="w-full h-full rounded-lg object-cover p-0"
       onError={() => setErrored(true)}
-      style={{
-        width: "100%",
-        height: "100%",
-        borderRadius: "var(--radius-lg)",
-        objectFit: "cover",
-        padding: "0",
-      }}
     />
   );
 }

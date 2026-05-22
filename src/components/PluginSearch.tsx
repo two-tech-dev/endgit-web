@@ -31,21 +31,14 @@ export default function PluginSearch() {
   }, [searchParams]);
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
+    <div className="relative w-full">
       <Search
-        style={{
-          position: "absolute",
-          left: "var(--space-3)",
-          top: "50%",
-          transform: "translateY(-50%)",
-          color: "var(--text-muted)",
-        }}
+        className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted"
         size={18}
       />
       <input
-        className="input"
+        className="input pl-10 w-full"
         placeholder="Search plugins..."
-        style={{ paddingLeft: "var(--space-10)", width: "100%" }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />

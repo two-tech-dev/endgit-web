@@ -26,59 +26,24 @@ export default function SubmitForReview({
 
   if (isSubmitted) {
     return (
-      <div
-        className="card"
-        style={{
-          padding: "var(--space-4) var(--space-5)",
-          marginTop: "var(--space-6)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderLeft: "4px solid var(--status-warning)",
-          background: "rgba(245,158,11,0.04)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-          }}
-        >
+      <div className="card px-5 py-4 mt-6 flex items-center justify-between border-l-4 border-warning bg-warning/5">
+        <div className="flex items-center gap-3">
           <Clock
             size={20}
-            color="var(--status-warning)"
-            style={{ flexShrink: 0 }}
+            className="text-warning shrink-0"
           />
           <div>
-            <div
-              style={{
-                fontWeight: 600,
-                fontSize: "0.875rem",
-                color: "var(--text-primary)",
-              }}
-            >
+            <div className="font-semibold text-sm text-text-primary">
               ⏳ Submitted for Review
             </div>
-            <div
-              style={{
-                fontSize: "0.8125rem",
-                color: "var(--text-muted)",
-                marginTop: "2px",
-              }}
-            >
+            <div className="text-[0.8125rem] text-text-muted mt-[2px]">
               Build #{buildNumber} is currently pending admin review.
             </div>
           </div>
         </div>
         <Link
           href={`/builds/${buildId}/submit`}
-          className="btn btn-secondary"
-          style={{
-            padding: "0.375rem 0.75rem",
-            fontSize: "0.75rem",
-            textDecoration: "none",
-          }}
+          className="btn btn-secondary px-3 py-1.5 text-xs no-underline"
         >
           Edit Submission
         </Link>
@@ -89,51 +54,20 @@ export default function SubmitForReview({
   if (!canSubmit) return null;
 
   return (
-    <div
-      className="card"
-      style={{ padding: "var(--space-5)", marginTop: "var(--space-6)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+    <div className="card p-5 mt-6">
+      <div className="flex justify-between items-center">
         <div>
-          <h3
-            style={{
-              fontWeight: 600,
-              fontSize: "0.9375rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-            }}
-          >
-            <Send size={16} color="var(--accent-primary)" /> Submit for Review
+          <h3 className="font-semibold text-[0.9375rem] flex items-center gap-2">
+            <Send size={16} className="text-brand" /> Submit for Review
           </h3>
-          <p
-            style={{
-              fontSize: "0.8125rem",
-              color: "var(--text-muted)",
-              marginTop: "4px",
-            }}
-          >
+          <p className="text-[0.8125rem] text-text-muted mt-1">
             Submit Build #{buildNumber} for admin review to get it published on
             the marketplace.
           </p>
         </div>
         <Link
           href={`/builds/${buildId}/submit`}
-          className="btn btn-primary"
-          style={{
-            padding: "0.5rem 1.25rem",
-            fontSize: "0.875rem",
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-          }}
+          className="btn btn-primary px-5 py-2 text-sm no-underline flex items-center gap-1.5"
         >
           <Send size={14} /> Publish Plugin
         </Link>

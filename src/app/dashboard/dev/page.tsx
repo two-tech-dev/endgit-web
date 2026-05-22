@@ -363,138 +363,78 @@ export default function DevDashboardPage() {
 
   if (sessionStatus === "loading") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-8)",
-          paddingBottom: "var(--space-8)",
-          maxWidth: "1100px",
-        }}
-      >
-        <div style={{ marginBottom: "var(--space-6)" }}>
+      <div className="container py-8">
+        <div className="mb-6">
           <Skeleton
             width="14rem"
             height="2rem"
-            style={{ marginBottom: "var(--space-2)" }}
+            className="mb-2"
           />
           <Skeleton width="20rem" height="0.875rem" />
         </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: "var(--space-4)",
-            marginBottom: "var(--space-6)",
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 mb-6">
           {Array.from({ length: 3 }, (_, i) => (
-            <SkeletonCard key={i} style={{ padding: "var(--space-5)" }}>
+            <SkeletonCard key={i} className="p-5">
               <Skeleton
                 width="5rem"
                 height="0.6875rem"
-                style={{ marginBottom: "6px" }}
+                className="mb-1.5"
               />
               <Skeleton width="3rem" height="1.75rem" />
             </SkeletonCard>
           ))}
         </div>
-        <SkeletonCard
-          style={{
-            padding: "var(--space-4) var(--space-5)",
-            marginBottom: "var(--space-5)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-3)",
-            }}
-          >
+        <SkeletonCard className="p-4 md:px-5 mb-5">
+          <div className="flex items-center gap-3">
             <Skeleton
               width={20}
               height={20}
-              borderRadius="var(--radius-full)"
+              borderRadius="9999px"
             />
             <Skeleton width="10rem" height="0.875rem" />
           </div>
         </SkeletonCard>
-        <div
-          style={{
-            display: "flex",
-            gap: "var(--space-3)",
-            marginBottom: "var(--space-5)",
-            alignItems: "center",
-          }}
-        >
+        <div className="flex gap-3 mb-5 items-center">
           <Skeleton
             width="100%"
             height="2.5rem"
-            borderRadius="var(--radius-md)"
-            style={{ flex: 1 }}
+            borderRadius="10px"
+            className="flex-1"
           />
           <Skeleton
             width="14rem"
             height="2.5rem"
-            borderRadius="var(--radius-md)"
+            borderRadius="10px"
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-3)",
-          }}
-        >
+        <div className="flex flex-col gap-3">
           {Array.from({ length: 5 }, (_, i) => (
             <SkeletonCard
               key={i}
-              style={{
-                padding: "var(--space-5)",
-                borderLeft: "3px solid var(--border-color)",
-              }}
+              className="p-5 border-l-[3px] border-border"
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "var(--space-4)",
-                    flex: 1,
-                  }}
-                >
+              <div className="flex justify-between items-start">
+                <div className="flex items-start gap-4 flex-1">
                   <Skeleton
                     width={40}
                     height={40}
-                    borderRadius="var(--radius-md)"
+                    borderRadius="6px"
                   />
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        marginBottom: "4px",
-                      }}
-                    >
+                  <div className="flex-1">
+                    <div className="flex gap-2 mb-1 flex-wrap">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
                         height="0.6875rem"
-                        borderRadius="var(--radius-full)"
+                        borderRadius="9999px"
                       />
                     </div>
                     <Skeleton
                       width="70%"
                       height="0.8125rem"
-                      style={{ marginBottom: "6px" }}
+                      className="mb-1.5"
                     />
-                    <div style={{ display: "flex", gap: "var(--space-4)" }}>
+                    <div className="flex gap-4">
                       <Skeleton width="2rem" height="0.75rem" />
                       <Skeleton width="3rem" height="0.75rem" />
                       <Skeleton width="4rem" height="0.75rem" />
@@ -504,7 +444,7 @@ export default function DevDashboardPage() {
                 <Skeleton
                   width="6rem"
                   height="2rem"
-                  borderRadius="var(--radius-md)"
+                  borderRadius="10px"
                 />
               </div>
             </SkeletonCard>
@@ -516,16 +456,9 @@ export default function DevDashboardPage() {
 
   if (sessionStatus === "unauthenticated") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
-        }}
-      >
+      <div className="container py-16 text-center">
         <h2 className="heading-3">Sign in Required</h2>
-        <p style={{ color: "var(--text-muted)", marginTop: "var(--space-2)" }}>
+        <p className="text-text-muted mt-2">
           Please sign in with GitHub to access the Dev Dashboard.
         </p>
       </div>
@@ -537,66 +470,22 @@ export default function DevDashboardPage() {
       process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL ||
       "https://github.com/apps/endgit-app/installations/new";
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-12)",
-          paddingBottom: "var(--space-12)",
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            maxWidth: "600px",
-            padding: "var(--space-10)",
-            textAlign: "center",
-            border: "1px solid var(--border-highlight)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              background: "rgba(124, 58, 237, 0.1)",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-6)",
-            }}
-          >
-            <PackagePlus size={40} color="var(--accent-primary)" />
+      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
+        <div className="card max-w-[600px] p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
-          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
+          <h1 className="heading-2 mb-4">
             Welcome to EndGit!
           </h1>
-          <p
-            className="text-secondary"
-            style={{
-              fontSize: "1.125rem",
-              lineHeight: 1.6,
-              marginBottom: "var(--space-8)",
-            }}
-          >
+          <p className="text-text-secondary text-lg leading-relaxed mb-8">
             To enable CI/CD pipelines, you must install the EndGit GitHub App on
             your repositories. The app will automatically detect your Bedrock
             plugins, build them, and publish them to the marketplace.
           </p>
           <a
             href={installUrl}
-            className="btn btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "1.125rem",
-              padding: "0.75rem 2rem",
-            }}
+            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
           >
             <ExternalLink size={20} /> Install GitHub App{" "}
             <ArrowRight size={20} />
@@ -607,114 +496,42 @@ export default function DevDashboardPage() {
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-8)",
-        paddingBottom: "var(--space-8)",
-        maxWidth: "1100px",
-      }}
-    >
+    <div className="container py-8 ">
       {/* Header */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-6)",
-        }}
-      >
+      <div className="flex justify-between items-center mb-6">
         <div>
-          <h1
-            className="heading-2"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-3)",
-            }}
-          >
-            <Settings size={28} color="var(--accent-primary)" /> Dev Dashboard
+          <h1 className="heading-2 flex items-center gap-3">
+            <Settings size={28} className="text-accent" /> Dev Dashboard
           </h1>
-          <p
-            style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}
-          >
+          <p className="text-text-muted mt-1">
             Manage your GitHub repositories and CI/CD pipelines
           </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-          gap: "var(--space-4)",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        <div className="card" style={{ padding: "var(--space-5)" }}>
-          <div
-            style={{
-              fontSize: "0.6875rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: "var(--text-muted)",
-              marginBottom: "4px",
-            }}
-          >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 mb-6">
+        <div className="card p-5">
+          <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-1">
             Total Repos
           </div>
-          <div
-            style={{
-              fontSize: "1.75rem",
-              fontWeight: 700,
-              color: "var(--text-primary)",
-            }}
-          >
+          <div className="text-3xl font-bold text-text-primary">
             {displayTotal}
           </div>
         </div>
-        <div className="card" style={{ padding: "var(--space-5)" }}>
-          <div
-            style={{
-              fontSize: "0.6875rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: "var(--text-muted)",
-              marginBottom: "4px",
-            }}
-          >
+        <div className="card p-5">
+          <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-1">
             CI Enabled
           </div>
-          <div
-            style={{
-              fontSize: "1.75rem",
-              fontWeight: 700,
-              color: "var(--status-success)",
-            }}
-          >
+          <div className="text-3xl font-bold text-success">
             {displayEnabled}
           </div>
         </div>
-        <div className="card" style={{ padding: "var(--space-5)" }}>
-          <div
-            style={{
-              fontSize: "0.6875rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: "var(--text-muted)",
-              marginBottom: "4px",
-            }}
-          >
+        <div className="card p-5">
+          <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-1">
             Disabled
           </div>
-          <div
-            style={{
-              fontSize: "1.75rem",
-              fontWeight: 700,
-              color: "var(--text-muted)",
-            }}
-          >
+          <div className="text-3xl font-bold text-text-muted">
             {displayDisabled}
           </div>
         </div>
@@ -722,74 +539,32 @@ export default function DevDashboardPage() {
 
       {/* Build Quota */}
       {quota && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-4) var(--space-5)",
-            marginBottom: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-            flexWrap: "wrap",
-          }}
-        >
-          <div style={{ flex: "0 0 auto" }}>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                color: "var(--text-muted)",
-                marginBottom: "2px",
-              }}
-            >
+        <div className="card p-4 md:px-5 mb-6 flex items-center gap-4 flex-wrap">
+          <div className="flex-[0_0_auto]">
+            <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
               Weekly Builds
             </div>
-            <div
-              style={{
-                fontSize: "1.125rem",
-                fontWeight: 700,
-                color:
-                  quota.used >= quota.limit
-                    ? "var(--status-error)"
-                    : "var(--text-primary)",
-              }}
-            >
+            <div className={`text-lg font-bold ${quota.used >= quota.limit ? "text-error" : "text-text-primary"}`}>
               {quota.used}/{quota.limit}
             </div>
           </div>
-          <div style={{ flex: 1, minWidth: "120px" }}>
-            <div
-              style={{
-                height: "8px",
-                background: "var(--bg-secondary)",
-                borderRadius: "4px",
-                overflow: "hidden",
-              }}
-            >
+          <div className="flex-1 min-w-[120px]">
+            <div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
               <div
+                className={`h-full rounded-full transition-[width] duration-300 ${
+                  quota.used >= quota.limit
+                    ? "bg-error"
+                    : quota.used >= quota.limit * 0.8
+                      ? "bg-warning"
+                      : "bg-accent"
+                }`}
                 style={{
                   width: `${Math.min(100, (quota.used / quota.limit) * 100)}%`,
-                  height: "100%",
-                  borderRadius: "4px",
-                  background:
-                    quota.used >= quota.limit
-                      ? "var(--status-error)"
-                      : quota.used >= quota.limit * 0.8
-                        ? "var(--status-warning)"
-                        : "var(--accent-primary)",
-                  transition: "width 300ms",
                 }}
               />
             </div>
           </div>
-          <div
-            style={{
-              fontSize: "0.75rem",
-              color: "var(--text-muted)",
-              whiteSpace: "nowrap",
-            }}
-          >
+          <div className="text-xs text-text-muted whitespace-nowrap">
             Resets{" "}
             {new Date(quota.resetsAt).toLocaleDateString("en-GB", {
               day: "2-digit",
@@ -797,16 +572,7 @@ export default function DevDashboardPage() {
             })}
           </div>
           {quota.used >= quota.limit && (
-            <div
-              style={{
-                width: "100%",
-                padding: "var(--space-3)",
-                background: "rgba(239,68,68,0.06)",
-                borderRadius: "var(--radius-sm)",
-                fontSize: "0.8125rem",
-                color: "var(--status-error)",
-              }}
-            >
+            <div className="w-full p-3 bg-error/5 rounded-sm text-xs text-error">
               ⚠️ Build quota exceeded. New pushes will not trigger builds until
               the quota resets. Contact an admin to increase your limit.
             </div>
@@ -816,244 +582,99 @@ export default function DevDashboardPage() {
 
       {/* Org Selector Section */}
       {orgsLoading && (
-        <SkeletonCard
-          style={{
-            padding: "var(--space-5)",
-            marginBottom: "var(--space-5)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "var(--space-4)",
-            }}
-          >
+        <SkeletonCard className="p-5 mb-5">
+          <div className="flex items-center justify-between mb-4">
             <div>
               <Skeleton
                 width="5rem"
                 height="0.6875rem"
-                style={{ marginBottom: "4px" }}
+                className="mb-1"
               />
               <Skeleton width="10rem" height="0.875rem" />
             </div>
             <Skeleton
               width="4rem"
               height="2rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="10px"
             />
           </div>
-          <div
-            style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}
-          >
+          <div className="flex gap-2 flex-wrap">
             {Array.from({ length: 3 }, (_, i) => (
               <Skeleton
                 key={i}
                 width={`${5 + i * 1.5}rem`}
                 height="1.75rem"
-                borderRadius="var(--radius-full)"
+                borderRadius="9999px"
               />
             ))}
           </div>
         </SkeletonCard>
       )}
       {orgsError && !orgsLoading && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-3) var(--space-5)",
-            marginBottom: "var(--space-5)",
-            borderLeft: "3px solid var(--status-warning)",
-            fontSize: "0.8125rem",
-            color: "var(--status-warning)",
-          }}
-        >
+        <div className="card p-3 px-5 mb-5 border-l-[3px] border-warning text-xs text-warning">
           {orgsError}
         </div>
       )}
       {!orgsLoading && !orgsError && orgs.length > 1 && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-5)",
-            marginBottom: "var(--space-5)",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "var(--space-4)",
-            }}
-          >
+        <div className="card p-5 mb-5">
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <div
-                style={{
-                  fontSize: "0.6875rem",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                  color: "var(--text-muted)",
-                  marginBottom: "2px",
-                }}
-              >
+              <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
                 Organization
               </div>
-              <div
-                style={{
-                  fontSize: "0.875rem",
-                  color: "var(--text-primary)",
-                  fontWeight: 500,
-                }}
-              >
+              <div className="text-sm text-text-primary font-medium">
                 {selectedOrg
                   ? `Viewing ${selectedOrg}`
                   : "Viewing all organizations"}
               </div>
             </div>
-            <div ref={orgDropdownRef} style={{ position: "relative" }}>
+            <div ref={orgDropdownRef} className="relative">
               <button
                 onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-2)",
-                  padding: "var(--space-2) var(--space-3)",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  cursor: "pointer",
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "var(--text-primary)",
-                  transition: "border-color 150ms",
-                }}
+                className="flex items-center gap-2 py-2 px-3 rounded-md border border-border bg-surface-secondary text-xs font-medium text-text-primary cursor-pointer transition-colors duration-150"
               >
                 Switch
                 <ChevronDown
                   size={14}
-                  color="var(--text-muted)"
-                  style={{
-                    transform: orgDropdownOpen ? "rotate(180deg)" : "none",
-                    transition: "transform 150ms",
-                  }}
+                  className={`text-text-muted transition-transform duration-150 ${orgDropdownOpen ? "rotate-180" : ""}`}
                 />
               </button>
               {orgDropdownOpen && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    right: 0,
-                    marginTop: "4px",
-                    minWidth: "280px",
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border-color)",
-                    borderRadius: "var(--radius-md)",
-                    boxShadow: "var(--shadow-lg)",
-                    zIndex: 50,
-                    overflow: "hidden",
-                  }}
-                >
+                <div className="absolute top-full right-0 mt-1 min-w-[280px] bg-surface-card border border-border rounded-md shadow-lg z-50 overflow-hidden">
                   <button
                     onClick={() => handleOrgChange(null)}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "var(--space-3)",
-                      width: "100%",
-                      padding: "var(--space-3) var(--space-4)",
-                      border: "none",
-                      background:
-                        selectedOrg === null
-                          ? "var(--bg-secondary)"
-                          : "transparent",
-                      cursor: "pointer",
-                      fontSize: "0.875rem",
-                      color: "var(--text-primary)",
-                      textAlign: "left",
-                      transition: "background 100ms",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "var(--bg-secondary)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background =
-                        selectedOrg === null
-                          ? "var(--bg-secondary)"
-                          : "transparent")
-                    }
+                    className={`flex items-center gap-3 w-full py-3 px-4 border-none text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
+                      selectedOrg === null ? "bg-surface-secondary" : "bg-transparent"
+                    }`}
                   >
-                    <Building2 size={18} color="var(--text-muted)" />
+                    <Building2 size={18} className="text-text-muted" />
                     <span>All organizations</span>
                   </button>
                   {orgs.map((org) => (
                     <button
                       key={org.id}
                       onClick={() => handleOrgChange(org.login)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "var(--space-3)",
-                        width: "100%",
-                        padding: "var(--space-3) var(--space-4)",
-                        border: "none",
-                        borderTop: "1px solid var(--border-color)",
-                        background:
-                          selectedOrg === org.login
-                            ? "var(--bg-secondary)"
-                            : "transparent",
-                        cursor: "pointer",
-                        fontSize: "0.875rem",
-                        color: "var(--text-primary)",
-                        textAlign: "left",
-                        transition: "background 100ms",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.background =
-                          "var(--bg-secondary)")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.background =
-                          selectedOrg === org.login
-                            ? "var(--bg-secondary)"
-                            : "transparent")
-                      }
+                      className={`flex items-center gap-3 w-full py-3 px-4 border-none border-t border-border text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
+                        selectedOrg === org.login ? "bg-surface-secondary" : "bg-transparent"
+                      }`}
                     >
                       <Image
                         src={org.avatarUrl}
                         alt=""
                         width={20}
                         height={20}
-                        style={{ borderRadius: "var(--radius-full)" }}
+                        className="rounded-full"
                       />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontWeight: 500 }}>{org.login}</div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium">{org.login}</div>
                         {org.description && (
-                          <div
-                            style={{
-                              fontSize: "0.75rem",
-                              color: "var(--text-muted)",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                            }}
-                          >
+                          <div className="text-[0.75rem] text-text-muted overflow-hidden text-ellipsis whitespace-nowrap">
                             {org.description}
                           </div>
                         )}
                       </div>
                       {selectedOrg === org.login && (
-                        <div
-                          style={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            background: "var(--accent-primary)",
-                            flexShrink: 0,
-                          }}
-                        />
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
                       )}
                     </button>
                   ))}
@@ -1061,35 +682,14 @@ export default function DevDashboardPage() {
               )}
             </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "var(--space-2)",
-              flexWrap: "wrap",
-            }}
-          >
+          <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => handleOrgChange(null)}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "var(--space-2)",
-                padding: "var(--space-2) var(--space-3)",
-                borderRadius: "var(--radius-full)",
-                border: `1px solid ${selectedOrg === null ? "var(--accent-primary)" : "var(--border-color)"}`,
-                background:
-                  selectedOrg === null
-                    ? "rgba(6,182,212,0.1)"
-                    : "var(--bg-secondary)",
-                cursor: "pointer",
-                fontSize: "0.8125rem",
-                fontWeight: selectedOrg === null ? 600 : 400,
-                color:
-                  selectedOrg === null
-                    ? "var(--accent-primary)"
-                    : "var(--text-muted)",
-                transition: "all 150ms",
-              }}
+              className={`inline-flex items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+                selectedOrg === null
+                  ? "border-accent bg-accent/10 font-semibold text-accent"
+                  : "border-border bg-surface-secondary font-normal text-text-muted"
+              }`}
             >
               <Building2 size={14} />
               All
@@ -1098,33 +698,18 @@ export default function DevDashboardPage() {
               <button
                 key={org.id}
                 onClick={() => handleOrgChange(org.login)}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "var(--space-2)",
-                  padding: "var(--space-2) var(--space-3)",
-                  borderRadius: "var(--radius-full)",
-                  border: `1px solid ${selectedOrg === org.login ? "var(--accent-primary)" : "var(--border-color)"}`,
-                  background:
-                    selectedOrg === org.login
-                      ? "rgba(6,182,212,0.1)"
-                      : "var(--bg-secondary)",
-                  cursor: "pointer",
-                  fontSize: "0.8125rem",
-                  fontWeight: selectedOrg === org.login ? 600 : 400,
-                  color:
-                    selectedOrg === org.login
-                      ? "var(--accent-primary)"
-                      : "var(--text-muted)",
-                  transition: "all 150ms",
-                }}
+                className={`inline-flex items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+                  selectedOrg === org.login
+                    ? "border-accent bg-accent/10 font-semibold text-accent"
+                    : "border-border bg-surface-secondary font-normal text-text-muted"
+                }`}
               >
                 <Image
                   src={org.avatarUrl}
                   alt=""
                   width={16}
                   height={16}
-                  style={{ borderRadius: "var(--radius-full)" }}
+                  className="rounded-full"
                 />
                 {org.login}
               </button>
@@ -1134,71 +719,30 @@ export default function DevDashboardPage() {
       )}
 
       {/* Search + Filter */}
-      <div
-        className="dev-search-filter"
-        style={{
-          display: "flex",
-          gap: "var(--space-3)",
-          marginBottom: "var(--space-5)",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <div style={{ flex: 1, position: "relative" }}>
+      <div className="dev-search-filter flex gap-3 mb-5 items-center flex-wrap">
+        <div className="flex-1 relative">
           <Search
             size={16}
-            style={{
-              position: "absolute",
-              left: "12px",
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "var(--text-muted)",
-            }}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
           />
           <input
             type="text"
             placeholder="Search repositories..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.625rem 0.75rem 0.625rem 2.25rem",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid var(--border-color)",
-              background: "var(--bg-card)",
-              color: "var(--text-primary)",
-              fontSize: "0.875rem",
-              outline: "none",
-            }}
+            className="w-full py-2.5 pl-9 pr-3 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none"
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "2px",
-            background: "var(--bg-secondary)",
-            padding: "3px",
-            borderRadius: "var(--radius-md)",
-          }}
-        >
+        <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md">
           {(["all", "enabled", "disabled"] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              style={{
-                padding: "0.5rem 0.875rem",
-                borderRadius: "var(--radius-sm)",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                textTransform: "capitalize",
-                background: filter === f ? "var(--bg-card)" : "transparent",
-                color:
-                  filter === f ? "var(--text-primary)" : "var(--text-muted)",
-                boxShadow: filter === f ? "var(--shadow-sm)" : "none",
-                border: "none",
-                cursor: "pointer",
-                transition: "all 150ms",
-              }}
+              className={`py-2 px-3.5 rounded-sm text-xs font-medium capitalize border-none cursor-pointer transition-all duration-150 ${
+                filter === f
+                  ? "bg-surface-card text-text-primary shadow-sm"
+                  : "bg-transparent text-text-muted hover:text-text-primary"
+              }`}
             >
               {f}{" "}
               {f === "all"
@@ -1213,68 +757,39 @@ export default function DevDashboardPage() {
 
       {/* Loading / Error */}
       {loading && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-3)",
-          }}
-        >
+        <div className="flex flex-col gap-3">
           {Array.from({ length: 5 }, (_, i) => (
             <SkeletonCard
               key={i}
-              style={{
-                padding: "var(--space-5)",
-                borderLeft: "3px solid var(--border-color)",
-              }}
+              className="p-5 border-l-[3px] border-border"
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: "var(--space-4)",
-                    flex: 1,
-                  }}
-                >
+              <div className="flex justify-between items-start">
+                <div className="flex items-start gap-4 flex-1">
                   <Skeleton
                     width={40}
                     height={40}
-                    borderRadius="var(--radius-md)"
+                    borderRadius="6px"
                   />
-                  <div style={{ flex: 1 }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        marginBottom: "4px",
-                        flexWrap: "wrap",
-                      }}
-                    >
+                  <div className="flex-1">
+                    <div className="flex gap-2 mb-1 flex-wrap">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
                         height="0.6875rem"
-                        borderRadius="var(--radius-full)"
+                        borderRadius="9999px"
                       />
                       <Skeleton
                         width="4rem"
                         height="0.6875rem"
-                        borderRadius="var(--radius-full)"
+                        borderRadius="9999px"
                       />
                     </div>
                     <Skeleton
                       width="70%"
                       height="0.8125rem"
-                      style={{ marginBottom: "6px" }}
+                      className="mb-1.5"
                     />
-                    <div style={{ display: "flex", gap: "var(--space-4)" }}>
+                    <div className="flex gap-4">
                       <Skeleton width="2rem" height="0.75rem" />
                       <Skeleton width="3rem" height="0.75rem" />
                       <Skeleton width="4rem" height="0.75rem" />
@@ -1284,7 +799,7 @@ export default function DevDashboardPage() {
                 <Skeleton
                   width="6rem"
                   height="2rem"
-                  borderRadius="var(--radius-md)"
+                  borderRadius="10px"
                 />
               </div>
             </SkeletonCard>
@@ -1293,24 +808,11 @@ export default function DevDashboardPage() {
       )}
 
       {error && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            textAlign: "center",
-            borderLeft: "4px solid var(--status-error)",
-          }}
-        >
-          <p style={{ color: "var(--status-error)", fontWeight: 600 }}>
+        <div className="card p-6 text-center border-l-4 border-error">
+          <p className="text-error font-semibold">
             {error}
           </p>
-          <p
-            style={{
-              color: "var(--text-muted)",
-              fontSize: "0.875rem",
-              marginTop: "var(--space-2)",
-            }}
-          >
+          <p className="text-text-muted text-sm mt-2">
             Make sure the API server is running and you are signed in with
             GitHub OAuth.
           </p>
@@ -1319,198 +821,89 @@ export default function DevDashboardPage() {
 
       {/* Repo List */}
       {!loading && !error && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-3)",
-          }}
-        >
+        <div className="flex flex-col gap-3">
           {filteredRepos.map((repo) => {
             const badge = statusBadge(repo.pluginStatus);
             return (
               <div
                 key={repo.id}
-                className="card"
-                style={{
-                  padding: "var(--space-5)",
-                  borderLeft: `3px solid ${repo.ciEnabled ? "var(--status-success)" : "var(--border-color)"}`,
-                  transition: "all 200ms",
-                }}
+                className={`card p-5 border-l-[3px] transition-all duration-200 ${
+                  repo.ciEnabled ? "border-l-success" : "border-l-border"
+                }`}
               >
-                <div
-                  className="dev-repo-card-inner"
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "var(--space-4)",
-                      flex: 1,
-                    }}
-                  >
+                <div className="dev-repo-card-inner flex justify-between items-start">
+                  <div className="flex items-start gap-4 flex-1">
                     <div
+                      className="w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0"
                       style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "var(--radius-md)",
                         background: `${langColor(repo.language)}15`,
                         border: `1px solid ${langColor(repo.language)}30`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
                       }}
                     >
-                      <Code size={18} color={langColor(repo.language)} />
+                      <Code size={18} style={{ color: langColor(repo.language) }} />
                     </div>
-                    <div style={{ minWidth: 0 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "var(--space-2)",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontWeight: 600,
-                            fontSize: "0.9375rem",
-                            color: "var(--text-primary)",
-                          }}
-                        >
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-semibold text-[0.9375rem] text-text-primary">
                           {repo.name}
                         </span>
                         {repo.isPrivate ? (
-                          <span
-                            style={{
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "3px",
-                              fontSize: "0.6875rem",
-                              padding: "1px 6px",
-                              borderRadius: "var(--radius-full)",
-                              background: "rgba(245,158,11,0.1)",
-                              color: "var(--status-warning)",
-                              border: "1px solid rgba(245,158,11,0.2)",
-                            }}
-                          >
+                          <span className="inline-flex items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-warning/10 text-warning border border-warning/20">
                             <Lock size={10} /> Private
                           </span>
                         ) : (
-                          <span
-                            style={{
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "3px",
-                              fontSize: "0.6875rem",
-                              padding: "1px 6px",
-                              borderRadius: "var(--radius-full)",
-                              background: "rgba(16,185,129,0.08)",
-                              color: "var(--text-muted)",
-                            }}
-                          >
+                          <span className="inline-flex items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-success/8 text-text-muted">
                             <Globe size={10} /> Public
                           </span>
                         )}
                         {repo.language && (
-                          <span
-                            style={{
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "4px",
-                              fontSize: "0.6875rem",
-                            }}
-                          >
+                          <span className="inline-flex items-center gap-1 text-[0.6875rem]">
                             <span
+                              className="w-2 h-2 rounded-full inline-block"
                               style={{
                                 width: "8px",
                                 height: "8px",
-                                borderRadius: "50%",
                                 background: langColor(repo.language),
-                                display: "inline-block",
                               }}
                             />
-                            <span style={{ color: "var(--text-muted)" }}>
+                            <span className="text-text-muted">
                               {repo.language}
                             </span>
                           </span>
                         )}
                         {badge && (
                           <span
+                            className="text-[0.6875rem] py-0.5 px-2 rounded-full font-semibold"
                             style={{
-                              fontSize: "0.6875rem",
-                              padding: "1px 8px",
-                              borderRadius: "var(--radius-full)",
                               background: badge.bg,
                               color: badge.color,
-                              fontWeight: 600,
                             }}
                           >
                             {badge.text}
                           </span>
                         )}
                       </div>
-                      <p
-                        style={{
-                          fontSize: "0.8125rem",
-                          color: "var(--text-muted)",
-                          marginTop: "2px",
-                          overflowWrap: "break-word",
-                          wordBreak: "break-word",
-                          whiteSpace: "normal",
-                          maxWidth: "100%",
-                        }}
-                      >
+                      <p className="text-xs text-text-muted mt-0.5 overflow-wrap-anywhere break-words normal-case max-w-full">
                         {repo.description || "No description"}
                       </p>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "var(--space-4)",
-                          marginTop: "4px",
-                          fontSize: "0.75rem",
-                          color: "var(--text-muted)",
-                        }}
-                      >
+                      <div className="flex gap-4 mt-1 text-xs text-text-muted">
                         <span>⭐ {repo.stargazersCount}</span>
                         <span>
                           <GitBranch
                             size={11}
-                            style={{ verticalAlign: "-1px" }}
-                          />{" "}
+                            className="inline-block align-[-1px] mr-1"
+                          />
                           {repo.defaultBranch}
                         </span>
                         <span>Updated {timeAgo(repo.updatedAt)}</span>
                       </div>
                     </div>
                   </div>
-                  <div
-                    className="dev-repo-actions"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "var(--space-3)",
-                      flexShrink: 0,
-                    }}
-                  >
+                  <div className="dev-repo-actions flex items-center gap-3 flex-shrink-0">
                     {repo.ciEnabled && repo.pluginSlug && (
                       <Link
                         href={`/plugins/${repo.pluginSlug}/builds`}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "4px",
-                          fontSize: "0.8125rem",
-                          color: "var(--accent-primary)",
-                          fontWeight: 500,
-                        }}
+                        className="inline-flex items-center gap-1 text-xs text-accent font-medium"
                       >
                         View Builds <ExternalLink size={12} />
                       </Link>
@@ -1518,25 +911,13 @@ export default function DevDashboardPage() {
                     <button
                       onClick={() => toggleCI(repo)}
                       disabled={toggling === repo.id}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        padding: "0.4375rem 1rem",
-                        borderRadius: "var(--radius-md)",
-                        fontSize: "0.8125rem",
-                        fontWeight: 600,
-                        cursor: toggling === repo.id ? "wait" : "pointer",
-                        transition: "all 200ms",
-                        border: "none",
-                        background: repo.ciEnabled
-                          ? "rgba(239,68,68,0.08)"
-                          : "rgba(16,185,129,0.08)",
-                        color: repo.ciEnabled
-                          ? "var(--status-error)"
-                          : "var(--status-success)",
-                        opacity: toggling === repo.id ? 0.5 : 1,
-                      }}
+                      className={`flex items-center gap-1.5 py-1.5 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
+                        toggling === repo.id ? "cursor-wait opacity-50" : "cursor-pointer"
+                      } ${
+                        repo.ciEnabled
+                          ? "bg-error/8 text-error"
+                          : "bg-success/8 text-success"
+                      }`}
                     >
                       {repo.ciEnabled ? (
                         <>
@@ -1555,24 +936,16 @@ export default function DevDashboardPage() {
           })}
 
           {filteredRepos.length > 0 && hasMore && (
-            <div style={{ textAlign: "center", marginTop: "var(--space-6)" }}>
+            <div className="text-center mt-6">
               <button
-                className="btn btn-secondary"
+                className="btn btn-secondary min-w-[150px] inline-flex justify-center"
                 onClick={() =>
                   fetchRepos(page + 1, selectedOrg, debouncedSearch)
                 }
                 disabled={isFetchingMore}
-                style={{
-                  minWidth: "150px",
-                  display: "inline-flex",
-                  justifyContent: "center",
-                }}
               >
                 {isFetchingMore ? (
-                  <Loader2
-                    size={16}
-                    style={{ animation: "spin 1s linear infinite" }}
-                  />
+                  <Loader2 size={16} className="spin" />
                 ) : (
                   "Load More"
                 )}
@@ -1581,15 +954,9 @@ export default function DevDashboardPage() {
           )}
 
           {filteredRepos.length === 0 && !loading && (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "var(--space-12)",
-                color: "var(--text-muted)",
-              }}
-            >
-              <p style={{ fontSize: "1rem" }}>No repositories found</p>
-              <p style={{ fontSize: "0.875rem", marginTop: "var(--space-2)" }}>
+            <div className="text-center py-12 text-text-muted">
+              <p className="text-base">No repositories found</p>
+              <p className="text-sm mt-2">
                 {search
                   ? "Try a different search term"
                   : "No GitHub repositories detected"}

@@ -44,49 +44,31 @@ export default async function PluginsPage({
   };
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-4)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
+    <div className="container py-8">
+      <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
         <div>
           <h1 className="heading-2">Releases</h1>
           {pagination.total > 0 && (
-            <p
-              className="text-muted"
-              style={{ fontSize: "0.875rem", marginTop: "var(--space-1)" }}
-            >
+            <p className="text-text-muted text-sm mt-1">
               Showing {(currentPage - 1) * pagination.pageSize + 1}–
               {Math.min(currentPage * pagination.pageSize, pagination.total)} of{" "}
               {pagination.total} plugins
             </p>
           )}
         </div>
-        <div className="desktop-only" style={{ maxWidth: "300px" }}>
+        <div className="hidden md:block w-full max-w-[300px]">
           <PluginSearch />
         </div>
       </div>
 
-      <div
-        className="plugins-layout"
-        style={{ display: "flex", gap: "var(--space-6)" }}
-      >
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar Filters */}
         <MobileFiltersWrapper searchComponent={<PluginSearch />}>
           <PluginSidebarFilters />
         </MobileFiltersWrapper>
 
         {/* Plugin Grid */}
-        <div id="plugin-grid" style={{ flex: 1 }}>
+        <div id="plugin-grid" className="flex-1">
           <PluginCardGrid plugins={realPlugins} />
 
           {pagination.totalPages > 1 && (

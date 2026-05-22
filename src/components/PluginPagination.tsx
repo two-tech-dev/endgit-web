@@ -42,57 +42,29 @@ export default function PluginPagination({
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
-  const btnStyle = (active: boolean, disabled: boolean) => ({
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "4px",
-    padding: "0.5rem 0.75rem",
-    minHeight: "44px",
-    minWidth: "44px",
-    borderRadius: "var(--radius-md)",
-    border: active
-      ? "1px solid var(--accent-primary)"
-      : "1px solid var(--border-color)",
-    background: active
-      ? "rgba(6, 182, 212, 0.1)"
-      : disabled
-        ? "var(--bg-secondary)"
-        : "var(--bg-card)",
-    color: active
-      ? "var(--accent-primary)"
-      : disabled
-        ? "var(--text-muted)"
-        : "var(--text-secondary)",
-    fontSize: "0.875rem",
-    fontWeight: active ? 700 : 500,
-    cursor: disabled ? "not-allowed" : "pointer",
-    opacity: disabled ? 0.5 : 1,
-    textDecoration: "none",
-    transition: "all 150ms",
-    textAlign: "center" as const,
-  });
+  const getBtnClassName = (active: boolean, disabled: boolean) => {
+    const base =
+      "inline-flex items-center justify-center gap-1 px-3 py-2 min-h-[44px] min-w-[44px] rounded-md text-sm transition-all text-center no-underline";
+    if (active) {
+      return `${base} border border-accent bg-accent/10 text-accent font-bold cursor-pointer`;
+    }
+    if (disabled) {
+      return `${base} border border-border bg-surface-secondary text-text-muted font-medium cursor-not-allowed opacity-50`;
+    }
+    return `${base} border border-border bg-surface-card text-text-secondary font-medium cursor-pointer hover:bg-surface-secondary hover:text-text-primary`;
+  };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "var(--space-2)",
-        marginTop: "var(--space-6)",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className="flex justify-center items-center gap-2 mt-6 flex-wrap">
       {currentPage > 1 ? (
         <button
           onClick={() => goToPage(currentPage - 1)}
-          style={btnStyle(false, false)}
+          className={getBtnClassName(false, false)}
         >
           <ChevronLeft size={16} /> Prev
         </button>
       ) : (
-        <span style={btnStyle(false, true)}>
+        <span className={getBtnClassName(false, true)}>
           <ChevronLeft size={16} /> Prev
         </span>
       )}
@@ -101,11 +73,7 @@ export default function PluginPagination({
         p === "..." ? (
           <span
             key={`dots-${i}`}
-            style={{
-              padding: "0.5rem 0.25rem",
-              color: "var(--text-muted)",
-              fontSize: "0.875rem",
-            }}
+            className="px-2 py-2 text-text-muted text-sm"
           >
             …
           </span>
@@ -113,7 +81,7 @@ export default function PluginPagination({
           <button
             key={p}
             onClick={() => goToPage(p)}
-            style={btnStyle(p === currentPage, false)}
+            className={getBtnClassName(p === currentPage, false)}
           >
             {p}
           </button>
@@ -123,12 +91,12 @@ export default function PluginPagination({
       {currentPage < totalPages ? (
         <button
           onClick={() => goToPage(currentPage + 1)}
-          style={btnStyle(false, false)}
+          className={getBtnClassName(false, false)}
         >
           Next <ChevronRight size={16} />
         </button>
       ) : (
-        <span style={btnStyle(false, true)}>
+        <span className={getBtnClassName(false, true)}>
           Next <ChevronRight size={16} />
         </span>
       )}

@@ -26,13 +26,9 @@ export default function NavbarClient({
   if (status === "loading") {
     return (
       <div
-        style={{
-          width: mobile ? "100%" : "100px",
-          height: "36px",
-          borderRadius: mobile ? "var(--radius-md)" : "var(--radius-full)",
-          background: "var(--bg-secondary)",
-          animation: "pulse 1.5s infinite",
-        }}
+        className={`animate-pulse bg-surface-secondary ${
+          mobile ? "w-full rounded-md" : "w-[100px] rounded-full"
+        } h-[36px]`}
       />
     );
   }
@@ -41,12 +37,7 @@ export default function NavbarClient({
     return (
       <button
         onClick={() => signIn("github")}
-        className="btn btn-primary"
-        style={{
-          padding: "0.5rem 1rem",
-          fontSize: "0.875rem",
-          width: mobile ? "100%" : undefined,
-        }}
+        className={`btn btn-primary text-sm py-2 px-4 ${mobile ? "w-full" : ""}`}
       >
         <LogIn size={16} /> Sign In
       </button>
@@ -62,27 +53,13 @@ export default function NavbarClient({
       alt=""
       width={mobile ? 32 : 28}
       height={mobile ? 32 : 28}
-      style={{
-        borderRadius: "50%",
-        objectFit: "cover",
-      }}
+      className="rounded-full object-cover"
     />
   ) : (
     <div
-      style={{
-        width: mobile ? "32px" : "28px",
-        height: mobile ? "32px" : "28px",
-        borderRadius: "50%",
-        background:
-          "linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover))",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: "white",
-        fontSize: "0.75rem",
-        fontWeight: 700,
-        flexShrink: 0,
-      }}
+      className={`${
+        mobile ? "w-8 h-8" : "w-7 h-7"
+      } rounded-full bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center text-white text-xs font-bold shrink-0`}
     >
       {initials}
     </div>
@@ -96,20 +73,9 @@ export default function NavbarClient({
           setDropdownOpen(false);
           onNavigate?.();
         }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
-          borderRadius: "var(--radius-sm)",
-          fontSize: mobile ? "0.9375rem" : "0.875rem",
-          color: "var(--text-secondary)",
-          transition: "background 100ms",
-        }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "var(--bg-secondary)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+        className={`flex items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
+          mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
+        }`}
       >
         <LayoutDashboard size={16} /> Dev Dashboard
       </Link>
@@ -119,51 +85,27 @@ export default function NavbarClient({
           setDropdownOpen(false);
           onNavigate?.();
         }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
-          borderRadius: "var(--radius-sm)",
-          fontSize: mobile ? "0.9375rem" : "0.875rem",
-          color: "var(--text-secondary)",
-          transition: "background 100ms",
-        }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.background = "var(--bg-secondary)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+        className={`flex items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
+          mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
+        }`}
       >
         <Package size={16} /> My Plugins
       </Link>
-      {(session?.user as any)?.trustLevel === "ADMIN" ||
-      (session?.user as any)?.trustLevel === "TRUSTED" ? (
+      {((session?.user as any)?.trustLevel === "ADMIN" ||
+        (session?.user as any)?.trustLevel === "TRUSTED") && (
         <Link
           href="/admin"
           onClick={() => {
             setDropdownOpen(false);
             onNavigate?.();
           }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
-            borderRadius: "var(--radius-sm)",
-            fontSize: mobile ? "0.9375rem" : "0.875rem",
-            color: "#8b5cf6",
-            transition: "background 100ms",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "rgba(139,92,246,0.05)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = "transparent")
-          }
+          className={`flex items-center gap-2 rounded-sm text-[#8b5cf6] hover:bg-[#8b5cf6]/5 transition-colors ${
+            mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
+          }`}
         >
           <Shield size={16} /> Admin Panel
         </Link>
-      ) : null}
+      )}
     </>
   );
 
@@ -174,22 +116,9 @@ export default function NavbarClient({
         setDropdownOpen(false);
         onNavigate?.();
       }}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5rem",
-        padding: mobile ? "0.625rem 0.75rem" : "0.5rem 0.75rem",
-        borderRadius: "var(--radius-sm)",
-        fontSize: mobile ? "0.9375rem" : "0.875rem",
-        color: "var(--status-error)",
-        width: "100%",
-        textAlign: "left",
-        transition: "background 100ms",
-      }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.background = "rgba(239, 68, 68, 0.05)")
-      }
-      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+      className={`flex items-center gap-2 rounded-sm text-error hover:bg-error/5 w-full text-left transition-colors ${
+        mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
+      }`}
     >
       <LogOut size={16} /> Sign Out
     </button>
@@ -197,82 +126,38 @@ export default function NavbarClient({
 
   if (mobile) {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-1)",
-        }}
-      >
+      <div className="flex flex-col gap-1">
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.75rem",
-            padding: "0.625rem 0.75rem",
-            borderRadius: "var(--radius-md)",
-            border: "none",
-            background: dropdownOpen ? "var(--bg-secondary)" : "transparent",
-            cursor: "pointer",
-            transition: "all 150ms",
-            width: "100%",
-          }}
+          className={`flex items-center gap-3 py-2.5 px-3 rounded-md border-0 w-full cursor-pointer transition-all ${
+            dropdownOpen ? "bg-surface-secondary" : "bg-transparent"
+          }`}
         >
           {userAvatar}
-          <div style={{ flex: 1, textAlign: "left", minWidth: 0 }}>
-            <div
-              style={{
-                fontWeight: 600,
-                fontSize: "0.9375rem",
-                color: "var(--text-primary)",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
+          <div className="flex-1 text-left min-w-0">
+            <div className="font-semibold text-[15px] text-text-primary overflow-hidden text-ellipsis whitespace-nowrap">
               {user?.name || user?.email}
             </div>
             {user?.email && user?.name && (
-              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                {user.email}
-              </div>
+              <div className="text-xs text-text-muted">{user.email}</div>
             )}
           </div>
           <ChevronDown
             size={16}
-            color="#94a3b8"
-            style={{
-              transition: "transform 200ms",
-              transform: dropdownOpen ? "rotate(180deg)" : "none",
-              flexShrink: 0,
-            }}
+            className={`text-text-muted transition-transform duration-200 shrink-0 ${
+              dropdownOpen ? "rotate-180" : ""
+            }`}
           />
         </button>
 
         <div
-          style={{
-            overflow: "hidden",
-            maxHeight: dropdownOpen ? "300px" : "0",
-            opacity: dropdownOpen ? 1 : 0,
-            transition: "max-height 0.2s ease, opacity 0.2s ease",
-          }}
+          className={`overflow-hidden transition-all duration-200 ease-in-out ${
+            dropdownOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
+          }`}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-1)",
-              padding: "0 0.25rem",
-            }}
-          >
+          <div className="flex flex-col gap-1 px-1">
             {menuItems}
-            <div
-              style={{
-                borderTop: "1px solid var(--border-color)",
-                margin: "0.25rem 0",
-              }}
-            />
+            <div className="border-t border-border my-1" />
             {signOutButton}
           </div>
         </div>
@@ -281,42 +166,20 @@ export default function NavbarClient({
   }
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className="relative">
       <button
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          padding: "0.375rem 0.75rem",
-          borderRadius: "var(--radius-full)",
-          border: "1px solid var(--border-color)",
-          background: "var(--bg-card)",
-          cursor: "pointer",
-          transition: "all 150ms",
-        }}
+        className="flex items-center gap-2 py-1.5 px-3 rounded-full border border-border bg-surface-card cursor-pointer transition-all hover:bg-surface-secondary"
       >
         {userAvatar}
-        <span
-          style={{
-            fontWeight: 500,
-            fontSize: "0.875rem",
-            color: "var(--text-primary)",
-            maxWidth: "120px",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-          }}
-        >
+        <span className="font-medium text-sm text-text-primary max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap">
           {user?.name || user?.email}
         </span>
         <ChevronDown
           size={14}
-          color="#94a3b8"
-          style={{
-            transition: "transform 200ms",
-            transform: dropdownOpen ? "rotate(180deg)" : "none",
-          }}
+          className={`text-text-muted transition-transform duration-200 ${
+            dropdownOpen ? "rotate-180" : ""
+          }`}
         />
       </button>
 
@@ -324,56 +187,20 @@ export default function NavbarClient({
         <>
           <div
             onClick={() => setDropdownOpen(false)}
-            style={{ position: "fixed", inset: 0, zIndex: 40 }}
+            className="fixed inset-0 z-40"
           />
 
-          <div
-            style={{
-              position: "absolute",
-              right: 0,
-              top: "calc(100% + 8px)",
-              zIndex: 50,
-              width: "220px",
-              maxWidth: "calc(100vw - 2rem)",
-              background: "var(--bg-card)",
-              border: "1px solid var(--border-color)",
-              borderRadius: "var(--radius-lg)",
-              boxShadow: "var(--shadow-lg)",
-              overflow: "hidden",
-              animation: "fadeIn 0.15s ease",
-            }}
-          >
-            <div
-              style={{
-                padding: "0.75rem 1rem",
-                borderBottom: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: 600,
-                  fontSize: "0.875rem",
-                  color: "var(--text-primary)",
-                }}
-              >
+          <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[220px] max-w-[calc(100vw-2rem)] bg-surface-card border border-border rounded-lg shadow-lg overflow-hidden animate-fade-in">
+            <div className="py-3 px-4 border-b border-border bg-surface-secondary">
+              <div className="font-semibold text-sm text-text-primary">
                 {user?.name}
               </div>
-              <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
-                {user?.email}
-              </div>
+              <div className="text-xs text-text-muted">{user?.email}</div>
             </div>
 
-            <div style={{ padding: "0.375rem" }}>{menuItems}</div>
+            <div className="p-1.5 flex flex-col gap-0.5">{menuItems}</div>
 
-            <div
-              style={{
-                padding: "0.375rem",
-                borderTop: "1px solid var(--border-color)",
-              }}
-            >
-              {signOutButton}
-            </div>
+            <div className="p-1.5 border-t border-border">{signOutButton}</div>
           </div>
         </>
       )}

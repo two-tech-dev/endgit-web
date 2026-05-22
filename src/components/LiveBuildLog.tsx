@@ -75,53 +75,37 @@ export default function LiveBuildLog({
 
   // Custom log parser for syntax highlighting
   const parseLogLine = (line: string, index: number) => {
-    let color = "#cbd5e1"; // default slate-300
-    let fontWeight = "normal";
+    let colorClass = "text-[#cbd5e1]"; // default slate-300
+    let fontWeightClass = "font-normal";
 
-    if (line.includes("✅"))
-      color = "#10b981"; // success green
-    else if (
+    if (line.includes("✅")) {
+      colorClass = "text-success"; // success green
+    } else if (
       line.includes("❌") ||
       line.includes("ERROR") ||
       line.includes("Failed permanently")
-    )
-      color = "#ef4444"; // error red
-    else if (line.includes("⚠️") || line.includes("Warning"))
-      color = "#f59e0b"; // warning yellow
-    else if (line.trim().startsWith("[") && line.includes("]")) {
-      color = "#38bdf8"; // cyan for steps like [1/5]
-      fontWeight = "600";
-    } else if (line.includes("->"))
-      color = "#94a3b8"; // muted slate-400 for sub-steps
-    else if (line.includes("Security Scan")) color = "#c084fc"; // purple for security
+    ) {
+      colorClass = "text-error"; // error red
+    } else if (line.includes("⚠️") || line.includes("Warning")) {
+      colorClass = "text-warning"; // warning yellow
+    } else if (line.trim().startsWith("[") && line.includes("]")) {
+      colorClass = "text-accent"; // cyan for steps like [1/5]
+      fontWeightClass = "font-semibold";
+    } else if (line.includes("->")) {
+      colorClass = "text-text-muted"; // muted slate-400 for sub-steps
+    } else if (line.includes("Security Scan")) {
+      colorClass = "text-purple-400"; // purple for security
+    }
 
     return (
       <div
         key={index}
-        style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}
+        className="flex gap-4 min-h-[1.5rem]"
       >
-        <span
-          style={{
-            color: "#334155",
-            minWidth: "2rem",
-            textAlign: "right",
-            userSelect: "none",
-            fontSize: "0.75rem",
-            paddingTop: "0.1rem",
-            fontFamily: "var(--font-mono)",
-          }}
-        >
+        <span className="text-[#334155] min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
-        <span
-          style={{
-            color,
-            fontWeight,
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-            flex: 1,
-          }}
-        >
+        <span className={`whitespace-pre-wrap break-words flex-1 font-mono ${colorClass} ${fontWeightClass}`}>
           {line}
         </span>
       </div>
@@ -129,95 +113,32 @@ export default function LiveBuildLog({
   };
 
   return (
-    <div
-      className="card"
-      style={{
-        overflow: "hidden",
-        border: "1px solid rgba(255,255,255,0.05)",
-        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)",
-        background: "#09090b", // Very dark background
-      }}
-    >
+    <div className="card overflow-hidden border border-white/5 shadow-2xl bg-[#09090b]">
       {/* Header */}
-      <div
-        className="live-build-header"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0.75rem 1.25rem",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-          background: "rgba(255, 255, 255, 0.02)",
-          backdropFilter: "blur(10px)",
-          flexWrap: "wrap",
-          gap: "var(--space-3)",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <Terminal size={16} color="#38bdf8" />
-          <span
-            style={{
-              fontWeight: 600,
-              fontSize: "0.875rem",
-              color: "#f8fafc",
-              letterSpacing: "0.02em",
-            }}
-          >
+      <div className="live-build-header flex justify-between items-center px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md flex-wrap gap-3">
+        <div className="flex items-center gap-3">
+          <Terminal size={16} className="text-accent" />
+          <span className="font-semibold text-sm text-[#f8fafc] tracking-wide">
             Execution Log
           </span>
           {isRunning && (
-            <span
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "6px",
-                fontSize: "0.6875rem",
-                color: "#38bdf8",
-                fontWeight: 700,
-                letterSpacing: "0.05em",
-                background: "rgba(56, 189, 248, 0.1)",
-                padding: "2px 8px",
-                borderRadius: "99px",
-              }}
-            >
-              <span
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  background: "#38bdf8",
-                  animation: "pulse 1.5s infinite",
-                }}
-              />
+            <span className="inline-flex items-center gap-1.5 text-[0.6875rem] text-accent font-bold tracking-wider bg-accent/10 px-2 py-0.5 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               LIVE
             </span>
           )}
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1rem",
-            fontSize: "0.8125rem",
-          }}
-        >
+        <div className="flex items-center gap-4 text-[0.8125rem]">
           {duration !== null && (
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                color: "#94a3b8",
-              }}
-            >
+            <span className="flex items-center gap-1.5 text-text-muted">
               <Clock size={14} /> {duration}s
             </span>
           )}
           {!isRunning &&
             (isSuccess ? (
-              <CheckCircle size={16} color="#10b981" />
+              <CheckCircle size={16} className="text-success" />
             ) : (
-              <XCircle size={16} color="#ef4444" />
+              <XCircle size={16} className="text-error" />
             ))}
         </div>
       </div>
@@ -231,29 +152,13 @@ export default function LiveBuildLog({
             setAutoScroll(scrollHeight - scrollTop - clientHeight < 50);
           }
         }}
-        style={{
-          margin: 0,
-          padding: "1rem 0",
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8125rem",
-          maxHeight: "500px",
-          overflowY: "auto",
-        }}
+        className="m-0 py-4 font-mono text-[0.8125rem] max-h-[500px] overflow-y-auto scrollbar-terminal"
       >
         {isTruncated && (
-          <div style={{ textAlign: "center", padding: "0.5rem 0 0.75rem" }}>
+          <div className="text-center py-2 pb-3">
             <button
               onClick={() => setShowAll(true)}
-              style={{
-                background: "rgba(56, 189, 248, 0.1)",
-                border: "1px solid rgba(56, 189, 248, 0.3)",
-                color: "#38bdf8",
-                padding: "0.375rem 1rem",
-                borderRadius: "var(--radius-md)",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                cursor: "pointer",
-              }}
+              className="bg-accent/10 border border-accent/30 text-accent px-4 py-1.5 rounded-md text-xs font-semibold cursor-pointer hover:bg-accent/20 transition-colors duration-150"
             >
               Show all {totalLines} lines ({hiddenCount} hidden)
             </button>
@@ -262,57 +167,34 @@ export default function LiveBuildLog({
         {logs ? (
           visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
-          <div style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
-            <span
-              style={{
-                color: "#334155",
-                minWidth: "2rem",
-                textAlign: "right",
-                fontSize: "0.75rem",
-                paddingTop: "0.1rem",
-              }}
-            >
+          <div className="flex gap-4 min-h-[1.5rem]">
+            <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
               1
             </span>
-            <span style={{ color: "#64748b", fontStyle: "italic" }}>
+            <span className="text-text-muted italic">
               Waiting for build agent to start...
             </span>
           </div>
         )}
         {isRunning && (
-          <div style={{ display: "flex", gap: "1rem", minHeight: "1.5rem" }}>
-            <span
-              style={{
-                color: "#334155",
-                minWidth: "2rem",
-                textAlign: "right",
-                fontSize: "0.75rem",
-                paddingTop: "0.1rem",
-              }}
-            >
+          <div className="flex gap-4 min-h-[1.5rem]">
+            <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
               {logs ? allLines.length + 1 : 2}
             </span>
-            <span
-              style={{
-                color: "#38bdf8",
-                animation: "blink 1s step-end infinite",
-              }}
-            >
+            <span className="text-accent animate-pulse font-mono">
               ▋
             </span>
           </div>
         )}
       </div>
 
-      <style>{`
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+      <style dangerouslySetInnerHTML={{ __html: `
         /* Custom scrollbar for the terminal */
-        div::-webkit-scrollbar { width: 8px; }
-        div::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        div::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-        div::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-      `}</style>
+        .scrollbar-terminal::-webkit-scrollbar { width: 8px; }
+        .scrollbar-terminal::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .scrollbar-terminal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .scrollbar-terminal::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+      `}} />
     </div>
   );
 }

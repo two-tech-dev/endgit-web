@@ -84,30 +84,12 @@ export default function NavbarMobile() {
   const dropdown = (
     <div
       ref={dropdownRef}
-      style={{
-        position: "fixed",
-        top: dropdownTop,
-        left: 0,
-        right: 0,
-        zIndex: 49,
-        background: "var(--bg-card)",
-        borderBottom: "1px solid var(--border-color)",
-        boxShadow: "var(--shadow-md)",
-        overflow: "hidden",
-        opacity: visible ? 1 : 0,
-        maxHeight: visible ? "100vh" : "0px",
-        transition: "opacity 250ms ease, max-height 250ms ease",
-      }}
+      style={{ top: dropdownTop }}
+      className={`fixed left-0 right-0 z-[49] bg-surface-card border-b border-border shadow-md overflow-hidden transition-all duration-250 ease-in-out ${
+        visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
+      }`}
     >
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          paddingTop: "var(--space-4)",
-          gap: "var(--space-1)",
-        }}
-      >
+      <div className="container flex flex-col pt-4 gap-1">
         {[
           { href: "/plugins", label: "Releases" },
           { href: "/plugins/top", label: "Top Plugins" },
@@ -116,22 +98,17 @@ export default function NavbarMobile() {
         ].map((item, i) => (
           <div
             key={item.href}
+            className="transition-all duration-250 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transition: `opacity 250ms ease ${50 + i * 50}ms, transform 250ms ease ${50 + i * 50}ms`,
+              transitionDelay: `${50 + i * 50}ms`,
             }}
           >
             <Link
               href={item.href}
               onClick={() => handleClose()}
-              style={{
-                display: "block",
-                color: "var(--text-secondary)",
-                fontWeight: 500,
-                fontSize: "1rem",
-                padding: "0.625rem 0",
-              }}
+              className="block text-text-secondary font-medium text-base py-2.5 hover:text-text-primary transition-colors"
             >
               {item.label}
             </Link>
@@ -140,42 +117,24 @@ export default function NavbarMobile() {
       </div>
 
       <div
+        className="border-t border-border transition-opacity duration-250 ease-in-out"
         style={{
-          borderTop: "1px solid var(--border-color)",
           opacity: visible ? 1 : 0,
-          transition: "opacity 250ms ease 200ms",
+          transitionDelay: "200ms",
         }}
       >
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            paddingTop: "var(--space-3)",
-            paddingBottom: "var(--space-4)",
-            gap: "var(--space-1)",
-          }}
-        >
+        <div className="container flex flex-col pt-3 pb-4 gap-1">
           <div
+            className="transition-all duration-250 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transition:
-                "opacity 250ms ease 250ms, transform 250ms ease 250ms",
+              transitionDelay: "250ms",
             }}
           >
             <button
               onClick={toggleTheme}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.625rem 0",
-                color: "var(--text-secondary)",
-                fontWeight: 500,
-                fontSize: "1rem",
-                width: "100%",
-              }}
+              className="flex items-center gap-2 py-2.5 text-text-secondary font-medium text-base w-full text-left hover:text-text-primary transition-colors"
             >
               {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
               {theme === "light" ? "Dark mode" : "Light mode"}
@@ -184,12 +143,11 @@ export default function NavbarMobile() {
 
           <div
             onClick={(e) => e.stopPropagation()}
+            className="pt-2 transition-all duration-250 ease-out"
             style={{
-              paddingTop: "var(--space-2)",
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transition:
-                "opacity 250ms ease 300ms, transform 250ms ease 300ms",
+              transitionDelay: "300ms",
             }}
           >
             <NavbarClient mobile onNavigate={() => handleClose()} />
@@ -200,49 +158,36 @@ export default function NavbarMobile() {
   );
 
   return (
-    <div ref={wrapperRef} style={{ display: "flex", alignItems: "center" }}>
+    <div ref={wrapperRef} className="flex items-center">
       {/* Desktop nav */}
-      <nav
-        className="nav-links"
-        style={{ display: "flex", gap: "2rem", alignItems: "center" }}
-      >
+      <nav className="hidden md:flex gap-8 items-center">
         <Link
           href="/plugins"
-          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           Releases
         </Link>
         <Link
           href="/plugins/top"
-          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           Top Plugins
         </Link>
         <Link
           href="/builds"
-          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           Dev Builds
         </Link>
         <Link
           href="/faq"
-          style={{ color: "var(--text-secondary)", fontWeight: 500 }}
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           FAQ
         </Link>
         <button
           onClick={toggleTheme}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 32,
-            height: 32,
-            borderRadius: "var(--radius-full)",
-            background: "var(--bg-secondary)",
-            color: "var(--text-secondary)",
-            transition: "all var(--transition-fast)",
-          }}
+          className="flex items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
@@ -252,45 +197,22 @@ export default function NavbarMobile() {
 
       {/* Mobile hamburger button */}
       <button
-        className="mobile-menu-btn"
+        className="flex md:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
         onClick={handleToggle}
         aria-label="Toggle menu"
-        style={{
-          color: "var(--text-primary)",
-        }}
       >
-        <div
-          style={{
-            position: "relative",
-            width: 24,
-            height: 24,
-          }}
-        >
+        <div className="relative w-6 h-6">
           <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: open ? 0 : 1,
-              transform: open ? "rotate(90deg)" : "rotate(0deg)",
-              transition: "opacity 200ms, transform 200ms",
-            }}
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${
+              open ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+            }`}
           >
             <Menu size={24} />
           </div>
           <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              opacity: open ? 1 : 0,
-              transform: open ? "rotate(0deg)" : "rotate(-90deg)",
-              transition: "opacity 200ms, transform 200ms",
-            }}
+            className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${
+              open ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+            }`}
           >
             <X size={24} />
           </div>

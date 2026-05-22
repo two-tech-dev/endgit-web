@@ -37,66 +37,22 @@ export default async function DashboardPage() {
 
   if (githubTokenExpired) {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-12)",
-          paddingBottom: "var(--space-12)",
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            maxWidth: "600px",
-            padding: "var(--space-10)",
-            textAlign: "center",
-            border: "1px solid var(--border-highlight)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              background: "rgba(255, 170, 0, 0.1)",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-6)",
-            }}
-          >
-            <AlertCircle size={40} color="var(--accent-orange)" />
+      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
+        <div className="card max-w-[600px] p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-warning/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <AlertCircle size={40} className="text-warning" />
           </div>
-          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
+          <h1 className="heading-2 mb-4">
             GitHub Session Expired
           </h1>
-          <p
-            className="text-secondary"
-            style={{
-              fontSize: "1.125rem",
-              lineHeight: 1.6,
-              marginBottom: "var(--space-8)",
-            }}
-          >
+          <p className="text-text-secondary text-lg leading-relaxed mb-8">
             For security reasons, your connection to GitHub has expired. Please
             re-authenticate to sync your App installation status and continue
             using the Developer Dashboard.
           </p>
           <a
             href="/api/auth/signin?callbackUrl=/dashboard"
-            className="btn btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "1.125rem",
-              padding: "0.75rem 2rem",
-            }}
+            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
           >
             Re-authenticate with GitHub
           </a>
@@ -107,52 +63,15 @@ export default async function DashboardPage() {
 
   if (!hasAppInstalled) {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-12)",
-          paddingBottom: "var(--space-12)",
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            maxWidth: "600px",
-            padding: "var(--space-10)",
-            textAlign: "center",
-            border: "1px solid var(--border-highlight)",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-          }}
-        >
-          <div
-            style={{
-              width: "80px",
-              height: "80px",
-              background: "rgba(124, 58, 237, 0.1)",
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto var(--space-6)",
-            }}
-          >
-            <PackagePlus size={40} color="var(--accent-primary)" />
+      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
+        <div className="card max-w-[600px] p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
-          <h1 className="heading-2" style={{ marginBottom: "var(--space-4)" }}>
+          <h1 className="heading-2 mb-4">
             Welcome to EndGit!
           </h1>
-          <p
-            className="text-secondary"
-            style={{
-              fontSize: "1.125rem",
-              lineHeight: 1.6,
-              marginBottom: "var(--space-8)",
-            }}
-          >
+          <p className="text-text-secondary text-lg leading-relaxed mb-8">
             To get started with the Developer Dashboard, you need to install the
             EndGit GitHub App on your repositories. The app will automatically
             detect your Bedrock plugins, build them using our CI/CD pipeline,
@@ -160,14 +79,7 @@ export default async function DashboardPage() {
           </p>
           <a
             href={installUrl}
-            className="btn btn-primary"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "1.125rem",
-              padding: "0.75rem 2rem",
-            }}
+            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
           >
             <ExternalLink size={20} /> Install GitHub App{" "}
             <ArrowRight size={20} />
@@ -187,42 +99,19 @@ export default async function DashboardPage() {
   const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: "var(--space-8)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
+    <div className="container py-8">
+      <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
-          <p className="text-muted">
+          <p className="text-text-muted">
             Manage your plugins and track performance.
           </p>
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "var(--space-4)",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="flex gap-4 flex-wrap">
           <a
             href={installUrl}
             target="_blank"
-            className="btn btn-secondary"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
+            className="btn btn-secondary flex items-center gap-2"
           >
             <Settings size={18} /> Manage App Installation
           </a>
@@ -230,42 +119,13 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
-          gap: "var(--space-6)",
-          marginBottom: "var(--space-10)",
-        }}
-      >
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(124, 58, 237, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--accent-primary)",
-            }}
-          >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6 mb-10">
+        <div className="card p-6 flex items-center gap-4">
+          <div className="bg-[#7c3aed]/10 p-3 rounded-md text-[#7c3aed]">
             <PackagePlus size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="text-text-muted text-sm mb-1">
               Total Plugins
             </div>
             <div className="heading-2">
@@ -274,33 +134,12 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(6, 182, 212, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--accent-primary)",
-            }}
-          >
+        <div className="card p-6 flex items-center gap-4">
+          <div className="bg-cyan-500/10 p-3 rounded-md text-cyan-500">
             <Activity size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="text-text-muted text-sm mb-1">
               Total Downloads
             </div>
             <div className="heading-2">
@@ -309,33 +148,12 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-6)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(245, 158, 11, 0.1)",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              color: "var(--status-warning)",
-            }}
-          >
+        <div className="card p-6 flex items-center gap-4">
+          <div className="bg-warning/10 p-3 rounded-md text-warning">
             <AlertCircle size={24} />
           </div>
           <div>
-            <div
-              className="text-muted"
-              style={{
-                fontSize: "0.875rem",
-                marginBottom: "0.25rem",
-              }}
-            >
+            <div className="text-text-muted text-sm mb-1">
               Pending Review
             </div>
             <div className="heading-2">
@@ -346,76 +164,26 @@ export default async function DashboardPage() {
       </div>
 
       {/* Plugins List */}
-      <h2 className="heading-3" style={{ marginBottom: "var(--space-6)" }}>
+      <h2 className="heading-3 mb-6">
         My Plugins
       </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(320px, 100%), 1fr))",
-          gap: "var(--space-6)",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-6">
         {myPlugins.map((plugin) => (
           <div
             key={plugin.id}
-            className="card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
+            className="card flex flex-col overflow-hidden"
           >
             {/* Status Bar */}
             <div
-              style={{
-                height: "4px",
-                width: "100%",
-                background:
-                  plugin.status === "APPROVED"
-                    ? "var(--status-success)"
-                    : "var(--status-warning)",
-              }}
+              className={`h-1 w-full ${
+                plugin.status === "APPROVED" ? "bg-success" : "bg-warning"
+              }`}
             />
 
-            <div
-              style={{
-                padding: "var(--space-5)",
-                display: "flex",
-                flexDirection: "column",
-                flex: 1,
-                gap: "var(--space-4)",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "var(--space-3)",
-                    alignItems: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      borderRadius: "var(--radius-sm)",
-                      background: "var(--bg-secondary)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "1px solid var(--border-color)",
-                      flexShrink: 0,
-                      overflow: "hidden",
-                    }}
-                  >
+            <div className="p-5 flex flex-col flex-1 gap-4">
+              <div className="flex justify-between items-start">
+                <div className="flex gap-3 items-center">
+                  <div className="w-12 h-12 rounded-sm bg-surface-secondary flex items-center justify-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}
@@ -425,22 +193,11 @@ export default async function DashboardPage() {
                   <div>
                     <Link
                       href={`/plugins/${plugin.slug}`}
-                      className="heading-3"
-                      style={{
-                        fontSize: "1.25rem",
-                        color: "var(--text-primary)",
-                        display: "block",
-                        marginBottom: "var(--space-1)",
-                      }}
+                      className="heading-3 text-xl text-text-primary block mb-1"
                     >
                       {plugin.displayName}
                     </Link>
-                    <span
-                      style={{
-                        fontSize: "0.875rem",
-                        color: "var(--text-muted)",
-                      }}
-                    >
+                    <span className="text-sm text-text-muted">
                       v{plugin.latestVersion || "0.0.0"}
                     </span>
                   </div>
@@ -452,117 +209,49 @@ export default async function DashboardPage() {
                 </span>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "var(--space-4)",
-                  padding: "var(--space-4) 0",
-                  borderTop: "1px solid var(--border-color)",
-                  borderBottom: "1px solid var(--border-color)",
-                  color: "var(--text-secondary)",
-                  fontSize: "0.875rem",
-                }}
-              >
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+              <div className="flex flex-wrap gap-4 py-4 border-y border-border text-text-secondary text-sm">
+                <div className="flex-1">
+                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Downloads
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.25rem",
-                      fontWeight: 500,
-                      color: "var(--text-primary)",
-                    }}
-                  >
-                    <Activity size={14} color="var(--accent-primary)" />{" "}
+                  <div className="flex items-center gap-1 font-medium text-text-primary">
+                    <Activity size={14} className="text-accent" />{" "}
                     {plugin.downloads?.toLocaleString() ?? 0}
                   </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                <div className="flex-1">
+                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Latest Version
                   </div>
-                  <div
-                    style={{
-                      fontWeight: 500,
-                      color: "var(--text-primary)",
-                    }}
-                  >
+                  <div className="font-medium text-text-primary">
                     {plugin.latestVersion
                       ? `v${plugin.latestVersion}`
                       : "No versions"}
                   </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.75rem",
-                      marginBottom: "0.25rem",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                <div className="flex-1">
+                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Status
                   </div>
                   <div
-                    style={{
-                      fontWeight: 500,
-                      color:
-                        plugin.status === "APPROVED"
-                          ? "var(--status-success)"
-                          : "var(--status-warning)",
-                    }}
+                    className={`font-medium ${
+                      plugin.status === "APPROVED"
+                        ? "text-success"
+                        : "text-warning"
+                    }`}
                   >
                     {plugin.status}
                   </div>
                 </div>
               </div>
 
-              <div style={{ marginTop: "auto" }}>
+              <div className="mt-auto">
                 {plugin.status === "PENDING_REVIEW" ? (
-                  <div
-                    style={{
-                      width: "100%",
-                      background: "var(--status-warning)",
-                      color: "#000",
-                      fontWeight: 600,
-                      padding: "0.5rem",
-                      borderRadius: "var(--radius-sm)",
-                      textAlign: "center",
-                    }}
-                  >
+                  <div className="w-full bg-warning text-black font-semibold p-2 rounded-sm text-center">
                     Submitted
                   </div>
                 ) : (
-                  <button
-                    className="btn btn-secondary"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "0.5rem",
-                    }}
-                  >
+                  <button className="btn btn-secondary w-full flex justify-center p-2">
                     <Settings size={16} /> Manage Plugin
                   </button>
                 )}

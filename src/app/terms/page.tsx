@@ -24,30 +24,12 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "4rem", paddingBottom: "4rem", maxWidth: "800px" }}
-    >
-      <h1
-        style={{
-          fontSize: "2.5rem",
-          fontWeight: "bold",
-          marginBottom: "2rem",
-          color: "var(--text-primary)",
-        }}
-      >
+    <div className="container max-w-3xl py-12 md:py-20">
+      <h1 className="heading-1 mb-8 text-text-primary">
         TERMS OF WEBSITE USE FOR ENDGIT
       </h1>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.5rem",
-          color: "var(--text-muted)",
-          lineHeight: 1.6,
-        }}
-      >
+      <div className="flex flex-col gap-6 text-text-secondary leading-relaxed">
         <p>
           This page sets out the terms on which you may access and make use of
           our website EndGit (the &quot;Site&quot;), whether as a guest or a
@@ -57,14 +39,7 @@ export default function TermsOfServicePage() {
           agree to these terms of use, please refrain from using the Site.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           INFORMATION ABOUT US
         </h2>
         <p>
@@ -73,21 +48,14 @@ export default function TermsOfServicePage() {
             href="https://2tech.studio"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ color: "var(--accent-primary)", textDecoration: "none" }}
+            className="text-accent hover:underline no-underline"
           >
             https://2tech.studio
           </a>
           ).
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           ACCESSING THE SITE
         </h2>
         <p>
@@ -119,14 +87,7 @@ export default function TermsOfServicePage() {
           aware of these terms, and that they comply with them.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           INTELLECTUAL PROPERTY RIGHTS
         </h2>
         <p>
@@ -139,14 +100,7 @@ export default function TermsOfServicePage() {
           licensors.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           RELIANCE ON INFORMATION POSTED
         </h2>
         <p>
@@ -157,14 +111,7 @@ export default function TermsOfServicePage() {
           may be informed of any of its contents.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           THE SITE CHANGES REGULARLY
         </h2>
         <p>
@@ -175,14 +122,7 @@ export default function TermsOfServicePage() {
           material.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           OUR LIABILITY
         </h2>
         <p>
@@ -191,14 +131,7 @@ export default function TermsOfServicePage() {
           by law, we, other members of our group of companies and third parties
           connected to us hereby expressly exclude:
         </p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>
             all conditions, warranties and other terms which might otherwise be
             implied by statute, common law or the law of equity;
@@ -209,15 +142,7 @@ export default function TermsOfServicePage() {
             connection with the use, inability to use, or results of the use of
             the Site, any websites linked to it and any materials posted on it,
             including, without limitation any liability for:
-            <ul
-              style={{
-                paddingLeft: "1.5rem",
-                marginTop: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.25rem",
-              }}
-            >
+            <ul className="list-circle pl-6 mt-2 flex flex-col gap-1">
               <li>loss of income or revenue;</li>
               <li>loss of business;</li>
               <li>loss of profits or contracts;</li>
@@ -239,28 +164,14 @@ export default function TermsOfServicePage() {
           which cannot be excluded or limited under applicable law.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           PROHIBITED USES
         </h2>
         <p>
           You may use the Site only for lawful purposes. You may not use the
           Site:
         </p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>
             in any way that breaches any applicable local, national or
             international law or regulation;
@@ -291,29 +202,14 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
         <p>You also agree:</p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>
             not to reproduce, duplicate, copy or resell any part of the Site in
             contravention of the provisions of our terms of website use;
           </li>
           <li>
             not to access without authority, interfere with, damage or disrupt:
-            <ul
-              style={{
-                paddingLeft: "1.5rem",
-                marginTop: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.25rem",
-              }}
-            >
+            <ul className="list-circle pl-6 mt-2 flex flex-col gap-1">
               <li>any part of the Site;</li>
               <li>any equipment or network on which the Site is stored;</li>
               <li>any software used in the provision of the Site; or</li>
@@ -325,28 +221,14 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           INTERACTIVE SERVICES
         </h2>
         <p>
           We may from time to time provide interactive services on the Site,
           including, without limitation:
         </p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>chat rooms;</li>
           <li>bulletin boards;</li>
           <li>reviews</li>
@@ -384,14 +266,7 @@ export default function TermsOfServicePage() {
           or difficulty arise.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           CONTENT STANDARDS
         </h2>
         <p>
@@ -405,14 +280,7 @@ export default function TermsOfServicePage() {
           well as to its whole.
         </p>
         <p>Contributions must:</p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>be accurate (where they state facts);</li>
           <li>be genuinely held (where they state opinions); and</li>
           <li>
@@ -421,14 +289,7 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
         <p>Contributions must not:</p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>contain any material which is defamatory;</li>
           <li>
             contain any material which is obscene, offensive, hateful or
@@ -472,14 +333,7 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           SUSPENSION AND TERMINATION
         </h2>
         <p>
@@ -493,14 +347,7 @@ export default function TermsOfServicePage() {
           breach of these terms of use and may result in our taking all or any
           of the following actions:
         </p>
-        <ul
-          style={{
-            paddingLeft: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.5rem",
-          }}
-        >
+        <ul className="list-disc pl-6 flex flex-col gap-2">
           <li>
             immediate, temporary or permanent withdrawal of your right to use
             the Site;
@@ -528,14 +375,7 @@ export default function TermsOfServicePage() {
           appropriate.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           INFORMATION ABOUT YOU AND YOUR VISITS TO THE SITE
         </h2>
         <p>
@@ -544,14 +384,7 @@ export default function TermsOfServicePage() {
           warrant that all data provided by you is accurate.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           VIRUSES, HACKING AND OTHER OFFENCES
         </h2>
         <p>
@@ -579,14 +412,7 @@ export default function TermsOfServicePage() {
           linked to it.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           LINKING TO THE SITE
         </h2>
         <p>
@@ -608,14 +434,7 @@ export default function TermsOfServicePage() {
           please contact EndGit.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           LINKS FROM THE SITE
         </h2>
         <p>
@@ -626,14 +445,7 @@ export default function TermsOfServicePage() {
           arise from your use of them.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           JURISDICTION AND APPLICABLE LAW
         </h2>
         <p>
@@ -650,14 +462,7 @@ export default function TermsOfServicePage() {
           in accordance with the law of the US.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           VARIATIONS
         </h2>
         <p>
@@ -668,14 +473,7 @@ export default function TermsOfServicePage() {
           provisions or notices published elsewhere on the Site.
         </p>
 
-        <h2
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: 600,
-            color: "var(--text-primary)",
-            marginTop: "1rem",
-          }}
-        >
+        <h2 className="text-xl font-semibold text-text-primary mt-4">
           YOUR CONCERNS
         </h2>
         <p>
@@ -683,14 +481,14 @@ export default function TermsOfServicePage() {
           please contact us at{" "}
           <a
             href="mailto:two-tech-dev@proton.me"
-            style={{ color: "var(--accent-primary)", textDecoration: "none" }}
+            className="text-accent hover:underline no-underline"
           >
             two-tech-dev@proton.me
           </a>{" "}
           or via our GitHub repository.
         </p>
 
-        <p style={{ marginTop: "1rem", fontStyle: "italic" }}>
+        <p className="mt-4 font-italic text-sm text-text-muted">
           Thank you for visiting the Site.
         </p>
       </div>

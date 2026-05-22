@@ -58,35 +58,24 @@ export default function DependencyGraph({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="card" style={{ padding: "var(--space-6)" }}>
-      <h3
-        style={{
-          fontSize: "1rem",
-          fontWeight: 600,
-          display: "flex",
-          alignItems: "center",
-          gap: "var(--space-2)",
-          color: "var(--text-primary)",
-          marginBottom: "var(--space-4)",
-        }}
-      >
-        <GitBranch size={18} color="var(--accent-primary)" /> Dependency Graph
+    <div className="card p-6">
+      <h3 className="text-base font-semibold flex items-center gap-2 text-text-primary mb-4">
+        <GitBranch size={18} className="text-accent" /> Dependency Graph
       </h3>
 
       {loading ? (
-        <div style={{ textAlign: "center", padding: "var(--space-4)" }}>
+        <div className="text-center py-4">
           <Loader2
             size={20}
-            color="var(--text-muted)"
-            style={{ animation: "spin 1s linear infinite" }}
+            className="text-text-muted animate-spin mx-auto"
           />
         </div>
       ) : error ? (
-        <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+        <p className="text-text-muted text-sm">
           {error}
         </p>
       ) : (
-        <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.8125rem" }}>
+        <div className="font-mono text-[0.8125rem]">
           {deps.map((dep, i) => (
             <TreeNode key={i} node={dep} isRoot depth={0} />
           ))}
@@ -109,42 +98,21 @@ function TreeNode({
   const hasChildren = node.children && node.children.length > 0;
 
   return (
-    <div style={{ marginLeft: isRoot ? 0 : "1.25rem" }}>
+    <div className={isRoot ? "" : "ml-5"}>
       <div
         onClick={() => hasChildren && setOpen(!open)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.375rem",
-          padding: "0.25rem 0.5rem",
-          borderRadius: "var(--radius-sm)",
-          cursor: hasChildren ? "pointer" : "default",
-          transition: "background 100ms",
-          marginBottom: "2px",
-        }}
-        onMouseEnter={(e) => {
-          if (hasChildren)
-            e.currentTarget.style.background = "var(--bg-secondary)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = "transparent";
-        }}
+        className={`flex items-center gap-1.5 px-2 py-1 rounded-sm ${
+          hasChildren ? "cursor-pointer hover:bg-surface-secondary" : "cursor-default"
+        } transition-colors duration-100 mb-[2px]`}
       >
         {hasChildren ? (
           open ? (
-            <ChevronDown size={14} color="var(--text-muted)" />
+            <ChevronDown size={14} className="text-text-muted" />
           ) : (
-            <ChevronRight size={14} color="var(--text-muted)" />
+            <ChevronRight size={14} className="text-text-muted" />
           )
         ) : (
-          <span
-            style={{
-              width: "14px",
-              display: "inline-block",
-              textAlign: "center",
-              color: "var(--border-highlight)",
-            }}
-          >
+          <span className="w-3.5 inline-block text-center text-border-highlight">
             •
           </span>
         )}
@@ -152,45 +120,28 @@ function TreeNode({
           size={13}
           color={
             isRoot
-              ? "var(--accent-primary)"
+              ? "var(--color-accent)"
               : node.required
-                ? "var(--accent-primary)"
-                : "var(--text-muted)"
+                ? "var(--color-accent)"
+                : "var(--color-text-muted)"
           }
         />
         <span
-          style={{
-            color: isRoot ? "var(--accent-primary)" : "var(--text-primary)",
-            fontWeight: isRoot ? 600 : 400,
-          }}
+          className={isRoot ? "text-accent font-semibold" : "text-text-primary font-normal"}
         >
           {node.name}
         </span>
-        <span style={{ color: "var(--text-muted)", fontSize: "0.75rem" }}>
+        <span className="text-text-muted text-xs">
           {node.version}
         </span>
         {!node.required ? (
-          <span
-            style={{
-              fontSize: "0.75rem",
-              color: "var(--text-muted)",
-              background: "var(--bg-secondary)",
-              padding: "0 4px",
-              borderRadius: "3px",
-              border: "1px solid var(--border-color)",
-            }}
-          >
+          <span className="text-xs text-text-muted bg-surface-secondary px-1 py-0 rounded border border-border">
             optional
           </span>
         ) : null}
       </div>
       {hasChildren && open ? (
-        <div
-          style={{
-            borderLeft: "1px solid var(--border-color)",
-            marginLeft: "0.4375rem",
-          }}
-        >
+        <div className="border-l border-border ml-[7px]">
           {node.children!.map((child, i) => (
             <TreeNode key={i} node={child} depth={depth + 1} />
           ))}

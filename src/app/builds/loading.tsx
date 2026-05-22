@@ -2,45 +2,35 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 
 export default function BuildsLoading() {
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-10)",
-        paddingBottom: "var(--space-16)",
-      }}
-    >
-      <div style={{ marginBottom: "var(--space-8)" }}>
+    <div className="container pt-10 pb-16 mx-auto px-4">
+      <div className="mb-8">
         <Skeleton
           width="10rem"
           height="2rem"
-          style={{ marginBottom: "var(--space-2)" }}
+          className="mb-2"
         />
         <Skeleton width="16rem" height="0.875rem" />
       </div>
 
-      <SkeletonCard style={{ padding: 0 }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+      <SkeletonCard className="p-0">
+        <div className="flex flex-col">
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "var(--space-4)",
-                gap: "var(--space-4)",
-                borderBottom: i < 7 ? "1px solid var(--border-color)" : "none",
-              }}
+              className={`flex items-center p-4 gap-4 ${
+                i < 7 ? "border-b border-border" : ""
+              }`}
             >
-              <div style={{ flex: 1 }}>
+              <div className="flex-1">
                 <Skeleton
                   width="60%"
                   height="0.875rem"
-                  style={{ marginBottom: "4px" }}
+                  className="mb-1"
                 />
                 <Skeleton
                   width="30%"
                   height="0.75rem"
-                  style={{ marginBottom: "4px" }}
+                  className="mb-1"
                 />
                 <Skeleton width="40%" height="0.75rem" />
               </div>

@@ -167,11 +167,8 @@ export default function MarkdownTabs({
   // Fallback if no content
   if (tabs.length === 0) {
     return (
-      <div
-        className="markdown-body"
-        style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}
-      >
-        <em>No description provided.</em>
+      <div className="markdown-body text-text-secondary leading-relaxed italic p-6 bg-surface-card rounded-lg border border-border">
+        No description provided.
       </div>
     );
   }
@@ -179,10 +176,7 @@ export default function MarkdownTabs({
   // If there's only one tab, just render it normally without tabs UI
   if (tabs.length === 1) {
     return (
-      <div
-        className="markdown-body"
-        style={{ color: "var(--text-secondary)", lineHeight: 1.7 }}
-      >
+      <div className="markdown-body text-text-secondary leading-relaxed p-6 bg-surface-card rounded-lg border border-border">
         <MarkdownContent content={tabs[0].content} />
       </div>
     );
@@ -191,26 +185,9 @@ export default function MarkdownTabs({
   const currentTab = tabs[activeTab];
 
   return (
-    <div
-      style={{
-        minWidth: 0,
-        width: "100%",
-        maxWidth: "100%",
-        overflow: "hidden",
-      }}
-    >
+    <div className="min-w-0 w-full max-w-full overflow-hidden">
       {/* Tabs Header */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          maxWidth: "100%",
-          background: "transparent",
-          borderBottom: "1px solid var(--border-color)",
-          padding: "8px 8px 0 8px",
-          gap: "4px",
-        }}
-      >
+      <div className="flex flex-wrap max-w-full bg-transparent border-b border-border p-2 pb-0 gap-1">
         {tabs.map((tab, idx) => {
           const isActive = activeTab === idx;
           const displayTitle =
@@ -222,20 +199,11 @@ export default function MarkdownTabs({
             <button
               key={idx}
               onClick={() => setActiveTab(idx)}
-              style={{
-                padding: "6px 12px",
-                background: isActive ? "#007bff" : "var(--bg-card)",
-                color: isActive ? "white" : "var(--text-primary)",
-                border: "1px solid",
-                borderColor: isActive ? "#007bff" : "var(--border-color)",
-                borderBottomColor: isActive ? "#007bff" : "var(--border-color)",
-                borderRadius: "4px 4px 0 0",
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                transition: "all 0.2s",
-              }}
+              className={`px-3.5 py-2 border rounded-t-md text-xs font-medium whitespace-nowrap cursor-pointer transition-all -mb-[1px] ${
+                isActive
+                  ? "bg-brand text-white border-brand border-b-transparent"
+                  : "bg-surface-card text-text-primary border-border hover:bg-surface-secondary hover:text-brand"
+              }`}
               title={tab.title}
             >
               {displayTitle}
@@ -245,18 +213,7 @@ export default function MarkdownTabs({
       </div>
 
       {/* Tab Content */}
-      <div
-        className="markdown-body"
-        style={{
-          minWidth: 0,
-          width: "100%",
-          maxWidth: "100%",
-          padding: "var(--space-6)",
-          color: "var(--text-secondary)",
-          lineHeight: 1.7,
-          background: "var(--bg-card)",
-        }}
-      >
+      <div className="markdown-body min-w-0 w-full max-w-full p-6 text-text-secondary leading-relaxed bg-surface-card rounded-b-lg border-x border-b border-border">
         <MarkdownContent content={currentTab.content} />
       </div>
     </div>

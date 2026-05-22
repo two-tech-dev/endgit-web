@@ -56,17 +56,8 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
 
   if (loading) {
     return (
-      <div
-        className="card"
-        style={{
-          padding: "var(--space-6)",
-          height: "280px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+      <div className="card p-6 h-[280px] flex items-center justify-center">
+        <p className="text-text-muted text-sm">
           Loading analytics...
         </p>
       </div>
@@ -75,16 +66,12 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
 
   if (data.length === 0) {
     return (
-      <div
-        className="card"
-        style={{ padding: "var(--space-6)", textAlign: "center" }}
-      >
+      <div className="card p-6 text-center">
         <BarChart3
           size={24}
-          color="var(--text-muted)"
-          style={{ margin: "0 auto var(--space-2)" }}
+          className="text-text-muted mx-auto mb-2"
         />
-        <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+        <p className="text-text-muted text-sm">
           {error
             ? "Failed to load analytics data."
             : "No download analytics available yet"}
@@ -92,12 +79,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
         {error && (
           <button
             onClick={fetchAnalytics}
-            className="btn btn-secondary"
-            style={{
-              marginTop: "var(--space-3)",
-              fontSize: "0.8125rem",
-              padding: "0.375rem 1rem",
-            }}
+            className="btn btn-secondary mt-3 text-[0.8125rem] py-1.5 px-4"
           >
             Retry
           </button>
@@ -109,43 +91,17 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
   const totalDownloads = data.reduce((sum, d) => sum + d.downloads, 0);
 
   return (
-    <div className="card" style={{ padding: "var(--space-6)" }}>
-      <div
-        className="chart-header"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-5)",
-          flexWrap: "wrap",
-          gap: "var(--space-2)",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "1rem",
-            fontWeight: 600,
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-2)",
-            color: "var(--text-primary)",
-          }}
-        >
-          <BarChart3 size={18} color="var(--accent-primary)" /> Downloads (Last
-          30 Days)
+    <div className="card p-6">
+      <div className="chart-header flex justify-between items-center mb-5 flex-wrap gap-2">
+        <h3 className="text-base font-semibold flex items-center gap-2 text-text-primary">
+          <BarChart3 size={18} className="text-accent" /> Downloads (Last 30 Days)
         </h3>
-        <span
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: 700,
-            color: "var(--accent-primary)",
-          }}
-        >
+        <span className="text-xl font-bold text-accent">
           {totalDownloads.toLocaleString()}
         </span>
       </div>
 
-      <div style={{ width: "100%", height: "220px" }}>
+      <div className="w-full h-[220px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}

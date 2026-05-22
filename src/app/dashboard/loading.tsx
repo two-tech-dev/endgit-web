@@ -2,20 +2,13 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 
 function StatCardSkeleton() {
   return (
-    <SkeletonCard
-      style={{
-        padding: "var(--space-6)",
-        display: "flex",
-        alignItems: "center",
-        gap: "var(--space-4)",
-      }}
-    >
-      <Skeleton width={48} height={48} borderRadius="var(--radius-md)" />
+    <SkeletonCard className="p-6 flex items-center gap-4">
+      <Skeleton width={48} height={48} className="rounded-md" />
       <div>
         <Skeleton
           width="5rem"
           height="0.875rem"
-          style={{ marginBottom: "var(--space-1)" }}
+          className="mb-1"
         />
         <Skeleton width="3rem" height="2rem" />
       </div>
@@ -25,44 +18,24 @@ function StatCardSkeleton() {
 
 export default function DashboardLoading() {
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          marginBottom: "var(--space-8)",
-          flexWrap: "wrap",
-          gap: "var(--space-4)",
-        }}
-      >
+    <div className="container py-8">
+      <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
         <div>
           <Skeleton
             width="14rem"
             height="2rem"
-            style={{ marginBottom: "var(--space-2)" }}
+            className="mb-2"
           />
           <Skeleton width="18rem" height="0.875rem" />
         </div>
         <Skeleton
           width="12rem"
           height="2.5rem"
-          borderRadius="var(--radius-md)"
+          className="rounded-md"
         />
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
-          gap: "var(--space-6)",
-          marginBottom: "var(--space-10)",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6 mb-10">
         <StatCardSkeleton />
         <StatCardSkeleton />
         <StatCardSkeleton />
@@ -71,53 +44,29 @@ export default function DashboardLoading() {
       <Skeleton
         width="8rem"
         height="1.5rem"
-        style={{ marginBottom: "var(--space-6)" }}
+        className="mb-6"
       />
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(min(320px, 100%), 1fr))",
-          gap: "var(--space-6)",
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-6">
         {Array.from({ length: 3 }, (_, i) => (
           <SkeletonCard
             key={i}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
+            className="flex flex-col overflow-hidden"
           >
-            <Skeleton width="100%" height="4px" borderRadius="0" />
-            <div
-              style={{
-                padding: "var(--space-5)",
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-4)",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "var(--space-3)",
-                    alignItems: "center",
-                  }}
-                >
+            <Skeleton width="100%" height="4px" className="rounded-none" />
+            <div className="p-5 flex flex-col gap-4">
+              <div className="flex justify-between">
+                <div className="flex gap-3 items-center">
                   <Skeleton
                     width={48}
                     height={48}
-                    borderRadius="var(--radius-sm)"
+                    className="rounded-sm"
                   />
                   <div>
                     <Skeleton
                       width="8rem"
                       height="1.25rem"
-                      style={{ marginBottom: "var(--space-1)" }}
+                      className="mb-1"
                     />
                     <Skeleton width="4rem" height="0.875rem" />
                   </div>
@@ -125,24 +74,16 @@ export default function DashboardLoading() {
                 <Skeleton
                   width="4rem"
                   height="1.25rem"
-                  borderRadius="var(--radius-full)"
+                  className="rounded-full"
                 />
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-4)",
-                  padding: "var(--space-4) 0",
-                  borderTop: "1px solid var(--border-color)",
-                  borderBottom: "1px solid var(--border-color)",
-                }}
-              >
+              <div className="flex gap-4 py-4 border-y border-border">
                 {Array.from({ length: 3 }, (_, j) => (
-                  <div key={j} style={{ flex: 1 }}>
+                  <div key={j} className="flex-1">
                     <Skeleton
                       width="4rem"
                       height="0.625rem"
-                      style={{ marginBottom: "4px" }}
+                      className="mb-1"
                     />
                     <Skeleton width="3rem" height="0.875rem" />
                   </div>
@@ -151,7 +92,7 @@ export default function DashboardLoading() {
               <Skeleton
                 width="100%"
                 height="2.25rem"
-                borderRadius="var(--radius-sm)"
+                className="rounded-sm"
               />
             </div>
           </SkeletonCard>

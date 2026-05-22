@@ -260,10 +260,7 @@ export default function SubmitReviewForm({
 
   if (!session)
     return (
-      <div
-        className="card"
-        style={{ padding: "var(--space-6)", textAlign: "center" }}
-      >
+      <div className="card p-6 text-center">
         Please sign in.
       </div>
     );
@@ -272,43 +269,25 @@ export default function SubmitReviewForm({
     <div>
       <button
         onClick={() => router.back()}
-        className="btn btn-secondary"
-        style={{ marginBottom: "var(--space-6)" }}
+        className="btn btn-secondary mb-6"
       >
         <ArrowLeft size={16} /> Back to Build
       </button>
 
-      <div className="card" style={{ padding: "var(--space-6)" }}>
-        <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>
+      <div className="card p-6">
+        <h1 className="heading-2 mb-2">
           Publish Plugin
         </h1>
-        <div
-          style={{
-            marginBottom: "var(--space-6)",
-            padding: "var(--space-4)",
-            background: "rgba(139, 92, 246, 0.05)",
-            borderRadius: "var(--radius-md)",
-            borderLeft: "4px solid var(--accent-primary)",
-          }}
-        >
-          <p
-            className="text-primary"
-            style={{ fontWeight: 500, marginBottom: "var(--space-2)" }}
-          >
+        <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
+          <p className="text-text-primary font-medium mb-2">
             Submit Build #{buildNumber} for Review
           </p>
-          <p
-            className="text-muted"
-            style={{ fontSize: "0.875rem", lineHeight: 1.6 }}
-          >
+          <p className="text-text-muted text-sm leading-relaxed">
             Before submitting, please ensure your plugin complies with the{" "}
             <a
               href="/rules"
               target="_blank"
-              style={{
-                color: "var(--accent-primary)",
-                textDecoration: "underline",
-              }}
+              className="text-accent underline hover:text-accent-hover transition-colors"
             >
               EndGit Plugin Submission Rules
             </a>
@@ -319,44 +298,18 @@ export default function SubmitReviewForm({
 
         <form
           onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-5)",
-          }}
+          className="flex flex-col gap-5"
         >
           {/* ── Section: About this plugin ── */}
-          <h2
-            className="heading-3"
-            style={{
-              marginBottom: "var(--space-2)",
-              paddingBottom: "var(--space-2)",
-              borderBottom: "2px solid var(--accent-primary)",
-              fontSize: "1.1rem",
-              fontStyle: "italic",
-            }}
-          >
+          <h2 className="heading-3 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this plugin...
           </h2>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Display Name
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               The clean name shown on the marketplace (Rule B7).
             </p>
             <input
@@ -364,36 +317,15 @@ export default function SubmitReviewForm({
               required
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="input"
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Short Description
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               A catchy, one-sentence summary shown in search results and plugin
               cards (Max 100 chars).
             </p>
@@ -404,36 +336,15 @@ export default function SubmitReviewForm({
               onChange={(e) => setDescription(e.target.value)}
               maxLength={100}
               placeholder="A brief summary of what your plugin does..."
-              className="input"
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Keywords
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               Comma-separated keywords to help users find your plugin in search.
             </p>
             <input
@@ -441,34 +352,13 @@ export default function SubmitReviewForm({
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
               placeholder="e.g. economy, shops, gui"
-              className="input"
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
           <div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                marginBottom: "2px",
-              }}
-            >
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                }}
-              >
+            <div className="flex justify-between items-end mb-0.5">
+              <label className="block text-sm font-medium">
                 Long Description (Markdown)
               </label>
               {plugin?.repoUrl && (
@@ -476,33 +366,14 @@ export default function SubmitReviewForm({
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    fontSize: "0.75rem",
-                    background: "rgba(14, 165, 233, 0.1)",
-                    color: "var(--accent-primary)",
-                    border: "1px solid rgba(14, 165, 233, 0.2)",
-                    borderRadius: "var(--radius-sm)",
-                    padding: "4px 8px",
-                    cursor: "pointer",
-                    fontWeight: 500,
-                    opacity: isFetchingReadme ? 0.6 : 1,
-                  }}
+                  className="flex items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
                 </button>
               )}
             </div>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               Explain features, configuration, commands, and permissions.
               Screenshots and code blocks are highly recommended (Rules D1, D3,
               D4).
@@ -513,83 +384,39 @@ export default function SubmitReviewForm({
               onChange={(e) => setLongDescription(e.target.value)}
               rows={12}
               placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-                outline: "none",
-                resize: "vertical",
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.875rem",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
             />
           </div>
 
           <div>
-            <label
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "8px",
-              }}
-            >
+            <label className="flex justify-between items-baseline text-sm font-medium mb-2">
               <span>
                 Categories{" "}
-                <span
-                  style={{ color: "var(--text-muted)", fontWeight: "normal" }}
-                >
+                <span className="text-text-muted font-normal">
                   (Max 5)
                 </span>
               </span>
               <span
-                style={{
-                  fontSize: "0.75rem",
-                  color:
-                    selectedCategories.length > 5
-                      ? "var(--status-error)"
-                      : "var(--text-muted)",
-                }}
+                className={`text-xs ${
+                  selectedCategories.length > 5
+                    ? "text-error"
+                    : "text-text-muted"
+                }`}
               >
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                gap: "8px",
-                background: "var(--bg-secondary)",
-                padding: "var(--space-4)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-              }}
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                  }}
+                  className="flex items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
                     checked={selectedCategories.includes(cat)}
                     onChange={() => toggleCategory(cat)}
-                    style={{
-                      accentColor: "var(--accent-primary)",
-                      width: "16px",
-                      height: "16px",
-                    }}
+                    className="accent-accent w-4 h-4"
                   />
                   <span>{cat}</span>
                 </label>
@@ -598,45 +425,23 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               License{" "}
               {isFetchingLicense && (
-                <span style={{ opacity: 0.5, fontSize: "0.75rem" }}>
+                <span className="opacity-50 text-xs">
                   (Fetching from GitHub...)
                 </span>
               )}
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               All plugins must have an OSI-approved open source license (Rule
               D6).
             </p>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <select
                 value={license}
                 onChange={(e) => setLicense(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "0.625rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                  paddingRight: "40px",
-                  appearance: "auto",
-                }}
+                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150 pr-10 appearance-none"
               >
                 <option value="">Select a license...</option>
                 {COMMON_LICENSES.map((l) => (
@@ -653,17 +458,7 @@ export default function SubmitReviewForm({
                   type="button"
                   onClick={fetchLicense}
                   disabled={isFetchingLicense}
-                  style={{
-                    position: "absolute",
-                    right: "28px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "var(--accent-primary)",
-                    opacity: isFetchingLicense ? 0.5 : 1,
-                  }}
+                  className="absolute right-7 top-1/2 -translate-y-1/2 text-accent bg-transparent hover:text-accent-hover transition-colors disabled:opacity-50"
                   title="Fetch from GitHub"
                 >
                   <Download size={16} />
@@ -673,38 +468,15 @@ export default function SubmitReviewForm({
           </div>
 
           {/* ── Section: About this version ── */}
-          <h2
-            className="heading-3"
-            style={{
-              marginTop: "var(--space-4)",
-              marginBottom: "var(--space-2)",
-              paddingBottom: "var(--space-2)",
-              borderBottom: "2px solid var(--accent-primary)",
-              fontSize: "1.1rem",
-              fontStyle: "italic",
-            }}
-          >
+          <h2 className="heading-3 mt-4 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this version...
           </h2>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Version
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               Follow Semantic Versioning (e.g., 1.0.0, 2.0.0-beta).
             </p>
             <input
@@ -713,49 +485,21 @@ export default function SubmitReviewForm({
               value={version}
               onChange={(e) => setVersion(e.target.value)}
               placeholder="e.g. 1.0.0"
-              className="input"
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
           </div>
 
           <div>
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                cursor: "pointer",
-              }}
-            >
+            <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
               <input
                 type="checkbox"
                 checked={isPreRelease}
                 onChange={(e) => setIsPreRelease(e.target.checked)}
-                style={{
-                  accentColor: "var(--accent-primary)",
-                  width: "16px",
-                  height: "16px",
-                }}
+                className="accent-accent w-4 h-4"
               />
               <span>Pre-release?</span>
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginTop: "4px",
-                marginLeft: "26px",
-              }}
-            >
+            <p className="text-xs text-text-muted mt-1 ml-6 leading-relaxed">
               Pre-release versions will not be listed by default. This is for
               users to have a &quot;semi-stable&quot; preview version of your
               updates. Pre-release versions are less likely to be rejected,
@@ -764,47 +508,18 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Supported APIs (Endstone Versions)
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               Select the stable Endstone API versions this build is verified to
               work with (Rule B1).
             </p>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))",
-                gap: "8px",
-                background: "var(--bg-secondary)",
-                padding: "var(--space-4)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-              }}
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
               {ENDSTONE_APIS.map((api) => (
                 <label
                   key={api}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                  }}
+                  className="flex items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
@@ -818,11 +533,7 @@ export default function SubmitReviewForm({
                         setSupportedApis((prev) => [...prev, api]);
                       }
                     }}
-                    style={{
-                      accentColor: "var(--accent-primary)",
-                      width: "16px",
-                      height: "16px",
-                    }}
+                    className="accent-accent w-4 h-4"
                   />
                   <span>{api}</span>
                 </label>
@@ -831,14 +542,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "6px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-1.5">
               Icon Path (Optional)
             </label>
             <input
@@ -846,23 +550,9 @@ export default function SubmitReviewForm({
               value={iconPath}
               onChange={(e) => setIconPath(e.target.value)}
               placeholder="e.g. assets/icon.png (Default: icon.png)"
-              className="input"
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginTop: "4px",
-              }}
-            >
+            <p className="text-xs text-text-muted mt-1">
               Relative path to the icon file in your repository. If not found,
               the default EndGit logo will be used.
             </p>
@@ -870,23 +560,10 @@ export default function SubmitReviewForm({
 
           {!isFirstVersion && (
             <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  marginBottom: "2px",
-                }}
-              >
+              <label className="block text-sm font-medium mb-0.5">
                 What&apos;s New (Changelog)
               </label>
-              <p
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-muted)",
-                  marginBottom: "6px",
-                }}
-              >
+              <p className="text-xs text-text-muted mb-1.5">
                 Provide a human-readable list of changes, bug fixes, and new
                 features (Rule D5).
               </p>
@@ -895,32 +572,14 @@ export default function SubmitReviewForm({
                 onChange={(e) => setChangelog(e.target.value)}
                 rows={4}
                 placeholder="- Added new command /example&#10;- Fixed issue with config loading"
-                style={{
-                  width: "100%",
-                  padding: "0.625rem",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                  outline: "none",
-                  resize: "vertical",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.875rem",
-                }}
+                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
               />
             </div>
           )}
 
           <div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "baseline",
-                marginBottom: "8px",
-              }}
-            >
-              <label style={{ fontSize: "0.875rem", fontWeight: 500 }}>
+            <div className="flex justify-between items-baseline mb-2">
+              <label className="text-sm font-medium">
                 Producers
               </label>
               <button
@@ -931,30 +590,17 @@ export default function SubmitReviewForm({
                     { githubUser: "", role: "CONTRIBUTOR" },
                   ])
                 }
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  fontSize: "0.75rem",
-                  background: "none",
-                  border: "1px dashed var(--border-color)",
-                  padding: "4px 8px",
-                  borderRadius: "var(--radius-sm)",
-                  color: "var(--text-primary)",
-                  cursor: "pointer",
-                }}
+                className="flex items-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
               >
                 <Plus size={12} /> Add Producer
               </button>
             </div>
 
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
-            >
+            <div className="flex flex-col gap-2">
               {producers.map((producer, index) => (
                 <div
                   key={index}
-                  style={{ display: "flex", gap: "8px", alignItems: "center" }}
+                  className="flex gap-2 items-center"
                 >
                   <input
                     type="text"
@@ -966,19 +612,9 @@ export default function SubmitReviewForm({
                       newProducers[index].githubUser = e.target.value;
                       setProducers(newProducers);
                     }}
-                    style={{
-                      flex: 1,
-                      padding: "0.5rem",
-                      borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--border-color)",
-                      background:
-                        index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)",
-                      color:
-                        index === 0
-                          ? "var(--text-muted)"
-                          : "var(--text-primary)",
-                      opacity: index === 0 ? 0.7 : 1,
-                    }}
+                    className={`flex-1 px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                      index === 0 ? "opacity-60 cursor-not-allowed bg-black/20" : ""
+                    }`}
                   />
                   <select
                     value={producer.role}
@@ -988,19 +624,9 @@ export default function SubmitReviewForm({
                       newProducers[index].role = e.target.value;
                       setProducers(newProducers);
                     }}
-                    style={{
-                      padding: "0.5rem",
-                      borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--border-color)",
-                      background:
-                        index === 0 ? "rgba(0,0,0,0.2)" : "var(--bg-secondary)",
-                      color:
-                        index === 0
-                          ? "var(--text-muted)"
-                          : "var(--text-primary)",
-                      width: "140px",
-                      opacity: index === 0 ? 0.7 : 1,
-                    }}
+                    className={`px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent w-[140px] ${
+                      index === 0 ? "opacity-60 cursor-not-allowed bg-black/20" : ""
+                    }`}
                   >
                     <option value="COLLABORATOR">Collaborator</option>
                     <option value="CONTRIBUTOR">Contributor</option>
@@ -1014,16 +640,11 @@ export default function SubmitReviewForm({
                         setProducers(producers.filter((_, i) => i !== index));
                       }
                     }}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      color:
-                        producers.length > 1
-                          ? "var(--status-error)"
-                          : "var(--text-muted)",
-                      cursor: producers.length > 1 ? "pointer" : "not-allowed",
-                      padding: "8px",
-                    }}
+                    className={`p-2 transition-colors duration-150 ${
+                      producers.length > 1
+                        ? "text-error hover:text-red-600 cursor-pointer"
+                        : "text-text-muted cursor-not-allowed"
+                    }`}
                     disabled={producers.length <= 1}
                   >
                     <Trash2 size={16} />
@@ -1031,22 +652,8 @@ export default function SubmitReviewForm({
                 </div>
               ))}
             </div>
-            <div
-              style={{
-                padding: "var(--space-3)",
-                background: "rgba(14, 165, 233, 0.05)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid rgba(14, 165, 233, 0.15)",
-                marginTop: "8px",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "0.75rem",
-                  color: "var(--text-secondary)",
-                  margin: 0,
-                }}
-              >
+            <div className="p-3 bg-accent/5 rounded-md border border-accent/15 mt-2">
+              <p className="text-xs text-text-secondary m-0 leading-relaxed">
                 <strong>Rule A7:</strong> You must only submit work you have
                 authored. Add all GitHub contributors who helped create this
                 version. There must be at least one{" "}
@@ -1056,23 +663,10 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label
-              style={{
-                display: "block",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                marginBottom: "2px",
-              }}
-            >
+            <label className="block text-sm font-medium mb-0.5">
               Notes to Reviewer (Optional)
             </label>
-            <p
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                marginBottom: "6px",
-              }}
-            >
+            <p className="text-xs text-text-muted mb-1.5">
               Provide context for the moderator reviewing your plugin (e.g.,
               test server IPs, known limitations).
             </p>
@@ -1081,40 +675,17 @@ export default function SubmitReviewForm({
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
               placeholder="Any specific features to test, or explanations for unusual code patterns..."
-              style={{
-                width: "100%",
-                padding: "0.625rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-secondary)",
-                color: "var(--text-primary)",
-                outline: "none",
-                resize: "vertical",
-              }}
+              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
             />
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "var(--space-3)",
-              marginTop: "var(--space-2)",
-              paddingTop: "var(--space-4)",
-              borderTop: "1px solid var(--border-color)",
-            }}
-          >
+          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border">
             {isPending && (
               <button
                 type="button"
                 onClick={(e) => handleSubmit(e as any, true)}
                 disabled={submitting}
-                className="btn btn-secondary"
-                style={{
-                  padding: "0.75rem 2rem",
-                  fontSize: "1rem",
-                  opacity: submitting ? 0.6 : 1,
-                }}
+                className="btn btn-secondary px-8 py-3 text-base disabled:opacity-60"
               >
                 Save Draft
               </button>
@@ -1123,12 +694,7 @@ export default function SubmitReviewForm({
               type="button"
               onClick={(e) => handleSubmit(e as any, false)}
               disabled={submitting}
-              className="btn btn-primary"
-              style={{
-                padding: "0.75rem 2rem",
-                fontSize: "1rem",
-                opacity: submitting ? 0.6 : 1,
-              }}
+              className="btn btn-primary px-8 py-3 text-base disabled:opacity-60"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Submitting..." : "Submit Plugin for Review"}
@@ -1137,19 +703,7 @@ export default function SubmitReviewForm({
         </form>
 
         {error && (
-          <div
-            style={{
-              marginTop: "var(--space-4)",
-              padding: "var(--space-3)",
-              background: "rgba(239,68,68,0.08)",
-              borderRadius: "var(--radius-sm)",
-              color: "var(--status-error)",
-              fontSize: "0.875rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-            }}
-          >
+          <div className="mt-4 p-3 bg-error/8 rounded-sm text-error text-sm flex items-center gap-2">
             <AlertTriangle size={16} /> {error}
           </div>
         )}

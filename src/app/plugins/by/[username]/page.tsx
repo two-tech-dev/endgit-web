@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, BadgeCheck, Download, Star } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
@@ -30,97 +30,51 @@ export default async function AuthorPluginsPage({
   const realPlugins = responseData?.data?.plugins || [];
 
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <div style={{ marginBottom: "var(--space-8)" }}>
-        <h1
-          className="heading-2"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-2)",
-          }}
-        >
+    <div className="container py-8">
+      <div className="mb-8">
+        <h1 className="heading-2 flex items-center gap-2">
           Plugins by{" "}
-          <span style={{ color: "var(--accent-primary)" }}>{username}</span>
+          <span className="text-brand">{username}</span>
         </h1>
-        <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
+        <p className="text-text-muted mt-1.5 text-sm">
           Viewing all {realPlugins.length} plugins created by this author.
         </p>
       </div>
 
       {realPlugins.length === 0 ? (
-        <div
-          className="card"
-          style={{ padding: "var(--space-8)", textAlign: "center" }}
-        >
+        <div className="card p-8 text-center">
           <Search
             size={32}
-            color="var(--text-muted)"
-            style={{ margin: "0 auto var(--space-4)", opacity: 0.5 }}
+            className="text-text-muted mx-auto mb-4 opacity-50"
           />
-          <h3 style={{ fontSize: "1.125rem", fontWeight: 600 }}>
+          <h3 className="text-lg font-semibold text-text-primary">
             No plugins found
           </h3>
-          <p style={{ color: "var(--text-muted)", marginTop: "4px" }}>
+          <p className="text-text-muted mt-1 text-sm">
             This author has not published any plugins yet.
           </p>
         </div>
       ) : (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(340px, 100%), 1fr))",
-            gap: "var(--space-6)",
-          }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 align-content-start">
           {realPlugins.map((plugin: any) => {
             const avgRating = plugin.stars
               ? Math.round((plugin.stars / 20) * 10) / 10
               : 0;
             const isFeatured = plugin.isFeatured;
+            const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+            const isVerified = repoOwner
+              ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
+              : false;
 
             return (
               <Link
                 href={`/plugins/${plugin.slug}`}
                 key={plugin.id}
-                className="card"
-                style={{
-                  padding: "0",
-                  display: "flex",
-                  flexDirection: "column",
-                  textDecoration: "none",
-                  background: "var(--bg-card)",
-                  overflow: "hidden",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                }}
+                className="card p-0 flex flex-col no-underline bg-surface-card overflow-hidden transition-all"
               >
-                <div
-                  style={{
-                    padding: "var(--space-4)",
-                    display: "flex",
-                    gap: "var(--space-4)",
-                    flexWrap: "wrap",
-                  }}
-                >
+                <div className="plugin-card-inner p-4 flex gap-4 items-center">
                   {/* Left: Icon */}
-                  <div
-                    style={{
-                      width: "64px",
-                      height: "64px",
-                      flexShrink: 0,
-                      borderRadius: "var(--radius-md)",
-                      overflow: "hidden",
-                      background: "var(--bg-secondary)",
-                      border: "1px solid var(--border-color)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}
@@ -129,31 +83,22 @@ export default async function AuthorPluginsPage({
                   </div>
 
                   {/* Middle: Title, Version, Author */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <h3
-                      className="heading-3"
-                      style={{
-                        fontSize: "1.125rem",
-                        margin: "0 0 4px 0",
-                        color: "var(--accent-primary)",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1.5">
                       {plugin.displayName}
+                      {isVerified && (
+                        <span
+                          title="This plugin is officially supported by EndstoneMC/EndGit"
+                          className="inline-flex items-center text-brand shrink-0"
+                        >
+                          <BadgeCheck size={15} />
+                        </span>
+                      )}
                     </h3>
-                    <div
-                      style={{
-                        fontSize: "0.8125rem",
-                        color: "var(--text-muted)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "2px",
-                      }}
-                    >
-                      <span>v{plugin.latestVersion || "1.0.0"}</span>
-                      <span>
+                    <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
+                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">v{plugin.latestVersion || "1.0.0"}</span>
+                      <span>•</span>
+                      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                         {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
                           plugin.author?.displayName ||
                           plugin.author?.username}
@@ -162,48 +107,25 @@ export default async function AuthorPluginsPage({
                   </div>
 
                   {/* Right: Date & Stats */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                      gap: "4px",
-                      fontSize: "0.75rem",
-                      color: "var(--text-muted)",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    <span>
-                      {new Date(plugin.createdAt).toLocaleDateString("en-GB", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
+                  <div className="flex flex-col items-end gap-1.5 text-xs text-text-muted shrink-0">
+                    <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                      <Download size={13} className="text-text-muted" />
+                      {plugin.downloads?.toLocaleString() ?? 0}
                     </span>
-                    <span>
-                      {plugin.downloads?.toLocaleString() ?? 0} downloads
-                    </span>
-                    {avgRating > 0 && (
-                      <span
-                        style={{
-                          color: "#f59e0b",
-                          fontSize: "0.8125rem",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "3px",
-                        }}
-                      >
-                        {"★".repeat(Math.round(avgRating))}
-                        {"☆".repeat(5 - Math.round(avgRating))}
-                        <span
-                          style={{
-                            color: "var(--text-muted)",
-                            fontSize: "0.6875rem",
-                            marginLeft: "2px",
-                          }}
-                        >
-                          ({avgRating})
-                        </span>
+                    {avgRating > 0 ? (
+                      <span className="text-warning text-xs flex items-center gap-0.5 font-medium">
+                        <Star size={13} className="fill-current" />
+                        <span>{avgRating.toFixed(1)}</span>
+                      </span>
+                    ) : (
+                      <span className="text-[11px]">
+                        {new Date(plugin.createdAt || "").toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "short",
+                          },
+                        )}
                       </span>
                     )}
                   </div>
@@ -211,25 +133,8 @@ export default async function AuthorPluginsPage({
 
                 {/* Bottom: Featured Banner */}
                 {isFeatured && (
-                  <div
-                    style={{
-                      padding: "0 var(--space-4) var(--space-4)",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "100%",
-                        padding: "6px 0",
-                        textAlign: "center",
-                        background: "#008000",
-                        color: "white",
-                        fontSize: "0.875rem",
-                        fontWeight: 500,
-                        borderRadius: "var(--radius-sm)",
-                      }}
-                    >
+                  <div className="px-3 pb-3 flex justify-center">
+                    <div className="w-full py-1 text-center bg-emerald-500/10 text-emerald-500 text-xs font-semibold rounded border border-emerald-500/20">
                       Featured
                     </div>
                   </div>

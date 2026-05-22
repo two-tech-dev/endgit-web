@@ -31,15 +31,8 @@ export default function VersionSelector({
 
   if (!versions || versions.length === 0) {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-2)",
-          alignItems: "flex-end",
-        }}
-      >
-        <button className="btn btn-primary" disabled style={{ opacity: 0.5 }}>
+      <div className="flex flex-col gap-2 items-end">
+        <button className="btn btn-primary opacity-50" disabled>
           No versions available
         </button>
       </div>
@@ -57,38 +50,12 @@ export default function VersionSelector({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "var(--space-3)",
-        width: "100%",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "stretch",
-          gap: "10px",
-          flexWrap: "wrap",
-          width: "100%",
-        }}
-      >
+    <div className="flex flex-col gap-3 w-full">
+      <div className="flex items-stretch gap-2.5 flex-wrap w-full">
         <select
           value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
-          style={{
-            padding: "0.625rem 1rem",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-color)",
-            background: "var(--bg-secondary)",
-            color: "var(--text-primary)",
-            fontSize: "0.9375rem",
-            cursor: "pointer",
-            outline: "none",
-            flex: "1 1 140px",
-            minWidth: 0,
-          }}
+          className="px-4 py-2.5 rounded-md border border-border bg-surface-secondary text-text-primary text-[0.9375rem] cursor-pointer outline-none flex-[1_1_140px] min-w-0"
         >
           {versions.map((v, i) => (
             <option key={v.version} value={v.version}>
@@ -97,48 +64,16 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div
-            className="cpp-download-buttons"
-            style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}
-          >
+          <div className="flex gap-2 flex-wrap">
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
-              className="btn btn-primary"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "0.9375rem",
-                padding: "0.625rem 1.25rem",
-                background: "#1e293b",
-                border: "1px solid #475569",
-                borderRadius: "var(--radius-md)",
-                fontWeight: 600,
-                color: "white",
-                textDecoration: "none",
-                flex: "1 1 auto",
-                minWidth: "120px",
-                justifyContent: "center",
-              }}
+              className="btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 bg-slate-800 dark:bg-slate-900 border border-slate-700 rounded-md font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-800 transition-colors duration-150 no-underline flex-[1_1_auto] min-w-[120px] justify-center"
             >
               <Download size={16} /> Linux (.so)
             </a>
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=windows`}
-              className="btn btn-primary"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                fontSize: "0.9375rem",
-                padding: "0.625rem 1.25rem",
-                borderRadius: "var(--radius-md)",
-                fontWeight: 600,
-                textDecoration: "none",
-                flex: "1 1 auto",
-                minWidth: "120px",
-                justifyContent: "center",
-              }}
+              className="btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 rounded-md font-semibold no-underline flex-[1_1_auto] min-w-[120px] justify-center"
             >
               <Download size={16} /> Windows (.dll)
             </a>
@@ -146,38 +81,20 @@ export default function VersionSelector({
         ) : (
           <a
             href={`/api/v1/download/${slug}/${selectedVersion.version}`}
-            className="btn btn-primary"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-              fontSize: "1rem",
-              padding: "0.625rem 1.5rem",
-              fontWeight: 600,
-              textDecoration: "none",
-              flex: "1 1 auto",
-            }}
+            className="btn btn-primary flex items-center justify-center gap-2 text-base px-6 py-2.5 font-semibold no-underline flex-[1_1_auto]"
           >
             <Download size={18} /> Download
           </a>
         )}
       </div>
-      <div
-        className="version-info-text"
-        style={{
-          fontSize: "0.75rem",
-          color: "var(--text-muted)",
-          textAlign: "right",
-        }}
-      >
+      <div className="text-xs text-text-muted text-right">
         <span>
           Size:{" "}
           {selectedVersion.fileSize
             ? `${(selectedVersion.fileSize / 1024).toFixed(0)} KB`
             : "—"}
         </span>
-        <span style={{ marginLeft: "12px" }}>
+        <span className="ml-3">
           Uploaded: {new Date(selectedVersion.createdAt).toLocaleDateString()}
         </span>
       </div>

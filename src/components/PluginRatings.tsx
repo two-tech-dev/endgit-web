@@ -30,7 +30,7 @@ interface RatingSummary {
 
 function StarDisplay({ score, size = 14 }: { score: number; size?: number }) {
   return (
-    <div style={{ display: "flex", gap: "1px" }}>
+    <div className="flex gap-[1px]">
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
@@ -173,57 +173,26 @@ export default function PluginRatings({
   };
 
   return (
-    <div className="card" style={{ padding: "var(--space-6)" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "var(--space-5)",
-          flexWrap: "wrap",
-          gap: "var(--space-3)",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "1.125rem",
-            fontWeight: 600,
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-2)",
-            margin: 0,
-          }}
-        >
-          <Star size={20} color="#f59e0b" fill="#f59e0b" /> Ratings & Reviews
+    <div className="card p-6">
+      <div className="flex justify-between items-center mb-5 flex-wrap gap-3">
+        <h3 className="text-lg font-semibold flex items-center gap-2 m-0">
+          <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings & Reviews
         </h3>
 
         {/* Star Selector in Header */}
         {session && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-            }}
-          >
-            <span style={{ fontSize: "0.8125rem", color: "var(--text-muted)" }}>
+          <div className="flex items-center gap-2">
+            <span className="text-[13px] text-text-muted">
               Your rating:
             </span>
-            <div style={{ display: "flex", gap: "2px" }}>
+            <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((i) => (
                 <button
                   key={i}
                   onClick={() => setMyScore(i)}
                   onMouseEnter={() => setHoverScore(i)}
                   onMouseLeave={() => setHoverScore(0)}
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: "6px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+                  className="bg-transparent border-none cursor-pointer p-1.5 flex items-center"
                 >
                   <Star
                     size={22}
@@ -236,15 +205,7 @@ export default function PluginRatings({
               ))}
             </div>
             {myScore > 0 && (
-              <span
-                style={{
-                  fontSize: "0.8125rem",
-                  color: "#f59e0b",
-                  fontWeight: 600,
-                  width: "24px",
-                  textAlign: "right",
-                }}
-              >
+              <span className="text-[13px] text-[#f59e0b] font-semibold w-6 text-right">
                 {myScore}/5
               </span>
             )}
@@ -254,52 +215,23 @@ export default function PluginRatings({
 
       {/* Write Review Comment Form */}
       {session && myScore > 0 && (
-        <div style={{ marginBottom: "var(--space-6)" }}>
+        <div className="mb-6">
           <textarea
             value={myComment}
             onChange={(e) => setMyComment(e.target.value)}
             placeholder="Share your experience... (optional)"
             rows={3}
-            style={{
-              width: "100%",
-              padding: "0.75rem",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid var(--border-color)",
-              background: "var(--bg-secondary)",
-              color: "var(--text-primary)",
-              fontSize: "0.875rem",
-              resize: "vertical",
-              fontFamily: "inherit",
-              outline: "none",
-              minHeight: "80px",
-            }}
+            className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit outline-none min-h-[80px]"
           />
-          <div
-            style={{
-              marginTop: "var(--space-3)",
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
+          <div className="mt-3 flex justify-end">
             <button
               onClick={handleSubmit}
               disabled={myScore === 0 || submitting}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                padding: "0.5rem 1.25rem",
-                borderRadius: "var(--radius-md)",
-                background:
-                  myScore > 0 ? "var(--accent-primary)" : "var(--bg-secondary)",
-                color: myScore > 0 ? "white" : "var(--text-muted)",
-                border: "none",
-                fontSize: "0.8125rem",
-                fontWeight: 600,
-                cursor: myScore > 0 ? "pointer" : "not-allowed",
-                opacity: submitting ? 0.6 : 1,
-                transition: "all 150ms",
-              }}
+              className={`flex items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+                myScore > 0
+                  ? "bg-accent text-white cursor-pointer hover:bg-accent-hover"
+                  : "bg-surface-secondary text-text-muted cursor-not-allowed"
+              } ${submitting ? "opacity-60" : "opacity-100"}`}
             >
               <Send size={14} />{" "}
               {submitting
@@ -314,81 +246,36 @@ export default function PluginRatings({
 
       {/* Loading */}
       {loading && (
-        <div style={{ textAlign: "center", padding: "var(--space-8)" }}>
+        <div className="text-center p-8">
           <Loader2
             size={24}
             color="var(--text-muted)"
-            style={{ animation: "spin 1s linear infinite" }}
+            className="animate-spin"
           />
         </div>
       )}
 
       {/* Reviews List — Poggit-inspired clean style */}
       {!loading && (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className="flex flex-col">
           {ratings.length === 0 && (
-            <p
-              style={{
-                color: "var(--text-muted)",
-                textAlign: "center",
-                padding: "var(--space-6)",
-                fontSize: "0.875rem",
-              }}
-            >
+            <p className="text-text-muted text-center p-6 text-sm">
               No reviews yet. Be the first to review this plugin!
             </p>
           )}
           {ratings.map((rating) => (
-            <div
-              key={rating.id}
-              style={{
-                padding: "var(--space-4) 0",
-                borderBottom: "1px solid var(--border-color)",
-              }}
-            >
+            <div key={rating.id} className="py-4 border-b border-border">
               {/* Top row: avatar + username + stars + version badge + date */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-3)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "28px",
-                      height: "28px",
-                      borderRadius: "4px",
-                      background:
-                        "linear-gradient(135deg, var(--accent-primary), var(--accent-primary))",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "white",
-                      fontSize: "0.6875rem",
-                      fontWeight: 700,
-                      flexShrink: 0,
-                      overflow: "hidden",
-                    }}
-                  >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
                     {rating.user.avatarUrl ? (
                       <Image
                         src={rating.user.avatarUrl}
                         alt=""
                         width={28}
                         height={28}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
+                        className="w-full h-full object-cover"
                       />
                     ) : (
                       rating.user.username.charAt(0).toUpperCase()
@@ -398,107 +285,36 @@ export default function PluginRatings({
                     href={`https://github.com/${rating.user.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "0.875rem",
-                      color: "var(--accent-primary)",
-                      textDecoration: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                    }}
+                    className="font-semibold text-sm text-accent no-underline flex items-center gap-1.5 hover:underline"
                   >
                     {rating.user.displayName || rating.user.username}
                     {rating.user.trustLevel === "ADMIN" && (
-                      <span
-                        style={{
-                          fontSize: "0.75rem",
-                          padding: "1px 6px",
-                          borderRadius: "4px",
-                          background: "rgba(16, 185, 129, 0.15)",
-                          color: "var(--status-success)",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                        }}
-                      >
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-success/15 text-success font-bold uppercase tracking-wider">
                         Staff
                       </span>
                     )}
                   </a>
                   <StarDisplay score={rating.score} size={12} />
                 </div>
-                <span
-                  style={{
-                    fontSize: "0.75rem",
-                    color: "var(--text-muted)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <span className="text-xs text-text-muted whitespace-nowrap">
                   {formatDate(rating.createdAt)}
                 </span>
               </div>
               {/* Comment block — indented like Poggit */}
               {rating.comment && (
-                <div
-                  className="rating-comment"
-                  style={{
-                    marginTop: "var(--space-2)",
-                    marginLeft: "40px",
-                    padding: "var(--space-3)",
-                    background: "var(--bg-secondary)",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid var(--border-color)",
-                    fontSize: "0.875rem",
-                    color: "var(--text-secondary)",
-                    lineHeight: 1.6,
-                  }}
-                >
+                <div className="rating-comment mt-2 ml-10 p-3 bg-surface-secondary rounded-md border border-border text-sm text-text-secondary leading-relaxed">
                   {rating.comment}
                 </div>
               )}
 
               {/* Owner Reply */}
               {rating.ownerReply && (
-                <div
-                  className="rating-reply"
-                  style={{
-                    marginTop: "var(--space-2)",
-                    marginLeft: "56px",
-                    padding: "var(--space-3)",
-                    background: "rgba(16, 185, 129, 0.05)",
-                    borderRadius: "var(--radius-md)",
-                    border: "1px solid rgba(16, 185, 129, 0.2)",
-                    borderLeft: "3px solid var(--status-success)",
-                    fontSize: "0.875rem",
-                    color: "var(--text-secondary)",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: "0.75rem",
-                        fontWeight: 700,
-                        color: "var(--status-success)",
-                        textTransform: "uppercase",
-                      }}
-                    >
+                <div className="rating-reply mt-2 ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <span className="text-xs font-bold text-success uppercase">
                       Author Reply
                     </span>
-                    <span
-                      style={{
-                        fontSize: "0.75rem",
-                        color: "var(--text-muted)",
-                      }}
-                    >
+                    <span className="text-xs text-text-muted">
                       {formatDate(rating.repliedAt || rating.updatedAt)}
                     </span>
                   </div>
@@ -510,73 +326,34 @@ export default function PluginRatings({
               {!rating.ownerReply &&
                 session?.user &&
                 (session.user as any).id === authorId && (
-                  <div
-                    className="rating-comment"
-                    style={{ marginLeft: "40px", marginTop: "var(--space-2)" }}
-                  >
+                  <div className="rating-comment ml-10 mt-2">
                     {replyingTo === rating.id ? (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "var(--space-2)",
-                        }}
-                      >
+                      <div className="flex flex-col gap-2">
                         <textarea
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder="Write your reply..."
                           rows={2}
-                          style={{
-                            width: "100%",
-                            padding: "0.5rem",
-                            borderRadius: "var(--radius-md)",
-                            border: "1px solid var(--border-color)",
-                            background: "var(--bg-secondary)",
-                            color: "var(--text-primary)",
-                            fontSize: "0.875rem",
-                            resize: "vertical",
-                            outline: "none",
-                            fontFamily: "inherit",
-                          }}
+                          className="w-full p-2 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y outline-none font-inherit"
                         />
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "var(--space-2)",
-                            justifyContent: "flex-end",
-                          }}
-                        >
+                        <div className="flex gap-2 justify-end">
                           <button
                             onClick={() => {
                               setReplyingTo(null);
                               setReplyText("");
                             }}
-                            style={{
-                              background: "transparent",
-                              border: "1px solid var(--border-color)",
-                              color: "var(--text-primary)",
-                              borderRadius: "var(--radius-sm)",
-                              padding: "4px 8px",
-                              fontSize: "0.75rem",
-                              cursor: "pointer",
-                            }}
+                            className="bg-transparent border border-border text-text-primary rounded-sm px-2 py-1 text-xs cursor-pointer hover:bg-surface-secondary transition-all"
                           >
                             Cancel
                           </button>
                           <button
                             onClick={() => handleReplySubmit(rating.id)}
                             disabled={replying}
-                            style={{
-                              background: "var(--accent-primary)",
-                              border: "none",
-                              color: "white",
-                              borderRadius: "var(--radius-sm)",
-                              padding: "4px 8px",
-                              fontSize: "0.75rem",
-                              cursor: replying ? "not-allowed" : "pointer",
-                              opacity: replying ? 0.6 : 1,
-                            }}
+                            className={`bg-accent border-none text-white rounded-sm px-2 py-1 text-xs transition-all ${
+                              replying
+                                ? "cursor-not-allowed opacity-60"
+                                : "cursor-pointer hover:bg-accent-hover opacity-100"
+                            }`}
                           >
                             {replying ? "Submitting..." : "Submit Reply"}
                           </button>
@@ -588,15 +365,7 @@ export default function PluginRatings({
                           setReplyingTo(rating.id);
                           setReplyText("");
                         }}
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          color: "var(--accent-primary)",
-                          cursor: "pointer",
-                          fontSize: "0.75rem",
-                          fontWeight: 600,
-                          padding: 0,
-                        }}
+                        className="bg-transparent border-none text-accent cursor-pointer text-xs font-semibold p-0 hover:underline"
                       >
                         Reply to this review
                       </button>

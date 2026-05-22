@@ -1,42 +1,14 @@
-import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
+import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 
 export default function PluginDetailLoading() {
   return (
-    <div
-      className="container"
-      style={{ paddingTop: "var(--space-8)", paddingBottom: "var(--space-8)" }}
-    >
-      <SkeletonCard
-        style={{ padding: "var(--space-6)", marginBottom: "var(--space-6)" }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            className="plugin-header-inner"
-            style={{
-              display: "flex",
-              gap: "var(--space-4)",
-              minWidth: 0,
-              flex: "1 1 auto",
-            }}
-          >
+    <div className="container py-8">
+      <SkeletonCard className="p-6 mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4 md:flex-nowrap">
+          <div className="plugin-header-inner flex gap-4 min-w-0 flex-1">
             <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" />
-            <div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-2)",
-                }}
-              >
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-3 flex-wrap mb-2">
                 <Skeleton width="14rem" height="2rem" />
                 <Skeleton
                   width="5rem"
@@ -47,26 +19,19 @@ export default function PluginDetailLoading() {
               <Skeleton
                 width="10rem"
                 height="0.875rem"
-                style={{ marginBottom: "var(--space-2)" }}
+                className="mb-2"
               />
               <Skeleton width="20rem" height="0.875rem" />
             </div>
           </div>
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-2)",
-              alignItems: "flex-end",
-            }}
-          >
+          <div className="plugin-header-actions flex flex-col gap-2 shrink-0 items-end">
             <Skeleton
               width="10rem"
               height="2.5rem"
               borderRadius="var(--radius-md)"
             />
-            <div style={{ display: "flex", gap: "var(--space-6)" }}>
+            <div className="flex gap-6">
               <Skeleton width="4rem" height="1rem" />
               <Skeleton width="5rem" height="1rem" />
             </div>
@@ -74,25 +39,13 @@ export default function PluginDetailLoading() {
         </div>
       </SkeletonCard>
 
-      <div
-        className="plugin-layout"
-        style={{ display: "flex", gap: "var(--space-6)", flexWrap: "wrap" }}
-      >
-        <div
-          className="plugin-main-content"
-          style={{
-            flex: "1 1 min(400px, 100%)",
-            minWidth: 0,
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
+      <div className="plugin-layout flex gap-6 flex-wrap">
+        <div className="plugin-main-content flex-[1_1_min(400px,100%)] min-w-0 flex flex-col gap-6">
+          <SkeletonCard className="p-5">
             <Skeleton
               width="10rem"
               height="1rem"
-              style={{ marginBottom: "var(--space-3)" }}
+              className="mb-3"
             />
             <Skeleton
               width="100%"
@@ -101,26 +54,12 @@ export default function PluginDetailLoading() {
             />
           </SkeletonCard>
 
-          <div
-            style={{
-              border: "1px solid var(--border-color)",
-              borderRadius: "var(--radius-md)",
-              background: "var(--bg-secondary)",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                gap: "var(--space-4)",
-                padding: "10px 16px",
-                borderBottom: "1px solid var(--border-color)",
-              }}
-            >
+          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full">
+            <div className="plugin-description-header flex gap-4 px-4 py-[10px] border-b border-border">
               <Skeleton width="8rem" height="0.875rem" />
               <Skeleton width="3rem" height="0.875rem" />
             </div>
-            <div style={{ padding: "12px" }}>
+            <div className="p-3">
               <Skeleton
                 width="100%"
                 height="12rem"
@@ -129,11 +68,11 @@ export default function PluginDetailLoading() {
             </div>
           </div>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
+          <SkeletonCard className="p-5">
             <Skeleton
               width="10rem"
               height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
+              className="mb-4"
             />
             <Skeleton
               width="100%"
@@ -142,27 +81,21 @@ export default function PluginDetailLoading() {
             />
           </SkeletonCard>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
+          <SkeletonCard className="p-5">
             <Skeleton
               width="8rem"
               height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
+              className="mb-4"
             />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-4)",
-              }}
-            >
+            <div className="flex flex-col gap-4">
               {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} style={{ display: "flex", gap: "var(--space-3)" }}>
+                <div key={i} className="flex gap-3">
                   <Skeleton circle width={32} height={32} />
-                  <div style={{ flex: 1 }}>
+                  <div className="flex-1">
                     <Skeleton
                       width="40%"
                       height="0.875rem"
-                      style={{ marginBottom: "var(--space-1)" }}
+                      className="mb-1"
                     />
                     <Skeleton width="100%" height="0.75rem" />
                   </div>
@@ -172,51 +105,25 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
         </div>
 
-        <aside
-          className="plugin-sidebar"
-          style={{
-            flex: "0 0 100%",
-            maxWidth: "320px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-6)",
-          }}
-        >
-          <SkeletonCard
-            style={{
-              padding: "var(--space-5)",
-              background: "var(--bg-secondary)",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
+        <aside className="plugin-sidebar w-full md:max-w-[320px] flex flex-col gap-6">
+          <SkeletonCard className="p-5 bg-surface-secondary">
+            <div className="flex items-center justify-between">
               <Skeleton width="6rem" height="1rem" />
               <Skeleton circle width={48} height={48} />
             </div>
           </SkeletonCard>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
+          <SkeletonCard className="p-5">
             <Skeleton
               width="4rem"
               height="1rem"
-              style={{ marginBottom: "var(--space-4)" }}
+              className="mb-4"
             />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
-            >
+            <div className="flex flex-col gap-3">
               {Array.from({ length: 4 }, (_, i) => (
                 <div
                   key={i}
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  className="flex justify-between"
                 >
                   <Skeleton width="5rem" height="0.875rem" />
                   <Skeleton width="5rem" height="0.875rem" />
@@ -225,30 +132,24 @@ export default function PluginDetailLoading() {
             </div>
           </SkeletonCard>
 
-          <SkeletonCard style={{ padding: "var(--space-5)" }}>
+          <SkeletonCard className="p-5">
             <Skeleton
               width="8rem"
               height="1rem"
-              style={{ marginBottom: "var(--space-3)" }}
+              className="mb-3"
             />
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "var(--space-3)",
-              }}
-            >
+            <div className="flex flex-col gap-3">
               {Array.from({ length: 3 }, (_, i) => (
                 <div
                   key={i}
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                  className="flex items-center gap-3"
                 >
                   <Skeleton circle width={32} height={32} />
                   <div>
                     <Skeleton
                       width="7rem"
                       height="0.875rem"
-                      style={{ marginBottom: "4px" }}
+                      className="mb-1"
                     />
                     <Skeleton width="5rem" height="0.625rem" />
                   </div>

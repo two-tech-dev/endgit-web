@@ -86,6 +86,38 @@ const TRUST_COLORS: Record<string, { bg: string; color: string }> = {
   FLAGGED: { bg: "rgba(239,68,68,0.1)", color: "var(--status-error)" },
 };
 
+const getStatusBadgeClass = (status: string) => {
+  switch (status) {
+    case "APPROVED":
+      return "bg-success/10 text-success border-success/20";
+    case "PENDING":
+    case "PENDING_REVIEW":
+      return "bg-warning/10 text-warning border-warning/20";
+    case "REJECTED":
+      return "bg-error/10 text-error border-error/20";
+    case "SUSPENDED":
+      return "bg-red-500/10 text-red-500 dark:text-red-400 border-red-500/20";
+    case "FLAGGED":
+      return "bg-orange-500/10 text-orange-500 dark:text-orange-400 border-orange-500/20";
+    default:
+      return "bg-surface-secondary text-text-muted border border-border";
+  }
+};
+
+const getVersionRowClass = (status: string) => {
+  switch (status) {
+    case "APPROVED":
+      return "border-success/20 bg-surface-card";
+    case "PENDING":
+    case "PENDING_REVIEW":
+      return "border-warning/20 bg-surface-card";
+    case "REJECTED":
+      return "border-error/20 bg-surface-card";
+    default:
+      return "border-border bg-surface-card";
+  }
+};
+
 export default function AdminPage() {
   const { data: session, status: sessionStatus } = useSession();
   const [tab, setTab] = useState<"users" | "queue" | "plugins" | "system">(
@@ -434,18 +466,10 @@ export default function AdminPage() {
 
   if (sessionStatus === "loading") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
-        }}
-      >
+      <div className="container py-16 text-center">
         <Loader2
           size={32}
-          color="#8b5cf6"
-          style={{ animation: "spin 1s linear infinite" }}
+          className="text-[#8b5cf6] animate-spin mx-auto"
         />
       </div>
     );
@@ -453,21 +477,13 @@ export default function AdminPage() {
 
   if (sessionStatus === "unauthenticated") {
     return (
-      <div
-        className="container"
-        style={{
-          paddingTop: "var(--space-16)",
-          paddingBottom: "var(--space-16)",
-          textAlign: "center",
-        }}
-      >
+      <div className="container py-16 text-center">
         <Shield
           size={48}
-          color="#8b5cf6"
-          style={{ margin: "0 auto var(--space-4)" }}
+          className="mx-auto mb-4 text-[#8b5cf6]"
         />
         <h2 className="heading-3">Admin Access Required</h2>
-        <p style={{ color: "var(--text-muted)", marginTop: "var(--space-2)" }}>
+        <p className="text-text-muted mt-2">
           Please sign in with an admin account.
         </p>
       </div>
@@ -475,42 +491,18 @@ export default function AdminPage() {
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-8)",
-        paddingBottom: "var(--space-8)",
-        maxWidth: "1100px",
-      }}
-    >
-      <div style={{ marginBottom: "var(--space-6)" }}>
-        <h1
-          className="heading-2"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-3)",
-          }}
-        >
-          <Shield size={28} color="#8b5cf6" /> Admin Panel
+    <div className="pt-8 pb-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+      <div className="mb-6">
+        <h1 className="heading-2 flex items-center gap-3">
+          <Shield size={28} className="text-[#8b5cf6]" /> Admin Panel
         </h1>
-        <p style={{ color: "var(--text-muted)", marginTop: "var(--space-1)" }}>
+        <p className="text-text-muted mt-1">
           Manage users, review queue, and system settings
         </p>
       </div>
 
       {/* Tabs */}
-      <div
-        style={{
-          display: "flex",
-          gap: "2px",
-          background: "var(--bg-secondary)",
-          padding: "3px",
-          borderRadius: "var(--radius-md)",
-          marginBottom: "var(--space-6)",
-          width: "fit-content",
-        }}
-      >
+      <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -522,22 +514,11 @@ export default function AdminPage() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "0.5rem 1rem",
-              borderRadius: "var(--radius-sm)",
-              fontSize: "0.8125rem",
-              fontWeight: 500,
-              border: "none",
-              cursor: "pointer",
-              background: tab === t.key ? "var(--bg-card)" : "transparent",
-              color:
-                tab === t.key ? "var(--text-primary)" : "var(--text-muted)",
-              boxShadow: tab === t.key ? "var(--shadow-sm)" : "none",
-              transition: "all 150ms",
-            }}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-[13px] font-medium transition-all cursor-pointer border-none shadow-none ${
+              tab === t.key
+                ? "bg-surface-card text-text-primary shadow-sm"
+                : "bg-transparent text-text-muted hover:text-text-primary"
+            }`}
           >
             {t.icon} {t.label}
           </button>
@@ -546,15 +527,8 @@ export default function AdminPage() {
 
       {/* Error */}
       {error && (
-        <div
-          className="card"
-          style={{
-            padding: "var(--space-5)",
-            marginBottom: "var(--space-4)",
-            borderLeft: "4px solid var(--status-error)",
-          }}
-        >
-          <p style={{ color: "var(--status-error)", fontSize: "0.875rem" }}>
+        <div className="card p-5 mb-4 border-l-4 border-l-error">
+          <p className="text-error text-sm">
             {error}
           </p>
         </div>
@@ -563,16 +537,10 @@ export default function AdminPage() {
       {/* Users Tab */}
       {tab === "users" && (
         <div>
-          <div style={{ marginBottom: "var(--space-4)", position: "relative" }}>
+          <div className="mb-4 relative">
             <Search
               size={16}
-              style={{
-                position: "absolute",
-                left: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--text-muted)",
-              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
             />
             <input
               type="text"
@@ -584,364 +552,229 @@ export default function AdminPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") loadData();
               }}
-              style={{
-                width: "100%",
-                maxWidth: "400px",
-                padding: "0.625rem 0.75rem 0.625rem 2.25rem",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--border-color)",
-                background: "var(--bg-card)",
-                color: "var(--text-primary)",
-                fontSize: "0.875rem",
-                outline: "none",
-              }}
+              className="w-full max-w-[400px] pl-9 pr-3 py-2.5 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
             />
           </div>
 
-          {loading ? (
-            <div className="card" style={{ overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr
-                    style={{
-                      background: "var(--bg-secondary)",
-                      borderBottom: "1px solid var(--border-color)",
-                    }}
-                  >
-                    {[
-                      "User",
-                      "Trust Level",
-                      "Quota",
-                      "Plugins",
-                      "Joined",
-                      "Actions",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        style={{
-                          padding: "0.75rem 1rem",
-                          textAlign: "left",
-                          fontSize: "0.6875rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                          color: "var(--text-muted)",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <tr
-                      key={i}
-                      style={{ borderBottom: "1px solid var(--border-color)" }}
-                    >
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "var(--space-3)",
-                          }}
+          {(() => {
+            const getTrustBadgeClass = (level: string) => {
+              switch (level) {
+                case "ADMIN":
+                  return "bg-[#8b5cf6]/10 text-[#8b5cf6]";
+                case "TRUSTED":
+                  return "bg-success/10 text-success border border-success/20";
+                case "FLAGGED":
+                  return "bg-error/10 text-error border border-error/20";
+                default:
+                  return "bg-surface-secondary text-text-muted border border-border";
+              }
+            };
+
+            return loading ? (
+              <div className="card overflow-hidden">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-surface-secondary border-b border-border">
+                      {[
+                        "User",
+                        "Trust Level",
+                        "Quota",
+                        "Plugins",
+                        "Joined",
+                        "Actions",
+                      ].map((h) => (
+                        <th
+                          key={h}
+                          className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-text-muted font-semibold"
                         >
-                          <Skeleton circle width={32} height={32} />
-                          <div>
-                            <Skeleton
-                              width="7rem"
-                              height="0.875rem"
-                              style={{ marginBottom: "4px" }}
-                            />
-                            <Skeleton width="5rem" height="0.75rem" />
-                          </div>
-                        </div>
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton
-                          width="4rem"
-                          height="1.25rem"
-                          borderRadius="var(--radius-full)"
-                        />
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton width="3.5rem" height="0.875rem" />
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton width="1.5rem" height="0.875rem" />
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton width="5rem" height="0.8125rem" />
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <Skeleton
-                          width="5rem"
-                          height="1.5rem"
-                          borderRadius="var(--radius-sm)"
-                        />
-                      </td>
+                          {h}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : users.length === 0 ? (
-            <div
-              className="card"
-              style={{ padding: "var(--space-12)", textAlign: "center" }}
-            >
-              <p style={{ color: "var(--text-muted)" }}>No users found</p>
-            </div>
-          ) : (
-            <div className="card" style={{ overflow: "hidden" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                <thead>
-                  <tr
-                    style={{
-                      background: "var(--bg-secondary)",
-                      borderBottom: "1px solid var(--border-color)",
-                    }}
-                  >
-                    {[
-                      "User",
-                      "Trust Level",
-                      "Quota",
-                      "Plugins",
-                      "Joined",
-                      "Actions",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        style={{
-                          padding: "0.75rem 1rem",
-                          textAlign: "left",
-                          fontSize: "0.6875rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                          color: "var(--text-muted)",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user: any) => (
-                    <tr
-                      key={user.id}
-                      style={{ borderBottom: "1px solid var(--border-color)" }}
-                    >
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "var(--space-3)",
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "32px",
-                              height: "32px",
-                              borderRadius: "50%",
-                              background:
-                                "linear-gradient(135deg, var(--accent-primary), var(--accent-primary))",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              color: "white",
-                              fontSize: "0.75rem",
-                              fontWeight: 700,
-                              overflow: "hidden",
-                            }}
-                          >
-                            {user.avatarUrl ? (
-                              <Image
-                                src={user.avatarUrl}
-                                alt=""
-                                width={32}
-                                height={32}
-                                style={{
-                                  width: "100%",
-                                  height: "100%",
-                                  objectFit: "cover",
-                                }}
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <tr key={i} className="border-b border-border">
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
+                            <Skeleton circle width={32} height={32} />
+                            <div>
+                              <Skeleton
+                                width="7rem"
+                                height="0.875rem"
+                                className="mb-1"
                               />
-                            ) : (
-                              user.username.charAt(0).toUpperCase()
-                            )}
-                          </div>
-                          <div>
-                            <div
-                              style={{ fontWeight: 600, fontSize: "0.875rem" }}
-                            >
-                              {user.displayName || user.username}
-                            </div>
-                            <div
-                              style={{
-                                fontSize: "0.75rem",
-                                color: "var(--text-muted)",
-                              }}
-                            >
-                              @{user.username}
+                              <Skeleton width="5rem" height="0.75rem" />
                             </div>
                           </div>
-                        </div>
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <span
-                          style={{
-                            padding: "2px 8px",
-                            borderRadius: "var(--radius-full)",
-                            fontSize: "0.6875rem",
-                            fontWeight: 600,
-                            ...(TRUST_COLORS[user.trustLevel] ||
-                              TRUST_COLORS.NEW),
-                          }}
-                        >
-                          {user.trustLevel}
-                        </span>
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "0.8125rem",
-                              color:
-                                user.weeklyBuildCount >= user.weeklyBuildQuota
-                                  ? "var(--status-error)"
-                                  : "var(--text-secondary)",
-                            }}
-                          >
-                            {user.weeklyBuildCount || 0}/
-                            {user.weeklyBuildQuota || 50}
-                          </span>
-                          <input
-                            type="number"
-                            min="1"
-                            max="10000"
-                            defaultValue={user.weeklyBuildQuota || 50}
-                            onBlur={(e) => {
-                              const v = parseInt(e.target.value);
-                              if (v && v !== user.weeklyBuildQuota)
-                                changeQuota(user.id, v);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter")
-                                (e.target as HTMLInputElement).blur();
-                            }}
-                            style={{
-                              width: "60px",
-                              padding: "2px 6px",
-                              borderRadius: "var(--radius-sm)",
-                              border: "1px solid var(--border-color)",
-                              background: "var(--bg-secondary)",
-                              color: "var(--text-primary)",
-                              fontSize: "0.75rem",
-                              textAlign: "center",
-                            }}
+                        </td>
+                        <td className="px-4 py-3">
+                          <Skeleton
+                            width="4rem"
+                            height="1.25rem"
+                            borderRadius="9999px"
                           />
-                        </div>
-                      </td>
-                      <td
-                        style={{
-                          padding: "0.75rem 1rem",
-                          fontSize: "0.875rem",
-                          color: "var(--text-secondary)",
-                        }}
-                      >
-                        {user._count?.plugins || 0}
-                      </td>
-                      <td
-                        style={{
-                          padding: "0.75rem 1rem",
-                          fontSize: "0.8125rem",
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {new Date(user.createdAt).toLocaleDateString()}
-                      </td>
-                      <td style={{ padding: "0.75rem 1rem" }}>
-                        <select
-                          value={user.trustLevel}
-                          onChange={(e) =>
-                            changeTrustLevel(user.id, e.target.value)
-                          }
-                          style={{
-                            padding: "4px 8px",
-                            borderRadius: "var(--radius-sm)",
-                            border: "1px solid var(--border-color)",
-                            background: "var(--bg-secondary)",
-                            color: "var(--text-primary)",
-                            fontSize: "0.75rem",
-                            cursor: "pointer",
-                          }}
+                        </td>
+                        <td className="px-4 py-3">
+                          <Skeleton width="3.5rem" height="0.875rem" />
+                        </td>
+                        <td className="px-4 py-3">
+                          <Skeleton width="1.5rem" height="0.875rem" />
+                        </td>
+                        <td className="px-4 py-3">
+                          <Skeleton width="5rem" height="0.8125rem" />
+                        </td>
+                        <td className="px-4 py-3">
+                          <Skeleton
+                            width="5rem"
+                            height="1.5rem"
+                            borderRadius="var(--radius-sm)"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : users.length === 0 ? (
+              <div className="card p-12 text-center">
+                <p className="text-text-muted">No users found</p>
+              </div>
+            ) : (
+              <div className="card overflow-hidden">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-surface-secondary border-b border-border">
+                      {[
+                        "User",
+                        "Trust Level",
+                        "Quota",
+                        "Plugins",
+                        "Joined",
+                        "Actions",
+                      ].map((h) => (
+                        <th
+                          key={h}
+                          className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-text-muted font-semibold"
                         >
-                          {TRUST_LEVELS.map((l) => (
-                            <option key={l} value={l}>
-                              {l}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
+                          {h}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {users.map((user: any) => (
+                      <tr
+                        key={user.id}
+                        className="border-b border-border hover:bg-surface-secondary/30 transition-colors"
+                      >
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold overflow-hidden flex-shrink-0">
+                              {user.avatarUrl ? (
+                                <Image
+                                  src={user.avatarUrl}
+                                  alt=""
+                                  width={32}
+                                  height={32}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                user.username.charAt(0).toUpperCase()
+                              )}
+                            </div>
+                            <div>
+                              <div className="font-semibold text-sm text-text-primary">
+                                {user.displayName || user.username}
+                              </div>
+                              <div className="text-xs text-text-muted">
+                                @{user.username}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${getTrustBadgeClass(
+                              user.trustLevel,
+                            )}`}
+                          >
+                            {user.trustLevel}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className={`text-[13px] ${
+                                user.weeklyBuildCount >= user.weeklyBuildQuota
+                                  ? "text-error font-semibold"
+                                  : "text-text-secondary"
+                              }`}
+                            >
+                              {user.weeklyBuildCount || 0}/
+                              {user.weeklyBuildQuota || 50}
+                            </span>
+                            <input
+                              type="number"
+                              min="1"
+                              max="10000"
+                              defaultValue={user.weeklyBuildQuota || 50}
+                              onBlur={(e) => {
+                                const v = parseInt(e.target.value);
+                                if (v && v !== user.weeklyBuildQuota)
+                                  changeQuota(user.id, v);
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter")
+                                  (e.target as HTMLInputElement).blur();
+                              }}
+                              className="w-[60px] px-1.5 py-0.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-xs text-center focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
+                            />
+                          </div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-text-secondary">
+                          {user._count?.plugins || 0}
+                        </td>
+                        <td className="px-4 py-3 text-[13px] text-text-muted">
+                          {new Date(user.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-3">
+                          <select
+                            value={user.trustLevel}
+                            onChange={(e) =>
+                              changeTrustLevel(user.id, e.target.value)
+                            }
+                            className="px-2 py-1 rounded-sm border border-border bg-surface-secondary text-text-primary text-xs cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand"
+                          >
+                            {TRUST_LEVELS.map((l) => (
+                              <option key={l} value={l}>
+                                {l}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          })()}
         </div>
       )}
 
       {/* Review Queue Tab — shows pending PLUGINS */}
       {tab === "queue" &&
         (loading ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-              gap: "var(--space-6)",
-            }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Array.from({ length: 3 }, (_, i) => (
               <SkeletonCard
                 key={i}
-                style={{
-                  padding: 0,
-                  borderTop: "4px solid var(--border-color)",
-                }}
+                className="p-0 border-t-4 border-t-border"
               >
-                <div
-                  style={{
-                    padding: "var(--space-5)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "var(--space-3)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-3)",
-                        alignItems: "center",
-                      }}
-                    >
+                <div className="p-5 flex flex-col gap-3">
+                  <div className="flex justify-between items-start">
+                    <div className="flex gap-3 items-center">
                       <Skeleton
                         width={48}
                         height={48}
@@ -951,7 +784,7 @@ export default function AdminPage() {
                         <Skeleton
                           width="8rem"
                           height="1.125rem"
-                          style={{ marginBottom: "4px" }}
+                          className="mb-1"
                         />
                         <Skeleton width="5rem" height="0.8125rem" />
                       </div>
@@ -963,15 +796,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <SkeletonText lines={2} />
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-2)",
-                      marginTop: "var(--space-2)",
-                      paddingTop: "var(--space-3)",
-                      borderTop: "1px solid var(--border-color)",
-                    }}
-                  >
+                  <div className="flex gap-2 mt-2 pt-3 border-t border-border">
                     <Skeleton
                       width="100%"
                       height="2.25rem"
@@ -988,29 +813,15 @@ export default function AdminPage() {
             ))}
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(380px, 1fr))",
-              gap: "var(--space-6)",
-            }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {queue.length === 0 ? (
-              <div
-                className="card"
-                style={{
-                  padding: "var(--space-12)",
-                  textAlign: "center",
-                  gridColumn: "1 / -1",
-                }}
-              >
+              <div className="card p-12 text-center col-span-full">
                 <CheckCircle
                   size={40}
-                  color="var(--status-success)"
-                  style={{ margin: "0 auto var(--space-3)" }}
+                  className="text-success mx-auto mb-3"
                 />
-                <p style={{ fontWeight: 600 }}>All caught up!</p>
-                <p style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+                <p className="font-semibold text-text-primary">All caught up!</p>
+                <p className="text-text-muted text-sm">
                   No plugins pending review
                 </p>
               </div>
@@ -1018,51 +829,12 @@ export default function AdminPage() {
               queue.map((plugin: any) => (
                 <div
                   key={plugin.id}
-                  className="card"
-                  style={{
-                    padding: "0",
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                    borderTop: "4px solid var(--status-warning)",
-                  }}
+                  className="card p-0 flex flex-col overflow-hidden border-t-4 border-t-warning border border-border shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div
-                    style={{
-                      padding: "var(--space-5)",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "var(--space-3)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: "var(--space-3)",
-                          alignItems: "center",
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: "48px",
-                            height: "48px",
-                            borderRadius: "var(--radius-md)",
-                            background: "var(--bg-secondary)",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            border: "1px solid var(--border-color)",
-                            flexShrink: 0,
-                            overflow: "hidden",
-                          }}
-                        >
+                  <div className="p-5 flex flex-col gap-3">
+                    <div className="flex justify-between items-start">
+                      <div className="flex gap-3 items-center">
+                        <div className="w-12 h-12 rounded-md bg-surface-secondary flex items-center justify-center border border-border flex-shrink-0 overflow-hidden">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
@@ -1070,37 +842,18 @@ export default function AdminPage() {
                           />
                         </div>
                         <div>
-                          <h3
-                            className="heading-3"
-                            style={{
-                              fontSize: "1.125rem",
-                              margin: 0,
-                              color: "var(--text-primary)",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "6px",
-                            }}
-                          >
+                          <h3 className="heading-3 text-lg font-bold m-0 text-text-primary flex items-center gap-1.5">
                             {plugin.displayName}
                             {plugin.versions?.[0]?.isPreRelease && (
                               <span
                                 title="This is a pre-release"
-                                style={{
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  color: "#ef4444",
-                                }}
+                                className="inline-flex items-center text-error"
                               >
                                 <FlaskConical size={16} />
                               </span>
                             )}
                           </h3>
-                          <p
-                            style={{
-                              color: "var(--text-muted)",
-                              fontSize: "0.8125rem",
-                            }}
-                          >
+                          <p className="text-text-muted text-xs">
                             @{plugin.author?.username}
                           </p>
                         </div>
@@ -1112,46 +865,14 @@ export default function AdminPage() {
                       </span>
                     </div>
 
-                    <p
-                      style={{
-                        color: "var(--text-secondary)",
-                        fontSize: "0.8125rem",
-                        lineHeight: 1.5,
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                        overflow: "hidden",
-                      }}
-                    >
+                    <p className="text-text-secondary text-xs leading-relaxed line-clamp-2 overflow-hidden">
                       {plugin.description}
                     </p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        marginTop: "var(--space-2)",
-                        paddingTop: "var(--space-3)",
-                        borderTop: "1px solid var(--border-color)",
-                      }}
-                    >
+                    <div className="flex gap-2 mt-2 pt-3 border-t border-border">
                       <button
                         onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
-                        style={{
-                          flex: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "6px",
-                          padding: "0.5rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: "var(--status-success)",
-                          color: "white",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
+                        className="flex-1 flex items-center justify-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 transition-colors"
                       >
                         <CheckCircle size={16} /> Approve Plugin
                       </button>
@@ -1162,39 +883,15 @@ export default function AdminPage() {
                             name: plugin.displayName,
                           })
                         }
-                        style={{
-                          flex: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "6px",
-                          padding: "0.5rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: "rgba(239,68,68,0.1)",
-                          color: "var(--status-error)",
-                          border: "1px solid rgba(239,68,68,0.2)",
-                          cursor: "pointer",
-                        }}
+                        className="flex-1 flex items-center justify-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 transition-colors"
                       >
                         <XCircle size={16} /> Reject Plugin
                       </button>
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-2)",
-                        justifyContent: "center",
-                      }}
-                    >
+                    <div className="flex gap-2 justify-center mt-1">
                       <Link
                         href={`/plugins/${plugin.slug}`}
-                        style={{
-                          fontSize: "0.75rem",
-                          color: "var(--accent-primary)",
-                          textAlign: "center",
-                        }}
+                        className="text-xs text-brand hover:underline text-center"
                       >
                         View Plugin →
                       </Link>
@@ -1203,11 +900,7 @@ export default function AdminPage() {
                           href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{
-                            fontSize: "0.75rem",
-                            color: "var(--text-muted)",
-                            textAlign: "center",
-                          }}
+                          className="text-xs text-text-muted hover:text-text-primary text-center"
                         >
                           View Commit →
                         </a>
@@ -1221,67 +914,29 @@ export default function AdminPage() {
             {/* Reject Reason Modal */}
             {rejectModal && (
               <div
-                style={{
-                  position: "fixed",
-                  inset: 0,
-                  background: "rgba(0,0,0,0.6)",
-                  backdropFilter: "blur(4px)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  zIndex: 1000,
-                  padding: "var(--space-4)",
-                }}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
                 onClick={() => {
                   setRejectModal(null);
                   setRejectReason("");
                 }}
               >
                 <div
-                  className="card"
-                  style={{
-                    width: "100%",
-                    maxWidth: "560px",
-                    padding: "0",
-                    overflow: "hidden",
-                    borderTop: "4px solid var(--status-error)",
-                  }}
+                  className="card w-full max-w-lg p-0 overflow-hidden border-t-4 border-t-error shadow-xl animate-in fade-in zoom-in-95 duration-200"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div style={{ padding: "var(--space-6)" }}>
-                    <h3
-                      style={{
-                        fontSize: "1.125rem",
-                        fontWeight: 700,
-                        color: "var(--text-primary)",
-                        margin: "0 0 var(--space-1)",
-                      }}
-                    >
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-text-primary m-0 mb-1">
                       Reject Plugin
                     </h3>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "0.875rem",
-                        margin: "0 0 var(--space-5)",
-                      }}
-                    >
+                    <p className="text-text-muted text-sm m-0 mb-5">
                       Rejecting{" "}
-                      <strong style={{ color: "var(--text-primary)" }}>
+                      <strong className="font-semibold text-text-primary">
                         {rejectModal.name}
                       </strong>
                       . The author will be notified via email with your reason.
                     </p>
 
-                    <label
-                      style={{
-                        display: "block",
-                        fontSize: "0.8125rem",
-                        fontWeight: 600,
-                        color: "var(--text-secondary)",
-                        marginBottom: "var(--space-2)",
-                      }}
-                    >
+                    <label className="block text-[13px] font-semibold text-text-secondary mb-2">
                       Reason for Rejection *
                       <textarea
                         value={rejectReason}
@@ -1290,56 +945,21 @@ export default function AdminPage() {
                           "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
                         }
                         rows={8}
-                        style={{
-                          width: "100%",
-                          padding: "var(--space-3)",
-                          borderRadius: "var(--radius-md)",
-                          border: "1px solid var(--border-color)",
-                          background: "var(--bg-secondary)",
-                          color: "var(--text-primary)",
-                          fontSize: "0.875rem",
-                          lineHeight: 1.6,
-                          resize: "vertical",
-                          outline: "none",
-                          fontFamily: "inherit",
-                          minHeight: "140px",
-                        }}
+                        className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[140px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
                       />
                     </label>
-                    <p
-                      style={{
-                        color: "var(--text-muted)",
-                        fontSize: "0.75rem",
-                        marginTop: "var(--space-1)",
-                      }}
-                    >
+                    <p className="text-text-muted text-xs mt-1">
                       Supports **bold** and {">"} blockquote formatting in the
                       email.
                     </p>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "var(--space-3)",
-                        marginTop: "var(--space-5)",
-                        justifyContent: "flex-end",
-                      }}
-                    >
+                    <div className="flex gap-3 mt-5 justify-end">
                       <button
                         onClick={() => {
                           setRejectModal(null);
                           setRejectReason("");
                         }}
-                        style={{
-                          padding: "0.625rem 1.25rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 500,
-                          background: "var(--bg-secondary)",
-                          color: "var(--text-secondary)",
-                          border: "1px solid var(--border-color)",
-                          cursor: "pointer",
-                        }}
+                        className="px-5 py-2.5 rounded-md text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
                       >
                         Cancel
                       </button>
@@ -1353,29 +973,12 @@ export default function AdminPage() {
                           )
                         }
                         disabled={!rejectReason.trim() || reviewLoading}
-                        style={{
-                          padding: "0.625rem 1.25rem",
-                          borderRadius: "var(--radius-md)",
-                          fontSize: "0.875rem",
-                          fontWeight: 600,
-                          background: rejectReason.trim()
-                            ? "var(--status-error)"
-                            : "rgba(239,68,68,0.3)",
-                          color: "white",
-                          border: "none",
-                          cursor: rejectReason.trim()
-                            ? "pointer"
-                            : "not-allowed",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          opacity: reviewLoading ? 0.7 : 1,
-                        }}
+                        className="px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer flex items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
                       >
                         {reviewLoading && (
                           <Loader2
                             size={14}
-                            style={{ animation: "spin 1s linear infinite" }}
+                            className="animate-spin"
                           />
                         )}
                         <XCircle size={14} /> Reject & Notify Author
@@ -1396,34 +999,18 @@ export default function AdminPage() {
               ? plugins
               : plugins.filter((p) => p.status === pluginStatusFilter);
           return (
-            <div className="card" style={{ padding: "var(--space-6)" }}>
+            <div className="card p-6">
               {/* Search + Filter Bar */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-4)",
-                  marginBottom: "var(--space-4)",
-                  flexWrap: "wrap",
-                }}
-              >
-                <div
-                  style={{ flex: 1, position: "relative", minWidth: "240px" }}
-                >
+              <div className="flex gap-4 mb-4 flex-wrap">
+                <div className="flex-1 relative min-w-[240px]">
                   <Search
                     size={16}
-                    color="var(--text-muted)"
-                    style={{
-                      position: "absolute",
-                      left: "var(--space-3)",
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                    }}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
                   />
                   <input
                     type="text"
                     placeholder="Search plugins by name or slug..."
-                    className="input"
-                    style={{ paddingLeft: "var(--space-10)" }}
+                    className="w-full pl-10 pr-3 py-2 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
                     value={pluginSearch}
                     onChange={(e) => setPluginSearch(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && loadData()}
@@ -1435,23 +1022,13 @@ export default function AdminPage() {
               </div>
 
               {/* Status Filter Pills */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "6px",
-                  marginBottom: "var(--space-5)",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
+              <div className="flex gap-1.5 mb-5 flex-wrap items-center">
                 <Filter
                   size={14}
-                  color="var(--text-muted)"
-                  style={{ marginRight: "4px" }}
+                  className="mr-1 text-text-muted"
                 />
                 {PLUGIN_STATUSES.map((s) => {
                   const isActive = pluginStatusFilter === s;
-                  const sc = s !== "ALL" ? STATUS_COLORS[s] : null;
                   const count =
                     s === "ALL"
                       ? plugins.length
@@ -1460,39 +1037,19 @@ export default function AdminPage() {
                     <button
                       key={s}
                       onClick={() => setPluginStatusFilter(s)}
-                      style={{
-                        padding: "4px 12px",
-                        borderRadius: "var(--radius-full)",
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        border: isActive
-                          ? `1px solid ${sc?.border || "var(--border-highlight)"}`
-                          : "1px solid var(--border-color)",
-                        background: isActive
-                          ? sc?.bg || "var(--bg-secondary)"
-                          : "transparent",
-                        color: isActive
-                          ? sc?.color || "var(--text-primary)"
-                          : "var(--text-muted)",
-                        cursor: "pointer",
-                        transition: "all 150ms",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold border cursor-pointer transition-all flex items-center gap-1.5 ${
+                        isActive
+                          ? getStatusBadgeClass(s)
+                          : "border-border bg-transparent text-text-muted hover:text-text-primary"
+                      }`}
                     >
                       {s === "ALL" ? "All" : s.replace("_", " ")}
                       <span
-                        style={{
-                          background: isActive
-                            ? "rgba(255,255,255,0.15)"
-                            : "var(--bg-secondary)",
-                          padding: "0 6px",
-                          borderRadius: "var(--radius-full)",
-                          fontSize: "0.6875rem",
-                          minWidth: "20px",
-                          textAlign: "center",
-                        }}
+                        className={`px-1.5 rounded-full text-[11px] min-w-[20px] text-center ${
+                          isActive
+                            ? "bg-white/15 dark:bg-white/10"
+                            : "bg-surface-secondary text-text-muted"
+                        }`}
                       >
                         {count}
                       </span>
@@ -1502,22 +1059,13 @@ export default function AdminPage() {
               </div>
 
               {loading ? (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className="w-full border-collapse">
                   <thead>
-                    <tr
-                      style={{
-                        borderBottom: "1px solid var(--border-color)",
-                        textAlign: "left",
-                      }}
-                    >
+                    <tr className="border-b border-border text-left">
                       {["Plugin", "Author", "Status", "Actions"].map((h) => (
                         <th
                           key={h}
-                          style={{
-                            padding: "0 var(--space-4) var(--space-3)",
-                            color: "var(--text-muted)",
-                            fontSize: "0.8125rem",
-                          }}
+                          className="px-4 py-3 text-text-muted text-[13px] font-semibold"
                         >
                           {h}
                         </th>
@@ -1526,47 +1074,25 @@ export default function AdminPage() {
                   </thead>
                   <tbody>
                     {Array.from({ length: 4 }, (_, i) => (
-                      <tr
-                        key={i}
-                        style={{
-                          borderBottom: "1px solid var(--border-color)",
-                        }}
-                      >
-                        <td style={{ padding: "var(--space-4)" }}>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "var(--space-3)",
-                            }}
-                          >
+                      <tr key={i} className="border-b border-border">
+                        <td className="p-4">
+                          <div className="flex items-center gap-3">
                             <Skeleton width="8rem" height="0.875rem" />
                             <Skeleton width="4rem" height="0.75rem" />
                           </div>
                         </td>
-                        <td style={{ padding: "var(--space-4)" }}>
+                        <td className="p-4">
                           <Skeleton width="6rem" height="0.875rem" />
                         </td>
-                        <td style={{ padding: "var(--space-4)" }}>
+                        <td className="p-4">
                           <Skeleton
                             width="5rem"
                             height="1.5rem"
                             borderRadius="var(--radius-sm)"
                           />
                         </td>
-                        <td
-                          style={{
-                            padding: "var(--space-4)",
-                            textAlign: "right",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "var(--space-2)",
-                              justifyContent: "flex-end",
-                            }}
-                          >
+                        <td className="p-4 text-right">
+                          <div className="flex gap-2 justify-end">
                             <Skeleton
                               width="2rem"
                               height="2rem"
@@ -1589,82 +1115,34 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               ) : (
-                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                <table className="w-full border-collapse">
                   <thead>
-                    <tr
-                      style={{
-                        borderBottom: "1px solid var(--border-color)",
-                        textAlign: "left",
-                      }}
-                    >
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                    <tr className="border-b border-border text-left">
+                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
                         Plugin
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
                         Author
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                        }}
-                      >
+                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
                         Status
                       </th>
-                      <th
-                        style={{
-                          padding: "0 var(--space-4) var(--space-3)",
-                          color: "var(--text-muted)",
-                          fontSize: "0.8125rem",
-                          textAlign: "right",
-                        }}
-                      >
+                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold text-right">
                         Actions
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {filtered.map((plugin: any) => {
-                      const psc =
-                        STATUS_COLORS[plugin.status] || STATUS_COLORS.DRAFT;
                       return (
                         <React.Fragment key={plugin.id}>
-                          <tr
-                            style={{
-                              borderBottom: "1px solid var(--border-color)",
-                            }}
-                          >
-                            <td style={{ padding: "var(--space-4)" }}>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "var(--space-3)",
-                                }}
-                              >
-                                <div style={{ fontWeight: 600 }}>
+                          <tr className="border-b border-border hover:bg-surface-secondary/20 transition-colors">
+                            <td className="p-4 text-sm">
+                              <div className="flex items-center gap-3">
+                                <div className="font-semibold text-text-primary">
                                   {plugin.displayName}
                                 </div>
-                                <div
-                                  style={{
-                                    fontSize: "0.75rem",
-                                    color: "var(--text-muted)",
-                                    fontFamily: "var(--font-mono)",
-                                  }}
-                                >
+                                <div className="text-xs text-text-muted font-mono">
                                   {plugin.slug}
                                 </div>
                                 {plugin.versions &&
@@ -1673,24 +1151,11 @@ export default function AdminPage() {
                                       onClick={() =>
                                         togglePluginExpanded(plugin.id)
                                       }
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "4px",
-                                        padding: "2px 8px",
-                                        borderRadius: "var(--radius-sm)",
-                                        border: "1px solid var(--border-color)",
-                                        background: expandedPlugins.has(
-                                          plugin.id,
-                                        )
-                                          ? "var(--bg-secondary)"
-                                          : "transparent",
-                                        cursor: "pointer",
-                                        fontSize: "0.75rem",
-                                        color: "var(--text-muted)",
-                                        fontWeight: 600,
-                                        transition: "all 150ms",
-                                      }}
+                                      className={`flex items-center gap-1 px-2 py-0.5 rounded-sm border border-border hover:bg-surface-secondary text-xs text-text-muted font-semibold transition-colors cursor-pointer ${
+                                        expandedPlugins.has(plugin.id)
+                                          ? "bg-surface-secondary"
+                                          : "bg-transparent"
+                                      }`}
                                     >
                                       {expandedPlugins.has(plugin.id) ? (
                                         <ChevronDown size={14} />
@@ -1702,16 +1167,11 @@ export default function AdminPage() {
                                   )}
                               </div>
                             </td>
-                            <td
-                              style={{
-                                padding: "var(--space-4)",
-                                fontSize: "0.875rem",
-                              }}
-                            >
+                            <td className="p-4 text-sm text-text-secondary">
                               {plugin.author?.displayName ||
                                 plugin.author?.username}
                             </td>
-                            <td style={{ padding: "var(--space-4)" }}>
+                            <td className="p-4">
                               <select
                                 value={plugin.status}
                                 onChange={(e) =>
@@ -1722,16 +1182,9 @@ export default function AdminPage() {
                                     plugin.displayName,
                                   )
                                 }
-                                style={{
-                                  padding: "0.25rem 0.5rem",
-                                  borderRadius: "var(--radius-sm)",
-                                  background: psc.bg,
-                                  border: `1px solid ${psc.border}`,
-                                  color: psc.color,
-                                  fontSize: "0.8125rem",
-                                  fontWeight: 600,
-                                  cursor: "pointer",
-                                }}
+                                className={`px-2 py-1 rounded-sm text-xs font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ${getStatusBadgeClass(
+                                  plugin.status,
+                                )}`}
                               >
                                 <option value="DRAFT">DRAFT</option>
                                 <option value="PENDING_REVIEW">
@@ -1743,20 +1196,8 @@ export default function AdminPage() {
                                 <option value="FLAGGED">FLAGGED</option>
                               </select>
                             </td>
-                            <td
-                              style={{
-                                padding: "var(--space-4)",
-                                textAlign: "right",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  gap: "var(--space-2)",
-                                  justifyContent: "flex-end",
-                                  alignItems: "center",
-                                }}
-                              >
+                            <td className="p-4 text-right">
+                              <div className="flex gap-2 justify-end items-center">
                                 {/* Quick reject button — only shown for approved plugins */}
                                 {plugin.status === "APPROVED" && (
                                   <button
@@ -1771,22 +1212,7 @@ export default function AdminPage() {
                                       setPluginRejectReason("");
                                     }}
                                     title="Reject this approved plugin"
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      gap: "4px",
-                                      height: "32px",
-                                      padding: "0 10px",
-                                      borderRadius: "var(--radius-sm)",
-                                      border: "1px solid rgba(239,68,68,0.3)",
-                                      background: "rgba(239,68,68,0.08)",
-                                      color: "var(--status-error)",
-                                      cursor: "pointer",
-                                      transition: "all 150ms",
-                                      fontSize: "0.6875rem",
-                                      fontWeight: 600,
-                                    }}
+                                    className="flex items-center justify-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
                                   >
                                     <ShieldAlert size={14} /> Reject
                                   </button>
@@ -1798,32 +1224,18 @@ export default function AdminPage() {
                                       ? "Remove Featured"
                                       : "Mark as Featured"
                                   }
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "32px",
-                                    height: "32px",
-                                    borderRadius: "var(--radius-sm)",
-                                    border: plugin.isFeatured
-                                      ? "1px solid #fbbf24"
-                                      : "1px solid var(--border-color)",
-                                    background: plugin.isFeatured
-                                      ? "rgba(251, 191, 36, 0.15)"
-                                      : "var(--bg-secondary)",
-                                    cursor: "pointer",
-                                    transition: "all 150ms",
-                                  }}
+                                  className={`flex items-center justify-center w-8 h-8 rounded-sm border cursor-pointer transition-all ${
+                                    plugin.isFeatured
+                                      ? "border-amber-400 bg-amber-400/15 hover:bg-amber-400/25"
+                                      : "border-border bg-surface-secondary text-text-muted hover:bg-surface-secondary/80"
+                                  }`}
                                 >
                                   <Star
                                     size={16}
-                                    color={
+                                    className={
                                       plugin.isFeatured
-                                        ? "#fbbf24"
-                                        : "var(--text-muted)"
-                                    }
-                                    fill={
-                                      plugin.isFeatured ? "#fbbf24" : "none"
+                                        ? "text-amber-400 fill-amber-400"
+                                        : "text-text-muted"
                                     }
                                   />
                                 </button>
@@ -1831,11 +1243,7 @@ export default function AdminPage() {
                                   href={`/plugins/${plugin.slug}`}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="btn btn-secondary"
-                                  style={{
-                                    padding: "0.25rem 0.5rem",
-                                    fontSize: "0.75rem",
-                                  }}
+                                  className="btn btn-secondary px-2.5 py-1 text-xs"
                                 >
                                   View
                                 </a>
@@ -1845,66 +1253,24 @@ export default function AdminPage() {
                           {expandedPlugins.has(plugin.id) &&
                             plugin.versions &&
                             plugin.versions.length > 0 && (
-                              <tr
-                                style={{
-                                  borderBottom: "1px solid var(--border-color)",
-                                  background: "rgba(0,0,0,0.02)",
-                                }}
-                              >
+                              <tr className="border-b border-border bg-surface-secondary/10">
                                 <td
                                   colSpan={4}
-                                  style={{
-                                    padding:
-                                      "var(--space-3) var(--space-4) var(--space-4) var(--space-8)",
-                                  }}
+                                  className="p-3 px-4 pl-8"
                                 >
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      gap: "6px",
-                                    }}
-                                  >
+                                  <div className="flex flex-col gap-1.5">
                                     {plugin.versions.map((v: any) => {
-                                      const vsc =
-                                        STATUS_COLORS[v.status] ||
-                                        STATUS_COLORS.DRAFT;
                                       return (
                                         <div
                                           key={v.id}
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "10px",
-                                            padding: "6px 10px",
-                                            borderRadius: "var(--radius-sm)",
-                                            border: `1px solid ${vsc.border}`,
-                                            background: "var(--bg-card)",
-                                          }}
+                                          className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
+                                            v.status,
+                                          )}`}
                                         >
-                                          <span
-                                            style={{
-                                              fontSize: "0.8125rem",
-                                              fontWeight: 700,
-                                              color: "var(--text-primary)",
-                                              minWidth: "56px",
-                                            }}
-                                          >
+                                          <span className="text-[13px] font-bold text-text-primary min-w-[56px]">
                                             v{v.version}
                                           </span>
-                                          <span
-                                            style={{
-                                              fontSize: "0.6875rem",
-                                              fontWeight: 700,
-                                              padding: "2px 8px",
-                                              borderRadius:
-                                                "var(--radius-full)",
-                                              background: vsc.bg,
-                                              color: vsc.color,
-                                              textTransform: "uppercase",
-                                              letterSpacing: "0.03em",
-                                            }}
-                                          >
+                                          <span className={`text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}>
                                             {v.status}
                                           </span>
                                           <select
@@ -1918,17 +1284,7 @@ export default function AdminPage() {
                                                 `${plugin.displayName} v${v.version}`,
                                               )
                                             }
-                                            style={{
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              background: "var(--bg-secondary)",
-                                              border:
-                                                "1px solid var(--border-color)",
-                                              color: "var(--text-primary)",
-                                              fontSize: "0.6875rem",
-                                              cursor: "pointer",
-                                              marginLeft: "auto",
-                                            }}
+                                            className="px-1.5 py-0.5 rounded-sm bg-surface-secondary border border-border text-text-primary text-[11px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ml-auto"
                                           >
                                             <option value="PENDING">
                                               PENDING
@@ -1954,11 +1310,7 @@ export default function AdminPage() {
                       <tr>
                         <td
                           colSpan={4}
-                          style={{
-                            padding: "var(--space-8)",
-                            textAlign: "center",
-                            color: "var(--text-muted)",
-                          }}
+                          className="p-8 text-center text-text-muted"
                         >
                           {pluginStatusFilter !== "ALL"
                             ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
@@ -1976,58 +1328,33 @@ export default function AdminPage() {
       {/* Plugin/Version Rejection Reason Modal */}
       {pluginRejectModal && (
         <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.6)",
-            backdropFilter: "blur(4px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-            padding: "var(--space-4)",
-          }}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
           onClick={() => {
             setPluginRejectModal(null);
             setPluginRejectReason("");
           }}
         >
           <div
-            className="card"
-            style={{
-              width: "100%",
-              maxWidth: "560px",
-              padding: "0",
-              overflow: "hidden",
-              borderTop: `4px solid ${pluginRejectModal.targetStatus === "SUSPENDED" ? "#f87171" : pluginRejectModal.targetStatus === "FLAGGED" ? "#fb923c" : "var(--status-error)"}`,
-            }}
+            className={`card w-full max-w-lg p-0 overflow-hidden border-t-4 shadow-xl animate-in fade-in zoom-in-95 duration-200 ${
+              pluginRejectModal.targetStatus === "SUSPENDED"
+                ? "border-t-red-400"
+                : pluginRejectModal.targetStatus === "FLAGGED"
+                  ? "border-t-orange-400"
+                  : "border-t-error"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ padding: "var(--space-6)" }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-3)",
-                  marginBottom: "var(--space-1)",
-                }}
-              >
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-1">
                 <ShieldAlert
                   size={22}
-                  color={
+                  className={
                     pluginRejectModal.targetStatus === "FLAGGED"
-                      ? "#fb923c"
-                      : "var(--status-error)"
+                      ? "text-orange-400"
+                      : "text-error"
                   }
                 />
-                <h3
-                  style={{
-                    fontSize: "1.125rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    margin: 0,
-                  }}
-                >
+                <h3 className="text-lg font-bold text-text-primary m-0">
                   {pluginRejectModal.targetStatus === "SUSPENDED"
                     ? "Suspend"
                     : pluginRejectModal.targetStatus === "FLAGGED"
@@ -2036,59 +1363,33 @@ export default function AdminPage() {
                   {pluginRejectModal.type === "version" ? "Version" : "Plugin"}
                 </h3>
               </div>
-              <p
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.875rem",
-                  margin: "var(--space-2) 0 var(--space-4)",
-                }}
-              >
+              <p className="text-text-muted text-sm my-2 mb-4">
                 Changing{" "}
-                <strong style={{ color: "var(--text-primary)" }}>
+                <strong className="font-semibold text-text-primary">
                   {pluginRejectModal.name}
                 </strong>{" "}
                 from{" "}
-                <span
-                  style={{
-                    fontWeight: 600,
-                    color:
-                      STATUS_COLORS[pluginRejectModal.currentStatus]?.color ||
-                      "var(--text-primary)",
-                  }}
-                >
+                <span className="font-semibold text-text-primary">
                   {pluginRejectModal.currentStatus}
                 </span>
                 {" → "}
                 <span
-                  style={{
-                    fontWeight: 600,
-                    color:
-                      STATUS_COLORS[pluginRejectModal.targetStatus]?.color ||
-                      "var(--status-error)",
-                  }}
+                  className={`font-semibold ${
+                    pluginRejectModal.targetStatus === "SUSPENDED"
+                      ? "text-red-500 dark:text-red-400"
+                      : pluginRejectModal.targetStatus === "FLAGGED"
+                        ? "text-orange-500 dark:text-orange-400"
+                        : "text-error"
+                  }`}
                 >
                   {pluginRejectModal.targetStatus}
                 </span>
                 .
                 {pluginRejectModal.currentStatus === "APPROVED" && (
-                  <span
-                    style={{
-                      display: "block",
-                      marginTop: "var(--space-2)",
-                      padding: "var(--space-2) var(--space-3)",
-                      background: "rgba(245,158,11,0.08)",
-                      borderRadius: "var(--radius-sm)",
-                      borderLeft: "3px solid var(--status-warning)",
-                      fontSize: "0.8125rem",
-                    }}
-                  >
+                  <span className="block mt-2 px-3 py-2 bg-warning/10 rounded-sm border-l-3 border-l-warning text-[13px] text-text-secondary">
                     <AlertTriangle
                       size={12}
-                      style={{
-                        display: "inline",
-                        verticalAlign: "middle",
-                        marginRight: "4px",
-                      }}
+                      className="inline-block align-middle mr-1"
                     />
                     This plugin/version is currently{" "}
                     <strong>live and approved</strong>. This action will remove
@@ -2097,15 +1398,7 @@ export default function AdminPage() {
                 )}
               </p>
 
-              <label
-                style={{
-                  display: "block",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  color: "var(--text-secondary)",
-                  marginBottom: "var(--space-2)",
-                }}
-              >
+              <label className="block text-[13px] font-semibold text-text-secondary mb-2">
                 Reason for{" "}
                 {pluginRejectModal.targetStatus === "SUSPENDED"
                   ? "Suspension"
@@ -2120,75 +1413,36 @@ export default function AdminPage() {
                 autoFocus
                 placeholder={`Explain why this ${pluginRejectModal.type} is being ${pluginRejectModal.targetStatus.toLowerCase()}...\n\nExample:\nSecurity concern — Suspicious network calls detected in decompiled code.\n\nThe plugin will be reverted to non-public status.`}
                 rows={7}
-                style={{
-                  width: "100%",
-                  padding: "var(--space-3)",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid var(--border-color)",
-                  background: "var(--bg-secondary)",
-                  color: "var(--text-primary)",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.6,
-                  resize: "vertical",
-                  outline: "none",
-                  fontFamily: "inherit",
-                  minHeight: "120px",
-                }}
+                className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[120px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
               />
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "var(--space-3)",
-                  marginTop: "var(--space-5)",
-                  justifyContent: "flex-end",
-                }}
-              >
+              <div className="flex gap-3 mt-5 justify-end">
                 <button
                   onClick={() => {
                     setPluginRejectModal(null);
                     setPluginRejectReason("");
                   }}
-                  style={{
-                    padding: "0.625rem 1.25rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-secondary)",
-                    border: "1px solid var(--border-color)",
-                    cursor: "pointer",
-                  }}
+                  className="px-5 py-2.5 rounded-md text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmPluginReject}
                   disabled={!pluginRejectReason.trim() || pluginRejectLoading}
-                  style={{
-                    padding: "0.625rem 1.25rem",
-                    borderRadius: "var(--radius-md)",
-                    fontSize: "0.875rem",
-                    fontWeight: 600,
-                    background: pluginRejectReason.trim()
-                      ? STATUS_COLORS[pluginRejectModal.targetStatus]?.color ||
-                        "var(--status-error)"
-                      : "rgba(239,68,68,0.3)",
-                    color: "white",
-                    border: "none",
-                    cursor: pluginRejectReason.trim()
-                      ? "pointer"
-                      : "not-allowed",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    opacity: pluginRejectLoading ? 0.7 : 1,
-                  }}
+                  className={`px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer flex items-center gap-1.5 transition-all ${
+                    pluginRejectReason.trim()
+                      ? pluginRejectModal.targetStatus === "SUSPENDED"
+                        ? "bg-red-500 hover:bg-red-600"
+                        : pluginRejectModal.targetStatus === "FLAGGED"
+                          ? "bg-orange-500 hover:bg-orange-600"
+                          : "bg-error hover:bg-error/90"
+                      : "bg-error/30 text-white/50 cursor-not-allowed"
+                  }`}
                 >
                   {pluginRejectLoading && (
                     <Loader2
                       size={14}
-                      style={{ animation: "spin 1s linear infinite" }}
+                      className="animate-spin"
                     />
                   )}
                   <ShieldAlert size={14} />
@@ -2208,23 +1462,10 @@ export default function AdminPage() {
       {/* System Tab */}
       {tab === "system" &&
         (loading ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Array.from({ length: 4 }, (_, i) => (
-              <SkeletonCard key={i} style={{ padding: "var(--space-6)" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-3)",
-                    marginBottom: "var(--space-3)",
-                  }}
-                >
+              <SkeletonCard key={i} className="p-6">
+                <div className="flex items-center gap-3 mb-3">
                   <Skeleton
                     width={40}
                     height={40}
@@ -2237,83 +1478,46 @@ export default function AdminPage() {
             ))}
           </div>
         ) : (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "var(--space-4)",
-            }}
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
                 label: "Total Users",
                 value: stats.users,
-                icon: <Users size={20} color="var(--accent-primary)" />,
-                bg: "rgba(139,92,246,0.08)",
+                icon: <Users size={20} className="text-purple-500" />,
+                bg: "bg-purple-500/10",
               },
               {
                 label: "Total Plugins",
                 value: stats.plugins,
-                icon: <Package size={20} color="var(--accent-primary)" />,
-                bg: "rgba(14,165,233,0.08)",
+                icon: <Package size={20} className="text-brand" />,
+                bg: "bg-brand/10",
               },
               {
                 label: "Total Builds",
                 value: stats.builds,
-                icon: <Activity size={20} color="var(--status-success)" />,
-                bg: "rgba(16,185,129,0.08)",
+                icon: <Activity size={20} className="text-success" />,
+                bg: "bg-success/10",
               },
               {
                 label: "Pending Reviews",
                 value: stats.pendingReviews,
-                icon: <AlertTriangle size={20} color="var(--status-warning)" />,
-                bg: "rgba(245,158,11,0.08)",
+                icon: <AlertTriangle size={20} className="text-warning" />,
+                bg: "bg-warning/10",
               },
             ].map((s) => (
               <div
                 key={s.label}
-                className="card"
-                style={{ padding: "var(--space-6)" }}
+                className="card p-6 flex flex-col bg-surface-card border border-border rounded-xl shadow-sm"
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-3)",
-                    marginBottom: "var(--space-3)",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "var(--radius-md)",
-                      background: s.bg,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 ${s.bg}`}>
                     {s.icon}
                   </div>
-                  <span
-                    style={{
-                      fontSize: "0.8125rem",
-                      color: "var(--text-muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
+                  <span className="text-xs text-text-muted uppercase tracking-wider font-medium">
                     {s.label}
                   </span>
                 </div>
-                <div
-                  style={{
-                    fontSize: "2rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                  }}
-                >
+                <div className="text-3xl font-bold text-text-primary">
                   {s.value}
                 </div>
               </div>

@@ -95,144 +95,54 @@ export default function DeviceAuthPage() {
 
   if (status === "loading") {
     return (
-      <div
-        style={{
-          minHeight: "60vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <div className="min-h-[60vh] flex items-center justify-center">
         <Loader2
           size={32}
-          style={{
-            animation: "spin 1s linear infinite",
-            color: "var(--accent-primary)",
-          }}
+          className="animate-spin text-brand"
         />
       </div>
     );
   }
 
   return (
-    <div
-      className="container"
-      style={{
-        paddingTop: "var(--space-12)",
-        paddingBottom: "var(--space-12)",
-        minHeight: "60vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        className="card"
-        style={{
-          maxWidth: "480px",
-          width: "100%",
-          padding: "var(--space-10)",
-          textAlign: "center",
-        }}
-      >
+    <div className="container py-12 min-h-[60vh] flex items-center justify-center mx-auto px-4">
+      <div className="card max-w-[480px] w-full p-10 text-center">
         {/* Icon */}
-        <div
-          style={{
-            width: "72px",
-            height: "72px",
-            background: "rgba(14, 165, 233, 0.1)",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto var(--space-6)",
-          }}
-        >
-          <Terminal size={36} color="var(--accent-primary)" />
+        <div className="w-[72px] h-[72px] bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-6">
+          <Terminal size={36} className="text-brand" />
         </div>
 
-        <h1 className="heading-2" style={{ marginBottom: "var(--space-2)" }}>
+        <h1 className="heading-2 mb-2">
           Device Authorization
         </h1>
-        <p
-          className="text-secondary"
-          style={{
-            fontSize: "0.9375rem",
-            lineHeight: 1.6,
-            marginBottom: "var(--space-8)",
-          }}
-        >
+        <p className="text-text-secondary text-[0.9375rem] leading-relaxed mb-8">
           Authorize the EndGit CLI to access your account
         </p>
 
         {/* Success state */}
         {success ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-4)",
-            }}
-          >
-            <CheckCircle size={48} color="var(--status-success)" />
-            <p
-              style={{
-                fontSize: "1.125rem",
-                fontWeight: 600,
-                color: "var(--text-primary)",
-              }}
-            >
+          <div className="flex flex-col items-center gap-4">
+            <CheckCircle size={48} className="text-success" />
+            <p className="text-lg font-semibold text-text-primary">
               Device authorized!
             </p>
-            <p className="text-secondary" style={{ fontSize: "0.9375rem" }}>
+            <p className="text-text-secondary text-[0.9375rem]">
               You can close this page. The CLI will complete login
               automatically.
             </p>
           </div>
         ) : !session ? (
           /* Not signed in */
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "var(--space-6)",
-            }}
-          >
-            <div
-              style={{
-                padding: "var(--space-4)",
-                background: "rgba(251, 191, 36, 0.1)",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid rgba(251, 191, 36, 0.2)",
-                width: "100%",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  color: "var(--accent-orange)",
-                  fontWeight: 500,
-                  justifyContent: "center",
-                }}
-              >
+          <div className="flex flex-col items-center gap-6">
+            <div className="p-4 bg-warning/10 rounded-md border border-warning/20 w-full">
+              <div className="flex items-center gap-2 text-warning font-medium justify-center">
                 <AlertCircle size={16} />
                 You must be signed in to authorize a device
               </div>
             </div>
             <a
               href={`/api/auth/signin?callbackUrl=${encodeURIComponent("/oauth/device")}`}
-              className="btn btn-primary"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                width: "100%",
-                justifyContent: "center",
-              }}
+              className="btn btn-primary inline-flex items-center gap-2 w-full justify-center"
             >
               Sign in with GitHub
             </a>
@@ -241,33 +151,15 @@ export default function DeviceAuthPage() {
           /* Signed in — show code entry form */
           <form
             onSubmit={handleSubmit}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-6)",
-            }}
+            className="flex flex-col gap-6"
           >
             <div>
-              <p
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  marginBottom: "var(--space-3)",
-                  color: "var(--text-secondary)",
-                }}
-              >
+              <p className="text-sm font-medium mb-3 text-text-secondary">
                 Enter the code shown in your terminal
               </p>
 
               {/* Two-segment code input */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "12px",
-                }}
-              >
+              <div className="flex items-center justify-center gap-3">
                 <input
                   type="text"
                   value={segments[0]}
@@ -277,29 +169,11 @@ export default function DeviceAuthPage() {
                   placeholder="XXXX"
                   autoFocus
                   autoComplete="off"
-                  style={{
-                    width: "120px",
-                    textAlign: "center",
-                    letterSpacing: "0.25em",
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    fontFamily: "var(--font-mono)",
-                    padding: "0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: `2px solid ${error ? "var(--status-error)" : "var(--border-color)"}`,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    textTransform: "uppercase",
-                  }}
+                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-md border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
+                    error ? "border-error" : "border-border"
+                  }`}
                 />
-                <span
-                  style={{
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: "var(--text-muted)",
-                  }}
-                >
+                <span className="text-2xl font-bold text-text-muted">
                   —
                 </span>
                 <input
@@ -312,40 +186,16 @@ export default function DeviceAuthPage() {
                   maxLength={4}
                   placeholder="XXXX"
                   autoComplete="off"
-                  style={{
-                    width: "120px",
-                    textAlign: "center",
-                    letterSpacing: "0.25em",
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    fontFamily: "var(--font-mono)",
-                    padding: "0.75rem",
-                    borderRadius: "var(--radius-md)",
-                    border: `2px solid ${error ? "var(--status-error)" : "var(--border-color)"}`,
-                    background: "var(--bg-secondary)",
-                    color: "var(--text-primary)",
-                    outline: "none",
-                    textTransform: "uppercase",
-                  }}
+                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-md border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
+                    error ? "border-error" : "border-border"
+                  }`}
                 />
               </div>
             </div>
 
             {/* Error message */}
             {error && (
-              <div
-                style={{
-                  padding: "var(--space-3)",
-                  background: "rgba(239, 68, 68, 0.1)",
-                  borderRadius: "var(--radius-md)",
-                  border: "1px solid rgba(239, 68, 68, 0.2)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  color: "var(--status-error)",
-                  fontSize: "0.875rem",
-                }}
-              >
+              <div className="p-3 bg-error/10 rounded-md border border-error/20 flex items-center gap-2 text-error text-sm">
                 <AlertCircle size={14} />
                 {error}
               </div>
@@ -354,27 +204,13 @@ export default function DeviceAuthPage() {
             <button
               type="submit"
               disabled={userCode.length !== 9 || loading}
-              className="btn btn-primary"
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "8px",
-                fontSize: "1rem",
-                padding: "0.75rem",
-                opacity: userCode.length !== 9 || loading ? 0.5 : 1,
-                cursor:
-                  userCode.length !== 9 || loading ? "not-allowed" : "pointer",
-              }}
+              className="btn btn-primary w-full flex items-center justify-center gap-2 text-base p-3 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (
                 <>
                   <Loader2
                     size={16}
-                    style={{
-                      animation: "spin 1s linear infinite",
-                    }}
+                    className="animate-spin"
                   />{" "}
                   Authorizing...
                 </>
@@ -383,21 +219,15 @@ export default function DeviceAuthPage() {
               )}
             </button>
 
-            <p
-              style={{
-                fontSize: "0.8125rem",
-                color: "var(--text-muted)",
-                lineHeight: 1.5,
-              }}
-            >
+            <p className="text-[0.8125rem] text-text-muted leading-relaxed">
               Authorizing as{" "}
-              <strong style={{ color: "var(--text-primary)" }}>
+              <strong className="text-text-primary">
                 @{(session.user as any)?.username || session.user?.name}
               </strong>
               . Not you?{" "}
               <a
                 href="/api/auth/signout"
-                style={{ color: "var(--accent-primary)" }}
+                className="text-brand hover:underline"
               >
                 Sign out
               </a>
