@@ -5,8 +5,29 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
+import python from "react-syntax-highlighter/dist/esm/languages/prism/python";
+import cpp from "react-syntax-highlighter/dist/esm/languages/prism/cpp";
+import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
+import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
+import bash from "react-syntax-highlighter/dist/esm/languages/prism/bash";
+import json from "react-syntax-highlighter/dist/esm/languages/prism/json";
+import yaml from "react-syntax-highlighter/dist/esm/languages/prism/yaml";
+import markdown from "react-syntax-highlighter/dist/esm/languages/prism/markdown";
+import css from "react-syntax-highlighter/dist/esm/languages/prism/css";
+import clike from "react-syntax-highlighter/dist/esm/languages/prism/clike";
+
+SyntaxHighlighter.registerLanguage("python", python);
+SyntaxHighlighter.registerLanguage("cpp", cpp);
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("bash", bash);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("markdown", markdown);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("clike", clike);
 
 interface Tab {
   title: string;
