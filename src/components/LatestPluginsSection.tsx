@@ -1,11 +1,8 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { ArrowRight, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
-import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 import FadeIn from "@/components/FadeIn";
+import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
 interface Plugin {
   id: string;
@@ -20,36 +17,25 @@ interface Plugin {
   author?: { displayName?: string; username?: string };
 }
 
-export default function LatestPluginsSection() {
-  const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
-  const [plugins, setPlugins] = useState<Plugin[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    async function fetchPlugins() {
-      try {
-        const apiUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-        const res = await fetch(
-          `${apiUrl}/api/v1/plugins/latest?page=1&pageSize=6`,
-        );
-        const json = await res.json();
-        if (json?.success && json?.data?.plugins) {
-          setPlugins(json.data.plugins);
-        } else {
-          setError(true);
-        }
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
+export default async function LatestPluginsSection() {
+  let plugins: Plugin[] = [];
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    const res = await fetch(
+      `${apiUrl}/api/v1/plugins/latest?page=1&pageSize=6`,
+      { next: { revalidate: 60 } },
+    );
+    const json = await res.json();
+    if (json?.success && json?.data?.plugins) {
+      plugins = json.data.plugins;
     }
-    fetchPlugins();
-  }, []);
+  } catch {
+    return null;
+  }
 
-  if (error && plugins.length === 0) return null;
+  if (plugins.length === 0) return null;
+
+  const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
   return (
     <section className="container" style={{ paddingBottom: "var(--space-16)" }}>
@@ -99,196 +85,189 @@ export default function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      {!loading && (
-        <>
-          <StaggerContainer
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(min(340px, 100%), 1fr))",
-              gap: "var(--space-6)",
-              alignContent: "start",
-            }}
-          >
-            {plugins.map((plugin) => {
-              const avgRating = plugin.stars
-                ? Math.round((plugin.stars / 20) * 10) / 10
-                : 0;
-              const repoOwner =
-                plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
-              const isVerified = repoOwner
-                ? VERIFIED_ORGS.includes(repoOwner)
-                : false;
+      <StaggerContainer
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fit, minmax(min(340px, 100%), 1fr))",
+          gap: "var(--space-6)",
+          alignContent: "start",
+        }}
+      >
+        {plugins.map((plugin) => {
+          const avgRating = plugin.stars
+            ? Math.round((plugin.stars / 20) * 10) / 10
+            : 0;
+          const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+          const isVerified = repoOwner
+            ? VERIFIED_ORGS.includes(repoOwner)
+            : false;
 
-              return (
-                <StaggerItem key={plugin.id}>
-                  <Link
-                    href={`/plugins/${plugin.slug}`}
-                    className="card"
+          return (
+            <StaggerItem key={plugin.id}>
+              <Link
+                href={`/plugins/${plugin.slug}`}
+                className="card"
+                style={{
+                  padding: "0",
+                  display: "flex",
+                  flexDirection: "column",
+                  textDecoration: "none",
+                  background: "var(--bg-card)",
+                  overflow: "hidden",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  height: "100%",
+                }}
+              >
+                <div
+                  className="plugin-card-inner"
+                  style={{
+                    padding: "var(--space-4)",
+                    display: "flex",
+                    gap: "var(--space-4)",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <div
                     style={{
-                      padding: "0",
-                      display: "flex",
-                      flexDirection: "column",
-                      textDecoration: "none",
-                      background: "var(--bg-card)",
+                      width: "64px",
+                      height: "64px",
+                      flexShrink: 0,
+                      borderRadius: "var(--radius-md)",
                       overflow: "hidden",
-                      transition: "transform 0.2s, box-shadow 0.2s",
-                      height: "100%",
+                      background: "var(--bg-secondary)",
+                      border: "1px solid var(--border-color)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    <div
-                      className="plugin-card-inner"
+                    <PluginImage
+                      iconUrl={plugin.iconUrl}
+                      repoUrl={plugin.repoUrl}
+                      alt={`${plugin.displayName} icon`}
+                    />
+                  </div>
+
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h3
+                      className="heading-3"
                       style={{
-                        padding: "var(--space-4)",
+                        fontSize: "1.125rem",
+                        margin: "0 0 4px 0",
+                        color: "var(--accent-primary)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
                         display: "flex",
-                        gap: "var(--space-4)",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                    >
+                      {plugin.displayName}
+                      {isVerified && (
+                        <span
+                          title="This plugin is officially supported by EndstoneMC/EndGit"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            color: "var(--accent-primary)",
+                            flexShrink: 0,
+                          }}
+                        >
+                          <BadgeCheck size={16} />
+                        </span>
+                      )}
+                    </h3>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        gap: "var(--space-3)",
                         flexWrap: "wrap",
                       }}
                     >
                       <div
                         style={{
-                          width: "64px",
-                          height: "64px",
-                          flexShrink: 0,
-                          borderRadius: "var(--radius-md)",
-                          overflow: "hidden",
-                          background: "var(--bg-secondary)",
-                          border: "1px solid var(--border-color)",
+                          fontSize: "0.8125rem",
+                          color: "var(--text-muted)",
                           display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
+                          flexDirection: "column",
+                          gap: "2px",
+                          minWidth: 0,
+                          flex: "1 1 0",
                         }}
                       >
-                        <PluginImage
-                          iconUrl={plugin.iconUrl}
-                          repoUrl={plugin.repoUrl}
-                          alt={`${plugin.displayName} icon`}
-                        />
-                      </div>
-
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <h3
-                          className="heading-3"
+                        <span>v{plugin.latestVersion || "1.0.0"}</span>
+                        <span
                           style={{
-                            fontSize: "1.125rem",
-                            margin: "0 0 4px 0",
-                            color: "var(--accent-primary)",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
                           }}
                         >
-                          {plugin.displayName}
-                          {isVerified && (
-                            <span
-                              title="This plugin is officially supported by EndstoneMC/EndGit"
-                              style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                color: "var(--accent-primary)",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <BadgeCheck size={16} />
-                            </span>
+                          {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
+                            plugin.author?.displayName ||
+                            plugin.author?.username}
+                        </span>
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "flex-end",
+                          gap: "4px",
+                          fontSize: "0.75rem",
+                          color: "var(--text-muted)",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        <span>
+                          {new Date(plugin.createdAt || "").toLocaleDateString(
+                            "en-GB",
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            },
                           )}
-                        </h3>
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
-                            gap: "var(--space-3)",
-                            flexWrap: "wrap",
-                          }}
-                        >
-                          <div
+                        </span>
+                        <span>
+                          {plugin.downloads?.toLocaleString() ?? 0} downloads
+                        </span>
+                        {avgRating > 0 && (
+                          <span
                             style={{
+                              color: "#f59e0b",
                               fontSize: "0.8125rem",
-                              color: "var(--text-muted)",
                               display: "flex",
-                              flexDirection: "column",
-                              gap: "2px",
-                              minWidth: 0,
-                              flex: "1 1 0",
+                              alignItems: "center",
+                              gap: "3px",
                             }}
                           >
-                            <span>v{plugin.latestVersion || "1.0.0"}</span>
+                            {"★".repeat(Math.round(avgRating))}
+                            {"☆".repeat(5 - Math.round(avgRating))}
                             <span
                               style={{
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
+                                color: "var(--text-muted)",
+                                fontSize: "0.6875rem",
+                                marginLeft: "2px",
                               }}
                             >
-                              {plugin.repoUrl?.match(
-                                /github\.com\/([^/]+)/,
-                              )?.[1] ||
-                                plugin.author?.displayName ||
-                                plugin.author?.username}
+                              ({avgRating})
                             </span>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "flex-end",
-                              gap: "4px",
-                              fontSize: "0.75rem",
-                              color: "var(--text-muted)",
-                              whiteSpace: "nowrap",
-                            }}
-                          >
-                            <span>
-                              {new Date(
-                                plugin.createdAt || "",
-                              ).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </span>
-                            <span>
-                              {plugin.downloads?.toLocaleString() ?? 0}{" "}
-                              downloads
-                            </span>
-                            {avgRating > 0 && (
-                              <span
-                                style={{
-                                  color: "#f59e0b",
-                                  fontSize: "0.8125rem",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "3px",
-                                }}
-                              >
-                                {"★".repeat(Math.round(avgRating))}
-                                {"☆".repeat(5 - Math.round(avgRating))}
-                                <span
-                                  style={{
-                                    color: "var(--text-muted)",
-                                    fontSize: "0.6875rem",
-                                    marginLeft: "2px",
-                                  }}
-                                >
-                                  ({avgRating})
-                                </span>
-                              </span>
-                            )}
-                          </div>
-                        </div>
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </Link>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
-        </>
-      )}
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
+          );
+        })}
+      </StaggerContainer>
     </section>
   );
 }

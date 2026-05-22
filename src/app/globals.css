@@ -478,6 +478,17 @@ ol {
   color: var(--text-muted);
 }
 
+/* ── Focus Indicators ── */
+.btn:focus-visible,
+.input:focus-visible,
+.card:focus-visible,
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
 /* ── Mobile Responsive ─────────────────────────────────────── */
 
 @media (max-width: 768px) {
@@ -910,6 +921,27 @@ ol {
 
 .builds-table-wrapper::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Entry Animations ── */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* ── Reduced Motion ── */

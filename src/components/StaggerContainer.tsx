@@ -1,7 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { ReactNode } from "react";
+import { useInView } from "@/hooks/useInView";
+import {
+  Children,
+  cloneElement,
+  useEffect,
+  useState,
+  isValidElement,
+  type ReactNode,
+} from "react";
 
 interface StaggerContainerProps {
   children: ReactNode;
@@ -10,40 +17,51 @@ interface StaggerContainerProps {
   style?: React.CSSProperties;
 }
 
+function usePrefersReducedMotion() {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+  return prefersReduced;
+}
+
 export default function StaggerContainer({
   children,
   staggerDelay = 0.08,
   className,
   style,
 }: StaggerContainerProps) {
-  const prefersReducedMotion = useReducedMotion();
+  const { ref, inView } = useInView();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   if (prefersReducedMotion) {
     return (
-      <div className={className} style={style}>
+      <div ref={ref} className={className} style={style}>
         {children}
       </div>
     );
   }
 
-  return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-40px" }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: staggerDelay,
+  const indexedChildren = inView
+    ? Children.map(children, (child, i) => {
+        if (!isValidElement(child)) return child;
+        return cloneElement(child as React.ReactElement<any>, {
+          style: {
+            ...(child.props.style || {}),
+            animation: `fadeSlideUp 0.45s cubic-bezier(0.25, 0.1, 0.25, 1) ${i * staggerDelay}s both`,
           },
-        },
-      }}
-      className={className}
-      style={style}
-    >
-      {children}
-    </motion.div>
+        });
+      })
+    : null;
+
+  return (
+    <div ref={ref} className={className} style={style}>
+      {indexedChildren}
+    </div>
   );
 }
 
@@ -56,34 +74,9 @@ export function StaggerItem({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
-  if (prefersReducedMotion) {
-    return (
-      <div className={className} style={style}>
-        {children}
-      </div>
-    );
-  }
-
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 20, scale: 0.97 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: {
-            duration: 0.45,
-            ease: [0.25, 0.1, 0.25, 1],
-          },
-        },
-      }}
-      className={className}
-      style={style}
-    >
+    <div className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

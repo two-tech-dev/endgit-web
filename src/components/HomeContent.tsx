@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
-import LatestPluginsSection from "@/components/LatestPluginsSection";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
@@ -41,6 +40,17 @@ function TerminalMock() {
   const timerRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("terminal-seen")
+    ) {
+      setTypedChars(COMMAND_TEXT.length);
+      setVisibleLines(OUTPUT_LINES.length);
+      setShowCursor(false);
+      setShowPrompt(true);
+      return;
+    }
+
     const t = timerRef.current;
     t.length = 0;
 
@@ -64,6 +74,7 @@ function TerminalMock() {
       setTimeout(() => {
         setShowCursor(false);
         setShowPrompt(true);
+        sessionStorage.setItem("terminal-seen", "1");
       }, offset),
     );
 
@@ -563,9 +574,6 @@ export default function HomeContent({ stats }: HomeContentProps) {
           ))}
         </StaggerContainer>
       </section>
-
-      {/* ── Recent Releases ── */}
-      <LatestPluginsSection />
 
       {/* ── Features ── */}
       <section

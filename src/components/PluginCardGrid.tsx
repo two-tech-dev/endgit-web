@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 import { FlaskConical, BadgeCheck } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
@@ -42,7 +42,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
           : false;
 
         return (
-          <motion.a
+          <Link
             href={`/plugins/${plugin.slug}`}
             key={plugin.id}
             className="card"
@@ -53,13 +53,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
               textDecoration: "none",
               background: "var(--bg-card)",
               overflow: "hidden",
-            }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.3,
-              delay: Math.min(i * 0.04, 0.3),
-              ease: [0.25, 0.1, 0.25, 1],
+              animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(i * 0.04, 0.3)}s both`,
             }}
           >
             <div
@@ -244,7 +238,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                 </div>
               </div>
             )}
-          </motion.a>
+          </Link>
         );
       })}
     </div>

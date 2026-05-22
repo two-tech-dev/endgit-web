@@ -93,8 +93,7 @@ export default function LiveBuildLog({
       fontWeight = "600";
     } else if (line.includes("->"))
       color = "#94a3b8"; // muted slate-400 for sub-steps
-    else if (line.includes("Security Scan"))
-      color = "#c084fc"; // purple for security
+    else if (line.includes("Security Scan")) color = "#c084fc"; // purple for security
 
     return (
       <div
