@@ -7,7 +7,12 @@ export default function PluginDetailLoading() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-start gap-4 lg:flex-nowrap">
           {/* Header left */}
           <div className="plugin-header-inner grid grid-cols-[auto_1fr] gap-4 min-w-0 flex-1">
-            <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" className="shrink-0" />
+            <Skeleton
+              width={72}
+              height={72}
+              borderRadius="var(--radius-lg)"
+              className="shrink-0"
+            />
             <div className="min-w-0 flex-1">
               <h1 className="heading-2 m-0 flex flex-wrap items-center gap-3">
                 <Skeleton width="10rem" height="1.75rem" />
@@ -97,7 +102,12 @@ export default function PluginDetailLoading() {
             <div className="grid gap-4">
               {Array.from({ length: 3 }, (_, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <Skeleton circle width={32} height={32} className="shrink-0" />
+                  <Skeleton
+                    circle
+                    width={32}
+                    height={32}
+                    className="shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <Skeleton width="40%" height="0.875rem" className="mb-1" />
                     <Skeleton width="100%" height="0.75rem" />
@@ -132,11 +142,13 @@ export default function PluginDetailLoading() {
             <Skeleton width="8rem" height="1rem" className="mb-3" />
             <div className="grid gap-3">
               {Array.from({ length: 3 }, (_, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3"
-                >
-                  <Skeleton circle width={32} height={32} className="shrink-0" />
+                <div key={i} className="flex items-center gap-3">
+                  <Skeleton
+                    circle
+                    width={32}
+                    height={32}
+                    className="shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <Skeleton width="7rem" height="0.875rem" className="mb-1" />
                     <Skeleton width="5rem" height="0.625rem" />

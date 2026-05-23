@@ -726,7 +726,12 @@ export default function DevDashboardPage() {
             <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
               <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] items-start gap-4 w-full">
                 <div className="flex flex-col sm:flex-row items-start gap-4 w-full">
-                  <Skeleton width={40} height={40} borderRadius="6px" className="shrink-0" />
+                  <Skeleton
+                    width={40}
+                    height={40}
+                    borderRadius="6px"
+                    className="shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap gap-2 mb-1 items-center">
                       <Skeleton width="8rem" height="0.9375rem" />

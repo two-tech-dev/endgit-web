@@ -501,7 +501,8 @@ export default async function PluginDetailPage({
                       key={tag}
                       className="badge badge-outline text-xs inline-flex items-center gap-1 max-w-full truncate"
                     >
-                      <Tag size={10} className="shrink-0" /> <span className="truncate">{tag}</span>
+                      <Tag size={10} className="shrink-0" />{" "}
+                      <span className="truncate">{tag}</span>
                     </span>
                   ))}
                 </div>

@@ -681,7 +681,6 @@
   align-items: flex-end;
 }
 
-
 .plugin-main-content > * {
   min-width: 0;
   max-width: 100%;
@@ -930,7 +929,6 @@
     justify-content: space-between !important;
   }
 
-
   .navbar-logo {
     position: absolute;
     left: 50%;
@@ -1046,7 +1044,6 @@
   }
 }
 
-
 /* ── Badge Overflow Fix ── */
 .badge {
   max-width: 100%;
@@ -1062,8 +1059,6 @@
 }
 
 @media (max-width: 768px) {
-
-
   /* Hero section CTA buttons: stack on small screens */
   .card.p-5.lg\\:p-8 {
     grid-template-columns: 1fr;

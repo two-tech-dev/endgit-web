@@ -220,7 +220,11 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             />
             {(session?.user as any)?.trustLevel !== "ADMIN" && (
               <p className="text-xs text-warning mt-1 flex items-start gap-1">
-                <AlertTriangle size={12} className="shrink-0 mt-0.5" /> <span>Display name cannot be changed. Contact an admin if you need to rename your plugin.</span>
+                <AlertTriangle size={12} className="shrink-0 mt-0.5" />{" "}
+                <span>
+                  Display name cannot be changed. Contact an admin if you need
+                  to rename your plugin.
+                </span>
               </p>
             )}
           </div>

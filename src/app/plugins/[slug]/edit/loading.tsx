@@ -20,8 +20,16 @@ export default function EditPluginLoading() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end w-full">
-            <Skeleton width="100%" height="2.5rem" className="rounded-md sm:w-[5rem]" />
-            <Skeleton width="100%" height="2.5rem" className="rounded-md sm:w-[5rem]" />
+            <Skeleton
+              width="100%"
+              height="2.5rem"
+              className="rounded-md sm:w-[5rem]"
+            />
+            <Skeleton
+              width="100%"
+              height="2.5rem"
+              className="rounded-md sm:w-[5rem]"
+            />
           </div>
         </div>
       </SkeletonCard>

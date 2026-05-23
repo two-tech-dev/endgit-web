@@ -18,9 +18,7 @@ export default function ChangelogViewer({ changelog, version }: Props) {
 
   return (
     <div className="card p-4 lg:p-5">
-      <h3 className="font-semibold mb-3 text-base">
-        What's New in v{version}
-      </h3>
+      <h3 className="font-semibold mb-3 text-base">What's New in v{version}</h3>
       <div className="relative">
         <div
           className={`transition-[max-height] duration-300 ease-in-out overflow-hidden ${

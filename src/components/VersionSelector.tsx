@@ -104,14 +104,19 @@ export default function VersionSelector({
           </div>
         )}
         {downloads !== undefined && (
-          <div className="flex items-center gap-1 font-semibold text-text-primary" title="Total Downloads">
+          <div
+            className="flex items-center gap-1 font-semibold text-text-primary"
+            title="Total Downloads"
+          >
             <Download size={14} className="text-text-muted" />
             {downloads.toLocaleString()}
-            {activeVersionDownloads !== undefined && activeVersionDownloads > 0 && (
-              <span className="text-[10.5px] text-text-muted font-normal ml-0.5">
-                ({activeVersionDownloads.toLocaleString()} v{selectedVersion.version})
-              </span>
-            )}
+            {activeVersionDownloads !== undefined &&
+              activeVersionDownloads > 0 && (
+                <span className="text-[10.5px] text-text-muted font-normal ml-0.5">
+                  ({activeVersionDownloads.toLocaleString()} v
+                  {selectedVersion.version})
+                </span>
+              )}
           </div>
         )}
         <span>
