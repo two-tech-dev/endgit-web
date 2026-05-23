@@ -32,7 +32,7 @@ export default async function AuthorPluginsPage({
   return (
     <div className="container py-6 lg:py-8">
       <div className="mb-8">
-        <h1 className="heading-2 flex flex-wrap items-center gap-2">
+        <h1 className="heading-2 grid grid-flow-col auto-cols-max items-center gap-2">
           Plugins by <span className="text-brand">{username}</span>
         </h1>
         <p className="text-text-muted mt-1.5 text-sm">
@@ -70,9 +70,9 @@ export default async function AuthorPluginsPage({
               <Link
                 href={`/plugins/${plugin.slug}`}
                 key={plugin.id}
-                className="card p-0 flex flex-col no-underline bg-surface-card overflow-hidden transition-all"
+                className="card p-0 grid no-underline bg-surface-card overflow-hidden transition-all"
               >
-                <div className="plugin-card-inner p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center w-full">
+                <div className="plugin-card-inner p-4 grid grid-flow-col auto-cols-max gap-4 items-center">
                   {/* Left: Icon */}
                   <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border grid place-items-center">
                     <PluginImage
@@ -83,19 +83,19 @@ export default async function AuthorPluginsPage({
                   </div>
 
                   {/* Middle: Title, Version, Author */}
-                  <div className="flex-1 min-w-0 w-full">
-                    <h3 className="text-base font-semibold m-0 text-brand truncate flex items-center gap-1.5">
+                  <div className="min-w-0">
+                    <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap grid grid-flow-col auto-cols-max items-center gap-1.5">
                       {plugin.displayName}
                       {isVerified && (
                         <span
                           title="This plugin is officially supported by EndstoneMC/EndGit"
-                          className="inline-flex items-center text-brand shrink-0"
+                          className="inline-grid grid-cols-[auto_1fr] items-center text-brand shrink-0"
                         >
                           <BadgeCheck size={15} />
                         </span>
                       )}
                     </h3>
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-text-muted mt-1">
+                    <div className="grid grid-flow-col auto-cols-max items-center gap-2 text-xs text-text-muted mt-1">
                       <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
                         v{plugin.latestVersion || "1.0.0"}
                       </span>
@@ -109,13 +109,13 @@ export default async function AuthorPluginsPage({
                   </div>
 
                   {/* Right: Date & Stats */}
-                  <div className="flex flex-row sm:flex-col gap-3 items-center sm:items-end text-xs text-text-muted shrink-0 sm:ml-auto w-full sm:w-auto justify-between sm:justify-start border-t border-border/10 sm:border-t-0 pt-3 sm:pt-0 mt-2 sm:mt-0">
-                    <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                  <div className="grid gap-1.5 items-end text-xs text-text-muted shrink-0">
+                    <span className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold text-text-secondary">
                       <Download size={13} className="text-text-muted" />
                       {plugin.downloads?.toLocaleString() ?? 0}
                     </span>
                     {avgRating > 0 ? (
-                      <span className="text-warning text-xs flex items-center gap-0.5 font-medium">
+                      <span className="text-warning text-xs grid grid-flow-col auto-cols-max items-center gap-0.5 font-medium">
                         <Star size={13} className="fill-current" />
                         <span>{avgRating.toFixed(1)}</span>
                       </span>
@@ -135,7 +135,7 @@ export default async function AuthorPluginsPage({
 
                 {/* Bottom: Featured Banner */}
                 {isFeatured && (
-                  <div className="px-3 pb-3 w-full">
+                  <div className="px-3 pb-3 grid justify-items-center">
                     <div className="w-full py-1 text-center bg-emerald-500/10 text-emerald-500 text-xs font-semibold rounded border border-emerald-500/20">
                       Featured
                     </div>

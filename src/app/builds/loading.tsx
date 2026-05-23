@@ -13,27 +13,22 @@ export default function BuildsLoading() {
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              className={`flex items-center gap-4 p-4 ${
+              className={`grid grid-flow-col auto-cols-max items-center p-4 gap-4 ${
                 i < 7 ? "border-b border-border" : ""
               }`}
             >
-              <div className="w-1 h-10 bg-surface-secondary shrink-0 rounded-xs" />
-              <div className="flex-1 min-w-0">
-                <Skeleton width="8rem" height="1.125rem" className="mb-2" />
-                <div className="flex flex-wrap gap-3">
-                  <Skeleton width="4rem" height="0.75rem" />
-                  <Skeleton width="3.5rem" height="0.75rem" />
-                  <Skeleton width="2rem" height="0.75rem" />
-                </div>
+              <div>
+                <Skeleton width="60%" height="0.875rem" className="mb-1" />
+                <Skeleton width="30%" height="0.75rem" className="mb-1" />
+                <Skeleton width="40%" height="0.75rem" />
               </div>
-              <div className="flex flex-col items-end gap-1.5 shrink-0 ml-auto">
-                <Skeleton
-                  width="4rem"
-                  height="1.25rem"
-                  borderRadius="var(--radius-full)"
-                />
-                <Skeleton width="3rem" height="0.75rem" />
-              </div>
+              <Skeleton width="5rem" height="0.875rem" />
+              <Skeleton
+                width="4rem"
+                height="1.5rem"
+                borderRadius="var(--radius-full)"
+              />
+              <Skeleton width="3rem" height="0.875rem" />
             </div>
           ))}
         </div>

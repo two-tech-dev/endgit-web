@@ -146,14 +146,14 @@ export default function MarkdownTabs({
 
   if (!processedMarkdown.trim()) {
     return (
-      <div className="markdown-body text-text-muted leading-relaxed italic py-2">
+      <div className="markdown-body text-text-secondary leading-relaxed italic p-6 bg-surface-card rounded-lg border border-border">
         No description provided.
       </div>
     );
   }
 
   return (
-    <div className="markdown-body min-w-0 w-full max-w-full py-2 text-text-secondary leading-relaxed">
+    <div className="markdown-body min-w-0 w-full max-w-full p-6 text-text-secondary leading-relaxed">
       <MarkdownContent content={processedMarkdown} />
     </div>
   );

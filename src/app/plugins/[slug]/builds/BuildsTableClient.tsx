@@ -122,153 +122,147 @@ export function BuildsTableClient({
         ) : (
           <div
             ref={wrapperRef}
-            className="builds-table-wrapper overflow-auto max-h-[600px] w-full"
+            className="builds-table-wrapper overflow-auto max-h-[600px]"
           >
-            <div className="overflow-x-auto w-full">
-              <table className="builds-table w-full border-collapse text-sm min-w-[700px]">
-                <thead className="bg-surface-secondary sticky top-0 z-10">
-                  <tr className="border-b border-border text-left">
-                    <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                      Build #
-                    </th>
-                    <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                      Date
-                    </th>
-                    <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                      Lint
-                    </th>
-                    <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                      Commit
-                    </th>
-                    <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                      Branch or Pull Request number
-                    </th>
-                    <th className="px-4 py-3 text-text-primary font-semibold text-right">
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {builds.map((build: any) => (
-                    <tr
-                      key={build.id}
-                      className="border-b border-border bg-surface-card hover:bg-surface-secondary/30 transition-colors"
-                    >
-                      <td className="p-4 border-r border-border align-top">
-                        <div className="grid gap-[2px]">
-                          <Link
-                            href={`/builds/${build.id}`}
-                            className="text-accent no-underline font-medium hover:underline"
-                          >
-                            Dev #{build.buildNumber}
-                          </Link>
-                          {build.commitHash && (
-                            <span className="text-accent text-[13px]">
-                              (&amp;{build.commitHash.slice(0, 5)})
-                            </span>
-                          )}
-                          {build.triggerType === "WEBHOOK" && (
-                            <span className="badge text-xs w-fit mt-1">
-                              AUTO
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="p-4 border-r border-border align-top text-text-secondary">
-                        {timeAgo(build.createdAt)}
-                        {build.duration ? (
-                          <span className="text-[13px] text-text-muted">
-                            {" "}
-                            (in {build.duration}s)
-                          </span>
-                        ) : null}
-                      </td>
-                      <td className="p-4 border-r border-border align-top">
-                        {build.status === "SUCCESS" ? (
-                          <span className="text-success font-medium">OK</span>
-                        ) : build.status === "FAILED" ? (
-                          <span className="text-error font-medium">Failed</span>
-                        ) : build.status === "RUNNING" ? (
-                          <span className="text-brand font-medium">
-                            Running
-                          </span>
-                        ) : (
-                          <span className="text-text-muted">Queued</span>
-                        )}
-                      </td>
-                      <td className="p-4 border-r border-border align-top">
-                        <div className="flex flex-col gap-1.5">
-                          <div className="flex flex-wrap items-center gap-1.5 min-w-0">
-                            {build.commitHash && (
-                              <a
-                                href={`${plugin.repoUrl}/commit/${build.commitHash}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-accent font-mono no-underline hover:underline shrink-0"
-                              >
-                                {build.commitHash.slice(0, 7)}
-                              </a>
-                            )}
-                            <span className="text-text-primary break-all">
-                              {build.commitMessage || "No commit message"}
-                            </span>
-                          </div>
-                          <div className="flex flex-wrap gap-1.5 mt-1">
-                            {isOwner && build.versionStatus === "PENDING" && (
-                              <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
-                                PENDING REVIEW
-                              </span>
-                            )}
-                            {isOwner && build.versionStatus === "APPROVED" && (
-                              <span className="badge bg-success/10 text-success border border-success/20 text-xs font-semibold">
-                                APPROVED
-                              </span>
-                            )}
-                            {isOwner && build.versionStatus === "REJECTED" && (
-                              <span className="badge bg-error/10 text-error border border-error/20 text-xs font-semibold">
-                                REJECTED
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </td>
-                      <td className="p-4 border-r border-border align-top">
-                        <a
-                          href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-accent flex items-center gap-1 no-underline hover:underline font-mono"
+            <table className="builds-table w-full border-collapse text-sm">
+              <thead className="bg-surface-secondary sticky top-0 z-10">
+                <tr className="border-b border-border text-left">
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                    Build #
+                  </th>
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                    Date
+                  </th>
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                    Lint
+                  </th>
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                    Commit
+                  </th>
+                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                    Branch or Pull Request number
+                  </th>
+                  <th className="px-4 py-3 text-text-primary font-semibold text-right">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {builds.map((build: any) => (
+                  <tr
+                    key={build.id}
+                    className="border-b border-border bg-surface-card hover:bg-surface-secondary/30 transition-colors"
+                  >
+                    <td className="p-4 border-r border-border align-top">
+                      <div className="grid gap-[2px]">
+                        <Link
+                          href={`/builds/${build.id}`}
+                          className="text-accent no-underline font-medium hover:underline"
                         >
-                          {build.branch || "master"}
-                        </a>
-                      </td>
-                      <td className="p-4 text-right align-top">
-                        <div className="flex flex-wrap gap-2 justify-end">
-                          <Link
-                            href={`/builds/${build.id}`}
-                            className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
-                          >
-                            Logs
-                          </Link>
-                          {isOwner &&
-                            build.canSubmit &&
-                            Number(build.buildNumber) >
-                              Number(reviewedBuildNumber) &&
-                            !hasPendingVersion && (
-                              <Link
-                                href={`/builds/${build.id}/submit`}
-                                className="btn btn-primary py-1.5 px-3 text-[13px] flex items-center gap-1 whitespace-nowrap"
-                              >
-                                <Send size={14} /> Submit
-                              </Link>
-                            )}
+                          Dev #{build.buildNumber}
+                        </Link>
+                        {build.commitHash && (
+                          <span className="text-accent text-[13px]">
+                            (&amp;{build.commitHash.slice(0, 5)})
+                          </span>
+                        )}
+                        {build.triggerType === "WEBHOOK" && (
+                          <span className="badge text-xs w-fit mt-1">AUTO</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="p-4 border-r border-border align-top text-text-secondary">
+                      {timeAgo(build.createdAt)}
+                      {build.duration ? (
+                        <span className="text-[13px] text-text-muted">
+                          {" "}
+                          (in {build.duration}s)
+                        </span>
+                      ) : null}
+                    </td>
+                    <td className="p-4 border-r border-border align-top">
+                      {build.status === "SUCCESS" ? (
+                        <span className="text-success font-medium">OK</span>
+                      ) : build.status === "FAILED" ? (
+                        <span className="text-error font-medium">Failed</span>
+                      ) : build.status === "RUNNING" ? (
+                        <span className="text-brand font-medium">Running</span>
+                      ) : (
+                        <span className="text-text-muted">Queued</span>
+                      )}
+                    </td>
+                    <td className="p-4 border-r border-border align-top">
+                      <div className="flex flex-col gap-1.5">
+                        <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 break-all">
+                          {build.commitHash && (
+                            <a
+                              href={`${plugin.repoUrl}/commit/${build.commitHash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent font-mono no-underline hover:underline shrink-0"
+                            >
+                              {build.commitHash.slice(0, 7)}
+                            </a>
+                          )}
+                          <span className="text-text-primary">
+                            {build.commitMessage || "No commit message"}
+                          </span>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                        <div className="grid grid-flow-col auto-cols-max gap-1.5">
+                          {isOwner && build.versionStatus === "PENDING" && (
+                            <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
+                              PENDING REVIEW
+                            </span>
+                          )}
+                          {isOwner && build.versionStatus === "APPROVED" && (
+                            <span className="badge bg-success/10 text-success border border-success/20 text-xs font-semibold">
+                              APPROVED
+                            </span>
+                          )}
+                          {isOwner && build.versionStatus === "REJECTED" && (
+                            <span className="badge bg-error/10 text-error border border-error/20 text-xs font-semibold">
+                              REJECTED
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-4 border-r border-border align-top">
+                      <a
+                        href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 no-underline hover:underline font-mono"
+                      >
+                        {build.branch || "master"}
+                      </a>
+                    </td>
+                    <td className="p-4 text-right align-top">
+                      <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                        <Link
+                          href={`/builds/${build.id}`}
+                          className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
+                        >
+                          Logs
+                        </Link>
+                        {isOwner &&
+                          build.canSubmit &&
+                          Number(build.buildNumber) >
+                            Number(reviewedBuildNumber) &&
+                          !hasPendingVersion && (
+                            <Link
+                              href={`/builds/${build.id}/submit`}
+                              className="btn btn-primary py-1.5 px-3 text-[13px] grid grid-flow-col auto-cols-max items-center gap-1 whitespace-nowrap"
+                            >
+                              <Send size={14} /> Submit
+                            </Link>
+                          )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
             {isLoading && (
               <div className="grid justify-items-center p-4">

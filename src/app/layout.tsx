@@ -69,9 +69,23 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              document.body.classList.add('no-transitions');
+              window.addEventListener('load', function() {
+                setTimeout(function() {
+                  document.body.classList.remove('no-transitions');
+                }, 100);
+              });
+            })();
+            `,
+          }}
+        />
         <AuthProvider>
           <Navbar />
-          <main className="min-w-0">{children}</main>
+          <main className="">{children}</main>
           <Footer />
         </AuthProvider>
         <Analytics />
@@ -87,7 +101,7 @@ import Footer from "@/components/Footer";
 function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 lg:py-5">
-      <div className="container px-6 lg:px-12 xl:px-20 grid grid-cols-[1fr_auto] items-center relative">
+      <div className="container grid grid-cols-[1fr_auto] items-center relative">
         <Link
           href="/"
           className="text-2xl font-bold grid grid-cols-[auto_1fr] items-center gap-3 no-underline shrink-0"

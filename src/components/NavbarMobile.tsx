@@ -89,7 +89,7 @@ export default function NavbarMobile() {
         visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
       }`}
     >
-      <div className="container px-6 lg:px-12 xl:px-20 grid pt-4 gap-1">
+      <div className="container grid pt-4 gap-1">
         {[
           { href: "/plugins", label: "Releases" },
           { href: "/plugins/top", label: "Top Plugins" },
@@ -98,7 +98,7 @@ export default function NavbarMobile() {
         ].map((item, i) => (
           <div
             key={item.href}
-            className="transition-all duration-250 ease-out pt-1"
+            className="transition-all duration-250 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
@@ -123,9 +123,9 @@ export default function NavbarMobile() {
           transitionDelay: "200ms",
         }}
       >
-        <div className="container px-6 lg:px-12 xl:px-20 grid pt-3 pb-4 gap-1">
+        <div className="container grid pt-3 pb-4 gap-1">
           <div
-            className="transition-all duration-250 ease-out pt-1"
+            className="transition-all duration-250 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
@@ -143,7 +143,7 @@ export default function NavbarMobile() {
 
           <div
             onClick={(e) => e.stopPropagation()}
-            className="pt-3 transition-all duration-250 ease-out"
+            className="pt-2 transition-all duration-250 ease-out"
             style={{
               opacity: visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-16px)",
@@ -160,7 +160,7 @@ export default function NavbarMobile() {
   return (
     <div ref={wrapperRef} className="grid items-center">
       {/* Desktop nav */}
-      <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-8 items-center">
+      <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-8 xl:gap-12 items-center">
         <Link
           href="/plugins"
           className="text-text-secondary font-medium hover:text-text-primary transition-colors"

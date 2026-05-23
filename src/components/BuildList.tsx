@@ -109,7 +109,7 @@ export default function BuildsList({
     <>
       {/* Header */}
       <div className="mb-8">
-        <div className="flex flex-wrap items-center gap-3 mb-2">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
           <h1 className="heading-2">Dev Builds</h1>
 
           <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
@@ -124,7 +124,7 @@ export default function BuildsList({
 
       {/* Search */}
       <div className="mb-6">
-        <div className="card flex items-center gap-3 px-3 lg:px-4 py-0">
+        <div className="card grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -138,7 +138,7 @@ export default function BuildsList({
       </div>
 
       {/* Warning */}
-      <div className="card p-3 lg:p-4 lg:px-5 mb-8 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+      <div className="card p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
         <AlertTriangle size={20} className="text-warning shrink-0" />
 
         <div>
@@ -160,24 +160,24 @@ export default function BuildsList({
             <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
-              className="card p-3 lg:p-4 lg:px-5 flex items-center gap-3 lg:gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
+              className="card p-3 lg:p-4 lg:px-5 grid grid-flow-col auto-cols-max items-center gap-3 lg:gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
             >
               <div
                 className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`}
               />
 
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0">
                 <div className="font-semibold text-text-primary truncate">
                   {build.plugin?.displayName || build.plugin?.name}
                 </div>
 
-                <div className="flex flex-wrap gap-x-3 gap-y-1 text-[0.8125rem] text-text-muted">
-                  <span className="flex items-center gap-[3px]">
+                <div className="grid grid-flow-col auto-cols-max gap-3 text-[0.8125rem] text-text-muted">
+                  <span className="grid grid-flow-col auto-cols-max items-center gap-[3px]">
                     <User size={12} />
                     {build.plugin?.author?.username || "unknown"}
                   </span>
 
-                  <span className="flex items-center gap-[3px]">
+                  <span className="grid grid-flow-col auto-cols-max items-center gap-[3px]">
                     <GitBranch size={12} />
                     {build.branch}
                   </span>
@@ -186,8 +186,8 @@ export default function BuildsList({
                 </div>
               </div>
 
-              <div className="flex flex-col items-end gap-0.5 shrink-0 ml-auto">
-                <div className="flex items-center gap-2">
+              <div className="grid gap-0.5 justify-items-end shrink-0">
+                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
                   <StatusIcon status={build.status} />
 
                   <span

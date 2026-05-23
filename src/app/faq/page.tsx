@@ -334,7 +334,7 @@ export default function FAQPage() {
           />
         </div>
 
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
+        <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-center mb-8">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}

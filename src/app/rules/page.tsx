@@ -256,11 +256,6 @@ const RULE_CATEGORIES = [
   },
 ];
 
-function renderInlineMarkdown(text: string) {
-  const html = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
-}
-
 function CategoryIcon({ icon, color }: { icon: string; color: string }) {
   const style = { color };
   switch (icon) {
@@ -281,22 +276,22 @@ function CategoryIcon({ icon, color }: { icon: string; color: string }) {
 
 export default function RulesPage() {
   return (
-    <div className="container py-8 lg:py-16">
+    <div className="container max-w-4xl py-12 lg:py-20">
       {/* Hero Header */}
-      <div className="text-center mb-10">
-        <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-4 border border-purple-500/15">
-          <Shield size={28} className="text-accent" />
+      <div className="text-center mb-12">
+        <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
+          <Shield size={32} className="text-accent" />
         </div>
-        <h1 className="heading-1 mb-2">Plugin Submission Rules</h1>
-        <p className="text-text-secondary mx-auto text-[17px] leading-relaxed">
+        <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>
+        <p className="text-text-secondary max-w-2xl mx-auto text-[17px] leading-relaxed">
           All plugins submitted to the EndGit Marketplace must comply with the
           following rules. Violations may result in rejection during review.
         </p>
       </div>
 
       {/* Quick Navigation */}
-      <div className="card p-5 mb-6 flex flex-wrap items-center gap-3">
-        <span className="font-semibold text-sm text-text-muted mr-2 shrink-0">
+      <div className="card p-5 mb-10 grid grid-flow-col auto-cols-max items-center gap-3">
+        <span className="font-semibold text-sm text-text-muted mr-2">
           Jump to:
         </span>
         {RULE_CATEGORIES.map((cat) => (
@@ -308,7 +303,7 @@ export default function RulesPage() {
               color: cat.color,
               borderColor: `${cat.color}25`,
             }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold no-underline border transition-all hover:opacity-85"
+            className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold no-underline border transition-all hover:opacity-85"
           >
             <CategoryIcon icon={cat.icon} color={cat.color} />
             {cat.label}
@@ -320,13 +315,13 @@ export default function RulesPage() {
       </div>
 
       {/* Rule Categories */}
-      <div className="grid gap-8">
+      <div className="grid gap-12">
         {RULE_CATEGORIES.map((cat) => (
-          <section key={cat.id} id={cat.id} className="scroll-mt-24">
+          <section key={cat.id} id={cat.id}>
             {/* Category Header */}
             <div
               style={{ borderBottomColor: `${cat.color}30` }}
-              className="flex items-center gap-3 mb-6 pb-3 border-b-2"
+              className="grid grid-flow-col auto-cols-max items-center gap-3 mb-6 pb-3 border-b-2"
             >
               <div
                 style={{ background: `${cat.color}15` }}
@@ -335,7 +330,7 @@ export default function RulesPage() {
                 <CategoryIcon icon={cat.icon} color={cat.color} />
               </div>
               <div>
-                <h2 className="heading-3 m-0 flex items-center gap-2">
+                <h2 className="heading-3 m-0 grid grid-flow-col auto-cols-max items-center gap-2">
                   <span
                     style={{ color: cat.color }}
                     className="font-mono text-sm"
@@ -373,7 +368,7 @@ export default function RulesPage() {
                         {rule.title}
                       </h3>
                       <p className="m-0 text-sm text-text-secondary leading-relaxed">
-                        {renderInlineMarkdown(rule.text)}
+                        {rule.text}
                       </p>
                     </div>
                   </div>
@@ -387,7 +382,7 @@ export default function RulesPage() {
       {/* Footer Note */}
       <div className="mt-12 p-6 bg-error/5 rounded-lg border border-error/15 text-center">
         <p className="font-semibold text-text-primary mb-2">⚠️ Enforcement</p>
-        <p className="text-text-secondary text-sm mx-auto leading-relaxed m-0">
+        <p className="text-text-secondary text-sm max-w-xl mx-auto leading-relaxed m-0">
           Violations of these rules may result in the plugin being rejected
           during review. Repeated or severe violations may lead to submission
           privileges being restricted. If you have questions about a specific

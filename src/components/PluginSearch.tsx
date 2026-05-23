@@ -1,34 +1,45 @@
 "use client";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function PluginSearch() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("q") || "");
+  const isTyping = useRef(false);
 
+  // Sync external URL changes to local state, ONLY if user is not actively typing
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    if (q !== search && !isTyping.current) {
+      setSearch(q);
+    }
+  }, [searchParams]);
+
+  // Handle typing with a simple debounce
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      isTyping.current = false; // Reset typing flag after debounce finishes
       const currentQ = searchParams.get("q") || "";
+      
+      // Only push to router if the value actually changed
       if (search !== currentQ) {
         const params = new URLSearchParams(searchParams.toString());
         if (search) params.set("q", search);
         else params.delete("q");
-        params.delete("page");
+        params.delete("page"); // Reset to page 1 on new search
         router.push(`?${params.toString()}`, { scroll: false });
       }
-    }, 300);
-    return () => clearTimeout(timeoutId);
-  }, [search, router, searchParams]);
+    }, 400);
 
-  // Sync state with URL when it changes externally (e.g. from another search input or back button)
-  useEffect(() => {
-    const q = searchParams.get("q") || "";
-    if (q !== search) {
-      setSearch(q);
-    }
-  }, [searchParams]);
+    return () => clearTimeout(timeoutId);
+  }, [search, router]); // Remove searchParams from dependencies to avoid loop
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    isTyping.current = true;
+    setSearch(e.target.value);
+  };
 
   return (
     <div className="relative w-full">
@@ -40,7 +51,7 @@ export default function PluginSearch() {
         className="input pl-10 w-full"
         placeholder="Search plugins..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={handleChange}
       />
     </div>
   );
