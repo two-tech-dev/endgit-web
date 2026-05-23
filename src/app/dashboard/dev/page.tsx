@@ -862,12 +862,22 @@ export default function DevDashboardPage() {
                   </div>
                   <div className="dev-repo-actions flex items-center gap-3 shrink-0 flex-wrap mt-2 sm:mt-0">
                     {repo.ciEnabled && repo.pluginSlug && (
-                      <Link
-                        href={`/plugins/${repo.pluginSlug}/builds`}
-                        className="inline-flex items-center gap-1 text-xs text-accent font-medium"
-                      >
-                        View Builds <ExternalLink size={12} />
-                      </Link>
+                      <div className="flex items-center gap-3">
+                        <Link
+                          href={`/plugins/${repo.pluginSlug}/builds`}
+                          className="inline-flex items-center gap-1 text-xs text-accent font-medium hover:underline"
+                        >
+                          View Builds <ExternalLink size={12} />
+                        </Link>
+                        {repo.pluginStatus !== "PENDING_REVIEW" && (
+                          <Link
+                            href={`/plugins/${repo.pluginSlug}/edit`}
+                            className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-text-primary transition-colors font-medium hover:underline"
+                          >
+                            Edit <Settings size={12} />
+                          </Link>
+                        )}
+                      </div>
                     )}
                     <button
                       onClick={() => toggleCI(repo)}

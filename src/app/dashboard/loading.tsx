@@ -33,9 +33,13 @@ export default function DashboardLoading() {
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(min(320px,100%),1fr))] gap-6">
         {Array.from({ length: 3 }, (_, i) => (
-          <SkeletonCard key={i} className="grid overflow-hidden">
-            <Skeleton width="100%" height="4px" className="rounded-none" />
-            <div className="p-5 grid gap-4">
+          <SkeletonCard key={i} className="flex flex-col overflow-hidden">
+            <Skeleton
+              width="100%"
+              height="4px"
+              className="rounded-none shrink-0"
+            />
+            <div className="p-5 flex-1 flex flex-col gap-4">
               <div className="grid grid-cols-[1fr_auto]">
                 <div className="flex items-center gap-3 min-w-0">
                   <Skeleton width={48} height={48} className="rounded-sm" />
@@ -58,7 +62,11 @@ export default function DashboardLoading() {
                   </div>
                 ))}
               </div>
-              <Skeleton width="100%" height="2.25rem" className="rounded-sm" />
+              <Skeleton
+                width="100%"
+                height="2.25rem"
+                className="rounded-sm mt-auto"
+              />
             </div>
           </SkeletonCard>
         ))}

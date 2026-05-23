@@ -157,15 +157,15 @@ export default async function DashboardPage() {
       <h2 className="heading-3 mb-5 lg:mb-6">My Plugins</h2>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-5 lg:gap-6">
         {myPlugins.map((plugin) => (
-          <div key={plugin.id} className="card grid overflow-hidden">
+          <div key={plugin.id} className="card flex flex-col overflow-hidden">
             {/* Status Bar */}
             <div
-              className={`h-1 w-full ${
+              className={`h-1 w-full shrink-0 ${
                 plugin.status === "APPROVED" ? "bg-success" : "bg-warning"
               }`}
             />
 
-            <div className="p-4 lg:p-5 grid gap-4">
+            <div className="p-4 lg:p-5 flex-1 flex flex-col gap-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
@@ -236,9 +236,12 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <button className="btn btn-secondary w-full flex justify-center items-center gap-2 p-2">
+                  <Link
+                    href={`/plugins/${plugin.slug}/edit`}
+                    className="btn btn-secondary w-full flex justify-center items-center gap-2 p-2"
+                  >
                     <Settings size={16} /> Manage Plugin
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>
