@@ -228,7 +228,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="grid grid-cols-3 gap-6 lg:gap-8 mt-8 pt-5 border-t border-border">
+              <div className="flex items-center gap-8 sm:gap-12 md:gap-16 mt-8 pt-5 border-t border-border">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },

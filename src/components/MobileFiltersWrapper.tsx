@@ -14,7 +14,7 @@ export default function MobileFiltersWrapper({
 
   return (
     <>
-      <div className="lg:hidden mb-4 w-full">
+      <div className="lg:hidden mb-6 mt-2 w-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="btn btn-secondary grid grid-flow-col place-items-center gap-2 w-full p-3"
@@ -28,7 +28,7 @@ export default function MobileFiltersWrapper({
         className={`${isOpen ? "block" : "hidden"} lg:block w-full lg:w-[250px] shrink-0`}
       >
         {searchComponent && (
-          <div className="lg:hidden mb-4 w-full">{searchComponent}</div>
+          <div className="lg:hidden mb-6 w-full">{searchComponent}</div>
         )}
         {children}
       </div>

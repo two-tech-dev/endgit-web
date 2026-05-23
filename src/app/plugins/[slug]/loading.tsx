@@ -3,34 +3,46 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 export default function PluginDetailLoading() {
   return (
     <div className="container py-8">
-      <SkeletonCard className="p-6 mb-6">
-        <div className="grid lg:grid-cols-[1fr_auto] justify-between items-start gap-4">
-          <div className="plugin-header-inner flex flex-col sm:flex-row gap-4 min-w-0 w-full">
+      <SkeletonCard className="p-4 lg:p-6 mb-6">
+        <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center">
+          {/* Header left */}
+          <div className="flex items-center gap-4 min-w-0 w-full md:w-auto">
             <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" className="shrink-0" />
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <Skeleton width="14rem" height="2rem" />
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-3 mb-1.5">
+                <Skeleton width="10rem" height="1.75rem" />
                 <Skeleton
-                  width="5rem"
+                  width="4.5rem"
                   height="1.25rem"
                   borderRadius="var(--radius-full)"
                 />
               </div>
-              <Skeleton width="10rem" height="0.875rem" className="mb-2" />
-              <Skeleton width="20rem" height="0.875rem" />
+              <Skeleton width="6rem" height="0.875rem" className="mb-1" />
+              <Skeleton width="14rem" height="0.875rem" />
             </div>
           </div>
 
-          <div className="plugin-header-actions flex flex-col gap-2 shrink-0 items-start sm:items-end w-full sm:w-auto">
-            <Skeleton
-              width="10rem"
-              height="2.5rem"
-              borderRadius="var(--radius-md)"
-              className="w-full sm:w-auto"
-            />
-            <div className="flex flex-wrap gap-6">
-              <Skeleton width="4rem" height="1rem" />
-              <Skeleton width="5rem" height="1rem" />
+          {/* Header right / actions */}
+          <div className="plugin-header-actions flex flex-col gap-2 shrink-0 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row gap-2.5 w-full">
+              <Skeleton
+                width="100%"
+                height="2.5rem"
+                borderRadius="var(--radius-md)"
+                className="w-full sm:w-28"
+              />
+              <Skeleton
+                width="100%"
+                height="2.5rem"
+                borderRadius="var(--radius-md)"
+                className="w-full sm:w-32"
+              />
+            </div>
+            <div className="flex flex-wrap gap-3.5 justify-center md:justify-end items-center w-full mt-1">
+              <Skeleton width="3rem" height="0.875rem" />
+              <Skeleton width="3.5rem" height="0.875rem" />
+              <Skeleton width="3rem" height="0.875rem" />
+              <Skeleton width="5rem" height="0.875rem" />
             </div>
           </div>
         </div>
