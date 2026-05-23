@@ -1188,7 +1188,7 @@
   }
 
   /* Hero section CTA buttons: stack on small screens */
-  .card.p-5.lg\\:p-8 {
+  .card.p-5 {
     grid-template-columns: 1fr;
   }
 }
