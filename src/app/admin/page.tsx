@@ -902,9 +902,9 @@ export default function AdminPage() {
             {/* Reject Reason Modal */}
             {rejectModal && (
               <div
-className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-50 p-4"
-          onClick={() => {
-            setRejectModal(null);
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-50 p-4"
+                onClick={() => {
+                  setRejectModal(null);
                   setRejectReason("");
                 }}
               >
@@ -1058,7 +1058,7 @@ className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-
                     {Array.from({ length: 4 }, (_, i) => (
                       <tr key={i} className="border-b border-border">
                         <td className="p-4">
-                           <div className="grid grid-flow-col auto-cols-max items-center gap-3">
+                          <div className="grid grid-flow-col auto-cols-max items-center gap-3">
                             <Skeleton width="8rem" height="0.875rem" />
                             <Skeleton width="4rem" height="0.75rem" />
                           </div>
@@ -1074,7 +1074,7 @@ className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-
                           />
                         </td>
                         <td className="p-4 text-right">
-                           <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                          <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
                             <Skeleton
                               width="2rem"
                               height="2rem"

@@ -18,7 +18,6 @@ import AnimatedNumber from "@/components/AnimatedNumber";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
-
 interface HomeContentProps {
   stats: {
     plugins: number | string;
@@ -277,7 +276,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
               <div className="w-10 h-10 rounded-md bg-brand-light grid place-items-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-          <div className="min-w-0">
+              <div className="min-w-0">
                 <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>

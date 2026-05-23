@@ -52,7 +52,7 @@ export default function DashboardLoading() {
               </div>
               <div className="grid grid-flow-col auto-cols-max gap-4 py-4 border-y border-border">
                 {Array.from({ length: 3 }, (_, j) => (
-                    <div key={j}>
+                  <div key={j}>
                     <Skeleton width="4rem" height="0.625rem" className="mb-1" />
                     <Skeleton width="3rem" height="0.875rem" />
                   </div>

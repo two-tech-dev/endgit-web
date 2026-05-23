@@ -98,7 +98,10 @@ export default function LiveBuildLog({
     }
 
     return (
-      <div key={index} className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
+      <div
+        key={index}
+        className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]"
+      >
         <span className="text-[#334155] min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>

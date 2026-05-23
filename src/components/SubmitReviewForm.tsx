@@ -578,7 +578,10 @@ export default function SubmitReviewForm({
 
             <div className="grid gap-2">
               {producers.map((producer, index) => (
-                <div key={index} className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2 items-stretch sm:items-center">
+                <div
+                  key={index}
+                  className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2 items-stretch sm:items-center"
+                >
                   <input
                     type="text"
                     placeholder="GitHub Username"

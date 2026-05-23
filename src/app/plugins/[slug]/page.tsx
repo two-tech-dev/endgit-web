@@ -34,9 +34,9 @@ const PluginAnalyticsChart = dynamic(
   () => import("@/components/PluginAnalyticsChart"),
   {
     loading: () => (
-    <div className="card p-6 h-[280px] grid place-items-center">
-      <p className="text-text-muted text-sm">Loading analytics...</p>
-    </div>
+      <div className="card p-6 h-[280px] grid place-items-center">
+        <p className="text-text-muted text-sm">Loading analytics...</p>
+      </div>
     ),
   },
 );
@@ -367,7 +367,9 @@ export default async function PluginDetailPage({
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
             <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-3 rounded-md font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
-              <code className="whitespace-nowrap">endgit install {plugin.slug}</code>
+              <code className="whitespace-nowrap">
+                endgit install {plugin.slug}
+              </code>
               <button className="touch-target bg-transparent border-none cursor-pointer p-3 grid place-items-center">
                 <Copy size={16} className="text-text-muted" />
               </button>

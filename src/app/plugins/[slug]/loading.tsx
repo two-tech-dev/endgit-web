@@ -109,7 +109,10 @@ export default function PluginDetailLoading() {
             <Skeleton width="8rem" height="1rem" className="mb-3" />
             <div className="grid gap-3">
               {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} className="grid grid-flow-col auto-cols-max items-center gap-3">
+                <div
+                  key={i}
+                  className="grid grid-flow-col auto-cols-max items-center gap-3"
+                >
                   <Skeleton circle width={32} height={32} />
                   <div>
                     <Skeleton width="7rem" height="0.875rem" className="mb-1" />

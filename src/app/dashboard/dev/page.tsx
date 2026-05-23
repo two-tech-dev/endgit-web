@@ -383,11 +383,7 @@ export default function DevDashboardPage() {
           </div>
         </SkeletonCard>
         <div className="grid grid-flow-col auto-cols-max gap-3 mb-5 items-center">
-          <Skeleton
-            width="100%"
-            height="2.5rem"
-            borderRadius="10px"
-          />
+          <Skeleton width="100%" height="2.5rem" borderRadius="10px" />
           <Skeleton width="14rem" height="2.5rem" borderRadius="10px" />
         </div>
         <div className="grid gap-3">
