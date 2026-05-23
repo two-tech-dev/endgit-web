@@ -358,7 +358,7 @@ export default async function PluginDetailPage({
       </div>
 
       {/* Two Column Layout */}
-      <div className="plugin-layout grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4 lg:gap-6">
+      <div className="plugin-layout grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-4 xl:gap-6 items-start">
         {/* Main Content */}
         <div className="plugin-main-content min-w-0 grid gap-6">
           {/* Quick Install */}
@@ -430,7 +430,7 @@ export default async function PluginDetailPage({
         </div>
 
         {/* Right Sidebar */}
-        <aside className="plugin-sidebar w-full lg:max-w-[320px] grid gap-6">
+        <aside className="plugin-sidebar w-full xl:max-w-[280px] min-w-0 grid gap-6">
           {/* VirusTotal Scan */}
           <VirusTotalCard version={activeVersion} />
 
@@ -438,7 +438,7 @@ export default async function PluginDetailPage({
           {activeVersion &&
             activeVersion.producers &&
             activeVersion.producers.length > 0 && (
-              <div className="card p-4 lg:p-5">
+              <div className="card p-4 lg:p-5 overflow-hidden">
                 <h3 className="text-sm font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-1.5">
                   Producers{" "}
                   <span className="text-[11px] text-text-muted font-normal">
@@ -482,7 +482,7 @@ export default async function PluginDetailPage({
             )}
 
           {/* Details */}
-          <div className="card p-4 lg:p-5">
+          <div className="card p-4 lg:p-5 overflow-hidden">
             <h3 className="font-semibold mb-4">Details</h3>
             <div className="grid gap-3">
               <div className="grid grid-cols-[1fr_auto] text-sm">
@@ -538,7 +538,7 @@ export default async function PluginDetailPage({
 
           {/* Badges for Markdown */}
           {isAuthor && (
-            <div className="card p-4 lg:p-5">
+            <div className="card p-4 lg:p-5 overflow-hidden">
               <h3 className="font-semibold mb-4 text-sm">Markdown Badges</h3>
               <p className="text-xs text-text-muted mb-3">
                 Show off your plugin stats in your README.

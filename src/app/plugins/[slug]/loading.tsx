@@ -35,7 +35,7 @@ export default function PluginDetailLoading() {
         </div>
       </SkeletonCard>
 
-      <div className="plugin-layout grid gap-6">
+      <div className="plugin-layout grid grid-cols-1 xl:grid-cols-[1fr_280px] gap-6 items-start">
         <div className="plugin-main-content min-w-0 grid gap-6">
           <SkeletonCard className="p-5">
             <Skeleton width="10rem" height="1rem" className="mb-3" />
@@ -85,7 +85,7 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
         </div>
 
-        <aside className="plugin-sidebar w-full lg:max-w-[320px] grid gap-6">
+        <aside className="plugin-sidebar w-full xl:max-w-[280px] grid gap-6 overflow-hidden">
           <SkeletonCard className="p-5 bg-surface-secondary">
             <div className="grid grid-cols-[1fr_auto] items-center">
               <Skeleton width="6rem" height="1rem" />

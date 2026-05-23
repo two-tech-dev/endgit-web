@@ -56,7 +56,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
     : null;
 
   return (
-    <div className="card p-5 bg-surface-secondary border border-border-highlight">
+    <div className="card p-5 bg-surface-secondary border border-border-highlight overflow-hidden">
       <div className="grid grid-cols-[1fr_auto] items-center mb-4">
         <h3 className="font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-sm text-text-primary">
           <Shield size={18} color={statusColor} /> VirusTotal Scan
@@ -77,9 +77,9 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
               {statusLabel}
             </span>
           </div>
-          <div className="grid grid-cols-[1fr_auto] text-sm">
+          <div className="grid grid-cols-[1fr_auto] text-sm gap-2">
             <span className="text-text-muted">Detection</span>
-            <span className="font-semibold text-text-primary">
+            <span className="font-semibold text-text-primary text-right break-words">
               {malicious}/{vt.total ?? 0} engines flagged
             </span>
           </div>
@@ -105,17 +105,16 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
       )}
 
       {(vt.status === "queued" || vt.status === "scanning") && (
-        <p className="text-[0.8125rem] text-warning grid grid-flow-col auto-cols-max items-center gap-1.5">
-          <Loader2 size={14} className="animate-spin shrink-0" />
-          Scan in progress — this may take a few minutes.
+        <p className="text-[0.8125rem] text-warning flex items-start gap-1.5">
+          <Loader2 size={14} className="animate-spin shrink-0 mt-0.5" />
+          <span>Scan in progress — this may take a few minutes.</span>
         </p>
       )}
 
       {vt.status === "failed" && (
-        <p className="text-[0.8125rem] text-text-muted grid grid-flow-col auto-cols-max items-center gap-1.5">
-          <AlertTriangle size={14} className="shrink-0" />
-          Scan could not be completed. It will be retried on the next
-          submission.
+        <p className="text-[0.8125rem] text-text-muted flex items-start gap-1.5">
+          <AlertTriangle size={14} className="shrink-0 mt-0.5" />
+          <span>Scan could not be completed. It will be retried on the next submission.</span>
         </p>
       )}
 

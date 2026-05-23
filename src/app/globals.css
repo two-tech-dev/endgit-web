@@ -867,12 +867,11 @@
     display: grid;
     width: 100%;
     min-width: 0;
-    overflow: hidden;
   }
 
   .plugin-sidebar {
     order: 2;
-    max-width: 100% !important;
+    max-width: 100%;
   }
 
   .plugin-ratings {

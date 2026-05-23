@@ -58,7 +58,7 @@ export default function DependencyGraph({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="card p-6">
+    <div className="card p-6 overflow-hidden">
       <h3 className="text-base font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-text-primary mb-4">
         <GitBranch size={18} className="text-accent" /> Dependency Graph
       </h3>
