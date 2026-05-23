@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
 
         {/* Links */}
-        <div className="footer-links grid grid-cols-[repeat(3,auto)] justify-items-end gap-4 lg:gap-6 justify-end">
+        <div className="footer-links grid grid-cols-1 sm:grid-cols-[repeat(3,auto)] gap-4 lg:gap-6 sm:justify-items-end sm:justify-end">
           <div>
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Platform
@@ -111,7 +111,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="container mt-8 pt-6 border-t border-border grid grid-cols-[1fr_auto] items-center flex-wrap gap-2">
+      <div className="container mt-8 pt-6 border-t border-border grid grid-cols-1 sm:grid-cols-[1fr_auto] items-center gap-2">
         <p className="text-text-muted text-xs m-0" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
           {process.env.VERCEL_GIT_COMMIT_SHA && (
