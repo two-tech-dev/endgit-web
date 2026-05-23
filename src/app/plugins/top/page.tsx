@@ -12,7 +12,7 @@ export default async function TopPluginsPage() {
   let plugins: any[] = [];
   try {
     const { data: responseData } = await fetchApi(
-      "/api/v1/plugins?sort=downloads&order=desc&pageSize=10",
+      "/api/v1/plugins?sort=downloads&order=desc&pageSize=12",
       { revalidate: 300 },
     );
     plugins = responseData?.data?.plugins || [];
