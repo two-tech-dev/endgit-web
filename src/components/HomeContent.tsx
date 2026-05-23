@@ -70,8 +70,12 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
           <span className="text-base font-semibold text-white/90 truncate group-hover:text-brand transition-colors">
             {plugin.displayName}
           </span>
-          {isVerified && <BadgeCheck size={13} className="text-brand shrink-0" />}
-          {plugin.isPreRelease && <FlaskConical size={12} className="text-error shrink-0" />}
+          {isVerified && (
+            <BadgeCheck size={13} className="text-brand shrink-0" />
+          )}
+          {plugin.isPreRelease && (
+            <FlaskConical size={12} className="text-error shrink-0" />
+          )}
         </div>
         <div className="flex items-center gap-3 mt-1.5 text-xs text-white/30">
           <span className="flex items-center gap-1">
@@ -186,7 +190,11 @@ const STEPS = [
   },
 ];
 
-export default function HomeContent({ stats, plugins = [], children }: HomeContentProps) {
+export default function HomeContent({
+  stats,
+  plugins = [],
+  children,
+}: HomeContentProps) {
   return (
     <div className="grid">
       {/* ── Hero ── */}
@@ -208,7 +216,7 @@ export default function HomeContent({ stats, plugins = [], children }: HomeConte
             <FadeIn delay={0.1} direction="none">
               <h1 className="heading-1 mb-8">
                 The next <br />
-                <span className="text-brand">GENERATION</span> <br/>
+                <span className="text-brand">GENERATION</span> <br />
                 of plugins.
               </h1>
             </FadeIn>
@@ -294,7 +302,7 @@ export default function HomeContent({ stats, plugins = [], children }: HomeConte
               <div className="w-10 h-10 rounded-md bg-brand-light grid place-items-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-            <div className="min-w-0">
+              <div className="min-w-0">
                 <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>

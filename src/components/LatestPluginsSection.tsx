@@ -48,7 +48,9 @@ export default async function LatestPluginsSection() {
       <FadeIn>
         <div className="flex justify-between items-end mb-8 lg:mb-12 flex-wrap gap-4 lg:gap-6 relative z-10">
           <div>
-            <span className="text-muted mb-2 lg:mb-3 block">Selected Works</span>
+            <span className="text-muted mb-2 lg:mb-3 block">
+              Selected Works
+            </span>
             <h2 className="heading-2 m-0">
               Recent <span className="text-brand">Releases</span>
             </h2>
@@ -85,7 +87,14 @@ export default async function LatestPluginsSection() {
                       ? "h-full glass-panel p-8 lg:p-12 !rounded-sm border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
                       : "card p-6 bg-surface-card border-border hover:border-brand/30"
                   }`}
-                  style={isLarge ? { background: 'var(--is-light, rgba(0, 242, 255, 0.02))' } : {}}
+                  style={
+                    isLarge
+                      ? {
+                          background:
+                            "var(--is-light, rgba(0, 242, 255, 0.02))",
+                        }
+                      : {}
+                  }
                 >
                   <div
                     className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col"}`}
@@ -121,14 +130,18 @@ export default async function LatestPluginsSection() {
                       >
                         {plugin.displayName}
                       </h3>
-                      {(isLarge || i === 1) ? (
+                      {isLarge || i === 1 ? (
                         isLarge ? (
                           <p className="text-text-secondary mt-4 text-lg leading-relaxed max-w-md">
-                            {plugin.shortDescription || plugin.description || `Experience the next generation of Endstone plugins with ${plugin.displayName}. Seamlessly integrated and highly optimized.`}
+                            {plugin.shortDescription ||
+                              plugin.description ||
+                              `Experience the next generation of Endstone plugins with ${plugin.displayName}. Seamlessly integrated and highly optimized.`}
                           </p>
                         ) : (
                           <MarkdownInline className="text-text-muted mt-2 text-sm leading-relaxed line-clamp-3">
-                            {plugin.shortDescription || plugin.description || `A high-performance plugin for the Endstone ecosystem. Install with \`endgit install ${plugin.slug}\`.`}
+                            {plugin.shortDescription ||
+                              plugin.description ||
+                              `A high-performance plugin for the Endstone ecosystem. Install with \`endgit install ${plugin.slug}\`.`}
                           </MarkdownInline>
                         )
                       ) : null}
@@ -142,10 +155,14 @@ export default async function LatestPluginsSection() {
                         {plugin.downloads?.toLocaleString() ?? 0}
                       </span>
                       <div className="flex items-center gap-2">
-                        {(plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0) > 0 && (
+                        {(plugin.stars
+                          ? Math.round((plugin.stars / 20) * 10) / 10
+                          : 0) > 0 && (
                           <span className="text-warning flex items-center gap-0.5 font-medium text-xs">
                             <Star size={12} className="fill-current" />
-                            {(Math.round((plugin.stars / 20) * 10) / 10).toFixed(1)}
+                            {(
+                              Math.round((plugin.stars / 20) * 10) / 10
+                            ).toFixed(1)}
                           </span>
                         )}
                         <span className="text-text-muted text-xs">
@@ -155,31 +172,41 @@ export default async function LatestPluginsSection() {
                     </div>
                   </div>
 
-                  {isLarge && (() => {
-                    const avgRating = plugin.stars
-                      ? Math.round((plugin.stars / 20) * 10) / 10
-                      : 0;
-                    return (
-                      <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          {avgRating > 0 ? (
-                            <>
-                              <div className="flex items-center gap-1.5">
-                                <Star size={20} className="text-warning fill-current" />
-                                <span className="text-2xl font-extrabold text-text-primary">{avgRating.toFixed(1)}</span>
-                              </div>
-                              <span className="text-xs text-text-muted">/ 5.0</span>
-                            </>
-                          ) : (
-                            <span className="text-xs text-text-muted">No ratings yet</span>
-                          )}
+                  {isLarge &&
+                    (() => {
+                      const avgRating = plugin.stars
+                        ? Math.round((plugin.stars / 20) * 10) / 10
+                        : 0;
+                      return (
+                        <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            {avgRating > 0 ? (
+                              <>
+                                <div className="flex items-center gap-1.5">
+                                  <Star
+                                    size={20}
+                                    className="text-warning fill-current"
+                                  />
+                                  <span className="text-2xl font-extrabold text-text-primary">
+                                    {avgRating.toFixed(1)}
+                                  </span>
+                                </div>
+                                <span className="text-xs text-text-muted">
+                                  / 5.0
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-xs text-text-muted">
+                                No ratings yet
+                              </span>
+                            )}
+                          </div>
+                          <div className="btn !bg-brand !text-black font-black uppercase tracking-tighter px-8 group-hover:scale-105 transition-transform">
+                            Explore <ArrowRight size={18} />
+                          </div>
                         </div>
-                        <div className="btn !bg-brand !text-black font-black uppercase tracking-tighter px-8 group-hover:scale-105 transition-transform">
-                          Explore <ArrowRight size={18} />
-                        </div>
-                      </div>
-                    );
-                  })()}
+                      );
+                    })()}
                 </Link>
               </StaggerItem>
             </div>

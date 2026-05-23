@@ -45,7 +45,10 @@ function HeroSkeleton() {
             {[1, 2, 3].map((row) => (
               <div key={row} className="flex gap-3">
                 {[1, 2, 3].map((n) => (
-                  <div key={n} className="skeleton-card w-[380px] shrink-0 p-4 flex items-center gap-4 rounded-sm">
+                  <div
+                    key={n}
+                    className="skeleton-card w-[380px] shrink-0 p-4 flex items-center gap-4 rounded-sm"
+                  >
                     <div className="skeleton w-14 h-14 shrink-0 rounded-sm" />
                     <div className="flex-1 space-y-2">
                       <div className="skeleton h-5 w-3/4" />
@@ -74,8 +77,12 @@ async function StatsSection() {
 
   try {
     const [statsRes, pluginsRes] = await Promise.all([
-      fetch(`${apiUrl}/api/v1/plugins/stats/global`, { next: { revalidate: 60 } }),
-      fetch(`${apiUrl}/api/v1/plugins?sort=downloads&order=desc&pageSize=10`, { next: { revalidate: 60 } }),
+      fetch(`${apiUrl}/api/v1/plugins/stats/global`, {
+        next: { revalidate: 60 },
+      }),
+      fetch(`${apiUrl}/api/v1/plugins?sort=downloads&order=desc&pageSize=10`, {
+        next: { revalidate: 60 },
+      }),
     ]);
     const statsJson = await statsRes.json();
     stats = statsJson?.data || stats;

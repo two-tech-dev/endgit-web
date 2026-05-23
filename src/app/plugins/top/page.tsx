@@ -39,20 +39,40 @@ export default async function TopPluginsPage() {
   const getRankBadge = (rank: number) => {
     switch (rank) {
       case 1:
-        return <span className="flex items-center gap-2 text-yellow-500 font-black bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-lg text-xl lg:text-2xl shadow-[0_0_15px_rgba(234,179,8,0.2)]"><Trophy size={20} className="mb-0.5" /> #1</span>;
+        return (
+          <span className="flex items-center gap-2 text-yellow-500 font-black bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-lg text-xl lg:text-2xl shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+            <Trophy size={20} className="mb-0.5" /> #1
+          </span>
+        );
       case 2:
-        return <span className="flex items-center gap-1.5 text-slate-300 font-black bg-slate-300/10 border border-slate-300/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(203,213,225,0.1)]">#2</span>;
+        return (
+          <span className="flex items-center gap-1.5 text-slate-300 font-black bg-slate-300/10 border border-slate-300/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(203,213,225,0.1)]">
+            #2
+          </span>
+        );
       case 3:
-        return <span className="flex items-center gap-1.5 text-amber-600 font-black bg-amber-700/10 border border-amber-700/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(180,83,9,0.1)]">#3</span>;
+        return (
+          <span className="flex items-center gap-1.5 text-amber-600 font-black bg-amber-700/10 border border-amber-700/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(180,83,9,0.1)]">
+            #3
+          </span>
+        );
       default:
-        return <span className="text-text-muted font-black text-lg lg:text-xl px-2">#{rank}</span>;
+        return (
+          <span className="text-text-muted font-black text-lg lg:text-xl px-2">
+            #{rank}
+          </span>
+        );
     }
   };
 
   const renderCard = (plugin: any, rank: number, isPodium: boolean = false) => {
-    const avgRating = plugin.stars ? Math.round((plugin.stars / 20) * 10) / 10 : 0;
+    const avgRating = plugin.stars
+      ? Math.round((plugin.stars / 20) * 10) / 10
+      : 0;
     const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
-    const isVerified = repoOwner ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner) : false;
+    const isVerified = repoOwner
+      ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
+      : false;
 
     // Adjust sizes for podium
     let padding = "p-5";
@@ -93,7 +113,7 @@ export default async function TopPluginsPage() {
                 alt={`${plugin.displayName} icon`}
               />
             </div>
-            
+
             {/* Minimal Stat Badge */}
             <div className="flex flex-col items-end gap-1.5 backdrop-blur-sm bg-surface-secondary/50 p-2 rounded-lg border border-border">
               <span className="flex items-center gap-1.5 font-bold text-text-primary text-sm tracking-wide">
@@ -112,7 +132,10 @@ export default async function TopPluginsPage() {
           <div className="flex-1 flex flex-col justify-end mt-6 pr-20 lg:pr-28">
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">
-                {repoOwner || plugin.author?.displayName || plugin.author?.username || "Community"}
+                {repoOwner ||
+                  plugin.author?.displayName ||
+                  plugin.author?.username ||
+                  "Community"}
               </span>
               {isVerified && (
                 <span className="text-brand shrink-0">
@@ -125,9 +148,9 @@ export default async function TopPluginsPage() {
             >
               {plugin.displayName}
             </h3>
-            
+
             <div className="mt-4 flex items-center">
-               <span className="font-mono bg-surface-secondary border border-border px-2 py-1 rounded text-xs text-text-secondary">
+              <span className="font-mono bg-surface-secondary border border-border px-2 py-1 rounded text-xs text-text-secondary">
                 v{plugin.latestVersion || "1.0.0"}
               </span>
             </div>
@@ -154,10 +177,11 @@ export default async function TopPluginsPage() {
         >
           <ArrowLeft size={16} /> Registry
         </Link>
-        <Trophy size={48} className="text-yellow-500 mb-6 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]" />
-        <h1 className="heading-1 m-0 mb-4">
-          Top Plugins
-        </h1>
+        <Trophy
+          size={48}
+          className="text-yellow-500 mb-6 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]"
+        />
+        <h1 className="heading-1 m-0 mb-4">Top Plugins</h1>
         <p className="text-text-secondary text-lg max-w-lg font-medium">
           The most downloaded Endstone plugins of all time.
         </p>

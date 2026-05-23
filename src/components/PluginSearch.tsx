@@ -22,7 +22,7 @@ export default function PluginSearch() {
     const timeoutId = setTimeout(() => {
       isTyping.current = false; // Reset typing flag after debounce finishes
       const currentQ = searchParams.get("q") || "";
-      
+
       // Only push to router if the value actually changed
       if (search !== currentQ) {
         const params = new URLSearchParams(searchParams.toString());
