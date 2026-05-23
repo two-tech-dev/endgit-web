@@ -24,7 +24,7 @@ export default async function PluginsPage({
   const query = new URLSearchParams();
   const currentPage = parseInt(searchParams.page as string) || 1;
   query.set("page", currentPage.toString());
-  query.set("pageSize", "10");
+  query.set("pageSize", "12");
   if (searchParams.q) query.set("q", searchParams.q as string);
   if (searchParams.category)
     query.set("category", searchParams.category as string);
@@ -40,7 +40,7 @@ export default async function PluginsPage({
     page: 1,
     totalPages: 1,
     total: 0,
-    pageSize: 10,
+    pageSize: 12,
   };
 
   return (

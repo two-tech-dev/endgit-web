@@ -59,7 +59,7 @@ export default function DependencyGraph({ slug }: { slug: string }) {
 
   return (
     <div className="card p-6 overflow-hidden">
-      <h3 className="text-base font-semibold flex items-center gap-2 text-text-primary mb-4">
+      <h3 className="text-base font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-text-primary mb-4">
         <GitBranch size={18} className="text-accent" /> Dependency Graph
       </h3>
 
@@ -96,7 +96,7 @@ function TreeNode({
     <div className={isRoot ? "" : "ml-5"}>
       <div
         onClick={() => hasChildren && setOpen(!open)}
-        className={`flex flex-wrap items-center gap-1.5 px-2 py-1 rounded-sm ${
+        className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-2 py-1 rounded-sm ${
           hasChildren
             ? "cursor-pointer hover:bg-surface-secondary"
             : "cursor-default"

@@ -38,104 +38,130 @@ export default async function LatestPluginsSection() {
   const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
   return (
-    <section className="container pb-10 lg:pb-16">
+    <section className="container pb-10 lg:pb-24 relative">
+      {/* Premium Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 blur-[120px] rounded-full pointer-events-none z-0" />
+
       <FadeIn>
-        <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
+        <div className="flex justify-between items-end mb-12 flex-wrap gap-6 relative z-10">
           <div>
-            <h2 className="text-2xl lg:text-4xl font-bold tracking-tight text-text-primary m-0">
-              Recent Releases
+            <span className="text-muted mb-3 block">Selected Works</span>
+            <h2 className="heading-2 m-0">
+              Recent <span className="text-brand">Releases</span>
             </h2>
-            <p className="text-text-secondary text-[17px] mt-2">
-              The latest additions to the Endstone ecosystem.
-            </p>
           </div>
           <Link
             href="/plugins"
-            className="btn btn-secondary inline-flex items-center gap-1.5 no-underline text-sm"
+            className="btn btn-secondary !bg-white/5 !border-white/10 hover:!bg-white/10 inline-flex items-center gap-2 no-underline text-xs uppercase tracking-widest font-bold px-6"
           >
-            View All <ArrowRight size={16} />
+            View Archive <ArrowRight size={14} />
           </Link>
         </div>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 content-start">
-        {plugins.map((plugin) => {
-          const avgRating = plugin.stars
-            ? Math.round((plugin.stars / 20) * 10) / 10
-            : 0;
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        {plugins.map((plugin, i) => {
           const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
           const isVerified = repoOwner
             ? VERIFIED_ORGS.includes(repoOwner)
             : false;
 
-          return (
-            <StaggerItem key={plugin.id}>
-              <Link
-                href={`/plugins/${plugin.slug}`}
-                className="card p-0 flex flex-col no-underline bg-surface-card overflow-hidden hover:-translate-y-0.5 hover:shadow-md transition-all h-full"
-              >
-                <div className="p-4 flex gap-4 items-center">
-                  <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
-                    <PluginImage
-                      iconUrl={plugin.iconUrl}
-                      repoUrl={plugin.repoUrl}
-                      alt={`${plugin.displayName} icon`}
-                    />
-                  </div>
+          // Featured / Large Card (First item)
+          const isLarge = i === 0;
 
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1.5">
-                      {plugin.displayName}
-                      {isVerified && (
-                        <span
-                          title="This plugin is officially supported by EndstoneMC/EndGit"
-                          className="inline-flex items-center text-brand shrink-0"
-                        >
-                          <BadgeCheck size={15} />
+          return (
+            <div
+              key={plugin.id}
+              className={`${isLarge ? "lg:col-span-8" : "lg:col-span-4"}`}
+            >
+              <StaggerItem className="h-full">
+                <Link
+                  href={`/plugins/${plugin.slug}`}
+                  className={`group flex flex-col no-underline transition-all duration-500 h-full ${
+                    isLarge
+                      ? "glass-panel p-8 lg:p-12 !rounded-xl border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
+                      : "card p-6 bg-surface-card border-border hover:border-brand/30"
+                  }`}
+                  style={isLarge ? { background: 'var(--is-light, rgba(0, 242, 255, 0.02))' } : {}}
+                >
+                  <div
+                    className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col"}`}
+                  >
+                    <div
+                      className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
+                    >
+                      <PluginImage
+                        iconUrl={plugin.iconUrl}
+                        repoUrl={plugin.repoUrl}
+                        alt={`${plugin.displayName} icon`}
+                      />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand/70">
+                          {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
+                            "Community"}
                         </span>
+                        {isVerified && (
+                          <span className="text-brand shrink-0">
+                            <BadgeCheck size={14} />
+                          </span>
+                        )}
+                      </div>
+                      <h3
+                        className={`${isLarge ? "text-3xl lg:text-4xl" : "text-xl"} font-extrabold m-0 text-text-primary group-hover:text-brand transition-colors tracking-tight`}
+                      >
+                        {plugin.displayName}
+                      </h3>
+                      {isLarge && (
+                        <p className="text-text-secondary mt-4 text-lg leading-relaxed max-w-md">
+                          Experience the next generation of Endstone plugins
+                          with {plugin.displayName}. Seamlessly integrated and
+                          highly optimized.
+                        </p>
                       )}
-                    </h3>
-                    <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
-                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
+                    </div>
+
+                    <div
+                      className={`flex ${isLarge ? "md:flex-col items-end" : "items-center mt-4"} gap-4 text-sm text-text-muted`}
+                    >
+                      <span className="flex items-center gap-2 font-mono text-xs bg-surface-secondary px-2 py-1 rounded text-text-secondary">
                         v{plugin.latestVersion || "1.0.0"}
                       </span>
-                      <span>•</span>
-                      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                        {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
-                          plugin.author?.displayName ||
-                          plugin.author?.username}
+                      <span className="flex items-center gap-1.5 font-bold text-text-primary">
+                        <Download size={14} className="text-brand" />
+                        {plugin.downloads?.toLocaleString() ?? 0}
                       </span>
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-end gap-1.5 text-xs text-text-muted shrink-0">
-                    <span className="flex items-center gap-1 font-semibold text-text-secondary">
-                      <Download size={13} className="text-text-muted" />
-                      {plugin.downloads?.toLocaleString() ?? 0}
-                    </span>
-                    {avgRating > 0 ? (
-                      <span className="text-warning text-xs flex items-center gap-0.5 font-medium">
-                        <Star size={13} className="fill-current" />
-                        <span>{avgRating.toFixed(1)}</span>
-                      </span>
-                    ) : (
-                      <span className="text-[11px]">
-                        {new Date(plugin.createdAt || "").toLocaleDateString(
-                          "en-GB",
-                          {
-                            day: "2-digit",
-                            month: "short",
-                          },
-                        )}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            </StaggerItem>
+                  {isLarge && (
+                    <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="flex -space-x-2">
+                          {[1, 2, 3].map((n) => (
+                            <div
+                              key={n}
+                              className="w-8 h-8 rounded-full border-2 border-surface bg-surface-secondary"
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs font-bold text-text-muted uppercase tracking-widest">
+                          Trusted by developers
+                        </span>
+                      </div>
+                      <div className="btn !bg-brand !text-black font-black uppercase tracking-tighter px-8 group-hover:scale-105 transition-transform">
+                        Explore <ArrowRight size={18} />
+                      </div>
+                    </div>
+                  )}
+                </Link>
+              </StaggerItem>
+            </div>
           );
         })}
-      </StaggerContainer>
+      </div>
     </section>
   );
 }

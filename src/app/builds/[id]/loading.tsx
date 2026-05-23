@@ -6,9 +6,9 @@ export default function BuildDetailLoading() {
       <Skeleton width="10rem" height="0.875rem" className="mb-6" />
 
       <SkeletonCard className="p-6 mb-6">
-        <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] items-start gap-4">
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-3 mb-2">
+        <div className="grid grid-cols-[1fr_auto] items-start gap-4">
+          <div>
+            <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
               <Skeleton width="14rem" height="1.5rem" />
               <Skeleton
                 width="5rem"
@@ -18,13 +18,11 @@ export default function BuildDetailLoading() {
             </div>
             <Skeleton width="8rem" height="0.875rem" />
           </div>
-          <div className="w-full sm:w-auto flex justify-start sm:justify-end">
-            <Skeleton
-              width="10rem"
-              height="2.25rem"
-              borderRadius="var(--radius-md)"
-            />
-          </div>
+          <Skeleton
+            width="10rem"
+            height="2.25rem"
+            borderRadius="var(--radius-md)"
+          />
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-5 pt-5 border-t border-border">

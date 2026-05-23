@@ -130,14 +130,14 @@ export default function DeviceAuthPage() {
           /* Not signed in */
           <div className="grid gap-6 items-center">
             <div className="p-4 bg-warning/10 rounded-md border border-warning/20 w-full">
-              <div className="flex flex-col items-center gap-2 text-warning font-medium">
+              <div className="grid place-items-center gap-2 text-warning font-medium">
                 <AlertCircle size={16} />
                 You must be signed in to authorize a device
               </div>
             </div>
             <a
               href={`/api/auth/signin?callbackUrl=${encodeURIComponent("/oauth/device")}`}
-              className="btn btn-primary flex items-center justify-center gap-2 w-full"
+              className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 w-full justify-items-center"
             >
               Sign in with GitHub
             </a>
@@ -151,7 +151,7 @@ export default function DeviceAuthPage() {
               </p>
 
               {/* Two-segment code input */}
-              <div className="flex items-center justify-center gap-3">
+              <div className="grid place-items-center gap-3">
                 <input
                   type="text"
                   value={segments[0]}
@@ -185,8 +185,8 @@ export default function DeviceAuthPage() {
 
             {/* Error message */}
             {error && (
-              <div className="p-3 bg-error/10 rounded-md border border-error/20 flex items-start gap-2 text-error text-sm text-left">
-                <AlertCircle size={14} className="shrink-0 mt-0.5" />
+              <div className="p-3 bg-error/10 rounded-md border border-error/20 grid grid-flow-col auto-cols-max items-center gap-2 text-error text-sm">
+                <AlertCircle size={14} />
                 {error}
               </div>
             )}
@@ -194,7 +194,7 @@ export default function DeviceAuthPage() {
             <button
               type="submit"
               disabled={userCode.length !== 9 || loading}
-              className="btn btn-primary w-full flex items-center justify-center gap-2 text-base p-3 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="btn btn-primary w-full grid place-items-center gap-2 text-base p-3 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (
                 <>

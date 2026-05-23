@@ -87,10 +87,10 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      className="w-full h-[200px] lg:h-[260px] lg:max-w-[480px] shrink-0"
+      className="w-full h-[200px] lg:h-[260px] lg:max-w-[480px] xl:max-w-[560px] shrink-0"
     >
       <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
           <div className="w-3 h-3 rounded-full bg-[#f38ba8]" />
           <div className="w-3 h-3 rounded-full bg-[#f9e2af]" />
           <div className="w-3 h-3 rounded-full bg-[#a6e3a1]" />
@@ -175,70 +175,69 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
   return (
     <div className="grid">
       {/* ── Hero ── */}
-      <section className="py-10 lg:py-10 lg:py-20 relative overflow-hidden">
-        <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
-        <div className="container grid items-center gap-8 lg:gap-16 lg:grid-cols-[1fr_auto]">
+      <section className="py-20 lg:py-32 relative overflow-hidden">
+        {/* Massive Background Accent */}
+        <div className="absolute -top-[20%] -left-[10%] w-[1000px] h-[1000px] bg-brand/5 blur-[160px] rounded-full pointer-events-none" />
+
+        <div className="container grid items-center gap-16 lg:gap-24 xl:gap-32 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
           {/* Left: Copy */}
           <div className="min-w-0">
             <FadeIn delay={0} direction="down">
-              <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-grid grid-cols-[auto_1fr] items-center gap-1.5 mb-5">
-                <Zap size={11} fill="currentColor" /> Public Beta
-              </span>
+              <div className="flex items-center gap-3 mb-8">
+                <span className="text-[10px] font-black tracking-[0.3em] uppercase px-4 py-1.5 rounded-full bg-white/5 text-brand border border-white/10 backdrop-blur-md">
+                  Public Beta
+                </span>
+              </div>
             </FadeIn>
 
             <FadeIn delay={0.1} direction="none">
-              <h1 className="text-[2rem] lg:text-[3.25rem] font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
-                Ship plugins for{" "}
-                <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent">
-                  Endstone
-                </span>{" "}
-                in minutes
+              <h1 className="heading-1 mb-8">
+                The next <br />
+                <span className="text-brand">GENERATION</span> <br/>
+                of plugins.
               </h1>
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <p className="text-base text-text-secondary leading-relaxed max-w-[480px] mb-6">
-                The{" "}
-                <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent font-bold">
-                  official
-                </span>{" "}
-                plugin registry for Endstone - push to GitHub, get compiled
-                builds, and install with one command.
+              <p className="text-xl text-text-secondary leading-relaxed max-w-[540px] mb-10 font-medium">
+                Ship high-performance Endstone plugins with our automated
+                pipeline. Connect, push, and deploy to the world’s most advanced
+                registry.
               </p>
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 items-stretch sm:items-center">
+              <div className="flex flex-wrap gap-5">
                 <Link
                   href="/plugins"
-                  className="btn btn-primary text-base font-semibold py-3 px-6 flex items-center justify-center gap-2 no-underline"
+                  className="btn !bg-brand !text-black font-black uppercase tracking-tighter py-4 px-10 text-lg hover:scale-105 transition-transform no-underline"
                 >
-                  Browse Plugins <ArrowRight size={16} />
+                  Explore Registry
                 </Link>
                 <a
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary text-base py-3 px-6 flex items-center justify-center gap-2 no-underline"
+                  className="btn !bg-surface-secondary !text-text-primary border border-border font-black uppercase tracking-tighter py-4 px-10 text-lg hover:!bg-border transition-all no-underline"
                 >
-                  <Terminal size={16} /> Install CLI
+                  Get the CLI
                 </a>
               </div>
             </FadeIn>
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="flex items-center gap-8 sm:gap-12 md:gap-16 mt-8 pt-5 border-t border-border">
+              <div className="grid grid-cols-3 gap-6 lg:gap-8 mt-12 pt-8 border-t border-white/5">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
                   { label: "Builds", value: stats.builds },
                 ].map((s, i) => (
                   <div key={i}>
-                    <div className="text-2xl font-bold text-text-primary leading-none mb-1">
+                    <div className="text-3xl font-black text-text-primary leading-none mb-1.5 tracking-tight">
                       <AnimatedNumber value={s.value} />
                     </div>
-                    <div className="text-xs font-semibold text-text-muted uppercase tracking-wider">
+                    <div className="text-[10px] font-bold text-text-muted uppercase tracking-widest">
                       {s.label}
                     </div>
                   </div>
@@ -248,7 +247,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
           </div>
 
           {/* Right: Terminal */}
-          <div className="grid justify-items-center min-w-0">
+          <div className="hidden lg:grid justify-items-center min-w-0">
             <TerminalMock />
           </div>
         </div>
@@ -351,18 +350,18 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
               Connect your GitHub, push your code, and let EndGit handle the
               rest.
             </p>
-            <div className="flex flex-wrap gap-3 justify-center mt-2 relative w-full">
+            <div className="flex flex-wrap gap-3 justify-center mt-2 relative">
               <Link
                 href="/dashboard/dev"
-                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 flex items-center justify-center gap-2 no-underline w-full sm:w-auto"
+                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
               >
                 <GitFork size={16} /> Start Publishing
               </Link>
               <Link
                 href="/plugins"
-                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 flex items-center justify-center gap-2 no-underline w-full sm:w-auto"
+                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
               >
-                <Download size={16} /> Explore Plugins
+                Explore Plugins
               </Link>
             </div>
           </div>

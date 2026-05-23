@@ -27,7 +27,7 @@ export default function SubmitForReview({
   if (isSubmitted) {
     return (
       <div className="card px-4 lg:px-5 py-4 mt-6 grid gap-3 items-start sm:grid-cols-[1fr_auto] sm:items-center border-l-4 border-warning bg-warning/5">
-        <div className="flex items-center gap-3">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-3">
           <Clock size={20} className="text-warning shrink-0" />
           <div>
             <div className="font-semibold text-sm text-text-primary">
@@ -54,7 +54,7 @@ export default function SubmitForReview({
     <div className="card p-4 lg:p-5 mt-6">
       <div className="grid gap-3 items-start sm:grid-cols-[1fr_auto] sm:items-center">
         <div>
-          <h3 className="font-semibold text-[0.9375rem] flex items-center gap-2">
+          <h3 className="font-semibold text-[0.9375rem] grid grid-flow-col auto-cols-max items-center gap-2">
             <Send size={16} className="text-brand" /> Submit for Review
           </h3>
           <p className="text-[0.8125rem] text-text-muted mt-1">
@@ -64,7 +64,7 @@ export default function SubmitForReview({
         </div>
         <Link
           href={`/builds/${buildId}/submit`}
-          className="btn btn-primary px-5 py-2 text-sm no-underline flex items-center gap-1.5 w-full sm:w-auto justify-center"
+          className="btn btn-primary px-5 py-2 text-sm no-underline grid grid-flow-col auto-cols-max items-center gap-1.5 w-full sm:w-auto justify-center"
         >
           <Send size={14} /> Publish Plugin
         </Link>

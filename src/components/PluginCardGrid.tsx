@@ -23,7 +23,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 align-content-start">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 align-content-start">
       {plugins.map((plugin, i) => {
         const avgRating = plugin.stars
           ? Math.round((plugin.stars / 20) * 10) / 10
@@ -90,20 +90,10 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   <Download size={13} className="text-text-muted" />
                   {plugin.downloads?.toLocaleString() ?? 0}
                 </span>
-                {avgRating > 0 ? (
+                {avgRating > 0 && (
                   <span className="text-warning text-xs flex items-center gap-0.5 font-medium">
                     <Star size={13} className="fill-current" />
                     <span>{avgRating.toFixed(1)}</span>
-                  </span>
-                ) : (
-                  <span className="text-[11px]">
-                    {new Date(plugin.createdAt || "").toLocaleDateString(
-                      "en-GB",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                      },
-                    )}
                   </span>
                 )}
               </div>
