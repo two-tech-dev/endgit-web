@@ -64,7 +64,7 @@ export default async function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
         {plugins.map((plugin, i) => {
           const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
           const isVerified = repoOwner
@@ -79,13 +79,13 @@ export default async function LatestPluginsSection() {
               key={plugin.id}
               className={isLarge ? "lg:col-span-8" : "lg:col-span-4"}
             >
-              <StaggerItem className={isLarge ? "h-full" : ""}>
+              <StaggerItem className="h-full">
                 <Link
                   href={`/plugins/${plugin.slug}`}
                   className={`group flex flex-col no-underline transition-all duration-500 ${
                     isLarge
                       ? "h-full glass-panel p-8 lg:p-12 !rounded-sm border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
-                      : "card p-6 bg-surface-card border-border hover:border-brand/30 overflow-hidden"
+                      : "h-full card p-6 bg-surface-card border-border hover:border-brand/30 overflow-hidden"
                   }`}
                   style={
                     isLarge
@@ -97,7 +97,7 @@ export default async function LatestPluginsSection() {
                   }
                 >
                   <div
-                    className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col"}`}
+                    className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col flex-1"}`}
                   >
                     <div
                       className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
