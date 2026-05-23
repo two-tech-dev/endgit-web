@@ -906,9 +906,14 @@
   }
 
   .dev-repo-actions {
-    grid-template-columns: 1fr;
-    justify-items: start;
+    width: 100%;
+    justify-content: stretch;
     gap: 0.5rem;
+    padding-top: 0.75rem;
+  }
+
+  .dev-repo-actions button {
+    width: 100%;
   }
 
   .dev-search-filter {

@@ -368,7 +368,7 @@ export default function DevDashboardPage() {
           <Skeleton width="14rem" height="2rem" className="mb-2" />
           <Skeleton width="20rem" height="0.875rem" />
         </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
           {Array.from({ length: 3 }, (_, i) => (
             <SkeletonCard key={i} className="p-5">
               <Skeleton width="5rem" height="0.6875rem" className="mb-1.5" />
@@ -466,7 +466,7 @@ export default function DevDashboardPage() {
       {/* Header */}
       <div className="grid grid-cols-[1fr_auto] items-start lg:items-center mb-6 gap-3">
         <div>
-          <h1 className="heading-2 grid grid-flow-col auto-cols-max items-center gap-3">
+          <h1 className="heading-2 flex flex-wrap items-center gap-3">
             <Settings size={28} className="text-accent" /> Dev Dashboard
           </h1>
           <p className="text-text-muted mt-1">
@@ -505,7 +505,7 @@ export default function DevDashboardPage() {
 
       {/* Build Quota */}
       {quota && (
-        <div className="card p-4 lg:px-5 mb-6 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+        <div className="card p-4 lg:px-5 mb-6 grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] items-start sm:items-center gap-3 sm:gap-4">
           <div>
             <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
               Weekly Builds
@@ -646,7 +646,7 @@ export default function DevDashboardPage() {
               )}
             </div>
           </div>
-          <div className="grid grid-flow-col auto-cols-max gap-2">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleOrgChange(null)}
               className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
@@ -797,7 +797,7 @@ export default function DevDashboardPage() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold text-[0.9375rem] text-text-primary">
                           {repo.name}
                         </span>
@@ -837,10 +837,10 @@ export default function DevDashboardPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-text-muted mt-0.5 overflow-wrap-anywhere break-words normal-case max-w-full">
+                      <p className="text-xs text-text-muted mt-0.5 break-all sm:break-words normal-case min-w-0">
                         {repo.description || "No description"}
                       </p>
-                      <div className="grid grid-flow-col auto-cols-max gap-4 mt-1 text-xs text-text-muted">
+                      <div className="flex flex-wrap gap-4 mt-1 text-xs text-text-muted">
                         <span>⭐ {repo.stargazersCount}</span>
                         <span>
                           <GitBranch
@@ -853,7 +853,7 @@ export default function DevDashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="dev-repo-actions grid grid-flow-col auto-cols-max items-center gap-3 shrink-0">
+                  <div className="dev-repo-actions flex flex-wrap items-center gap-3 shrink-0 pt-3 sm:pt-0">
                     {repo.ciEnabled && repo.pluginSlug && (
                       <Link
                         href={`/plugins/${repo.pluginSlug}/builds`}
@@ -865,7 +865,7 @@ export default function DevDashboardPage() {
                     <button
                       onClick={() => toggleCI(repo)}
                       disabled={toggling === repo.id}
-                      className={`grid grid-flow-col auto-cols-max items-center gap-1.5 py-1.5 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
+                      className={`w-full sm:w-auto grid grid-flow-col auto-cols-max items-center justify-center gap-1.5 py-2 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
                         toggling === repo.id
                           ? "cursor-wait opacity-50"
                           : "cursor-pointer"
