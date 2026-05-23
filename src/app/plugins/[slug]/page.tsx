@@ -19,6 +19,7 @@ import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
+import ChangelogViewer from "@/components/ChangelogViewer";
 import { fetchApi } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
@@ -359,14 +360,10 @@ export default async function PluginDetailPage({
 
           {/* What's New — based on active version */}
           {activeVersion && activeVersion.changelog && (
-            <div className="card p-4 lg:p-5">
-              <h3 className="font-semibold mb-3 text-base">
-                What's New in v{activeVersion.version}
-              </h3>
-              <p className="text-sm text-text-secondary whitespace-pre-wrap m-0 font-mono">
-                {activeVersion.changelog}
-              </p>
-            </div>
+            <ChangelogViewer
+              changelog={activeVersion.changelog}
+              version={activeVersion.version}
+            />
           )}
 
           {/* About — Plugin Description */}
