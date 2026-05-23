@@ -175,9 +175,9 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
   return (
     <div className="grid">
       {/* ── Hero ── */}
-      <section className="py-20 lg:py-32 relative overflow-hidden">
+      <section className="py-20 lg:py-32 relative overflow-x-clip">
         {/* Massive Background Accent */}
-        <div className="absolute -top-[20%] -left-[10%] w-[1000px] h-[1000px] bg-brand/5 blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute -top-[20%] -left-[10%] w-[1000px] h-[1400px] bg-brand/5 blur-[160px] rounded-full pointer-events-none" />
 
         <div className="container grid items-center gap-16 lg:gap-24 xl:gap-32 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
           {/* Left: Copy */}
@@ -199,7 +199,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <p className="text-xl text-text-secondary leading-relaxed max-w-[540px] mb-10 font-medium">
+              <p className="text-base sm:text-lg lg:text-xl text-text-secondary leading-relaxed max-w-[540px] mb-10 font-medium">
                 Ship high-performance Endstone plugins with our automated
                 pipeline. Connect, push, and deploy to the world’s most advanced
                 registry.
@@ -210,7 +210,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
               <div className="flex flex-wrap gap-5">
                 <Link
                   href="/plugins"
-                  className="btn !bg-brand !text-black font-black uppercase tracking-tighter py-4 px-10 text-lg hover:scale-105 transition-transform no-underline"
+                  className="btn !bg-brand !text-black font-extrabold uppercase tracking-wide py-4 px-10 text-lg hover:scale-105 transition-transform no-underline"
                 >
                   Explore Registry
                 </Link>
@@ -218,7 +218,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn !bg-surface-secondary !text-text-primary border border-border font-black uppercase tracking-tighter py-4 px-10 text-lg hover:!bg-border transition-all no-underline"
+                  className="btn !bg-surface-secondary !text-text-primary border border-border font-extrabold uppercase tracking-wide py-4 px-10 text-lg hover:!bg-border transition-all no-underline"
                 >
                   Get the CLI
                 </a>

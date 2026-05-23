@@ -803,7 +803,7 @@
   }
 
   .heading-1 {
-    font-size: 2.25rem;
+    font-size: 2.75rem;
   }
 
   .heading-2 {
@@ -1102,7 +1102,7 @@
 
 @media (max-width: 480px) {
   .heading-1 {
-    font-size: 1.75rem;
+    font-size: 2.125rem;
   }
 
   .heading-2 {
