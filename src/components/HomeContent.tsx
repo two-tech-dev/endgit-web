@@ -176,11 +176,11 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
   return (
     <div className="flex flex-col">
       {/* ── Hero ── */}
-      <section className="py-10 md:py-10 lg:py-20 relative overflow-hidden">
+      <section className="py-10 md:py-10 xl:py-20 relative overflow-hidden">
         <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
-        <div className="container flex items-center gap-8 md:gap-16 flex-col md:flex-row">
+        <div className="container grid items-center gap-8 xl:gap-16 xl:grid-cols-[1fr_auto]">
           {/* Left: Copy */}
-          <div className="flex-2 min-w-0">
+          <div className="min-w-0">
             <FadeIn delay={0} direction="down">
               <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-flex items-center gap-1.5 mb-5">
                 <Zap size={11} fill="currentColor" /> Public Beta
@@ -249,7 +249,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
           </div>
 
           {/* Right: Terminal */}
-          <div className="w-full md:flex-[1_1_400px] flex justify-center min-w-0">
+          <div className="flex justify-center min-w-0">
             <TerminalMock />
           </div>
         </div>

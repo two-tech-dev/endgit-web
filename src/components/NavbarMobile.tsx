@@ -160,7 +160,7 @@ export default function NavbarMobile() {
   return (
     <div ref={wrapperRef} className="flex items-center">
       {/* Desktop nav */}
-      <nav className="hidden md:flex gap-8 items-center">
+      <nav className="hidden xl:flex gap-8 items-center">
         <Link
           href="/plugins"
           className="text-text-secondary font-medium hover:text-text-primary transition-colors"
@@ -197,7 +197,7 @@ export default function NavbarMobile() {
 
       {/* Mobile hamburger button */}
       <button
-        className="flex md:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
+        className="flex xl:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
         onClick={handleToggle}
         aria-label="Toggle menu"
       >

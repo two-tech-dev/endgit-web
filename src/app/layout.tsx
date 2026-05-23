@@ -86,7 +86,7 @@ import Footer from "@/components/Footer";
 
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 md:py-5">
+    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 xl:py-5">
       <div className="container flex justify-between items-center relative">
         <Link
           href="/"
