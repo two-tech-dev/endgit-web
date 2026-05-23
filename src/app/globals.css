@@ -681,11 +681,6 @@
   align-items: flex-end;
 }
 
-.plugin-description-panel {
-  min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
-}
 
 .plugin-main-content > * {
   min-width: 0;
@@ -1051,11 +1046,6 @@
   }
 }
 
-/* ── Plugin Description Scroll ── */
-.plugin-description-container .markdown-body {
-  max-height: 800px;
-  overflow-y: auto;
-}
 
 /* ── Badge Overflow Fix ── */
 .badge {
@@ -1072,10 +1062,7 @@
 }
 
 @media (max-width: 768px) {
-  /* Constrain plugin description height on mobile for readability */
-  .plugin-description-container .markdown-body {
-    max-height: 600px;
-  }
+
 
   /* Hero section CTA buttons: stack on small screens */
   .card.p-5.lg\\:p-8 {

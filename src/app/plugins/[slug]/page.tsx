@@ -369,36 +369,31 @@ export default async function PluginDetailPage({
             </div>
           )}
 
-          {/* About — Plugin Description Panel */}
-          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
+          {/* About — Plugin Description */}
+          <div className="card p-4 lg:p-5">
             {/* Header */}
-            <div className="plugin-description-header flex items-center justify-between px-4 py-[10px] gap-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-text-primary">
-                  Plugin Description
-                </span>
-                <div className="w-1.5 h-1.5 rounded-full bg-success"></div>
-              </div>
-              <a
-                href={plugin.repoUrl ? `${plugin.repoUrl}/issues` : "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-surface-card border border-border rounded-[4px] px-4 py-1 text-[13px] text-text-primary no-underline font-medium hover:bg-surface-secondary transition-all"
-              >
-                Bugs
-              </a>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-base flex items-center gap-2 m-0">
+                Description
+              </h3>
+              {plugin.repoUrl && (
+                <a
+                  href={`${plugin.repoUrl}/issues`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-3 py-1 rounded-md text-[13px] font-medium no-underline bg-surface-secondary text-text-primary border border-border hover:bg-surface-card transition-all"
+                >
+                  Report Bugs
+                </a>
+              )}
             </div>
 
             {/* Body */}
-            <div className="px-3 pb-3">
-              <div className="bg-surface-card border border-border rounded-[4px] overflow-hidden">
-                <MarkdownTabs
-                  markdown={displayDescription}
-                  repoUrl={plugin.repoUrl}
-                  commitHash={activeVersion?.fileHash}
-                />
-              </div>
-            </div>
+            <MarkdownTabs
+              markdown={displayDescription}
+              repoUrl={plugin.repoUrl}
+              commitHash={activeVersion?.fileHash}
+            />
           </div>
 
           {/* Analytics Chart */}
