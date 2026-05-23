@@ -50,12 +50,12 @@ export default function VersionSelector({
   };
 
   return (
-    <div className="flex flex-col gap-3 w-full md:max-w-[360px]">
+    <div className="flex flex-col gap-3 w-full">
       <div className="flex items-stretch gap-2.5 flex-col sm:flex-row w-full">
         <select
           value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
-          className="px-4 py-2.5 rounded-md border border-border bg-surface-secondary text-text-primary text-[0.9375rem] cursor-pointer outline-none flex-[1_1_140px] min-w-0"
+          className="px-4 py-2.5 rounded-md border border-border bg-surface-secondary text-text-primary text-[0.9375rem] cursor-pointer outline-none min-w-0 sm:flex-[1_1_140px]"
         >
           {versions.map((v, i) => (
             <option key={v.version} value={v.version}>
@@ -64,16 +64,16 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="flex gap-2 flex-col sm:flex-row flex-[1_1_auto] min-w-0">
+          <div className="flex gap-2 flex-col sm:flex-row min-w-0 sm:flex-[1_1_auto]">
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
-              className="btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 bg-slate-800 dark:bg-slate-900 border border-slate-700 rounded-md font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-800 transition-colors duration-150 no-underline flex-[1_1_auto] min-w-[120px] justify-center"
+              className="btn btn-primary flex items-center justify-center gap-2 text-[0.9375rem] px-5 py-2.5 bg-slate-800 dark:bg-slate-900 border border-slate-700 rounded-md font-semibold text-white hover:bg-slate-700 dark:hover:bg-slate-800 transition-colors duration-150 no-underline min-w-0 sm:flex-[1_1_auto]"
             >
               <Download size={16} /> Linux (.so)
             </a>
             <a
               href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=windows`}
-              className="btn btn-primary flex items-center gap-2 text-[0.9375rem] px-5 py-2.5 rounded-md font-semibold no-underline flex-[1_1_auto] min-w-[120px] justify-center"
+              className="btn btn-primary flex items-center justify-center gap-2 text-[0.9375rem] px-5 py-2.5 rounded-md font-semibold no-underline min-w-0 sm:flex-[1_1_auto]"
             >
               <Download size={16} /> Windows (.dll)
             </a>
@@ -81,9 +81,9 @@ export default function VersionSelector({
         ) : (
           <a
             href={`/api/v1/download/${slug}/${selectedVersion.version}`}
-            className="btn btn-primary flex items-center justify-center gap-2 text-base px-6 py-2.5 font-semibold no-underline flex-[1_1_auto]"
+            className="btn btn-primary flex items-center justify-center gap-2 text-sm md:text-base px-5 md:px-6 py-2.5 font-semibold no-underline sm:flex-[1_1_auto]"
           >
-            <Download size={18} /> Download
+            <Download size={16} /> Download
           </a>
         )}
       </div>

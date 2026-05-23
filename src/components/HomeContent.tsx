@@ -17,7 +17,7 @@ import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
-import LatestPluginsSection from "@/components/LatestPluginsSection";
+
 
 interface HomeContentProps {
   stats: {
@@ -25,6 +25,7 @@ interface HomeContentProps {
     downloads: number | string;
     builds: number | string;
   };
+  children?: React.ReactNode;
 }
 
 const COMMAND_TEXT = "endgit install endstone-warps";
@@ -87,7 +88,7 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      className="w-full max-w-[520px] h-[220px] md:h-[260px] shrink-0"
+      className="w-full max-w-[480px] h-[200px] md:h-[260px] shrink-0"
     >
       <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
@@ -98,7 +99,7 @@ function TerminalMock() {
             endgit-cli
           </span>
         </div>
-        <div className="p-4 md:p-5 font-mono text-sm leading-relaxed h-[160px] md:h-[200px] overflow-hidden">
+        <div className="p-3 md:p-5 font-mono text-xs md:text-sm leading-relaxed h-[140px] md:h-[200px] overflow-hidden">
           <div className="flex gap-2 items-center">
             <span className="text-[#f38ba8] select-none">$</span>
             <span className="text-[#cdd6f4]">
@@ -171,7 +172,7 @@ const STEPS = [
   },
 ];
 
-export default function HomeContent({ stats }: HomeContentProps) {
+export default function HomeContent({ stats, children }: HomeContentProps) {
   return (
     <div className="flex flex-col">
       {/* ── Hero ── */}
@@ -179,7 +180,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
         <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
         <div className="container flex items-center gap-8 md:gap-16 flex-col md:flex-row">
           {/* Left: Copy */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-2 min-w-0">
             <FadeIn delay={0} direction="down">
               <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-flex items-center gap-1.5 mb-5">
                 <Zap size={11} fill="currentColor" /> Public Beta
@@ -187,7 +188,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.1} direction="none">
-              <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
+              <h1 className="text-[2rem] md:text-[3.25rem] font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
                 Ship plugins for{" "}
                 <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent">
                   Endstone
@@ -253,7 +254,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
           </div>
         </div>
       </section>
-      <LatestPluginsSection />
+      {children}
       {/* ── How it works ── */}
       <section className="container pb-10 lg:pb-16">
         <FadeIn>
@@ -276,7 +277,7 @@ export default function HomeContent({ stats }: HomeContentProps) {
               <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-              <div className="flex-1 min-w-0">
+          <div className="flex-[3] min-w-0">
                 <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>

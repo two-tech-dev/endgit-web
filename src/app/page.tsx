@@ -1,4 +1,5 @@
 import HomeContent from "@/components/HomeContent";
+import LatestPluginsSection from "@/components/LatestPluginsSection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -23,7 +24,13 @@ async function StatsSection() {
   } catch {
     // use defaults
   }
-  return <HomeContent stats={stats} />;
+  return (
+    <>
+      <HomeContent stats={stats}>
+        <LatestPluginsSection />
+      </HomeContent>
+    </>
+  );
 }
 
 export default function Home() {

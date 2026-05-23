@@ -38,7 +38,7 @@ export default async function LatestPluginsSection() {
   const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
   return (
-    <section className="container pb-16 lg:pb-24">
+    <section className="container pb-10 lg:pb-16">
       <FadeIn>
         <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
           <div>

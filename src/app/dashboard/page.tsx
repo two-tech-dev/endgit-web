@@ -115,7 +115,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-4 md:gap-6 mb-8 md:mb-10">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 md:gap-6 mb-10 md:mb-12">
         <div className="card p-4 md:p-6 flex items-center gap-4">
           <div className="bg-[#7c3aed]/10 p-3 rounded-md text-[#7c3aed]">
             <PackagePlus size={24} />
@@ -154,8 +154,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Plugins List */}
-      <h2 className="heading-3 mb-4 md:mb-6">My Plugins</h2>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-4 md:gap-6">
+      <h2 className="heading-3 mb-5 md:mb-6">My Plugins</h2>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-5 md:gap-6">
         {myPlugins.map((plugin) => (
           <div key={plugin.id} className="card flex flex-col overflow-hidden">
             {/* Status Bar */}
