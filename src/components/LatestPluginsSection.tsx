@@ -64,7 +64,7 @@ export default async function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-start">
         {plugins.map((plugin, i) => {
           const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
           const isVerified = repoOwner
@@ -85,7 +85,7 @@ export default async function LatestPluginsSection() {
                   className={`group flex flex-col no-underline transition-all duration-500 ${
                     isLarge
                       ? "h-full glass-panel p-8 lg:p-12 !rounded-sm border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
-                      : "card p-6 bg-surface-card border-border hover:border-brand/30"
+                      : "card p-6 bg-surface-card border-border hover:border-brand/30 overflow-hidden"
                   }`}
                   style={
                     isLarge
@@ -161,7 +161,7 @@ export default async function LatestPluginsSection() {
                           <span className="text-warning flex items-center gap-0.5 font-medium text-xs">
                             <Star size={12} className="fill-current" />
                             {(
-                              Math.round((plugin.stars / 20) * 10) / 10
+                              Math.round(((plugin.stars ?? 0) / 20) * 10) / 10
                             ).toFixed(1)}
                           </span>
                         )}
