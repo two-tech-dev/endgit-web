@@ -759,10 +759,6 @@
     min-height: 44px;
   }
 
-  .footer-links {
-    gap: 1.5rem;
-  }
-
   .plugin-header-inner {
     grid-template-columns: 1fr !important;
     justify-items: center !important;
