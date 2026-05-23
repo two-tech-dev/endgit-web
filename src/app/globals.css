@@ -883,24 +883,6 @@
     width: 100%;
   }
 
-  .builds-table thead {
-    display: none;
-  }
-
-  .builds-table tbody tr {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    padding: 1rem;
-    gap: 0.75rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .builds-table tbody td {
-    border: none !important;
-    padding: 0 !important;
-  }
-
   .plugin-card-inner {
     gap: 0.75rem;
   }
