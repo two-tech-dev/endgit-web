@@ -74,7 +74,7 @@ export default function NewVersionForm({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="grid grid-flow-col auto-cols-max items-center gap-1.5 px-4 py-2 rounded-md bg-accent text-white hover:bg-accent-hover font-semibold text-sm cursor-pointer mt-2"
+        className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-accent text-white hover:bg-accent-hover font-semibold text-sm cursor-pointer mt-2"
       >
         <Plus size={16} /> Submit New Version
       </button>
@@ -102,7 +102,7 @@ export default function NewVersionForm({
                   required
                   value={version}
                   onChange={(e) => setVersion(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
+                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
                 />
               </div>
 
@@ -120,7 +120,7 @@ export default function NewVersionForm({
 
               <div className="border-t border-border mt-2 pt-4">
                 <p className="text-sm font-semibold mb-2">Artifact Source</p>
-                <div className="text-[13px] text-text-muted mb-3 grid grid-cols-[auto_1fr] items-start gap-1.5">
+                <div className="text-[13px] text-text-muted mb-3 flex items-start gap-1.5">
                   <Info size={14} className="shrink-0 mt-0.5" />{" "}
                   <span>
                     Provide either a successful Build ID or a direct file URL.
@@ -190,18 +190,18 @@ export default function NewVersionForm({
                 </div>
               </div>
 
-              <div className="grid grid-flow-col auto-cols-max gap-3 mt-2 justify-end">
+              <div className="flex flex-col sm:flex-row gap-3 mt-2 sm:justify-end w-full">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 rounded-md bg-transparent text-text-primary border border-border hover:bg-surface-secondary cursor-pointer text-sm font-medium transition-all"
+                  className="px-4 py-2 rounded-md bg-transparent text-text-primary border border-border hover:bg-surface-secondary cursor-pointer text-sm font-medium transition-all w-full sm:w-auto text-center"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting || (!buildId && !fileUrl)}
-                  className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-md bg-accent text-white font-semibold text-sm transition-all ${
+                  className={`flex items-center justify-center gap-1.5 px-5 py-2 rounded-md bg-accent text-white font-semibold text-sm transition-all w-full sm:w-auto ${
                     submitting || (!buildId && !fileUrl)
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-accent-hover cursor-pointer"

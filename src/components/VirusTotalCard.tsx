@@ -58,7 +58,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
   return (
     <div className="card p-5 bg-surface-secondary border border-border-highlight overflow-hidden">
       <div className="grid grid-cols-[1fr_auto] items-center mb-4">
-        <h3 className="font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-sm text-text-primary">
+        <h3 className="font-semibold flex items-center gap-2 text-sm text-text-primary">
           <Shield size={18} color={statusColor} /> VirusTotal Scan
         </h3>
         {!vt.status && (
@@ -96,7 +96,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
               href={vt.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="grid grid-flow-col place-items-center gap-1.5 mt-2 px-3 py-2 rounded-md text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
+              className="flex items-center justify-center gap-1.5 mt-2 px-3 py-2 rounded-md text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
             >
               <ExternalLink size={14} /> View Full Report
             </a>

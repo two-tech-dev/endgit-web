@@ -5,10 +5,10 @@ export default function PluginDetailLoading() {
     <div className="container py-8">
       <SkeletonCard className="p-6 mb-6">
         <div className="grid lg:grid-cols-[1fr_auto] justify-between items-start gap-4">
-          <div className="plugin-header-inner grid grid-flow-col auto-cols-max gap-4 min-w-0">
-            <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" />
+          <div className="plugin-header-inner flex flex-col sm:flex-row gap-4 min-w-0 w-full">
+            <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" className="shrink-0" />
             <div className="min-w-0">
-              <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
+              <div className="flex flex-wrap items-center gap-3 mb-2">
                 <Skeleton width="14rem" height="2rem" />
                 <Skeleton
                   width="5rem"
@@ -21,13 +21,14 @@ export default function PluginDetailLoading() {
             </div>
           </div>
 
-          <div className="plugin-header-actions grid gap-2 shrink-0 items-end">
+          <div className="plugin-header-actions flex flex-col gap-2 shrink-0 items-start sm:items-end w-full sm:w-auto">
             <Skeleton
               width="10rem"
               height="2.5rem"
               borderRadius="var(--radius-md)"
+              className="w-full sm:w-auto"
             />
-            <div className="grid grid-flow-col auto-cols-max gap-6">
+            <div className="flex flex-wrap gap-6">
               <Skeleton width="4rem" height="1rem" />
               <Skeleton width="5rem" height="1rem" />
             </div>
@@ -47,7 +48,7 @@ export default function PluginDetailLoading() {
           </SkeletonCard>
 
           <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full">
-            <div className="plugin-description-header grid grid-flow-col auto-cols-max gap-4 px-4 py-[10px] border-b border-border">
+            <div className="plugin-description-header flex items-center justify-between gap-4 px-4 py-[10px] border-b border-border">
               <Skeleton width="8rem" height="0.875rem" />
               <Skeleton width="3rem" height="0.875rem" />
             </div>
@@ -73,9 +74,9 @@ export default function PluginDetailLoading() {
             <Skeleton width="8rem" height="1rem" className="mb-4" />
             <div className="grid gap-4">
               {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} className="grid grid-flow-col auto-cols-max gap-3">
-                  <Skeleton circle width={32} height={32} />
-                  <div>
+                <div key={i} className="flex items-center gap-3">
+                  <Skeleton circle width={32} height={32} className="shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <Skeleton width="40%" height="0.875rem" className="mb-1" />
                     <Skeleton width="100%" height="0.75rem" />
                   </div>
@@ -111,10 +112,10 @@ export default function PluginDetailLoading() {
               {Array.from({ length: 3 }, (_, i) => (
                 <div
                   key={i}
-                  className="grid grid-flow-col auto-cols-max items-center gap-3"
+                  className="flex items-center gap-3"
                 >
-                  <Skeleton circle width={32} height={32} />
-                  <div>
+                  <Skeleton circle width={32} height={32} className="shrink-0" />
+                  <div className="min-w-0 flex-1">
                     <Skeleton width="7rem" height="0.875rem" className="mb-1" />
                     <Skeleton width="5rem" height="0.625rem" />
                   </div>

@@ -30,7 +30,7 @@ interface RatingSummary {
 
 function StarDisplay({ score, size = 14 }: { score: number; size?: number }) {
   return (
-    <div className="grid grid-flow-col auto-cols-max gap-[1px]">
+    <div className="flex gap-[1px] shrink-0">
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
@@ -222,11 +222,11 @@ export default function PluginRatings({
             rows={3}
             className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit outline-none min-h-[80px]"
           />
-          <div className="mt-3 grid justify-items-end">
+          <div className="mt-3 flex justify-end">
             <button
               onClick={handleSubmit}
               disabled={myScore === 0 || submitting}
-              className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+              className={`flex items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
                 myScore > 0
                   ? "bg-accent text-white cursor-pointer hover:bg-accent-hover"
                   : "bg-surface-secondary text-text-muted cursor-not-allowed"
@@ -309,7 +309,7 @@ export default function PluginRatings({
               {/* Owner Reply */}
               {rating.ownerReply && (
                 <div className="rating-reply mt-2 ml-0 sm:ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
-                  <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 mb-1">
+                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                     <span className="text-xs font-bold text-success uppercase">
                       Author Reply
                     </span>
@@ -335,7 +335,7 @@ export default function PluginRatings({
                           rows={2}
                           className="w-full p-2 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y outline-none font-inherit"
                         />
-                        <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                        <div className="flex items-center gap-2 justify-end">
                           <button
                             onClick={() => {
                               setReplyingTo(null);

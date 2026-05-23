@@ -90,7 +90,7 @@ function TerminalMock() {
       className="w-full h-[200px] lg:h-[260px] lg:max-w-[480px] shrink-0"
     >
       <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
-        <div className="grid grid-flow-col auto-cols-max items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
           <div className="w-3 h-3 rounded-full bg-[#f38ba8]" />
           <div className="w-3 h-3 rounded-full bg-[#f9e2af]" />
           <div className="w-3 h-3 rounded-full bg-[#a6e3a1]" />
@@ -208,10 +208,10 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="grid gap-3 lg:gap-4 sm:grid-flow-col sm:auto-cols-max items-stretch sm:items-center">
+              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 items-stretch sm:items-center">
                 <Link
                   href="/plugins"
-                  className="btn btn-primary text-base font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
+                  className="btn btn-primary text-base font-semibold py-3 px-6 flex items-center justify-center gap-2 no-underline"
                 >
                   Browse Plugins <ArrowRight size={16} />
                 </Link>
@@ -219,7 +219,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary text-base py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
+                  className="btn btn-secondary text-base py-3 px-6 flex items-center justify-center gap-2 no-underline"
                 >
                   <Terminal size={16} /> Install CLI
                 </a>
@@ -351,18 +351,18 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
               Connect your GitHub, push your code, and let EndGit handle the
               rest.
             </p>
-            <div className="flex flex-wrap gap-3 justify-center mt-2 relative">
+            <div className="flex flex-wrap gap-3 justify-center mt-2 relative w-full">
               <Link
                 href="/dashboard/dev"
-                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
+                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 flex items-center justify-center gap-2 no-underline w-full sm:w-auto"
               >
                 <GitFork size={16} /> Start Publishing
               </Link>
               <Link
                 href="/plugins"
-                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
+                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 flex items-center justify-center gap-2 no-underline w-full sm:w-auto"
               >
-                Explore Plugins
+                <Download size={16} /> Explore Plugins
               </Link>
             </div>
           </div>

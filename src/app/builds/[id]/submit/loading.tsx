@@ -28,7 +28,7 @@ export default function SubmitReviewLoading() {
 
           <div>
             <Skeleton width="4rem" height="0.875rem" className="mb-2" />
-            <div className="grid grid-flow-col auto-cols-max gap-2">
+            <div className="flex flex-wrap gap-2">
               {Array.from({ length: 3 }, (_, i) => (
                 <Skeleton
                   key={i}

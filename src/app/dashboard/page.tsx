@@ -96,18 +96,18 @@ export default async function DashboardPage() {
 
   return (
     <div className="container py-6 lg:py-8">
-      <div className="grid grid-cols-[1fr_auto] items-end mb-6 lg:mb-8 gap-4">
+      <div className="flex flex-col sm:grid sm:grid-cols-[1fr_auto] items-start sm:items-end mb-6 lg:mb-8 gap-4">
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
           <p className="text-text-muted">
             Manage your plugins and track performance.
           </p>
         </div>
-        <div className="grid grid-flow-col auto-cols-max gap-4">
+        <div className="flex flex-wrap gap-4">
           <a
             href={installUrl}
             target="_blank"
-            className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2"
+            className="btn btn-secondary flex items-center gap-2"
           >
             <Settings size={18} /> Manage App Installation
           </a>
@@ -116,7 +116,7 @@ export default async function DashboardPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 lg:gap-6 mb-10 lg:mb-12">
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
           <div className="bg-[#7c3aed]/10 p-3 rounded-md text-[#7c3aed]">
             <PackagePlus size={24} />
           </div>
@@ -128,7 +128,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
           <div className="bg-cyan-500/10 p-3 rounded-md text-cyan-500">
             <Activity size={24} />
           </div>
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
           <div className="bg-warning/10 p-3 rounded-md text-warning">
             <AlertCircle size={24} />
           </div>
@@ -167,7 +167,7 @@ export default async function DashboardPage() {
 
             <div className="p-4 lg:p-5 grid gap-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
-                <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
+                <div className="flex items-center gap-3 min-w-0">
                   <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
@@ -175,10 +175,10 @@ export default async function DashboardPage() {
                       alt={`${plugin.displayName} icon`}
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <Link
                       href={`/plugins/${plugin.slug}`}
-                      className="heading-3 text-xl text-text-primary block mb-1"
+                      className="heading-3 text-xl text-text-primary block mb-1 truncate"
                     >
                       {plugin.displayName}
                     </Link>
@@ -194,12 +194,12 @@ export default async function DashboardPage() {
                 </span>
               </div>
 
-              <div className="grid grid-flow-col auto-cols-max gap-4 py-4 border-y border-border text-text-secondary text-sm">
+              <div className="flex flex-wrap gap-4 py-4 border-y border-border text-text-secondary text-sm">
                 <div className="">
                   <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Downloads
                   </div>
-                  <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-text-primary">
+                  <div className="flex items-center gap-1 font-medium text-text-primary">
                     <Activity size={14} className="text-accent" />{" "}
                     {plugin.downloads?.toLocaleString() ?? 0}
                   </div>
@@ -236,7 +236,7 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <button className="btn btn-secondary w-full grid place-items-center p-2">
+                  <button className="btn btn-secondary w-full flex justify-center items-center gap-2 p-2">
                     <Settings size={16} /> Manage Plugin
                   </button>
                 )}

@@ -352,7 +352,7 @@ export default function SubmitReviewForm({
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="flex items-center justify-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150 w-full sm:w-auto"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -394,7 +394,7 @@ export default function SubmitReviewForm({
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
-                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm"
+                  className="flex items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
@@ -472,7 +472,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label className="grid grid-flow-col auto-cols-max items-center gap-2 text-sm font-medium cursor-pointer">
+            <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
               <input
                 type="checkbox"
                 checked={isPreRelease}
@@ -501,7 +501,7 @@ export default function SubmitReviewForm({
               {ENDSTONE_APIS.map((api) => (
                 <label
                   key={api}
-                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm"
+                  className="flex items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
@@ -560,7 +560,7 @@ export default function SubmitReviewForm({
           )}
 
           <div>
-            <div className="grid grid-cols-[1fr_auto] items-baseline mb-2">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-2 gap-2">
               <label className="text-sm font-medium">Producers</label>
               <button
                 type="button"
@@ -570,7 +570,7 @@ export default function SubmitReviewForm({
                     { githubUser: "", role: "CONTRIBUTOR" },
                   ])
                 }
-                className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
+                className="flex items-center justify-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer w-full sm:w-auto"
               >
                 <Plus size={12} /> Add Producer
               </button>
@@ -663,7 +663,7 @@ export default function SubmitReviewForm({
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-3 mt-2 pt-4 border-t border-border justify-items-end">
+          <div className="flex flex-col sm:flex-row gap-3 mt-2 pt-4 border-t border-border sm:justify-end">
             {isPending && (
               <button
                 type="button"
@@ -678,7 +678,7 @@ export default function SubmitReviewForm({
               type="button"
               onClick={(e) => handleSubmit(e as any, false)}
               disabled={submitting}
-              className="btn btn-primary px-8 py-3 text-base disabled:opacity-60 w-full sm:w-auto justify-center"
+              className="btn btn-primary px-8 py-3 text-base disabled:opacity-60 w-full sm:w-auto flex items-center justify-center gap-2"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Submitting..." : "Submit Plugin for Review"}
@@ -687,8 +687,8 @@ export default function SubmitReviewForm({
         </form>
 
         {error && (
-          <div className="mt-4 p-3 bg-error/8 rounded-sm text-error text-sm grid grid-flow-col auto-cols-max items-center gap-2">
-            <AlertTriangle size={16} /> {error}
+          <div className="mt-4 p-3 bg-error/8 rounded-sm text-error text-sm flex items-start gap-2">
+            <AlertTriangle size={16} className="shrink-0 mt-0.5" /> {error}
           </div>
         )}
       </div>

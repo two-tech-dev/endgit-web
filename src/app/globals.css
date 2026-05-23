@@ -277,24 +277,24 @@
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 1.25rem;
+    padding: 0 1rem;
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 640px) {
     .container {
-      padding: 0 2rem;
+      padding: 0 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding: 0 6rem;
+      padding: 0 3rem;
     }
   }
 
   @media (min-width: 1280px) {
     .container {
-      padding: 0 10rem;
+      padding: 0 5rem;
     }
   }
 

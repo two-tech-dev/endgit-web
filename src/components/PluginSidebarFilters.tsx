@@ -66,7 +66,7 @@ export default function PluginSidebarFilters() {
       <div className="card p-4">
         <h3 className="font-semibold mb-3 text-text-primary">Type</h3>
         <ul className="grid gap-2 p-0 m-0">
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
+          <li className="flex items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"
@@ -79,7 +79,7 @@ export default function PluginSidebarFilters() {
               All Types
             </label>
           </li>
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
+          <li className="flex items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"
@@ -92,7 +92,7 @@ export default function PluginSidebarFilters() {
               Python (.whl)
             </label>
           </li>
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
+          <li className="flex items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"

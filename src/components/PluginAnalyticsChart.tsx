@@ -87,8 +87,8 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
 
   return (
     <div className="card p-4 lg:p-6">
-      <div className="chart-header grid grid-cols-[1fr_auto] items-center mb-5 gap-2">
-        <h3 className="text-base font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-text-primary">
+      <div className="chart-header flex items-center justify-between mb-5 gap-2">
+        <h3 className="text-base font-semibold flex items-center gap-2 text-text-primary">
           <BarChart3 size={18} className="text-accent" /> Downloads (Last 30
           Days)
         </h3>

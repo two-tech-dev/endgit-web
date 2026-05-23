@@ -242,7 +242,7 @@ export default async function PluginDetailPage({
                   )}
                 </h1>
                 {plugin.qualityBadge === "VERIFIED" && (
-                  <span className="badge badge-cyan grid grid-flow-col auto-cols-max items-center gap-1">
+                  <span className="badge badge-cyan flex items-center gap-1">
                     <ShieldCheck size={14} /> VERIFIED
                   </span>
                 )}
@@ -256,7 +256,7 @@ export default async function PluginDetailPage({
                   </Link>
                 )}
               </div>
-              <p className="text-text-muted mt-1 grid grid-flow-col auto-cols-max items-center gap-1.5">
+              <p className="text-text-muted mt-1 flex flex-wrap items-center gap-1.5">
                 by{" "}
                 {(() => {
                   // Extract owner from repoUrl (e.g., github.com/OrgName/Repo → OrgName)
@@ -275,7 +275,7 @@ export default async function PluginDetailPage({
                           href={`https://github.com/${repoOwner}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="grid grid-flow-col auto-cols-max items-center opacity-60 hover:opacity-100"
+                          className="flex items-center opacity-60 hover:opacity-100"
                           title={`View ${repoOwner} on GitHub`}
                         >
                           <Image
@@ -301,7 +301,7 @@ export default async function PluginDetailPage({
                         href={`https://github.com/${plugin.author.username}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="grid grid-flow-col auto-cols-max items-center opacity-60 hover:opacity-100"
+                        className="flex items-center opacity-60 hover:opacity-100"
                         title={`View ${plugin.author.username} on GitHub`}
                       >
                         <img
@@ -330,29 +330,10 @@ export default async function PluginDetailPage({
               slug={plugin.slug}
               pluginType={plugin.pluginType}
               versions={displayVersions}
+              averageRating={plugin.averageRating}
+              downloads={plugin.downloads}
+              activeVersionDownloads={activeVersion?.downloads}
             />
-            <div className="grid grid-flow-col auto-cols-max gap-4 lg:gap-6 mt-2">
-              <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold">
-                <Star size={16} className="text-warning" />{" "}
-                {(plugin.averageRating || 0).toLocaleString(undefined, {
-                  minimumFractionDigits: 1,
-                  maximumFractionDigits: 1,
-                })}
-              </div>
-              <div
-                className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold"
-                title="Total Downloads"
-              >
-                <Download size={16} className="text-text-muted" />{" "}
-                {(plugin.downloads || 0).toLocaleString()}
-                {activeVersion && (
-                  <span className="text-xs text-text-muted ml-1 font-normal">
-                    ({(activeVersion.downloads || 0).toLocaleString()} this
-                    version)
-                  </span>
-                )}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -363,14 +344,14 @@ export default async function PluginDetailPage({
         <div className="plugin-main-content min-w-0 grid gap-6">
           {/* Quick Install */}
           <div className="card p-4 lg:p-5">
-            <h3 className="font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-2">
+            <h3 className="font-semibold mb-3 flex items-center gap-2">
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
-            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-3 rounded-md font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
+            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-1.5 rounded-md font-mono text-xs lg:text-sm flex items-center justify-between gap-2 overflow-x-auto w-full">
               <code className="whitespace-nowrap">
                 endgit install {plugin.slug}
               </code>
-              <button className="touch-target bg-transparent border-none cursor-pointer p-3 grid place-items-center">
+              <button className="touch-target bg-transparent border-none cursor-pointer p-3 grid place-items-center shrink-0">
                 <Copy size={16} className="text-text-muted" />
               </button>
             </div>
@@ -391,8 +372,8 @@ export default async function PluginDetailPage({
           {/* About — Plugin Description Panel */}
           <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
             {/* Header */}
-            <div className="plugin-description-header grid grid-cols-[1fr_auto] items-center px-4 py-[10px]">
-              <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+            <div className="plugin-description-header flex items-center justify-between px-4 py-[10px] gap-2">
+              <div className="flex items-center gap-2">
                 <span className="text-sm text-text-primary">
                   Plugin Description
                 </span>
@@ -439,7 +420,7 @@ export default async function PluginDetailPage({
             activeVersion.producers &&
             activeVersion.producers.length > 0 && (
               <div className="card p-4 lg:p-5 overflow-hidden">
-                <h3 className="text-sm font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-1.5">
+                <h3 className="text-sm font-semibold mb-3 flex items-center gap-1.5">
                   Producers{" "}
                   <span className="text-[11px] text-text-muted font-normal">
                     (v{activeVersion.version})
@@ -449,7 +430,7 @@ export default async function PluginDetailPage({
                   {activeVersion.producers.map((producer: any) => (
                     <div
                       key={producer.githubUser}
-                      className="grid grid-cols-[auto_1fr] items-center gap-3"
+                      className="flex items-center gap-3"
                     >
                       <Image
                         src={`https://github.com/${producer.githubUser}.png?size=40`}
@@ -458,7 +439,7 @@ export default async function PluginDetailPage({
                         height={32}
                         className="rounded-full object-cover bg-surface-secondary"
                       />
-                      <div className="grid gap-0.5">
+                      <div className="flex flex-col gap-0.5 min-w-0">
                         <a
                           href={`https://github.com/${producer.githubUser}`}
                           target="_blank"
@@ -510,7 +491,7 @@ export default async function PluginDetailPage({
                   <span className="text-text-muted">Repository</span>
                   <a
                     href={plugin.repoUrl}
-                    className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 font-medium hover:underline"
+                    className="text-accent flex items-center gap-1 font-medium hover:underline"
                   >
                     <GitBranch size={14} /> GitHub
                   </a>
@@ -526,9 +507,9 @@ export default async function PluginDetailPage({
                   {plugin.tags.map((tag: string) => (
                     <span
                       key={tag}
-                      className="badge badge-outline text-xs inline-grid grid-cols-[auto_1fr] items-center gap-1"
+                      className="badge badge-outline text-xs inline-flex items-center gap-1 max-w-full truncate"
                     >
-                      <Tag size={10} /> {tag}
+                      <Tag size={10} className="shrink-0" /> <span className="truncate">{tag}</span>
                     </span>
                   ))}
                 </div>
@@ -544,7 +525,7 @@ export default async function PluginDetailPage({
                 Show off your plugin stats in your README.
               </p>
               <div className="grid gap-2">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Image
                     src={`https://endgit.dev/shield.dl.total/${plugin.slug}`}
                     alt="Downloads Badge"
@@ -560,7 +541,7 @@ export default async function PluginDetailPage({
               </div>
 
               <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Image
                     src={`https://endgit.dev/shield.state/${plugin.slug}`}
                     alt="Status Badge"
@@ -576,7 +557,7 @@ export default async function PluginDetailPage({
               </div>
 
               <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+                <div className="flex items-center gap-2">
                   <Image
                     src={`https://endgit.dev/shield.version/${plugin.slug}`}
                     alt="Version Badge"
@@ -592,7 +573,7 @@ export default async function PluginDetailPage({
               </div>
 
               <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+                <div className="flex items-center gap-2">
                   <img
                     src={`https://endgit.dev/shield.rating/${plugin.slug}`}
                     alt="Rating Badge"

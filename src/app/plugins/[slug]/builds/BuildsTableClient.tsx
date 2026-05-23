@@ -122,9 +122,10 @@ export function BuildsTableClient({
         ) : (
           <div
             ref={wrapperRef}
-            className="builds-table-wrapper overflow-auto max-h-[600px]"
+            className="builds-table-wrapper overflow-auto max-h-[600px] w-full"
           >
-            <table className="builds-table w-full border-collapse text-sm">
+            <div className="overflow-x-auto w-full">
+              <table className="builds-table w-full border-collapse text-sm min-w-[700px]">
               <thead className="bg-surface-secondary sticky top-0 z-10">
                 <tr className="border-b border-border text-left">
                   <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
@@ -193,7 +194,7 @@ export function BuildsTableClient({
                     </td>
                     <td className="p-4 border-r border-border align-top">
                       <div className="flex flex-col gap-1.5">
-                        <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 break-all">
+                        <div className="flex flex-wrap items-center gap-1.5 min-w-0">
                           {build.commitHash && (
                             <a
                               href={`${plugin.repoUrl}/commit/${build.commitHash}`}
@@ -204,11 +205,11 @@ export function BuildsTableClient({
                               {build.commitHash.slice(0, 7)}
                             </a>
                           )}
-                          <span className="text-text-primary">
+                          <span className="text-text-primary break-all">
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>
-                        <div className="grid grid-flow-col auto-cols-max gap-1.5">
+                        <div className="flex flex-wrap gap-1.5 mt-1">
                           {isOwner && build.versionStatus === "PENDING" && (
                             <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
                               PENDING REVIEW
@@ -232,13 +233,13 @@ export function BuildsTableClient({
                         href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 no-underline hover:underline font-mono"
+                        className="text-accent flex items-center gap-1 no-underline hover:underline font-mono"
                       >
                         {build.branch || "master"}
                       </a>
                     </td>
                     <td className="p-4 text-right align-top">
-                      <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                      <div className="flex flex-wrap gap-2 justify-end">
                         <Link
                           href={`/builds/${build.id}`}
                           className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
@@ -252,7 +253,7 @@ export function BuildsTableClient({
                           !hasPendingVersion && (
                             <Link
                               href={`/builds/${build.id}/submit`}
-                              className="btn btn-primary py-1.5 px-3 text-[13px] grid grid-flow-col auto-cols-max items-center gap-1 whitespace-nowrap"
+                              className="btn btn-primary py-1.5 px-3 text-[13px] flex items-center gap-1 whitespace-nowrap"
                             >
                               <Send size={14} /> Submit
                             </Link>
@@ -263,6 +264,7 @@ export function BuildsTableClient({
                 ))}
               </tbody>
             </table>
+          </div>
 
             {isLoading && (
               <div className="grid justify-items-center p-4">

@@ -290,8 +290,8 @@ export default function RulesPage() {
       </div>
 
       {/* Quick Navigation */}
-      <div className="card p-5 mb-10 grid grid-flow-col auto-cols-max items-center gap-3">
-        <span className="font-semibold text-sm text-text-muted mr-2">
+      <div className="card p-5 mb-10 flex flex-wrap items-center gap-3">
+        <span className="font-semibold text-sm text-text-muted mr-2 shrink-0">
           Jump to:
         </span>
         {RULE_CATEGORIES.map((cat) => (
@@ -321,7 +321,7 @@ export default function RulesPage() {
             {/* Category Header */}
             <div
               style={{ borderBottomColor: `${cat.color}30` }}
-              className="grid grid-flow-col auto-cols-max items-center gap-3 mb-6 pb-3 border-b-2"
+              className="flex items-center gap-3 mb-6 pb-3 border-b-2"
             >
               <div
                 style={{ background: `${cat.color}15` }}
@@ -330,7 +330,7 @@ export default function RulesPage() {
                 <CategoryIcon icon={cat.icon} color={cat.color} />
               </div>
               <div>
-                <h2 className="heading-3 m-0 grid grid-flow-col auto-cols-max items-center gap-2">
+                <h2 className="heading-3 m-0 flex items-center gap-2">
                   <span
                     style={{ color: cat.color }}
                     className="font-mono text-sm"

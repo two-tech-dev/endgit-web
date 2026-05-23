@@ -15,7 +15,7 @@ export default function PluginBuildsLoading() {
           {Array.from({ length: 6 }, (_, i) => (
             <div
               key={i}
-              className={`grid grid-flow-col auto-cols-max items-center p-4 gap-4 ${i < 5 ? "border-b border-border" : ""}`}
+              className={`flex flex-col sm:flex-row items-start sm:items-center p-4 gap-4 ${i < 5 ? "border-b border-border" : ""}`}
             >
               <div className="w-[100px] shrink-0">
                 <Skeleton width="4rem" height="0.875rem" className="mb-[2px]" />
@@ -27,13 +27,13 @@ export default function PluginBuildsLoading() {
               <div className="w-[60px] shrink-0">
                 <Skeleton width="3rem" height="0.875rem" />
               </div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <Skeleton width="70%" height="0.875rem" />
               </div>
               <div className="w-20 shrink-0">
                 <Skeleton width="4rem" height="0.875rem" />
               </div>
-              <div className="w-[100px] shrink-0 grid grid-flow-col auto-cols-max gap-2 justify-end">
+              <div className="flex items-center gap-2 shrink-0 sm:ml-auto w-full sm:w-auto justify-end">
                 <Skeleton
                   width="3rem"
                   height="1.75rem"

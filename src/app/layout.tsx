@@ -71,7 +71,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Navbar />
-          <main className="">{children}</main>
+          <main className="min-w-0">{children}</main>
           <Footer />
         </AuthProvider>
         <Analytics />

@@ -219,9 +219,8 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               }`}
             />
             {(session?.user as any)?.trustLevel !== "ADMIN" && (
-              <p className="text-xs text-warning mt-1 grid grid-flow-col auto-cols-max items-center gap-1">
-                <AlertTriangle size={12} /> Display name cannot be changed.
-                Contact an admin if you need to rename your plugin.
+              <p className="text-xs text-warning mt-1 flex items-start gap-1">
+                <AlertTriangle size={12} className="shrink-0 mt-0.5" /> <span>Display name cannot be changed. Contact an admin if you need to rename your plugin.</span>
               </p>
             )}
           </div>
@@ -255,7 +254,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="flex items-center justify-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150 w-full sm:w-auto"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -297,7 +296,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
-                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm text-text-primary"
+                  className="flex items-center gap-2 cursor-pointer text-sm text-text-primary"
                 >
                   <input
                     type="checkbox"
@@ -317,7 +316,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </h2>
 
           <div>
-            <label className="grid grid-flow-col auto-cols-max items-center gap-2.5 text-sm font-medium cursor-pointer text-text-primary">
+            <label className="flex items-center gap-2.5 text-sm font-medium cursor-pointer text-text-primary">
               <input
                 type="checkbox"
                 checked={isPreRelease}
@@ -409,7 +408,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             <button
               type="submit"
               disabled={submitting}
-              className="btn btn-primary px-8 py-3 text-base grid grid-flow-col place-items-center gap-1.5 disabled:opacity-60 w-full sm:w-auto"
+              className="btn btn-primary px-8 py-3 text-base flex items-center justify-center gap-1.5 disabled:opacity-60 w-full sm:w-auto"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Saving..." : "Save Changes"}
@@ -418,8 +417,8 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
         </form>
 
         {error && (
-          <div className="mt-4 p-3 bg-error/10 rounded-sm text-error text-sm grid grid-flow-col auto-cols-max items-center gap-2 border border-error/20">
-            <AlertTriangle size={16} /> {error}
+          <div className="mt-4 p-3 bg-error/10 rounded-sm text-error text-sm flex items-start gap-2 border border-error/20">
+            <AlertTriangle size={16} className="shrink-0 mt-0.5" /> {error}
           </div>
         )}
       </div>
