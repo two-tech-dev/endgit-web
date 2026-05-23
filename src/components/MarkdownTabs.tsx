@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -28,11 +26,6 @@ SyntaxHighlighter.registerLanguage("yaml", yaml);
 SyntaxHighlighter.registerLanguage("markdown", markdown);
 SyntaxHighlighter.registerLanguage("css", css);
 SyntaxHighlighter.registerLanguage("clike", clike);
-
-interface Tab {
-  title: string;
-  content: string;
-}
 
 const markdownSchema = {
   ...defaultSchema,
@@ -96,33 +89,22 @@ function rewriteRelativeUrls(
   return result;
 }
 
-function parseMarkdownTabs(markdown: string): Tab[] {
-  // Split by H2 (## ) at the start of a line
-  const parts = markdown.split(/^##\s+(.*)$/gm);
-  const tabs: Tab[] = [];
-
-  const firstPart = parts[0].trim();
-  if (firstPart || parts.length === 1) {
-    tabs.push({ title: "General", content: parts[0] });
-  }
-
-  for (let i = 1; i < parts.length; i += 2) {
-    const title = parts[i].trim();
-    const content = parts[i + 1] || "";
-    if (title) {
-      tabs.push({ title, content });
-    }
-  }
-
-  return tabs;
-}
-
 function MarkdownContent({ content }: { content: string }) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw, () => rehypeSanitize(markdownSchema)]}
       components={{
+        table({ children, ...props }: any) {
+          return (
+            <div
+              className="table-wrapper"
+              style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}
+            >
+              <table {...props}>{children}</table>
+            </div>
+          );
+        },
         code({ node, inline, className, children, ...props }: any) {
           const match = /language-(\w+)/.exec(className || "");
           return !inline && match ? (
@@ -161,11 +143,8 @@ export default function MarkdownTabs({
     repoUrl,
     commitHash,
   );
-  const tabs = parseMarkdownTabs(processedMarkdown);
-  const [activeTab, setActiveTab] = useState(0);
 
-  // Fallback if no content
-  if (tabs.length === 0) {
+  if (!processedMarkdown.trim()) {
     return (
       <div className="markdown-body text-text-secondary leading-relaxed italic p-6 bg-surface-card rounded-lg border border-border">
         No description provided.
@@ -173,49 +152,9 @@ export default function MarkdownTabs({
     );
   }
 
-  // If there's only one tab, just render it normally without tabs UI
-  if (tabs.length === 1) {
-    return (
-      <div className="markdown-body text-text-secondary leading-relaxed p-6 bg-surface-card rounded-lg border border-border">
-        <MarkdownContent content={tabs[0].content} />
-      </div>
-    );
-  }
-
-  const currentTab = tabs[activeTab];
-
   return (
-    <div className="min-w-0 w-full max-w-full overflow-hidden">
-      {/* Tabs Header */}
-      <div className="grid grid-flow-col auto-cols-max max-w-full bg-transparent border-b border-border p-2 pb-0 gap-1">
-        {tabs.map((tab, idx) => {
-          const isActive = activeTab === idx;
-          const displayTitle =
-            tab.title.length > 20
-              ? tab.title.substring(0, 20) + "..."
-              : tab.title;
-
-          return (
-            <button
-              key={idx}
-              onClick={() => setActiveTab(idx)}
-              className={`px-3.5 py-2 border rounded-t-md text-xs font-medium whitespace-nowrap cursor-pointer transition-all -mb-[1px] ${
-                isActive
-                  ? "bg-brand text-white border-brand border-b-transparent"
-                  : "bg-surface-card text-text-primary border-border hover:bg-surface-secondary hover:text-brand"
-              }`}
-              title={tab.title}
-            >
-              {displayTitle}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Tab Content */}
-      <div className="markdown-body min-w-0 w-full max-w-full p-6 text-text-secondary leading-relaxed bg-surface-card rounded-b-lg border-x border-b border-border">
-        <MarkdownContent content={currentTab.content} />
-      </div>
+    <div className="markdown-body min-w-0 w-full max-w-full p-6 text-text-secondary leading-relaxed">
+      <MarkdownContent content={processedMarkdown} />
     </div>
   );
 }

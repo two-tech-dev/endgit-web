@@ -58,7 +58,7 @@ export default async function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-6 content-start">
+      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 content-start">
         {plugins.map((plugin) => {
           const avgRating = plugin.stars
             ? Math.round((plugin.stars / 20) * 10) / 10

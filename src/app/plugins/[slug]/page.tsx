@@ -194,8 +194,8 @@ export default async function PluginDetailPage({
               />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="grid grid-flow-col auto-cols-max items-center gap-3">
-                <h1 className="heading-2 m-0 grid grid-flow-col auto-cols-max items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="heading-2 m-0 flex flex-wrap items-center gap-3">
                   {plugin.displayName}
                   {["EndstoneMC", "two-tech-dev"].includes(
                     repoOwnerDetail || "",
@@ -389,7 +389,7 @@ export default async function PluginDetailPage({
           )}
 
           {/* About — Plugin Description Panel */}
-          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full">
+          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
             {/* Header */}
             <div className="plugin-description-header grid grid-cols-[1fr_auto] items-center px-4 py-[10px]">
               <div className="grid grid-flow-col auto-cols-max items-center gap-2">
@@ -522,7 +522,7 @@ export default async function PluginDetailPage({
             {plugin.tags && plugin.tags.length > 0 && (
               <div className="mt-4 pt-4 border-t border-border">
                 <h4 className="text-sm font-semibold mb-2">Tags</h4>
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] gap-2">
+                <div className="flex flex-wrap gap-2">
                   {plugin.tags.map((tag: string) => (
                     <span
                       key={tag}

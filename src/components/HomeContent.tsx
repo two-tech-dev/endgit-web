@@ -228,7 +228,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="grid grid-flow-col auto-cols-max gap-6 lg:gap-8 mt-8 pt-5 border-t border-border">
+              <div className="grid grid-cols-3 gap-6 lg:gap-8 mt-8 pt-5 border-t border-border">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
@@ -308,7 +308,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             <div className="w-14 h-14 rounded-lg bg-brand-light grid place-items-center text-brand shrink-0">
               <Activity size={26} />
             </div>
-            <div className="min-w-[240px]">
+            <div className="min-w-0">
               <h3 className="text-lg font-semibold text-text-primary mb-2">
                 Automated CI/CD Pipeline
               </h3>
@@ -351,7 +351,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
               Connect your GitHub, push your code, and let EndGit handle the
               rest.
             </p>
-            <div className="grid grid-flow-col auto-cols-max gap-3 justify-items-center mt-2 relative">
+            <div className="flex flex-wrap gap-3 justify-center mt-2 relative">
               <Link
                 href="/dashboard/dev"
                 className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"

@@ -114,7 +114,10 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
       {vt.status === "failed" && (
         <p className="text-[0.8125rem] text-text-muted flex items-start gap-1.5">
           <AlertTriangle size={14} className="shrink-0 mt-0.5" />
-          <span>Scan could not be completed. It will be retried on the next submission.</span>
+          <span>
+            Scan could not be completed. It will be retried on the next
+            submission.
+          </span>
         </p>
       )}
 

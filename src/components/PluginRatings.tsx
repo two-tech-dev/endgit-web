@@ -174,24 +174,24 @@ export default function PluginRatings({
 
   return (
     <div className="card p-4 lg:p-6">
-      <div className="grid grid-cols-[1fr_auto] items-center mb-5 flex-wrap gap-3">
-        <h3 className="text-lg font-semibold grid grid-flow-col auto-cols-max items-center gap-2 m-0">
+      <div className="flex flex-wrap items-center justify-between mb-5 gap-3">
+        <h3 className="text-lg font-semibold flex items-center gap-2 m-0">
           <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings &
           Reviews
         </h3>
 
         {/* Star Selector in Header */}
         {session && (
-          <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-[13px] text-text-muted">Your rating:</span>
-            <div className="grid grid-flow-col auto-cols-max gap-0.5">
+            <div className="flex gap-0.5">
               {[1, 2, 3, 4, 5].map((i) => (
                 <button
                   key={i}
                   onClick={() => setMyScore(i)}
                   onMouseEnter={() => setHoverScore(i)}
                   onMouseLeave={() => setHoverScore(0)}
-                  className="bg-transparent border-none cursor-pointer p-1.5 grid grid-flow-col auto-cols-max items-center"
+                  className="bg-transparent border-none cursor-pointer p-1.5 flex items-center"
                 >
                   <Star
                     size={22}
@@ -265,9 +265,9 @@ export default function PluginRatings({
           {ratings.map((rating) => (
             <div key={rating.id} className="py-4 border-b border-border">
               {/* Top row: avatar + username + stars + version badge + date */}
-              <div className="grid grid-cols-[1fr_auto] items-center">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-3">
-                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent grid grid-flow-col auto-cols-max items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
                     {rating.user.avatarUrl ? (
                       <Image
                         src={rating.user.avatarUrl}
@@ -284,7 +284,7 @@ export default function PluginRatings({
                     href={`https://github.com/${rating.user.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-sm text-accent no-underline grid grid-flow-col auto-cols-max items-center gap-1.5 hover:underline"
+                    className="font-semibold text-sm text-accent no-underline flex items-center gap-1.5 hover:underline"
                   >
                     {rating.user.displayName || rating.user.username}
                     {rating.user.trustLevel === "ADMIN" && (
@@ -301,14 +301,14 @@ export default function PluginRatings({
               </div>
               {/* Comment block — indented like Poggit */}
               {rating.comment && (
-                <div className="rating-comment mt-2 ml-10 p-3 bg-surface-secondary rounded-md border border-border text-sm text-text-secondary leading-relaxed">
+                <div className="rating-comment mt-2 ml-0 sm:ml-10 p-3 bg-surface-secondary rounded-md border border-border text-sm text-text-secondary leading-relaxed">
                   {rating.comment}
                 </div>
               )}
 
               {/* Owner Reply */}
               {rating.ownerReply && (
-                <div className="rating-reply mt-2 ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
+                <div className="rating-reply mt-2 ml-0 sm:ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
                   <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 mb-1">
                     <span className="text-xs font-bold text-success uppercase">
                       Author Reply
@@ -325,7 +325,7 @@ export default function PluginRatings({
               {!rating.ownerReply &&
                 session?.user &&
                 (session.user as any).id === authorId && (
-                  <div className="rating-comment ml-10 mt-2">
+                  <div className="rating-comment ml-0 sm:ml-10 mt-2">
                     {replyingTo === rating.id ? (
                       <div className="grid gap-2">
                         <textarea
