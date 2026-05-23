@@ -85,7 +85,7 @@ export default function NavbarMobile() {
     <div
       ref={dropdownRef}
       style={{ top: dropdownTop }}
-      className={`fixed left-0 right-0 z-[49] bg-surface-card border-b border-border shadow-md overflow-hidden transition-all duration-250 ease-in-out ${
+      className={`fixed left-0 right-0 z-[49] bg-surface/80 backdrop-blur-md border-b border-border shadow-sm rounded-b-sm overflow-hidden transition-all duration-250 ease-in-out ${
         visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
       }`}
     >

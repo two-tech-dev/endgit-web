@@ -1,6 +1,6 @@
 "use client";
 
-import { Shield, ExternalLink, Loader2, AlertTriangle } from "lucide-react";
+import { ExternalLink, Loader2, AlertTriangle } from "lucide-react";
 
 interface VirusTotalCardProps {
   version: {
@@ -59,7 +59,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
     <div className="card p-5 bg-surface-secondary border border-border-highlight overflow-hidden">
       <div className="grid grid-cols-[1fr_auto] items-center mb-4">
         <h3 className="font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-sm text-text-primary">
-          <Shield size={18} color={statusColor} /> VirusTotal Scan
+          VirusTotal Scan
         </h3>
         {!vt.status && (
           <span className="text-xs text-text-muted font-normal">Pending</span>

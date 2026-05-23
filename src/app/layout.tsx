@@ -100,7 +100,7 @@ import Footer from "@/components/Footer";
 
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 lg:py-5">
+    <header className="sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border rounded-b-sm py-2.5 lg:py-4 shadow-sm">
       <div className="container grid grid-cols-[1fr_auto] items-center relative">
         <Link
           href="/"

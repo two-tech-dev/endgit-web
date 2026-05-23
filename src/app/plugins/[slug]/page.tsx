@@ -24,6 +24,7 @@ import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
+import MarkdownInline from "@/components/MarkdownInline";
 
 const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
   loading: () => (
@@ -318,20 +319,20 @@ export default async function PluginDetailPage({
                   );
                 })()}
               </p>
-              <p className="text-text-secondary mt-2 max-w-[600px] leading-relaxed">
+              <MarkdownInline className="text-text-secondary mt-2 max-w-[600px] leading-relaxed">
                 {plugin.description}
-              </p>
+              </MarkdownInline>
             </div>
           </div>
 
           {/* Download Button & Version Selector */}
-          <div className="plugin-header-actions grid gap-2 shrink-0">
+          <div className="plugin-header-actions grid gap-2 shrink-0 justify-items-end">
             <VersionSelector
               slug={plugin.slug}
               pluginType={plugin.pluginType}
               versions={displayVersions}
             />
-            <div className="grid grid-flow-col auto-cols-max gap-4 lg:gap-6 mt-2">
+            <div className="flex flex-wrap justify-end gap-4 lg:gap-6 mt-2">
               <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold">
                 <Star size={16} className="text-warning" />{" "}
                 {(plugin.averageRating || 0).toLocaleString(undefined, {

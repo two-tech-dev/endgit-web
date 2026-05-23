@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import {
   ArrowRight,
-  Zap,
   Terminal,
   Upload,
   Activity,
@@ -12,11 +11,28 @@ import {
   BookOpen,
   Cpu,
   Download,
+  Star,
+  BadgeCheck,
+  FlaskConical,
 } from "lucide-react";
 import Link from "next/link";
 import AnimatedNumber from "@/components/AnimatedNumber";
 import FadeIn from "@/components/FadeIn";
 import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
+import PluginImage from "@/components/PluginImage";
+
+interface Plugin {
+  id: string;
+  slug: string;
+  displayName: string;
+  iconUrl?: string;
+  repoUrl?: string;
+  latestVersion?: string;
+  stars?: number;
+  downloads?: number;
+  isPreRelease?: boolean;
+  author?: { displayName?: string; username?: string };
+}
 
 interface HomeContentProps {
   stats: {
@@ -24,111 +40,110 @@ interface HomeContentProps {
     downloads: number | string;
     builds: number | string;
   };
+  plugins?: Plugin[];
   children?: React.ReactNode;
 }
 
-const COMMAND_TEXT = "endgit install endstone-warps";
-const OUTPUT_LINES = [
-  { text: "→ Saved to: plugins/endstone_warps-1.0.5-py3-none-any.whl" },
-  { text: "✓ Installed endstone-warps@1.0.5", success: true },
-];
+const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
-function TerminalMock() {
-  const [typedChars, setTypedChars] = useState(0);
-  const [visibleLines, setVisibleLines] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
-  const [showPrompt, setShowPrompt] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      sessionStorage.getItem("terminal-seen")
-    ) {
-      setTypedChars(COMMAND_TEXT.length);
-      setVisibleLines(OUTPUT_LINES.length);
-      setShowCursor(false);
-      setShowPrompt(true);
-      return;
-    }
-
-    const t = timerRef.current;
-    t.length = 0;
-
-    const charDelay = 45;
-    const lineDelay = 400;
-    let offset = COMMAND_TEXT.length * charDelay + 400;
-
-    for (let i = 1; i <= COMMAND_TEXT.length; i++) {
-      t.push(setTimeout(() => setTypedChars(i), i * charDelay));
-    }
-
-    t.push(setTimeout(() => setShowCursor(false), offset));
-
-    for (let i = 0; i < OUTPUT_LINES.length; i++) {
-      offset += lineDelay;
-      t.push(setTimeout(() => setVisibleLines(i + 1), offset));
-    }
-
-    offset += 600;
-    t.push(
-      setTimeout(() => {
-        setShowCursor(false);
-        setShowPrompt(true);
-        sessionStorage.setItem("terminal-seen", "1");
-      }, offset),
-    );
-
-    return () => t.forEach(clearTimeout);
-  }, []);
+function PluginCard({ plugin }: { plugin: Plugin }) {
+  const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+  const isVerified = repoOwner ? VERIFIED_ORGS.includes(repoOwner) : false;
+  const avgRating = plugin.stars
+    ? Math.round((plugin.stars / 20) * 10) / 10
+    : 0;
 
   return (
-    <FadeIn
-      delay={0.3}
-      direction="right"
-      duration={0.6}
-      className="w-full h-[200px] lg:h-[260px] lg:max-w-[480px] xl:max-w-[560px] shrink-0"
+    <Link
+      href={`/plugins/${plugin.slug}`}
+      className="flex items-center gap-4 p-4 rounded-sm bg-white/[0.03] border border-white/[0.06] hover:border-brand/30 hover:bg-white/[0.06] transition-all duration-300 no-underline group w-[320px] lg:w-[380px] shrink-0 shadow-none lg:shadow-md"
     >
-      <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
-        <div className="grid grid-flow-col auto-cols-max items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
-          <div className="w-3 h-3 rounded-full bg-[#f38ba8]" />
-          <div className="w-3 h-3 rounded-full bg-[#f9e2af]" />
-          <div className="w-3 h-3 rounded-full bg-[#a6e3a1]" />
-          <span className="ml-2 text-xs text-[#585b70] font-mono">
-            endgit-cli
-          </span>
-        </div>
-        <div className="p-3 lg:p-5 font-mono text-xs lg:text-sm leading-relaxed h-[140px] lg:h-[200px] overflow-hidden">
-          <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
-            <span className="text-[#f38ba8] select-none">$</span>
-            <span className="text-[#cdd6f4]">
-              {COMMAND_TEXT.slice(0, typedChars)}
-            </span>
-            {showCursor && (
-              <span className="inline-block w-2 h-[1.2em] bg-[#cdd6f4] animate-[blink_1s_step-end_infinite]" />
-            )}
-          </div>
-
-          {OUTPUT_LINES.slice(0, visibleLines).map((line, i) => (
-            <div key={i}>
-              <span
-                className={line.success ? "text-[#a6e3a1]" : "text-[#89dceb]"}
-              >
-                {line.text}
-              </span>
-            </div>
-          ))}
-
-          {showPrompt && (
-            <div className="mt-1 grid grid-cols-[auto_1fr] gap-2 items-center">
-              <span className="text-[#f38ba8] select-none">$</span>
-              <span className="inline-block w-2 h-[1.2em] bg-[#cdd6f4] animate-[blink_1s_step-end_infinite]" />
-            </div>
-          )}
-        </div>
-        <style>{`@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }`}</style>
+      <div className="w-14 h-14 shrink-0 rounded-sm overflow-hidden bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+        <PluginImage
+          iconUrl={plugin.iconUrl}
+          repoUrl={plugin.repoUrl}
+          alt={`${plugin.displayName} icon`}
+        />
       </div>
-    </FadeIn>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1.5">
+          <span className="text-base font-semibold text-white/90 truncate group-hover:text-brand transition-colors">
+            {plugin.displayName}
+          </span>
+          {isVerified && <BadgeCheck size={13} className="text-brand shrink-0" />}
+          {plugin.isPreRelease && <FlaskConical size={12} className="text-error shrink-0" />}
+        </div>
+        <div className="flex items-center gap-3 mt-1.5 text-xs text-white/30">
+          <span className="flex items-center gap-1">
+            <Download size={12} />
+            {plugin.downloads?.toLocaleString() ?? 0}
+          </span>
+          {avgRating > 0 && (
+            <span className="flex items-center gap-0.5 text-amber-400/70">
+              <Star size={12} className="fill-current" />
+              {avgRating.toFixed(1)}
+            </span>
+          )}
+          <span>v{plugin.latestVersion || "1.0.0"}</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function PluginCarousel({ plugins }: { plugins: Plugin[] }) {
+  if (plugins.length === 0) return null;
+
+  const row1 = plugins.filter((_, i) => i % 3 === 0);
+  const row2 = plugins.filter((_, i) => i % 3 === 1);
+  const row3 = plugins.filter((_, i) => i % 3 === 2);
+
+  return (
+    <div className="relative overflow-hidden">
+      <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none" />
+      <div className="flex flex-col gap-3">
+        <div className="carousel-track-left flex gap-3">
+          {[...row1, ...row1].map((p, i) => (
+            <PluginCard key={`a-${i}`} plugin={p} />
+          ))}
+        </div>
+        <div className="carousel-track-right flex gap-3">
+          {[...row2, ...row2].map((p, i) => (
+            <PluginCard key={`b-${i}`} plugin={p} />
+          ))}
+        </div>
+        <div className="carousel-track-left-slow flex gap-3">
+          {[...row3, ...row3].map((p, i) => (
+            <PluginCard key={`c-${i}`} plugin={p} />
+          ))}
+        </div>
+      </div>
+      <style>{`
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .carousel-track-left {
+          animation: scroll-left 30s linear infinite;
+        }
+        .carousel-track-left-slow {
+          animation: scroll-left 40s linear infinite;
+        }
+        .carousel-track-right {
+          animation: scroll-right 35s linear infinite;
+        }
+        .carousel-track-left:hover,
+        .carousel-track-left-slow:hover,
+        .carousel-track-right:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </div>
   );
 }
 
@@ -171,15 +186,15 @@ const STEPS = [
   },
 ];
 
-export default function HomeContent({ stats, children }: HomeContentProps) {
+export default function HomeContent({ stats, plugins = [], children }: HomeContentProps) {
   return (
     <div className="grid">
       {/* ── Hero ── */}
-      <section className="py-20 lg:py-32 relative overflow-x-clip">
+      <section className="pt-15 pb-20 lg:pt-16 lg:pb-32 relative overflow-x-clip">
         {/* Massive Background Accent */}
-        <div className="absolute -top-[20%] -left-[10%] w-[1000px] h-[1400px] bg-brand/5 blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute -top-[20%] -left-[10%] w-[1000px] h-[1400px] rounded-full pointer-events-none" />
 
-        <div className="container grid items-center gap-16 lg:gap-24 xl:gap-32 lg:grid-cols-[1.2fr_0.8fr] relative z-10">
+        <div className="container grid items-center gap-16 lg:gap-20 xl:gap-28 lg:grid-cols-[1.6fr_0.8fr] relative z-10">
           {/* Left: Copy */}
           <div className="min-w-0">
             <FadeIn delay={0} direction="down">
@@ -199,9 +214,9 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.15}>
-              <p className="text-base sm:text-lg lg:text-xl text-text-secondary leading-relaxed max-w-[540px] mb-10 font-medium">
+              <p className="text-base sm:text-lg lg:text-xl text-text-secondary leading-relaxed mb-10 font-medium">
                 Ship high-performance Endstone plugins with our automated
-                pipeline. Connect, push, and deploy to the world’s most advanced
+                pipeline. Connect, push, and deploy to the world's most advanced
                 registry.
               </p>
             </FadeIn>
@@ -227,7 +242,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="grid grid-cols-3 gap-6 lg:gap-8 mt-12 pt-8 border-t border-white/5">
+              <div className="grid grid-flow-col auto-cols-auto gap-8 lg:gap-12 mt-12 pt-8 border-t border-white/5 w-fit">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
@@ -246,10 +261,14 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             </FadeIn>
           </div>
 
-          {/* Right: Terminal */}
-          <div className="hidden lg:grid justify-items-center min-w-0">
-            <TerminalMock />
-          </div>
+          {/* Plugin Carousel */}
+          {plugins.length > 0 && (
+            <div className="min-w-0">
+              <FadeIn delay={0.3} direction="none" duration={0.6}>
+                <PluginCarousel plugins={plugins} />
+              </FadeIn>
+            </div>
+          )}
         </div>
       </section>
       {children}
@@ -270,12 +289,12 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
           {STEPS.map((step) => (
             <StaggerItem
               key={step.number}
-              className="step-card grid grid-cols-[auto_1fr] items-start gap-4 p-5 lg:p-6 bg-surface-card border border-border rounded-lg shadow-sm transition-all cursor-default sm:last:col-span-2 lg:last:col-span-1"
+              className="step-card grid grid-cols-[auto_1fr] items-start gap-4 p-5 lg:p-6 bg-surface-card border border-border rounded-sm shadow-sm transition-all cursor-default sm:last:col-span-2 lg:last:col-span-1"
             >
               <div className="w-10 h-10 rounded-md bg-brand-light grid place-items-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-              <div className="min-w-0">
+            <div className="min-w-0">
                 <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>

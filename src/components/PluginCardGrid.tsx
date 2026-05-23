@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FlaskConical, BadgeCheck, Download, Star } from "lucide-react";
+import { BadgeCheck, Download, Star } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
 interface Plugin {
@@ -53,59 +53,62 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap flex items-center gap-1.5">
+                <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap">
                   {plugin.displayName}
-                  {isVerified && (
-                    <span
-                      title="This plugin is officially supported by EndstoneMC/EndGit"
-                      className="inline-flex items-center text-brand shrink-0"
-                    >
-                      <BadgeCheck size={15} />
-                    </span>
-                  )}
+                </h3>
+                <div className="flex items-center gap-2 min-w-0 flex-wrap mt-1">
                   {plugin.isPreRelease && (
                     <span
                       title="This is a pre-release"
-                      className="inline-flex items-center text-error shrink-0"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-error bg-error/10 border border-error/20 rounded px-1.5 py-0.5 shrink-0"
                     >
-                      <FlaskConical size={15} />
+                      Pre-release
                     </span>
                   )}
-                </h3>
-                <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
-                  <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
-                    v{plugin.latestVersion || "1.0.0"}
-                  </span>
-                  <span>•</span>
+                  {isVerified && (
+                    <span
+                      title="Officially supported by EndstoneMC/EndGit"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-brand bg-brand/10 border border-brand/20 rounded px-1.5 py-0.5 shrink-0"
+                    >
+                      <BadgeCheck size={11} />
+                      Verified
+                    </span>
+                  )}
+                  {isFeatured && (
+                    <span
+                      title="Featured plugin"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded px-1.5 py-0.5 shrink-0"
+                    >
+                      Featured
+                    </span>
+                  )}
+                </div>
+                <div className="text-xs text-text-muted mt-1">
                   <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                     {plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1] ||
                       plugin.author?.displayName ||
                       plugin.author?.username}
                   </span>
                 </div>
-              </div>
-
-              <div className="flex flex-col items-end gap-1.5 text-xs text-text-muted shrink-0">
-                <span className="flex items-center gap-1 font-semibold text-text-secondary">
-                  <Download size={13} className="text-text-muted" />
-                  {plugin.downloads?.toLocaleString() ?? 0}
-                </span>
-                {avgRating > 0 && (
-                  <span className="text-warning text-xs flex items-center gap-0.5 font-medium">
-                    <Star size={13} className="fill-current" />
-                    <span>{avgRating.toFixed(1)}</span>
+                <div className="flex items-center justify-between mt-2 text-xs text-text-muted">
+                  <span className="flex items-center gap-1 font-semibold text-text-secondary">
+                    <Download size={13} className="text-text-muted" />
+                    {plugin.downloads?.toLocaleString() ?? 0}
                   </span>
-                )}
-              </div>
-            </div>
-
-            {isFeatured && (
-              <div className="px-3 pb-3 flex justify-center">
-                <div className="w-full py-1 text-center bg-emerald-500/10 text-emerald-500 text-xs font-semibold rounded border border-emerald-500/20">
-                  Featured
+                  <div className="flex items-center gap-2">
+                    {avgRating > 0 && (
+                      <span className="text-warning flex items-center gap-0.5 font-medium">
+                        <Star size={12} className="fill-current" />
+                        {avgRating.toFixed(1)}
+                      </span>
+                    )}
+                    <span className="text-text-muted">
+                      v{plugin.latestVersion || "1.0.0"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </Link>
         );
       })}

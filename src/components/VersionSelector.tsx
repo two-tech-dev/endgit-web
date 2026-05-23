@@ -87,7 +87,7 @@ export default function VersionSelector({
           </a>
         )}
       </div>
-      <div className="version-info-text text-xs text-text-muted text-left lg:text-right grid grid-flow-col auto-cols-max gap-x-3 gap-y-0.5">
+      <div className="version-info-text text-xs text-text-muted flex flex-wrap justify-end gap-x-3 gap-y-0.5 w-full">
         <span>
           Size:{" "}
           {selectedVersion.fileSize
