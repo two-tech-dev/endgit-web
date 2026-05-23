@@ -23,7 +23,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 align-content-start">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 align-content-start">
       {plugins.map((plugin, i) => {
         const avgRating = plugin.stars
           ? Math.round((plugin.stars / 20) * 10) / 10

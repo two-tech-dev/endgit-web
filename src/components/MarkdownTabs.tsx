@@ -187,7 +187,7 @@ export default function MarkdownTabs({
   return (
     <div className="min-w-0 w-full max-w-full overflow-hidden">
       {/* Tabs Header */}
-      <div className="flex flex-wrap max-w-full bg-transparent border-b border-border p-2 pb-0 gap-1">
+      <div className="grid grid-flow-col auto-cols-max max-w-full bg-transparent border-b border-border p-2 pb-0 gap-1">
         {tabs.map((tab, idx) => {
           const isActive = activeTab === idx;
           const displayTitle =

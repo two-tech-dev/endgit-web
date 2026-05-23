@@ -70,7 +70,7 @@ function StatusBadge({ status }: { status: string }) {
   const c = config[status] || config.QUEUED;
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[0.8125rem] font-semibold border ${c.badgeClass}`}
+      className={`inline-grid grid-cols-[auto_1fr] items-center gap-1 px-2.5 py-1 rounded-full text-[0.8125rem] font-semibold border ${c.badgeClass}`}
     >
       {c.icon} {status}
     </span>
@@ -107,20 +107,20 @@ export default async function BuildDetailPage({
   }
 
   return (
-    <div className="container pt-6 md:pt-8 pb-16 max-w-[960px]">
+    <div className="container pt-6 lg:pt-8 pb-16 max-w-[960px]">
       {/* Breadcrumb */}
       <Link
         href="/builds"
-        className="inline-flex items-center gap-2 text-text-muted text-sm mb-6 hover:text-text-primary transition-colors no-underline"
+        className="inline-grid grid-cols-[auto_1fr] items-center gap-2 text-text-muted text-sm mb-6 hover:text-text-primary transition-colors no-underline"
       >
         <ArrowLeft size={14} /> Back to Live Builds
       </Link>
 
       {/* Header Card */}
-      <div className="card p-4 md:p-6 mb-6">
-        <div className="flex justify-between items-start flex-wrap gap-4">
+      <div className="card p-4 lg:p-6 mb-6">
+        <div className="grid grid-cols-[1fr_auto] items-start gap-4">
           <div>
-            <div className="build-title-row flex items-center gap-3 mb-2 flex-wrap">
+            <div className="build-title-row grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
               <h1 className="heading-3 m-0">
                 {build.plugin?.displayName} — Build #{build.buildNumber}
               </h1>
@@ -137,14 +137,14 @@ export default async function BuildDetailPage({
           </div>
 
           {build.status === "SUCCESS" && (
-            <div className="flex flex-col gap-2 items-end">
+            <div className="grid gap-2 items-end">
               {/* Python or fallback single artifact */}
               {build.artifactUrl &&
                 !build.artifactUrlLinux &&
                 !build.artifactUrlWin && (
                   <a
                     href={build.artifactUrl}
-                    className="btn btn-primary px-5 py-2 text-sm flex items-center gap-2 no-underline"
+                    className="btn btn-primary px-5 py-2 text-sm grid grid-flow-col auto-cols-max items-center gap-2 no-underline"
                   >
                     <Download size={16} /> Download Artifact
                   </a>
@@ -153,7 +153,7 @@ export default async function BuildDetailPage({
               {build.artifactUrlLinux && (
                 <a
                   href={build.artifactUrlLinux}
-                  className="btn btn-primary px-5 py-2 text-sm flex items-center gap-2 no-underline"
+                  className="btn btn-primary px-5 py-2 text-sm grid grid-flow-col auto-cols-max items-center gap-2 no-underline"
                 >
                   <Download size={16} /> 🐧 Linux (.so)
                 </a>
@@ -161,7 +161,7 @@ export default async function BuildDetailPage({
               {build.artifactUrlWin && (
                 <a
                   href={build.artifactUrlWin}
-                  className="btn btn-secondary px-5 py-2 text-sm flex items-center gap-2 no-underline"
+                  className="btn btn-secondary px-5 py-2 text-sm grid grid-flow-col auto-cols-max items-center gap-2 no-underline"
                 >
                   <Download size={16} /> 🪟 Windows (.dll)
                 </a>
@@ -171,7 +171,7 @@ export default async function BuildDetailPage({
           {/* C++ build in progress indicators */}
           {build.status === "RUNNING" &&
             (build.winBuildStatus || build.linuxBuildStatus) && (
-              <div className="flex flex-col gap-1 items-end text-xs">
+              <div className="grid gap-1 items-end text-xs">
                 {build.linuxBuildStatus && (
                   <span
                     className={
@@ -218,7 +218,7 @@ export default async function BuildDetailPage({
             <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Branch
             </div>
-            <div className="flex items-center gap-1 font-medium text-text-primary text-sm">
+            <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-text-primary text-sm">
               <GitBranch size={14} className="text-brand" /> {build.branch}
             </div>
           </div>
@@ -234,7 +234,7 @@ export default async function BuildDetailPage({
             <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Duration
             </div>
-            <div className="flex items-center gap-1 font-medium text-text-primary text-sm">
+            <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-text-primary text-sm">
               <Clock size={14} className="text-brand" />{" "}
               {build.duration ? `${build.duration}s` : "—"}
             </div>
@@ -278,7 +278,7 @@ export default async function BuildDetailPage({
 
       {/* Not Reviewed Warning */}
       {!build.isRelease ? (
-        <div className="card px-4 md:px-5 py-4 mt-6 flex items-center gap-3 border-l-4 border-warning bg-warning/5">
+        <div className="card px-4 lg:px-5 py-4 mt-6 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
           <AlertTriangle size={18} className="text-warning shrink-0" />
           <span className="text-text-secondary text-sm">
             <strong className="text-text-primary">NOT REVIEWED</strong> — This

@@ -32,7 +32,7 @@ export default async function EditPluginPage({
   }
 
   return (
-    <div className="container py-6 md:py-8">
+    <div className="container py-6 lg:py-8">
       <EditPluginForm plugin={plugin} />
     </div>
   );

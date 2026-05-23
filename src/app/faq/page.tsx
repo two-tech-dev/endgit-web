@@ -30,9 +30,9 @@ const FAQ_ITEMS: FAQItemType[] = [
     q: "How do I publish a plugin?",
     category: "publishing",
     a: (
-      <div className="flex flex-col gap-3">
+      <div className="grid gap-3">
         <p>Publishing a plugin is fully automated via GitHub integration:</p>
-        <ol className="flex flex-col gap-2 list-decimal pl-5">
+        <ol className="grid gap-2 list-decimal pl-5">
           <li>
             Install the{" "}
             <strong className="text-text-primary">EndGit GitHub App</strong> on
@@ -126,7 +126,7 @@ const FAQ_ITEMS: FAQItemType[] = [
     q: "How do I use the CLI?",
     category: "cli",
     a: (
-      <div className="flex flex-col gap-3">
+      <div className="grid gap-3">
         <p>Install the CLI utility with the following setup commands:</p>
         <div>
           <div className="text-xs font-semibold text-text-primary mb-1">
@@ -145,7 +145,7 @@ const FAQ_ITEMS: FAQItemType[] = [
           </pre>
         </div>
         <p className="mt-2">Common cli commands available:</p>
-        <ul className="flex flex-col gap-1 list-disc pl-5">
+        <ul className="grid gap-1 list-disc pl-5">
           <li>
             <code>endgit install &lt;plugin&gt;</code> — Download and install a
             plugin
@@ -167,11 +167,11 @@ const FAQ_ITEMS: FAQItemType[] = [
     q: "What languages/frameworks are supported?",
     category: "general",
     a: (
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <p>
           EndGit offers native support for two Endstone plugin architectures:
         </p>
-        <ul className="flex flex-col gap-1.5 list-disc pl-5">
+        <ul className="grid gap-1.5 list-disc pl-5">
           <li>
             <strong>Python plugins</strong> — Packaged as <code>.whl</code>{" "}
             wheels and built using standard pip packaging.
@@ -204,9 +204,9 @@ const FAQ_ITEMS: FAQItemType[] = [
     q: "How can I get support?",
     category: "general",
     a: (
-      <div className="flex flex-col gap-2">
+      <div className="grid gap-2">
         <p>Get in touch or join community discussion on our chat servers:</p>
-        <ul className="flex flex-col gap-1.5 list-disc pl-5">
+        <ul className="grid gap-1.5 list-disc pl-5">
           <li>
             <a
               href="https://discord.gg/TcY9vxx9fE"
@@ -253,9 +253,9 @@ function FAQItem({ item }: { item: FAQItemType }) {
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full p-5 flex justify-between items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
+        className="w-full p-5 grid grid-cols-[1fr_auto] items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
       >
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-2">
           <span className="font-semibold text-[15px] text-text-primary leading-snug">
             {item.q}
           </span>
@@ -268,7 +268,7 @@ function FAQItem({ item }: { item: FAQItemType }) {
           </span>
         </div>
         <div
-          className={`flex shrink-0 transition-transform duration-200 ${
+          className={`grid shrink-0 transition-transform duration-200 ${
             open ? "rotate-180" : ""
           }`}
         >
@@ -304,11 +304,11 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="container py-8 md:py-12 lg:py-16">
+    <div className="container py-8 lg:py-12 lg:py-16">
       {/* Header */}
       <FadeIn>
         <div className="text-center mb-10">
-          <div className="w-14 h-14 rounded-lg bg-cyan-500/10 flex items-center justify-center mx-auto mb-4 border border-cyan-500/15">
+          <div className="w-14 h-14 rounded-lg bg-cyan-500/10 grid place-items-center mx-auto mb-4 border border-cyan-500/15">
             <HelpCircle size={28} className="text-accent" />
           </div>
           <h1 className="heading-1 mb-2">Frequently Asked Questions</h1>
@@ -334,7 +334,7 @@ export default function FAQPage() {
           />
         </div>
 
-        <div className="flex gap-2 justify-center mb-8 flex-wrap">
+        <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-center mb-8">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
@@ -369,7 +369,7 @@ export default function FAQPage() {
           </div>
         </FadeIn>
       ) : (
-        <StaggerContainer staggerDelay={0.04} className="flex flex-col gap-3">
+        <StaggerContainer staggerDelay={0.04} className="grid gap-3">
           {filteredItems.map((item) => (
             <StaggerItem key={item.q}>
               <FAQItem item={item} />
@@ -392,7 +392,7 @@ export default function FAQPage() {
             href="https://discord.gg/9eZhP9y26Q"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary inline-flex items-center gap-2 text-sm"
+            className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-sm"
           >
             Join Discord Community
           </a>

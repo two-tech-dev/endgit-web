@@ -37,20 +37,20 @@ export default async function DashboardPage() {
 
   if (githubTokenExpired) {
     return (
-      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
-        <div className="card max-w-[600px] p-6 md:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-warning/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="container py-12 min-h-[60vh] grid place-items-center">
+        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-warning/10 rounded-full grid place-items-center mx-auto mb-6">
             <AlertCircle size={40} className="text-warning" />
           </div>
           <h1 className="heading-2 mb-4">GitHub Session Expired</h1>
-          <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8">
+          <p className="text-text-secondary text-base lg:text-lg leading-relaxed mb-8">
             For security reasons, your connection to GitHub has expired. Please
             re-authenticate to sync your App installation status and continue
             using the Developer Dashboard.
           </p>
           <a
             href="/api/auth/signin?callbackUrl=/dashboard"
-            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
+            className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-lg py-3 px-8"
           >
             Re-authenticate with GitHub
           </a>
@@ -61,13 +61,13 @@ export default async function DashboardPage() {
 
   if (!hasAppInstalled) {
     return (
-      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
-        <div className="card max-w-[600px] p-6 md:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="container py-12 min-h-[60vh] grid place-items-center">
+        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full grid place-items-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
           <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
-          <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8">
+          <p className="text-text-secondary text-base lg:text-lg leading-relaxed mb-8">
             To get started with the Developer Dashboard, you need to install the
             EndGit GitHub App on your repositories. The app will automatically
             detect your Bedrock plugins, build them using our CI/CD pipeline,
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
           </p>
           <a
             href={installUrl}
-            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
+            className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-lg py-3 px-8"
           >
             <ExternalLink size={20} /> Install GitHub App{" "}
             <ArrowRight size={20} />
@@ -95,19 +95,19 @@ export default async function DashboardPage() {
   const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
-    <div className="container py-6 md:py-8">
-      <div className="flex justify-between items-end mb-6 md:mb-8 flex-wrap gap-4">
+    <div className="container py-6 lg:py-8">
+      <div className="grid grid-cols-[1fr_auto] items-end mb-6 lg:mb-8 gap-4">
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
           <p className="text-text-muted">
             Manage your plugins and track performance.
           </p>
         </div>
-        <div className="flex gap-4 flex-wrap">
+        <div className="grid grid-flow-col auto-cols-max gap-4">
           <a
             href={installUrl}
             target="_blank"
-            className="btn btn-secondary flex items-center gap-2"
+            className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2"
           >
             <Settings size={18} /> Manage App Installation
           </a>
@@ -115,8 +115,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 md:gap-6 mb-10 md:mb-12">
-        <div className="card p-4 md:p-6 flex items-center gap-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 lg:gap-6 mb-10 lg:mb-12">
+        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
           <div className="bg-[#7c3aed]/10 p-3 rounded-md text-[#7c3aed]">
             <PackagePlus size={24} />
           </div>
@@ -128,7 +128,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 md:p-6 flex items-center gap-4">
+        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
           <div className="bg-cyan-500/10 p-3 rounded-md text-cyan-500">
             <Activity size={24} />
           </div>
@@ -140,7 +140,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 md:p-6 flex items-center gap-4">
+        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
           <div className="bg-warning/10 p-3 rounded-md text-warning">
             <AlertCircle size={24} />
           </div>
@@ -154,10 +154,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Plugins List */}
-      <h2 className="heading-3 mb-5 md:mb-6">My Plugins</h2>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-5 md:gap-6">
+      <h2 className="heading-3 mb-5 lg:mb-6">My Plugins</h2>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-5 lg:gap-6">
         {myPlugins.map((plugin) => (
-          <div key={plugin.id} className="card flex flex-col overflow-hidden">
+          <div key={plugin.id} className="card grid overflow-hidden">
             {/* Status Bar */}
             <div
               className={`h-1 w-full ${
@@ -165,10 +165,10 @@ export default async function DashboardPage() {
               }`}
             />
 
-            <div className="p-4 md:p-5 flex flex-col flex-1 gap-4">
-              <div className="flex justify-between items-start">
-                <div className="flex gap-3 items-center">
-                  <div className="w-12 h-12 rounded-sm bg-surface-secondary flex items-center justify-center border border-border flex-shrink-0 overflow-hidden">
+            <div className="p-4 lg:p-5 grid gap-4">
+              <div className="grid grid-cols-[1fr_auto] items-start">
+                <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
+                  <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}
@@ -194,17 +194,17 @@ export default async function DashboardPage() {
                 </span>
               </div>
 
-              <div className="flex flex-wrap gap-4 py-4 border-y border-border text-text-secondary text-sm">
-                <div className="flex-1">
+              <div className="grid grid-flow-col auto-cols-max gap-4 py-4 border-y border-border text-text-secondary text-sm">
+                <div className="">
                   <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Downloads
                   </div>
-                  <div className="flex items-center gap-1 font-medium text-text-primary">
+                  <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-text-primary">
                     <Activity size={14} className="text-accent" />{" "}
                     {plugin.downloads?.toLocaleString() ?? 0}
                   </div>
                 </div>
-                <div className="flex-1">
+                <div className="">
                   <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Latest Version
                   </div>
@@ -214,7 +214,7 @@ export default async function DashboardPage() {
                       : "No versions"}
                   </div>
                 </div>
-                <div className="flex-1">
+                <div className="">
                   <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Status
                   </div>
@@ -236,7 +236,7 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <button className="btn btn-secondary w-full flex justify-center p-2">
+                  <button className="btn btn-secondary w-full grid place-items-center p-2">
                     <Settings size={16} /> Manage Plugin
                   </button>
                 )}

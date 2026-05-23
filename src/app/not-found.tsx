@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="container py-16 text-center min-h-[60vh] flex flex-col items-center justify-center">
+    <div className="container py-16 text-center min-h-[60vh] grid place-items-center">
       <h1 className="text-[clamp(4rem,10vw,8rem)] font-extrabold text-text-muted leading-none m-0">
         404
       </h1>
       <p className="text-xl text-text-secondary mt-4 max-w-[480px]">
         The page you're looking for doesn't exist or has been removed.
       </p>
-      <div className="flex gap-3 mt-8">
+      <div className="grid grid-flow-col auto-cols-max gap-3 mt-8">
         <Link
           href="/"
           className="btn btn-primary py-3 px-6 text-[15px] no-underline"

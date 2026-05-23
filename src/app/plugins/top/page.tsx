@@ -21,7 +21,7 @@ export default async function TopPluginsPage() {
   }
 
   return (
-    <div className="container py-6 md:py-8">
+    <div className="container py-6 lg:py-8">
       <div className="mb-8">
         <Link
           href="/plugins"
@@ -38,7 +38,7 @@ export default async function TopPluginsPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 align-content-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-6 align-content-start">
         {plugins.map((plugin: any, index: number) => {
           const avgRating = plugin.stars
             ? Math.round((plugin.stars / 20) * 10) / 10

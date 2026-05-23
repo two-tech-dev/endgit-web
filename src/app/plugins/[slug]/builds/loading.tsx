@@ -11,11 +11,11 @@ export default function PluginBuildsLoading() {
       </div>
 
       <SkeletonCard className="p-6">
-        <div className="flex flex-col">
+        <div className="grid">
           {Array.from({ length: 6 }, (_, i) => (
             <div
               key={i}
-              className={`flex items-center p-4 gap-4 ${i < 5 ? "border-b border-border" : ""}`}
+              className={`grid grid-flow-col auto-cols-max items-center p-4 gap-4 ${i < 5 ? "border-b border-border" : ""}`}
             >
               <div className="w-[100px] shrink-0">
                 <Skeleton width="4rem" height="0.875rem" className="mb-[2px]" />
@@ -27,13 +27,13 @@ export default function PluginBuildsLoading() {
               <div className="w-[60px] shrink-0">
                 <Skeleton width="3rem" height="0.875rem" />
               </div>
-              <div className="flex-1">
+              <div>
                 <Skeleton width="70%" height="0.875rem" />
               </div>
               <div className="w-20 shrink-0">
                 <Skeleton width="4rem" height="0.875rem" />
               </div>
-              <div className="w-[100px] shrink-0 flex justify-end gap-2">
+              <div className="w-[100px] shrink-0 grid grid-flow-col auto-cols-max gap-2 justify-end">
                 <Skeleton
                   width="3rem"
                   height="1.75rem"

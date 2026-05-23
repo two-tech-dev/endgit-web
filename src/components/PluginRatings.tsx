@@ -30,7 +30,7 @@ interface RatingSummary {
 
 function StarDisplay({ score, size = 14 }: { score: number; size?: number }) {
   return (
-    <div className="flex gap-[1px]">
+    <div className="grid grid-flow-col auto-cols-max gap-[1px]">
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
@@ -173,25 +173,25 @@ export default function PluginRatings({
   };
 
   return (
-    <div className="card p-4 md:p-6">
-      <div className="flex justify-between items-center mb-5 flex-wrap gap-3">
-        <h3 className="text-lg font-semibold flex items-center gap-2 m-0">
+    <div className="card p-4 lg:p-6">
+      <div className="grid grid-cols-[1fr_auto] items-center mb-5 flex-wrap gap-3">
+        <h3 className="text-lg font-semibold grid grid-flow-col auto-cols-max items-center gap-2 m-0">
           <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings &
           Reviews
         </h3>
 
         {/* Star Selector in Header */}
         {session && (
-          <div className="flex items-center gap-2">
+          <div className="grid grid-flow-col auto-cols-max items-center gap-2">
             <span className="text-[13px] text-text-muted">Your rating:</span>
-            <div className="flex gap-0.5">
+            <div className="grid grid-flow-col auto-cols-max gap-0.5">
               {[1, 2, 3, 4, 5].map((i) => (
                 <button
                   key={i}
                   onClick={() => setMyScore(i)}
                   onMouseEnter={() => setHoverScore(i)}
                   onMouseLeave={() => setHoverScore(0)}
-                  className="bg-transparent border-none cursor-pointer p-1.5 flex items-center"
+                  className="bg-transparent border-none cursor-pointer p-1.5 grid grid-flow-col auto-cols-max items-center"
                 >
                   <Star
                     size={22}
@@ -222,11 +222,11 @@ export default function PluginRatings({
             rows={3}
             className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit outline-none min-h-[80px]"
           />
-          <div className="mt-3 flex justify-end">
+          <div className="mt-3 grid justify-items-end">
             <button
               onClick={handleSubmit}
               disabled={myScore === 0 || submitting}
-              className={`flex items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+              className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
                 myScore > 0
                   ? "bg-accent text-white cursor-pointer hover:bg-accent-hover"
                   : "bg-surface-secondary text-text-muted cursor-not-allowed"
@@ -256,7 +256,7 @@ export default function PluginRatings({
 
       {/* Reviews List — Poggit-inspired clean style */}
       {!loading && (
-        <div className="flex flex-col">
+        <div className="grid">
           {ratings.length === 0 && (
             <p className="text-text-muted text-center p-6 text-sm">
               No reviews yet. Be the first to review this plugin!
@@ -265,9 +265,9 @@ export default function PluginRatings({
           {ratings.map((rating) => (
             <div key={rating.id} className="py-4 border-b border-border">
               {/* Top row: avatar + username + stars + version badge + date */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
+              <div className="grid grid-cols-[1fr_auto] items-center">
+                <div className="grid grid-flow-col auto-cols-max items-center gap-3">
+                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent grid grid-flow-col auto-cols-max items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
                     {rating.user.avatarUrl ? (
                       <Image
                         src={rating.user.avatarUrl}
@@ -284,7 +284,7 @@ export default function PluginRatings({
                     href={`https://github.com/${rating.user.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-semibold text-sm text-accent no-underline flex items-center gap-1.5 hover:underline"
+                    className="font-semibold text-sm text-accent no-underline grid grid-flow-col auto-cols-max items-center gap-1.5 hover:underline"
                   >
                     {rating.user.displayName || rating.user.username}
                     {rating.user.trustLevel === "ADMIN" && (
@@ -309,7 +309,7 @@ export default function PluginRatings({
               {/* Owner Reply */}
               {rating.ownerReply && (
                 <div className="rating-reply mt-2 ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
-                  <div className="flex items-center gap-1.5 mb-1">
+                  <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 mb-1">
                     <span className="text-xs font-bold text-success uppercase">
                       Author Reply
                     </span>
@@ -327,7 +327,7 @@ export default function PluginRatings({
                 (session.user as any).id === authorId && (
                   <div className="rating-comment ml-10 mt-2">
                     {replyingTo === rating.id ? (
-                      <div className="flex flex-col gap-2">
+                      <div className="grid gap-2">
                         <textarea
                           value={replyText}
                           onChange={(e) => setReplyText(e.target.value)}
@@ -335,7 +335,7 @@ export default function PluginRatings({
                           rows={2}
                           className="w-full p-2 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y outline-none font-inherit"
                         />
-                        <div className="flex gap-2 justify-end">
+                        <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
                           <button
                             onClick={() => {
                               setReplyingTo(null);

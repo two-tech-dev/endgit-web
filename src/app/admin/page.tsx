@@ -485,9 +485,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="container py-6 md:py-8">
+    <div className="container py-6 lg:py-8">
       <div className="mb-6">
-        <h1 className="heading-2 flex items-center gap-3">
+        <h1 className="heading-2 grid grid-flow-col auto-cols-max items-center gap-3">
           <Shield size={28} className="text-[#8b5cf6]" /> Admin Panel
         </h1>
         <p className="text-text-muted mt-1">
@@ -496,7 +496,7 @@ export default function AdminPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit flex-wrap">
+      <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -508,7 +508,7 @@ export default function AdminPage() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-[13px] font-medium transition-all cursor-pointer border-none shadow-none ${
+            className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-4 py-2 rounded-sm text-[13px] font-medium transition-all cursor-pointer border-none shadow-none ${
               tab === t.key
                 ? "bg-surface-card text-text-primary shadow-sm"
                 : "bg-transparent text-text-muted hover:text-text-primary"
@@ -588,7 +588,7 @@ export default function AdminPage() {
                     {Array.from({ length: 5 }, (_, i) => (
                       <tr key={i} className="border-b border-border">
                         <td className="px-4 py-3">
-                          <div className="flex items-center gap-3">
+                          <div className="grid grid-flow-col auto-cols-max items-center gap-3">
                             <Skeleton circle width={32} height={32} />
                             <div>
                               <Skeleton
@@ -661,8 +661,8 @@ export default function AdminPage() {
                         className="border-b border-border hover:bg-surface-secondary/30 transition-colors"
                       >
                         <td className="px-4 py-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-brand text-white flex items-center justify-center text-xs font-bold overflow-hidden flex-shrink-0">
+                          <div className="grid grid-flow-col auto-cols-max items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-brand text-white grid place-items-center text-xs font-bold overflow-hidden flex-shrink-0">
                               {user.avatarUrl ? (
                                 <Image
                                   src={user.avatarUrl}
@@ -695,7 +695,7 @@ export default function AdminPage() {
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <div className="flex items-center gap-1.5">
+                          <div className="grid grid-flow-col auto-cols-max items-center gap-1.5">
                             <span
                               className={`text-[13px] ${
                                 user.weeklyBuildCount >= user.weeklyBuildQuota
@@ -758,12 +758,12 @@ export default function AdminPage() {
       {/* Review Queue Tab — shows pending PLUGINS */}
       {tab === "queue" &&
         (loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {Array.from({ length: 3 }, (_, i) => (
               <SkeletonCard key={i} className="p-0 border-t-4 border-t-border">
-                <div className="p-5 flex flex-col gap-3">
-                  <div className="flex justify-between items-start">
-                    <div className="flex gap-3 items-center">
+                <div className="p-5 grid gap-3">
+                  <div className="grid grid-cols-[1fr_auto] items-start">
+                    <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
                       <Skeleton
                         width={48}
                         height={48}
@@ -785,7 +785,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <SkeletonText lines={2} />
-                  <div className="flex gap-2 mt-2 pt-3 border-t border-border">
+                  <div className="grid grid-flow-col auto-cols-max gap-2 mt-2 pt-3 border-t border-border">
                     <Skeleton
                       width="100%"
                       height="2.25rem"
@@ -802,7 +802,7 @@ export default function AdminPage() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {queue.length === 0 ? (
               <div className="card p-12 text-center col-span-full">
                 <CheckCircle size={40} className="text-success mx-auto mb-3" />
@@ -817,12 +817,12 @@ export default function AdminPage() {
               queue.map((plugin: any) => (
                 <div
                   key={plugin.id}
-                  className="card p-0 flex flex-col overflow-hidden border-t-4 border-t-warning border border-border shadow-sm hover:shadow-md transition-shadow"
+                  className="card p-0 grid overflow-hidden border-t-4 border-t-warning border border-border shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="p-5 flex flex-col gap-3">
-                    <div className="flex justify-between items-start">
-                      <div className="flex gap-3 items-center">
-                        <div className="w-12 h-12 rounded-md bg-surface-secondary flex items-center justify-center border border-border flex-shrink-0 overflow-hidden">
+                  <div className="p-5 grid gap-3">
+                    <div className="grid grid-cols-[1fr_auto] items-start">
+                      <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
+                        <div className="w-12 h-12 rounded-md bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
@@ -830,12 +830,12 @@ export default function AdminPage() {
                           />
                         </div>
                         <div>
-                          <h3 className="heading-3 text-lg font-bold m-0 text-text-primary flex items-center gap-1.5">
+                          <h3 className="heading-3 text-lg font-bold m-0 text-text-primary grid grid-flow-col auto-cols-max items-center gap-1.5">
                             {plugin.displayName}
                             {plugin.versions?.[0]?.isPreRelease && (
                               <span
                                 title="This is a pre-release"
-                                className="inline-flex items-center text-error"
+                                className="inline-grid grid-flow-col auto-cols-max items-center text-error"
                               >
                                 <FlaskConical size={16} />
                               </span>
@@ -857,10 +857,10 @@ export default function AdminPage() {
                       {plugin.description}
                     </p>
 
-                    <div className="flex gap-2 mt-2 pt-3 border-t border-border">
+                    <div className="grid grid-flow-col auto-cols-max gap-2 mt-2 pt-3 border-t border-border">
                       <button
                         onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
-                        className="flex-1 flex items-center justify-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 transition-colors"
+                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 transition-colors"
                       >
                         <CheckCircle size={16} /> Approve Plugin
                       </button>
@@ -871,12 +871,12 @@ export default function AdminPage() {
                             name: plugin.displayName,
                           })
                         }
-                        className="flex-1 flex items-center justify-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 transition-colors"
+                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 transition-colors"
                       >
                         <XCircle size={16} /> Reject Plugin
                       </button>
                     </div>
-                    <div className="flex gap-2 justify-center mt-1">
+                    <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-center mt-1">
                       <Link
                         href={`/plugins/${plugin.slug}`}
                         className="text-xs text-brand hover:underline text-center"
@@ -902,9 +902,9 @@ export default function AdminPage() {
             {/* Reject Reason Modal */}
             {rejectModal && (
               <div
-                className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-                onClick={() => {
-                  setRejectModal(null);
+className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-50 p-4"
+          onClick={() => {
+            setRejectModal(null);
                   setRejectReason("");
                 }}
               >
@@ -941,7 +941,7 @@ export default function AdminPage() {
                       email.
                     </p>
 
-                    <div className="flex gap-3 mt-5 justify-end">
+                    <div className="grid grid-flow-col auto-cols-max gap-3 mt-5 justify-items-end">
                       <button
                         onClick={() => {
                           setRejectModal(null);
@@ -961,7 +961,7 @@ export default function AdminPage() {
                           )
                         }
                         disabled={!rejectReason.trim() || reviewLoading}
-                        className="px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer flex items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
+                        className="px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
                       >
                         {reviewLoading && (
                           <Loader2 size={14} className="animate-spin" />
@@ -984,10 +984,10 @@ export default function AdminPage() {
               ? plugins
               : plugins.filter((p) => p.status === pluginStatusFilter);
           return (
-            <div className="card p-4 md:p-6">
+            <div className="card p-4 lg:p-6">
               {/* Search + Filter Bar */}
-              <div className="flex gap-4 mb-4 flex-wrap">
-                <div className="flex-1 relative min-w-[240px]">
+              <div className="grid grid-flow-col auto-cols-max gap-4 mb-4">
+                <div className="relative min-w-[240px]">
                   <Search
                     size={16}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
@@ -1007,7 +1007,7 @@ export default function AdminPage() {
               </div>
 
               {/* Status Filter Pills */}
-              <div className="flex gap-1.5 mb-5 flex-wrap items-center">
+              <div className="grid grid-flow-col auto-cols-max gap-1.5 mb-5 items-center">
                 <Filter size={14} className="mr-1 text-text-muted" />
                 {PLUGIN_STATUSES.map((s) => {
                   const isActive = pluginStatusFilter === s;
@@ -1019,7 +1019,7 @@ export default function AdminPage() {
                     <button
                       key={s}
                       onClick={() => setPluginStatusFilter(s)}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold border cursor-pointer transition-all flex items-center gap-1.5 ${
+                      className={`px-3 py-1 rounded-full text-xs font-semibold border cursor-pointer transition-all grid grid-flow-col auto-cols-max items-center gap-1.5 ${
                         isActive
                           ? getStatusBadgeClass(s)
                           : "border-border bg-transparent text-text-muted hover:text-text-primary"
@@ -1058,7 +1058,7 @@ export default function AdminPage() {
                     {Array.from({ length: 4 }, (_, i) => (
                       <tr key={i} className="border-b border-border">
                         <td className="p-4">
-                          <div className="flex items-center gap-3">
+                           <div className="grid grid-flow-col auto-cols-max items-center gap-3">
                             <Skeleton width="8rem" height="0.875rem" />
                             <Skeleton width="4rem" height="0.75rem" />
                           </div>
@@ -1074,7 +1074,7 @@ export default function AdminPage() {
                           />
                         </td>
                         <td className="p-4 text-right">
-                          <div className="flex gap-2 justify-end">
+                           <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
                             <Skeleton
                               width="2rem"
                               height="2rem"
@@ -1120,7 +1120,7 @@ export default function AdminPage() {
                         <React.Fragment key={plugin.id}>
                           <tr className="border-b border-border hover:bg-surface-secondary/20 transition-colors">
                             <td className="p-4 text-sm">
-                              <div className="flex items-center gap-3">
+                              <div className="grid grid-flow-col auto-cols-max items-center gap-3">
                                 <div className="font-semibold text-text-primary">
                                   {plugin.displayName}
                                 </div>
@@ -1133,7 +1133,7 @@ export default function AdminPage() {
                                       onClick={() =>
                                         togglePluginExpanded(plugin.id)
                                       }
-                                      className={`flex items-center gap-1 px-2 py-0.5 rounded-sm border border-border hover:bg-surface-secondary text-xs text-text-muted font-semibold transition-colors cursor-pointer ${
+                                      className={`grid grid-flow-col auto-cols-max items-center gap-1 px-2 py-0.5 rounded-sm border border-border hover:bg-surface-secondary text-xs text-text-muted font-semibold transition-colors cursor-pointer ${
                                         expandedPlugins.has(plugin.id)
                                           ? "bg-surface-secondary"
                                           : "bg-transparent"
@@ -1179,7 +1179,7 @@ export default function AdminPage() {
                               </select>
                             </td>
                             <td className="p-4 text-right">
-                              <div className="flex gap-2 justify-end items-center">
+                              <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end items-center">
                                 {/* Quick reject button — only shown for approved plugins */}
                                 {plugin.status === "APPROVED" && (
                                   <button
@@ -1194,7 +1194,7 @@ export default function AdminPage() {
                                       setPluginRejectReason("");
                                     }}
                                     title="Reject this approved plugin"
-                                    className="flex items-center justify-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
+                                    className="grid place-items-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
                                   >
                                     <ShieldAlert size={14} /> Reject
                                   </button>
@@ -1206,7 +1206,7 @@ export default function AdminPage() {
                                       ? "Remove Featured"
                                       : "Mark as Featured"
                                   }
-                                  className={`flex items-center justify-center w-8 h-8 rounded-sm border cursor-pointer transition-all ${
+                                  className={`grid place-items-center w-8 h-8 rounded-sm border cursor-pointer transition-all ${
                                     plugin.isFeatured
                                       ? "border-amber-400 bg-amber-400/15 hover:bg-amber-400/25"
                                       : "border-border bg-surface-secondary text-text-muted hover:bg-surface-secondary/80"
@@ -1237,12 +1237,12 @@ export default function AdminPage() {
                             plugin.versions.length > 0 && (
                               <tr className="border-b border-border bg-surface-secondary/10">
                                 <td colSpan={4} className="p-3 px-4 pl-8">
-                                  <div className="flex flex-col gap-1.5">
+                                  <div className="grid gap-1.5">
                                     {plugin.versions.map((v: any) => {
                                       return (
                                         <div
                                           key={v.id}
-                                          className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
+                                          className={`grid grid-flow-col auto-cols-max items-center gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
                                             v.status,
                                           )}`}
                                         >
@@ -1309,7 +1309,7 @@ export default function AdminPage() {
       {/* Plugin/Version Rejection Reason Modal */}
       {pluginRejectModal && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm grid place-items-center z-50 p-4"
           onClick={() => {
             setPluginRejectModal(null);
             setPluginRejectReason("");
@@ -1326,7 +1326,7 @@ export default function AdminPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6">
-              <div className="flex items-center gap-3 mb-1">
+              <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-1">
                 <ShieldAlert
                   size={22}
                   className={
@@ -1397,7 +1397,7 @@ export default function AdminPage() {
                 className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[120px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
               />
 
-              <div className="flex gap-3 mt-5 justify-end">
+              <div className="grid grid-flow-col auto-cols-max gap-3 mt-5 justify-items-end">
                 <button
                   onClick={() => {
                     setPluginRejectModal(null);
@@ -1410,7 +1410,7 @@ export default function AdminPage() {
                 <button
                   onClick={confirmPluginReject}
                   disabled={!pluginRejectReason.trim() || pluginRejectLoading}
-                  className={`px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer flex items-center gap-1.5 transition-all ${
+                  className={`px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 transition-all ${
                     pluginRejectReason.trim()
                       ? pluginRejectModal.targetStatus === "SUSPENDED"
                         ? "bg-red-500 hover:bg-red-600"
@@ -1443,7 +1443,7 @@ export default function AdminPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Array.from({ length: 4 }, (_, i) => (
               <SkeletonCard key={i} className="p-6">
-                <div className="flex items-center gap-3 mb-3">
+                <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-3">
                   <Skeleton
                     width={40}
                     height={40}
@@ -1485,11 +1485,11 @@ export default function AdminPage() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="card p-6 flex flex-col bg-surface-card border border-border rounded-xl shadow-sm"
+                className="card p-6 grid bg-surface-card border border-border rounded-xl shadow-sm"
               >
-                <div className="flex items-center gap-3 mb-3">
+                <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-3">
                   <div
-                    className={`w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0 ${s.bg}`}
+                    className={`w-10 h-10 rounded-md grid place-items-center flex-shrink-0 ${s.bg}`}
                   >
                     {s.icon}
                   </div>

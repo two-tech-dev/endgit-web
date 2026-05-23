@@ -276,10 +276,10 @@ function CategoryIcon({ icon, color }: { icon: string; color: string }) {
 
 export default function RulesPage() {
   return (
-    <div className="container max-w-4xl py-12 md:py-20">
+    <div className="container max-w-4xl py-12 lg:py-20">
       {/* Hero Header */}
       <div className="text-center mb-12">
-        <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 flex items-center justify-center mx-auto mb-5 border border-purple-500/15">
+        <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
           <Shield size={32} className="text-accent" />
         </div>
         <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>
@@ -290,7 +290,7 @@ export default function RulesPage() {
       </div>
 
       {/* Quick Navigation */}
-      <div className="card p-5 mb-10 flex items-center flex-wrap gap-3">
+      <div className="card p-5 mb-10 grid grid-flow-col auto-cols-max items-center gap-3">
         <span className="font-semibold text-sm text-text-muted mr-2">
           Jump to:
         </span>
@@ -303,7 +303,7 @@ export default function RulesPage() {
               color: cat.color,
               borderColor: `${cat.color}25`,
             }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold no-underline border transition-all hover:opacity-85"
+            className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold no-underline border transition-all hover:opacity-85"
           >
             <CategoryIcon icon={cat.icon} color={cat.color} />
             {cat.label}
@@ -315,22 +315,22 @@ export default function RulesPage() {
       </div>
 
       {/* Rule Categories */}
-      <div className="flex flex-col gap-12">
+      <div className="grid gap-12">
         {RULE_CATEGORIES.map((cat) => (
           <section key={cat.id} id={cat.id}>
             {/* Category Header */}
             <div
               style={{ borderBottomColor: `${cat.color}30` }}
-              className="flex items-center gap-3 mb-6 pb-3 border-b-2"
+              className="grid grid-flow-col auto-cols-max items-center gap-3 mb-6 pb-3 border-b-2"
             >
               <div
                 style={{ background: `${cat.color}15` }}
-                className="w-9 h-9 rounded-md flex items-center justify-center"
+                className="w-9 h-9 rounded-md grid place-items-center"
               >
                 <CategoryIcon icon={cat.icon} color={cat.color} />
               </div>
               <div>
-                <h2 className="heading-3 m-0 flex items-center gap-2">
+                <h2 className="heading-3 m-0 grid grid-flow-col auto-cols-max items-center gap-2">
                   <span
                     style={{ color: cat.color }}
                     className="font-mono text-sm"
@@ -346,14 +346,14 @@ export default function RulesPage() {
             </div>
 
             {/* Rules List */}
-            <div className="flex flex-col gap-4">
+            <div className="grid gap-4">
               {cat.rules.map((rule) => (
                 <div
                   key={rule.id}
                   style={{ borderLeftColor: `${cat.color}60` }}
                   className="card p-5 border-l-3 transition-all duration-200"
                 >
-                  <div className="flex items-start gap-4">
+                  <div className="grid grid-cols-[auto_1fr] items-start gap-4">
                     <span
                       style={{
                         background: `${cat.color}12`,
@@ -363,7 +363,7 @@ export default function RulesPage() {
                     >
                       {rule.id}
                     </span>
-                    <div className="flex-1 min-w-0">
+                    <div className="min-w-0">
                       <h3 className="m-0 text-[15px] font-semibold text-text-primary mb-1.5">
                         {rule.title}
                       </h3>

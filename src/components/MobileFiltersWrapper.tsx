@@ -14,10 +14,10 @@ export default function MobileFiltersWrapper({
 
   return (
     <>
-      <div className="md:hidden mb-4 w-full">
+      <div className="lg:hidden mb-4 w-full">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="btn btn-secondary flex items-center gap-2 w-full justify-center p-3"
+          className="btn btn-secondary grid grid-flow-col place-items-center gap-2 w-full p-3"
         >
           <SlidersHorizontal size={18} />{" "}
           {isOpen ? "Hide Filters & Search" : "Show Filters & Search"}
@@ -25,10 +25,10 @@ export default function MobileFiltersWrapper({
       </div>
 
       <div
-        className={`${isOpen ? "block" : "hidden"} md:block w-full md:w-[250px] shrink-0`}
+        className={`${isOpen ? "block" : "hidden"} lg:block w-full lg:w-[250px] shrink-0`}
       >
         {searchComponent && (
-          <div className="md:hidden mb-4 w-full">{searchComponent}</div>
+          <div className="lg:hidden mb-4 w-full">{searchComponent}</div>
         )}
         {children}
       </div>

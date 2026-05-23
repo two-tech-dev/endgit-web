@@ -57,8 +57,8 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
 
   return (
     <div className="card p-5 bg-surface-secondary border border-border-highlight">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="font-semibold flex items-center gap-2 text-sm text-text-primary">
+      <div className="grid grid-cols-[1fr_auto] items-center mb-4">
+        <h3 className="font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-sm text-text-primary">
           <Shield size={18} color={statusColor} /> VirusTotal Scan
         </h3>
         {!vt.status && (
@@ -70,21 +70,21 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
       </div>
 
       {vt.status === "completed" && (
-        <div className="flex flex-col gap-3">
-          <div className="flex justify-between text-sm">
+        <div className="grid gap-3">
+          <div className="grid grid-cols-[1fr_auto] text-sm">
             <span className="text-text-muted">Status</span>
             <span className="font-semibold" style={{ color: statusColor }}>
               {statusLabel}
             </span>
           </div>
-          <div className="flex justify-between text-sm">
+          <div className="grid grid-cols-[1fr_auto] text-sm">
             <span className="text-text-muted">Detection</span>
             <span className="font-semibold text-text-primary">
               {malicious}/{vt.total ?? 0} engines flagged
             </span>
           </div>
           {formattedDate && (
-            <div className="flex justify-between text-sm">
+            <div className="grid grid-cols-[1fr_auto] text-sm">
               <span className="text-text-muted">Scanned</span>
               <span className="font-medium text-text-primary">
                 {formattedDate}
@@ -96,7 +96,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
               href={vt.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 mt-2 px-3 py-2 rounded-md text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
+              className="grid grid-flow-col place-items-center gap-1.5 mt-2 px-3 py-2 rounded-md text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
             >
               <ExternalLink size={14} /> View Full Report
             </a>
@@ -105,14 +105,14 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
       )}
 
       {(vt.status === "queued" || vt.status === "scanning") && (
-        <p className="text-[0.8125rem] text-warning flex items-center gap-1.5">
+        <p className="text-[0.8125rem] text-warning grid grid-flow-col auto-cols-max items-center gap-1.5">
           <Loader2 size={14} className="animate-spin shrink-0" />
           Scan in progress — this may take a few minutes.
         </p>
       )}
 
       {vt.status === "failed" && (
-        <p className="text-[0.8125rem] text-text-muted flex items-center gap-1.5">
+        <p className="text-[0.8125rem] text-text-muted grid grid-flow-col auto-cols-max items-center gap-1.5">
           <AlertTriangle size={14} className="shrink-0" />
           Scan could not be completed. It will be retried on the next
           submission.

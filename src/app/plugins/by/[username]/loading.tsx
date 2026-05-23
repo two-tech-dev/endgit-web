@@ -5,35 +5,33 @@ function PluginCardSkeleton() {
     <SkeletonCard
       style={{
         padding: 0,
-        display: "flex",
-        flexDirection: "column",
+        display: "grid",
         overflow: "hidden",
       }}
     >
       <div
         style={{
           padding: "var(--space-4)",
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
           gap: "var(--space-4)",
-          flexWrap: "wrap",
         }}
       >
         <Skeleton width={64} height={64} borderRadius="var(--radius-md)" />
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ minWidth: 0 }}>
           <Skeleton
             width="60%"
             height="1.25rem"
             style={{ marginBottom: "var(--space-2)" }}
           />
-          <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          <div style={{ display: "grid", gap: "4px" }}>
             <Skeleton width="3rem" height="0.8125rem" />
             <Skeleton width="5rem" height="0.8125rem" />
           </div>
         </div>
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
+            display: "grid",
             alignItems: "flex-end",
             gap: "4px",
           }}
@@ -55,7 +53,9 @@ export default function AuthorPluginsLoading() {
       <div style={{ marginBottom: "var(--space-8)" }}>
         <div
           style={{
-            display: "flex",
+            display: "grid",
+            gridAutoFlow: "column",
+            gridAutoColumns: "max-content",
             alignItems: "center",
             gap: "var(--space-2)",
           }}

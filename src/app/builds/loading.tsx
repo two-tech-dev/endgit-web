@@ -9,15 +9,15 @@ export default function BuildsLoading() {
       </div>
 
       <SkeletonCard className="p-0">
-        <div className="flex flex-col">
+        <div className="grid">
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              className={`flex items-center p-4 gap-4 ${
+              className={`grid grid-flow-col auto-cols-max items-center p-4 gap-4 ${
                 i < 7 ? "border-b border-border" : ""
               }`}
             >
-              <div className="flex-1">
+              <div>
                 <Skeleton width="60%" height="0.875rem" className="mb-1" />
                 <Skeleton width="30%" height="0.75rem" className="mb-1" />
                 <Skeleton width="40%" height="0.75rem" />

@@ -73,7 +73,7 @@ export default function NavbarClient({
           setDropdownOpen(false);
           onNavigate?.();
         }}
-        className={`flex items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
+        className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
           mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
         }`}
       >
@@ -85,7 +85,7 @@ export default function NavbarClient({
           setDropdownOpen(false);
           onNavigate?.();
         }}
-        className={`flex items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
+        className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary transition-colors ${
           mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
         }`}
       >
@@ -99,7 +99,7 @@ export default function NavbarClient({
             setDropdownOpen(false);
             onNavigate?.();
           }}
-          className={`flex items-center gap-2 rounded-sm text-[#8b5cf6] hover:bg-[#8b5cf6]/5 transition-colors ${
+          className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-[#8b5cf6] hover:bg-[#8b5cf6]/5 transition-colors ${
             mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
           }`}
         >
@@ -116,7 +116,7 @@ export default function NavbarClient({
         setDropdownOpen(false);
         onNavigate?.();
       }}
-      className={`flex items-center gap-2 rounded-sm text-error hover:bg-error/5 w-full text-left transition-colors ${
+      className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-error hover:bg-error/5 w-full text-left transition-colors ${
         mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
       }`}
     >
@@ -126,15 +126,15 @@ export default function NavbarClient({
 
   if (mobile) {
     return (
-      <div className="flex flex-col gap-1">
+      <div className="grid gap-1">
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className={`flex items-center gap-3 py-2.5 px-3 rounded-md border-0 w-full cursor-pointer transition-all ${
+          className={`grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2.5 px-3 rounded-md border-0 w-full cursor-pointer transition-all ${
             dropdownOpen ? "bg-surface-secondary" : "bg-transparent"
           }`}
         >
           {userAvatar}
-          <div className="flex-1 text-left min-w-0">
+          <div className="min-w-0">
             <div className="font-semibold text-[15px] text-text-primary overflow-hidden text-ellipsis whitespace-nowrap">
               {user?.name || user?.email}
             </div>
@@ -155,7 +155,7 @@ export default function NavbarClient({
             dropdownOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="flex flex-col gap-1 px-1">
+          <div className="grid gap-1 px-1">
             {menuItems}
             <div className="border-t border-border my-1" />
             {signOutButton}
@@ -169,7 +169,7 @@ export default function NavbarClient({
     <div className="relative">
       <button
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-2 py-1.5 px-3 rounded-full border border-border bg-surface-card cursor-pointer transition-all hover:bg-surface-secondary"
+        className="grid grid-cols-[auto_1fr_auto] items-center gap-2 py-1.5 px-3 rounded-full border border-border bg-surface-card cursor-pointer transition-all hover:bg-surface-secondary"
       >
         {userAvatar}
         <span className="font-medium text-sm text-text-primary max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap">
@@ -198,7 +198,7 @@ export default function NavbarClient({
               <div className="text-xs text-text-muted">{user?.email}</div>
             </div>
 
-            <div className="p-1.5 flex flex-col gap-0.5">{menuItems}</div>
+            <div className="p-1.5 grid gap-0.5">{menuItems}</div>
 
             <div className="p-1.5 border-t border-border">{signOutButton}</div>
           </div>

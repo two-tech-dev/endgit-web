@@ -3,11 +3,11 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border py-8 md:py-12 mt-auto bg-surface-secondary">
-      <div className="container flex flex-wrap justify-between gap-6 md:gap-8">
+    <footer className="border-t border-border py-8 lg:py-12 mt-auto bg-surface-secondary">
+      <div className="container grid grid-cols-[1fr] lg:grid-cols-[280px_1fr] justify-between gap-6 lg:gap-8">
         {/* Brand */}
         <div className="max-w-[280px]">
-          <div className="flex items-center gap-2 mb-3">
+          <div className="grid grid-cols-[auto_1fr] items-center gap-2 mb-3">
             <Image
               src="/logo.png"
               alt="EndGit"
@@ -25,12 +25,12 @@ export default function Footer() {
         </div>
 
         {/* Links */}
-        <div className="footer-links flex gap-8 md:gap-12 flex-wrap">
+        <div className="footer-links grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-8 lg:gap-12">
           <div>
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Platform
             </h4>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Link
                 href="/plugins"
                 className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
@@ -55,7 +55,7 @@ export default function Footer() {
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Community
             </h4>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <a
                 href="https://discord.gg/9eZhP9y26Q"
                 target="_blank"
@@ -92,7 +92,7 @@ export default function Footer() {
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Legal
             </h4>
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               <Link
                 href="/terms"
                 className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
@@ -111,7 +111,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="container mt-8 pt-6 border-t border-border flex justify-between items-center flex-wrap gap-2">
+      <div className="container mt-8 pt-6 border-t border-border grid grid-cols-[1fr_auto] items-center flex-wrap gap-2">
         <p className="text-text-muted text-xs m-0" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
           {process.env.VERCEL_GIT_COMMIT_SHA && (

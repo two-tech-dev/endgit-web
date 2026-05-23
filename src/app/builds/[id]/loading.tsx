@@ -6,9 +6,9 @@ export default function BuildDetailLoading() {
       <Skeleton width="10rem" height="0.875rem" className="mb-6" />
 
       <SkeletonCard className="p-6 mb-6">
-        <div className="flex justify-between items-start flex-wrap gap-4">
+        <div className="grid grid-cols-[1fr_auto] items-start gap-4">
           <div>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
               <Skeleton width="14rem" height="1.5rem" />
               <Skeleton
                 width="5rem"
@@ -36,7 +36,7 @@ export default function BuildDetailLoading() {
       </SkeletonCard>
 
       <SkeletonCard className="p-5">
-        <div className="flex justify-between mb-3">
+        <div className="grid grid-cols-[1fr_auto] mb-3">
           <Skeleton width="6rem" height="1rem" />
           <Skeleton width="4rem" height="0.875rem" />
         </div>

@@ -47,7 +47,7 @@ export default async function SubmitReviewPage({
   // Allow editing the submission even if already submitted
 
   return (
-    <div className="container pt-8 md:pt-10 pb-16">
+    <div className="container pt-8 lg:pt-10 pb-16">
       <SubmitReviewForm
         buildId={build.id}
         buildNumber={build.buildNumber}

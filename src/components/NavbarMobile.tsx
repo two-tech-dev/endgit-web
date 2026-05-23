@@ -89,7 +89,7 @@ export default function NavbarMobile() {
         visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
       }`}
     >
-      <div className="container flex flex-col pt-4 gap-1">
+      <div className="container grid pt-4 gap-1">
         {[
           { href: "/plugins", label: "Releases" },
           { href: "/plugins/top", label: "Top Plugins" },
@@ -123,7 +123,7 @@ export default function NavbarMobile() {
           transitionDelay: "200ms",
         }}
       >
-        <div className="container flex flex-col pt-3 pb-4 gap-1">
+        <div className="container grid pt-3 pb-4 gap-1">
           <div
             className="transition-all duration-250 ease-out"
             style={{
@@ -158,9 +158,9 @@ export default function NavbarMobile() {
   );
 
   return (
-    <div ref={wrapperRef} className="flex items-center">
+    <div ref={wrapperRef} className="grid items-center">
       {/* Desktop nav */}
-      <nav className="hidden xl:flex gap-8 items-center">
+      <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-8 items-center">
         <Link
           href="/plugins"
           className="text-text-secondary font-medium hover:text-text-primary transition-colors"
@@ -187,7 +187,7 @@ export default function NavbarMobile() {
         </Link>
         <button
           onClick={toggleTheme}
-          className="flex items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
+          className="grid items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
@@ -197,20 +197,20 @@ export default function NavbarMobile() {
 
       {/* Mobile hamburger button */}
       <button
-        className="flex xl:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
+        className="grid lg:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
         onClick={handleToggle}
         aria-label="Toggle menu"
       >
         <div className="relative w-6 h-6">
           <div
-            className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${
+            className={`absolute inset-0 grid items-center justify-center transition-all duration-200 ${
               open ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
             }`}
           >
             <Menu size={24} />
           </div>
           <div
-            className={`absolute inset-0 flex items-center justify-center transition-all duration-200 ${
+            className={`absolute inset-0 grid items-center justify-center transition-all duration-200 ${
               open ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
             }`}
           >

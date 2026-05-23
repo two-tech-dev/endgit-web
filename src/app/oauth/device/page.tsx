@@ -95,17 +95,17 @@ export default function DeviceAuthPage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="min-h-[60vh] grid place-items-center">
         <Loader2 size={32} className="animate-spin text-brand" />
       </div>
     );
   }
 
   return (
-    <div className="container py-12 min-h-[60vh] flex items-center justify-center mx-auto px-4">
+    <div className="container py-12 min-h-[60vh] grid place-items-center mx-auto px-4">
       <div className="card max-w-[480px] w-full p-10 text-center">
         {/* Icon */}
-        <div className="w-[72px] h-[72px] bg-brand/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="w-[72px] h-[72px] bg-brand/10 rounded-full grid place-items-center mx-auto mb-6">
           <Terminal size={36} className="text-brand" />
         </div>
 
@@ -116,7 +116,7 @@ export default function DeviceAuthPage() {
 
         {/* Success state */}
         {success ? (
-          <div className="flex flex-col items-center gap-4">
+          <div className="grid gap-4 items-center">
             <CheckCircle size={48} className="text-success" />
             <p className="text-lg font-semibold text-text-primary">
               Device authorized!
@@ -128,30 +128,30 @@ export default function DeviceAuthPage() {
           </div>
         ) : !session ? (
           /* Not signed in */
-          <div className="flex flex-col items-center gap-6">
+          <div className="grid gap-6 items-center">
             <div className="p-4 bg-warning/10 rounded-md border border-warning/20 w-full">
-              <div className="flex items-center gap-2 text-warning font-medium justify-center">
+              <div className="grid place-items-center gap-2 text-warning font-medium">
                 <AlertCircle size={16} />
                 You must be signed in to authorize a device
               </div>
             </div>
             <a
               href={`/api/auth/signin?callbackUrl=${encodeURIComponent("/oauth/device")}`}
-              className="btn btn-primary inline-flex items-center gap-2 w-full justify-center"
+              className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 w-full justify-items-center"
             >
               Sign in with GitHub
             </a>
           </div>
         ) : (
           /* Signed in — show code entry form */
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit} className="grid gap-6">
             <div>
               <p className="text-sm font-medium mb-3 text-text-secondary">
                 Enter the code shown in your terminal
               </p>
 
               {/* Two-segment code input */}
-              <div className="flex items-center justify-center gap-3">
+              <div className="grid place-items-center gap-3">
                 <input
                   type="text"
                   value={segments[0]}
@@ -185,7 +185,7 @@ export default function DeviceAuthPage() {
 
             {/* Error message */}
             {error && (
-              <div className="p-3 bg-error/10 rounded-md border border-error/20 flex items-center gap-2 text-error text-sm">
+              <div className="p-3 bg-error/10 rounded-md border border-error/20 grid grid-flow-col auto-cols-max items-center gap-2 text-error text-sm">
                 <AlertCircle size={14} />
                 {error}
               </div>
@@ -194,7 +194,7 @@ export default function DeviceAuthPage() {
             <button
               type="submit"
               disabled={userCode.length !== 9 || loading}
-              className="btn btn-primary w-full flex items-center justify-center gap-2 text-base p-3 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="btn btn-primary w-full grid place-items-center gap-2 text-base p-3 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
               {loading ? (
                 <>

@@ -93,10 +93,10 @@ export function BuildsTableClient({
     plugin.status === "PENDING_REVIEW";
 
   return (
-    <div className="container py-6 md:py-8">
+    <div className="container py-6 lg:py-8">
       <Link
         href="/dashboard/dev"
-        className="inline-flex items-center gap-1.5 text-text-muted no-underline text-sm font-medium mb-6 hover:text-brand transition-colors"
+        className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 text-text-muted no-underline text-sm font-medium mb-6 hover:text-brand transition-colors"
       >
         <ArrowLeft size={16} /> Back to Dev Dashboard
       </Link>
@@ -110,7 +110,7 @@ export function BuildsTableClient({
         </p>
       </div>
 
-      <div className="card p-4 md:p-6">
+      <div className="card p-4 lg:p-6">
         {builds.length === 0 ? (
           <div className="text-center p-8 text-text-muted">
             <GitBranch size={32} className="mx-auto mb-4 opacity-50" />
@@ -154,7 +154,7 @@ export function BuildsTableClient({
                     className="border-b border-border bg-surface-card hover:bg-surface-secondary/30 transition-colors"
                   >
                     <td className="p-4 border-r border-border align-top">
-                      <div className="flex flex-col gap-[2px]">
+                      <div className="grid gap-[2px]">
                         <Link
                           href={`/builds/${build.id}`}
                           className="text-accent no-underline font-medium hover:underline"
@@ -193,7 +193,7 @@ export function BuildsTableClient({
                     </td>
                     <td className="p-4 border-r border-border align-top">
                       <div className="flex flex-col gap-1.5">
-                        <div className="flex items-center gap-1.5 break-all">
+                        <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 break-all">
                           {build.commitHash && (
                             <a
                               href={`${plugin.repoUrl}/commit/${build.commitHash}`}
@@ -208,7 +208,7 @@ export function BuildsTableClient({
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>
-                        <div className="flex gap-1.5">
+                        <div className="grid grid-flow-col auto-cols-max gap-1.5">
                           {isOwner && build.versionStatus === "PENDING" && (
                             <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
                               PENDING REVIEW
@@ -232,13 +232,13 @@ export function BuildsTableClient({
                         href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent flex items-center gap-1 no-underline hover:underline font-mono"
+                        className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 no-underline hover:underline font-mono"
                       >
                         {build.branch || "master"}
                       </a>
                     </td>
                     <td className="p-4 text-right align-top">
-                      <div className="flex gap-2 justify-end">
+                      <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
                         <Link
                           href={`/builds/${build.id}`}
                           className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
@@ -252,7 +252,7 @@ export function BuildsTableClient({
                           !hasPendingVersion && (
                             <Link
                               href={`/builds/${build.id}/submit`}
-                              className="btn btn-primary py-1.5 px-3 text-[13px] flex items-center gap-1 whitespace-nowrap"
+                              className="btn btn-primary py-1.5 px-3 text-[13px] grid grid-flow-col auto-cols-max items-center gap-1 whitespace-nowrap"
                             >
                               <Send size={14} /> Submit
                             </Link>
@@ -265,7 +265,7 @@ export function BuildsTableClient({
             </table>
 
             {isLoading && (
-              <div className="flex justify-center p-4">
+              <div className="grid justify-items-center p-4">
                 <Loader2 size={20} className="animate-spin text-brand" />
               </div>
             )}

@@ -27,7 +27,7 @@ export default function PluginSidebarFilters() {
   ];
 
   return (
-    <aside className="sidebar-filters w-[250px] shrink-0 flex flex-col gap-6">
+    <aside className="sidebar-filters w-[250px] shrink-0 grid gap-6">
       <div className="card p-4">
         <h3 className="font-semibold mb-3 text-text-primary">Categories</h3>
         <select
@@ -46,7 +46,7 @@ export default function PluginSidebarFilters() {
 
       <div className="card p-4">
         <h3 className="font-semibold mb-3 text-text-primary">Sort By</h3>
-        <ul className="flex flex-col gap-2 p-0 m-0">
+        <ul className="grid gap-2 p-0 m-0">
           {sortOptions.map((opt) => (
             <li
               key={opt.value}
@@ -65,8 +65,8 @@ export default function PluginSidebarFilters() {
 
       <div className="card p-4">
         <h3 className="font-semibold mb-3 text-text-primary">Type</h3>
-        <ul className="flex flex-col gap-2 p-0 m-0">
-          <li className="flex items-center gap-2 text-text-secondary">
+        <ul className="grid gap-2 p-0 m-0">
+          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"
@@ -79,7 +79,7 @@ export default function PluginSidebarFilters() {
               All Types
             </label>
           </li>
-          <li className="flex items-center gap-2 text-text-secondary">
+          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"
@@ -92,7 +92,7 @@ export default function PluginSidebarFilters() {
               Python (.whl)
             </label>
           </li>
-          <li className="flex items-center gap-2 text-text-secondary">
+          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
             <input
               type="radio"
               name="type"

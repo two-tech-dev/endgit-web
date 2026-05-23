@@ -33,13 +33,13 @@ export default function PluginsLoading() {
           width="300px"
           height="2.5rem"
           borderRadius="var(--radius-md)"
-          className="hidden md:block"
+          className="hidden lg:block"
         />
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Sidebar Filters Skeleton */}
-        <div className="hidden md:flex flex-col gap-6 w-[250px] shrink-0">
+        <div className="hidden lg:flex flex-col gap-6 w-[250px] shrink-0">
           <SkeletonCard className="p-4">
             <Skeleton width="5rem" height="0.875rem" className="mb-3" />
             <Skeleton
@@ -65,7 +65,7 @@ export default function PluginsLoading() {
 
         {/* Plugin Grid Skeleton */}
         <div className="flex-1">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 align-content-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 align-content-start">
             {Array.from({ length: 6 }, (_, i) => (
               <PluginCardSkeleton key={i} />
             ))}

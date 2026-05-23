@@ -55,7 +55,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
+      className="grid place-items-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >
       {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}

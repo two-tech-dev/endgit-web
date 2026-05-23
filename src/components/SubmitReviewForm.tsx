@@ -267,7 +267,7 @@ export default function SubmitReviewForm({
         <ArrowLeft size={16} /> Back to Build
       </button>
 
-      <div className="card p-4 md:p-6">
+      <div className="card p-4 lg:p-6">
         <h1 className="heading-2 mb-2">Publish Plugin</h1>
         <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
@@ -287,7 +287,7 @@ export default function SubmitReviewForm({
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="grid gap-5">
           {/* ── Section: About this plugin ── */}
           <h2 className="heading-3 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this plugin...
@@ -343,7 +343,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-0.5 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] sm:items-end mb-0.5 gap-2">
               <label className="block text-sm font-medium">
                 Long Description (Markdown)
               </label>
@@ -352,7 +352,7 @@ export default function SubmitReviewForm({
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="flex items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -375,7 +375,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label className="flex justify-between items-baseline text-sm font-medium mb-2">
+            <label className="grid grid-cols-[1fr_auto] items-baseline text-sm font-medium mb-2">
               <span>
                 Categories{" "}
                 <span className="text-text-muted font-normal">(Max 5)</span>
@@ -390,11 +390,11 @@ export default function SubmitReviewForm({
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
-                  className="flex items-center gap-2 cursor-pointer text-sm"
+                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
@@ -472,7 +472,7 @@ export default function SubmitReviewForm({
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+            <label className="grid grid-flow-col auto-cols-max items-center gap-2 text-sm font-medium cursor-pointer">
               <input
                 type="checkbox"
                 checked={isPreRelease}
@@ -497,11 +497,11 @@ export default function SubmitReviewForm({
               Select the stable Endstone API versions this build is verified to
               work with (Rule B1).
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
               {ENDSTONE_APIS.map((api) => (
                 <label
                   key={api}
-                  className="flex items-center gap-2 cursor-pointer text-sm"
+                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm"
                 >
                   <input
                     type="checkbox"
@@ -560,7 +560,7 @@ export default function SubmitReviewForm({
           )}
 
           <div>
-            <div className="flex justify-between items-baseline mb-2">
+            <div className="grid grid-cols-[1fr_auto] items-baseline mb-2">
               <label className="text-sm font-medium">Producers</label>
               <button
                 type="button"
@@ -570,15 +570,15 @@ export default function SubmitReviewForm({
                     { githubUser: "", role: "CONTRIBUTOR" },
                   ])
                 }
-                className="flex items-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
+                className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
               >
                 <Plus size={12} /> Add Producer
               </button>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="grid gap-2">
               {producers.map((producer, index) => (
-                <div key={index} className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
+                <div key={index} className="grid grid-cols-1 sm:grid-cols-[1fr_auto_auto] gap-2 items-stretch sm:items-center">
                   <input
                     type="text"
                     placeholder="GitHub Username"
@@ -660,7 +660,7 @@ export default function SubmitReviewForm({
             />
           </div>
 
-          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border flex-col sm:flex-row">
+          <div className="grid grid-cols-1 sm:grid-cols-[auto_auto] gap-3 mt-2 pt-4 border-t border-border justify-items-end">
             {isPending && (
               <button
                 type="button"
@@ -684,7 +684,7 @@ export default function SubmitReviewForm({
         </form>
 
         {error && (
-          <div className="mt-4 p-3 bg-error/8 rounded-sm text-error text-sm flex items-center gap-2">
+          <div className="mt-4 p-3 bg-error/8 rounded-sm text-error text-sm grid grid-flow-col auto-cols-max items-center gap-2">
             <AlertTriangle size={16} /> {error}
           </div>
         )}

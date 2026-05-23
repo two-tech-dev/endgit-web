@@ -37,7 +37,7 @@ export default async function BuildsPage() {
   const today = todayUTC();
 
   return (
-    <div className="container pt-8 md:pt-10 pb-16">
+    <div className="container pt-8 lg:pt-10 pb-16">
       <BuildsList builds={allBuilds} today={today} />
     </div>
   );

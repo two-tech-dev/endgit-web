@@ -45,7 +45,7 @@ export default async function PluginsPage({
 
   return (
     <div className="container py-8">
-      <div className="flex justify-between items-center mb-4 flex-wrap gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-center mb-4 gap-4">
         <div>
           <h1 className="heading-2">Releases</h1>
           {pagination.total > 0 && (
@@ -56,12 +56,12 @@ export default async function PluginsPage({
             </p>
           )}
         </div>
-        <div className="hidden md:block w-full max-w-[300px]">
+        <div className="hidden lg:block w-full max-w-[300px]">
           <PluginSearch />
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="plugins-layout grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6">
         {/* Sidebar Filters */}
         <MobileFiltersWrapper searchComponent={<PluginSearch />}>
           <PluginSidebarFilters />

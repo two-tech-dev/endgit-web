@@ -88,10 +88,10 @@ function TerminalMock() {
       delay={0.3}
       direction="right"
       duration={0.6}
-      className="w-full max-w-[480px] h-[200px] md:h-[260px] shrink-0"
+      className="w-full h-[200px] lg:h-[260px] lg:max-w-[480px] shrink-0"
     >
       <div className="bg-[#0c0c14] rounded-xl border border-[#1e1e2e] overflow-hidden shadow-lg w-full h-full">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-2 px-4 py-3 border-b border-[#1e1e2e] bg-[#11111b]">
           <div className="w-3 h-3 rounded-full bg-[#f38ba8]" />
           <div className="w-3 h-3 rounded-full bg-[#f9e2af]" />
           <div className="w-3 h-3 rounded-full bg-[#a6e3a1]" />
@@ -99,8 +99,8 @@ function TerminalMock() {
             endgit-cli
           </span>
         </div>
-        <div className="p-3 md:p-5 font-mono text-xs md:text-sm leading-relaxed h-[140px] md:h-[200px] overflow-hidden">
-          <div className="flex gap-2 items-center">
+        <div className="p-3 lg:p-5 font-mono text-xs lg:text-sm leading-relaxed h-[140px] lg:h-[200px] overflow-hidden">
+          <div className="grid grid-cols-[auto_1fr] gap-2 items-center">
             <span className="text-[#f38ba8] select-none">$</span>
             <span className="text-[#cdd6f4]">
               {COMMAND_TEXT.slice(0, typedChars)}
@@ -121,7 +121,7 @@ function TerminalMock() {
           ))}
 
           {showPrompt && (
-            <div className="mt-1 flex gap-2 items-center">
+            <div className="mt-1 grid grid-cols-[auto_1fr] gap-2 items-center">
               <span className="text-[#f38ba8] select-none">$</span>
               <span className="inline-block w-2 h-[1.2em] bg-[#cdd6f4] animate-[blink_1s_step-end_infinite]" />
             </div>
@@ -174,21 +174,21 @@ const STEPS = [
 
 export default function HomeContent({ stats, children }: HomeContentProps) {
   return (
-    <div className="flex flex-col">
+    <div className="grid">
       {/* ── Hero ── */}
-      <section className="py-10 md:py-10 xl:py-20 relative overflow-hidden">
+      <section className="py-10 lg:py-10 lg:py-20 relative overflow-hidden">
         <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.05)_0%,transparent_60%)] pointer-events-none" />
-        <div className="container grid items-center gap-8 xl:gap-16 xl:grid-cols-[1fr_auto]">
+        <div className="container grid items-center gap-8 lg:gap-16 lg:grid-cols-[1fr_auto]">
           {/* Left: Copy */}
           <div className="min-w-0">
             <FadeIn delay={0} direction="down">
-              <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-flex items-center gap-1.5 mb-5">
+              <span className="text-xs font-bold tracking-wider uppercase px-3.5 py-1 rounded-full bg-brand/10 text-brand border border-brand/20 inline-grid grid-cols-[auto_1fr] items-center gap-1.5 mb-5">
                 <Zap size={11} fill="currentColor" /> Public Beta
               </span>
             </FadeIn>
 
             <FadeIn delay={0.1} direction="none">
-              <h1 className="text-[2rem] md:text-[3.25rem] font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
+              <h1 className="text-[2rem] lg:text-[3.25rem] font-extrabold tracking-tight text-text-primary leading-[1.1] mb-4">
                 Ship plugins for{" "}
                 <span className="bg-gradient-to-r from-brand to-brand-dark bg-clip-text text-transparent">
                   Endstone
@@ -209,10 +209,10 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="flex gap-3 md:gap-4 flex-col sm:flex-row items-stretch sm:items-center">
+              <div className="grid gap-3 lg:gap-4 sm:grid-flow-col sm:auto-cols-max items-stretch sm:items-center">
                 <Link
                   href="/plugins"
-                  className="btn btn-primary text-base font-semibold py-3 px-6 inline-flex items-center gap-2 no-underline"
+                  className="btn btn-primary text-base font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
                 >
                   Browse Plugins <ArrowRight size={16} />
                 </Link>
@@ -220,7 +220,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
                   href="https://github.com/two-tech-dev/endgit-cli#installation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary text-base py-3 px-6 inline-flex items-center gap-2 no-underline"
+                  className="btn btn-secondary text-base py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
                 >
                   <Terminal size={16} /> Install CLI
                 </a>
@@ -229,7 +229,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
 
             {/* Inline stats */}
             <FadeIn delay={0.3}>
-              <div className="flex gap-6 md:gap-8 mt-8 pt-5 border-t border-border flex-wrap">
+              <div className="grid grid-flow-col auto-cols-max gap-6 lg:gap-8 mt-8 pt-5 border-t border-border">
                 {[
                   { label: "Plugins", value: stats.plugins || "0" },
                   { label: "Downloads", value: stats.downloads },
@@ -249,7 +249,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
           </div>
 
           {/* Right: Terminal */}
-          <div className="flex justify-center min-w-0">
+          <div className="grid justify-items-center min-w-0">
             <TerminalMock />
           </div>
         </div>
@@ -262,22 +262,22 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             <span className="text-xs font-bold tracking-wider uppercase text-text-muted block mb-2">
               How it works
             </span>
-            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-text-primary m-0">
+            <h2 className="text-2xl lg:text-4xl font-bold tracking-tight text-text-primary m-0">
               From code to users in three steps
             </h2>
           </div>
         </FadeIn>
 
-        <StaggerContainer className="flex flex-wrap gap-5 justify-center">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {STEPS.map((step) => (
             <StaggerItem
               key={step.number}
-              className="step-card flex-[1_1_280px] max-w-[360px] flex items-start gap-4 p-5 md:p-6 bg-surface-card border border-border rounded-lg shadow-sm transition-all cursor-default"
+              className="step-card grid grid-cols-[auto_1fr] items-start gap-4 p-5 lg:p-6 bg-surface-card border border-border rounded-lg shadow-sm transition-all cursor-default sm:last:col-span-2 lg:last:col-span-1"
             >
-              <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand font-bold text-sm shrink-0">
+              <div className="w-10 h-10 rounded-md bg-brand-light grid place-items-center text-brand font-bold text-sm shrink-0">
                 {step.number}
               </div>
-          <div className="flex-[3] min-w-0">
+          <div className="min-w-0">
                 <h3 className="text-base font-semibold text-text-primary mb-1">
                   {step.title}
                 </h3>
@@ -297,7 +297,7 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
             <span className="text-xs font-bold tracking-wider uppercase text-text-muted block mb-2">
               Why EndGit
             </span>
-            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-text-primary m-0">
+            <h2 className="text-2xl lg:text-4xl font-bold tracking-tight text-text-primary m-0">
               Built for the Endstone ecosystem
             </h2>
           </div>
@@ -305,11 +305,11 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
 
         {/* CI/CD hero feature */}
         <FadeIn className="mb-5">
-          <div className="card p-5 md:p-8 flex gap-5 md:gap-6 items-center flex-wrap">
-            <div className="w-14 h-14 rounded-lg bg-brand-light flex items-center justify-center text-brand shrink-0">
+          <div className="card p-5 lg:p-8 grid grid-cols-[auto_1fr] gap-5 lg:gap-6 items-center">
+            <div className="w-14 h-14 rounded-lg bg-brand-light grid place-items-center text-brand shrink-0">
               <Activity size={26} />
             </div>
-            <div className="flex-1 min-w-[240px]">
+            <div className="min-w-[240px]">
               <h3 className="text-lg font-semibold text-text-primary mb-2">
                 Automated CI/CD Pipeline
               </h3>
@@ -323,10 +323,10 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
         </FadeIn>
 
         {/* Smaller feature cards */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {FEATURES.map((f, i) => (
-            <StaggerItem key={i} className="card p-6 flex flex-col gap-3">
-              <div className="w-10 h-10 rounded-md bg-brand-light flex items-center justify-center text-brand">
+            <StaggerItem key={i} className="card p-6 grid gap-3">
+              <div className="w-10 h-10 rounded-md bg-brand-light grid place-items-center text-brand">
                 {f.icon}
               </div>
               <h3 className="text-base font-semibold text-text-primary m-0">
@@ -343,25 +343,25 @@ export default function HomeContent({ stats, children }: HomeContentProps) {
       {/* ── CTA ── */}
       <section className="container pb-16 lg:pb-24">
         <FadeIn direction="none">
-          <div className="bg-slate-900 dark:bg-zinc-900 rounded-xl p-6 md:p-12 text-center flex flex-col items-center gap-4 relative overflow-hidden">
+          <div className="bg-slate-900 dark:bg-zinc-900 rounded-xl p-6 lg:p-12 text-center grid justify-items-center gap-4 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.08)_0%,transparent_60%)] pointer-events-none" />
-            <h2 className="text-xl md:text-3xl font-bold m-0 text-white relative">
+            <h2 className="text-xl lg:text-3xl font-bold m-0 text-white relative">
               Ready to publish your plugin?
             </h2>
             <p className="text-slate-300 dark:text-zinc-300 text-base max-w-[420px] m-0 leading-relaxed relative">
               Connect your GitHub, push your code, and let EndGit handle the
               rest.
             </p>
-            <div className="flex gap-3 flex-wrap justify-center mt-2 relative">
+            <div className="grid grid-flow-col auto-cols-max gap-3 justify-items-center mt-2 relative">
               <Link
                 href="/dashboard/dev"
-                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-flex items-center gap-2 no-underline"
+                className="btn bg-white hover:bg-slate-100 text-slate-900 font-semibold py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
               >
                 <GitFork size={16} /> Start Publishing
               </Link>
               <Link
                 href="/plugins"
-                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 inline-flex items-center gap-2 no-underline"
+                className="btn bg-white/10 hover:bg-white/15 text-white border border-white/20 py-3 px-6 inline-grid grid-cols-[auto_1fr] items-center gap-2 no-underline"
               >
                 Explore Plugins
               </Link>

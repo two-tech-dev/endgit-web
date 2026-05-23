@@ -86,11 +86,11 @@ import Footer from "@/components/Footer";
 
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 xl:py-5">
-      <div className="container flex justify-between items-center relative">
+    <header className="sticky top-0 z-50 bg-surface-secondary/80 backdrop-blur-md border-b border-border py-3 lg:py-5">
+      <div className="container grid grid-cols-[1fr_auto] items-center relative">
         <Link
           href="/"
-          className="text-2xl font-bold flex items-center gap-3 no-underline shrink-0"
+          className="text-2xl font-bold grid grid-cols-[auto_1fr] items-center gap-3 no-underline shrink-0"
         >
           <Image
             src="/logo.png"

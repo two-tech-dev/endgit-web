@@ -42,7 +42,7 @@ export default async function LatestPluginsSection() {
       <FadeIn>
         <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
           <div>
-            <h2 className="text-2xl md:text-4xl font-bold tracking-tight text-text-primary m-0">
+            <h2 className="text-2xl lg:text-4xl font-bold tracking-tight text-text-primary m-0">
               Recent Releases
             </h2>
             <p className="text-text-secondary text-[17px] mt-2">
@@ -58,7 +58,7 @@ export default async function LatestPluginsSection() {
         </div>
       </FadeIn>
 
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 content-start">
+      <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 gap-6 content-start">
         {plugins.map((plugin) => {
           const avgRating = plugin.stars
             ? Math.round((plugin.stars / 20) * 10) / 10

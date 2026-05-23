@@ -24,10 +24,10 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="container py-12 md:py-20">
+    <div className="container py-12 lg:py-20">
       <h1 className="heading-1 mb-8 text-text-primary">PRIVACY POLICY</h1>
 
-      <div className="flex flex-col gap-6 text-text-secondary leading-relaxed">
+      <div className="grid gap-6 text-text-secondary leading-relaxed">
         <p>
           This Privacy Policy describes how EndGit (&quot;we&quot;,
           &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects your
@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
           When you sign in through GitHub OAuth, we collect the following
           information from your GitHub account:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>GitHub username and numeric ID</li>
           <li>Display name</li>
           <li>Email address</li>
@@ -67,7 +67,7 @@ export default function PrivacyPolicyPage() {
           Content You Provide
         </h3>
         <p>We collect content you voluntarily submit to the platform:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             Plugin metadata: name, description, keywords, categories, license,
             repository URL, icon
@@ -81,7 +81,7 @@ export default function PrivacyPolicyPage() {
         <h3 className="text-[17px] font-semibold text-text-primary mt-2">
           Automatically Collected Information
         </h3>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             IP address (used temporarily in Redis for download deduplication,
             not persisted in our database)
@@ -98,7 +98,7 @@ export default function PrivacyPolicyPage() {
           HOW WE USE YOUR INFORMATION
         </h2>
         <p>We use the information we collect to:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             Authenticate your account and manage your session via GitHub OAuth
           </li>
@@ -192,7 +192,7 @@ export default function PrivacyPolicyPage() {
           COOKIES AND SESSION MANAGEMENT
         </h2>
         <p>We use the following cookies and storage mechanisms:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             <strong>NextAuth session cookie</strong> — A secure, HTTP-only JWT
             cookie that maintains your authenticated session. It contains your
@@ -223,7 +223,7 @@ export default function PrivacyPolicyPage() {
           (session cache and job queues). We implement the following security
           measures:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             All passwords and tokens are stored securely; OAuth tokens are
             obtained from GitHub and stored encrypted in our database
@@ -253,7 +253,7 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-xl font-semibold text-text-primary mt-4">
           DATA RETENTION
         </h2>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             <strong>Account data</strong> — Retained as long as your account
             exists. You may request deletion at any time.
@@ -290,7 +290,7 @@ export default function PrivacyPolicyPage() {
           YOUR RIGHTS
         </h2>
         <p>You have the right to:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             <strong>Access</strong> — Request a copy of the personal data we
             hold about you.

@@ -180,9 +180,9 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
         <ArrowLeft size={16} /> Back to Plugin
       </button>
 
-      <div className="card p-4 md:p-6">
+      <div className="card p-4 lg:p-6">
         <h1 className="heading-2 mb-2">Edit Plugin Details</h1>
-        <div className="mb-6 p-3 md:p-4 bg-accent/5 rounded-md border-l-4 border-accent">
+        <div className="mb-6 p-3 lg:p-4 bg-accent/5 rounded-md border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Updating {plugin.name}
           </p>
@@ -193,7 +193,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="grid gap-5">
           {/* ── Section: About this plugin ── */}
           <h2 className="heading-3 mb-2 pb-2 border-b-2 border-accent text-[1.1rem] italic">
             About this plugin...
@@ -219,7 +219,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               }`}
             />
             {(session?.user as any)?.trustLevel !== "ADMIN" && (
-              <p className="text-xs text-warning mt-1 flex items-center gap-1">
+              <p className="text-xs text-warning mt-1 grid grid-flow-col auto-cols-max items-center gap-1">
                 <AlertTriangle size={12} /> Display name cannot be changed.
                 Contact an admin if you need to rename your plugin.
               </p>
@@ -246,7 +246,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </div>
 
           <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-0.5 gap-2">
+            <div className="grid sm:grid-cols-[1fr_auto] sm:items-end mb-0.5 gap-2">
               <label className="block text-sm font-medium">
                 Long Description (Markdown)
               </label>
@@ -255,7 +255,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="flex items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -278,7 +278,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </div>
 
           <div>
-            <label className="flex justify-between items-baseline text-sm font-medium mb-2">
+            <label className="grid grid-cols-[1fr_auto] items-baseline text-sm font-medium mb-2">
               <span>
                 Categories{" "}
                 <span className="text-text-muted font-normal">(Max 5)</span>
@@ -293,11 +293,11 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(160px,100%),1fr))] gap-2 bg-surface-secondary p-3 md:p-4 rounded-md border border-border">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(160px,100%),1fr))] gap-2 bg-surface-secondary p-3 lg:p-4 rounded-md border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
-                  className="flex items-center gap-2 cursor-pointer text-sm text-text-primary"
+                  className="grid grid-flow-col auto-cols-max items-center gap-2 cursor-pointer text-sm text-text-primary"
                 >
                   <input
                     type="checkbox"
@@ -317,7 +317,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
           </h2>
 
           <div>
-            <label className="flex items-center gap-2.5 text-sm font-medium cursor-pointer text-text-primary">
+            <label className="grid grid-flow-col auto-cols-max items-center gap-2.5 text-sm font-medium cursor-pointer text-text-primary">
               <input
                 type="checkbox"
                 checked={isPreRelease}
@@ -405,11 +405,11 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             />
           </div>
 
-          <div className="flex justify-end gap-3 mt-2 pt-4 border-t border-border flex-col sm:flex-row">
+          <div className="grid justify-items-end gap-3 mt-2 pt-4 border-t border-border">
             <button
               type="submit"
               disabled={submitting}
-              className="btn btn-primary px-8 py-3 text-base flex items-center justify-center gap-1.5 disabled:opacity-60 w-full sm:w-auto"
+              className="btn btn-primary px-8 py-3 text-base grid grid-flow-col place-items-center gap-1.5 disabled:opacity-60 w-full sm:w-auto"
             >
               <CheckCircle size={18} />{" "}
               {submitting ? "Saving..." : "Save Changes"}
@@ -418,7 +418,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
         </form>
 
         {error && (
-          <div className="mt-4 p-3 bg-error/10 rounded-sm text-error text-sm flex items-center gap-2 border border-error/20">
+          <div className="mt-4 p-3 bg-error/10 rounded-sm text-error text-sm grid grid-flow-col auto-cols-max items-center gap-2 border border-error/20">
             <AlertTriangle size={16} /> {error}
           </div>
         )}

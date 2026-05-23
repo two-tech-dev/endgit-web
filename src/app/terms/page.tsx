@@ -24,12 +24,12 @@ export const metadata: Metadata = {
 
 export default function TermsOfServicePage() {
   return (
-    <div className="container py-12 md:py-20">
+    <div className="container py-12 lg:py-20">
       <h1 className="heading-1 mb-8 text-text-primary">
         TERMS OF WEBSITE USE FOR ENDGIT
       </h1>
 
-      <div className="flex flex-col gap-6 text-text-secondary leading-relaxed">
+      <div className="grid gap-6 text-text-secondary leading-relaxed">
         <p>
           This page sets out the terms on which you may access and make use of
           our website EndGit (the &quot;Site&quot;), whether as a guest or a
@@ -131,7 +131,7 @@ export default function TermsOfServicePage() {
           by law, we, other members of our group of companies and third parties
           connected to us hereby expressly exclude:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             all conditions, warranties and other terms which might otherwise be
             implied by statute, common law or the law of equity;
@@ -142,7 +142,7 @@ export default function TermsOfServicePage() {
             connection with the use, inability to use, or results of the use of
             the Site, any websites linked to it and any materials posted on it,
             including, without limitation any liability for:
-            <ul className="list-circle pl-6 mt-2 flex flex-col gap-1">
+            <ul className="list-circle pl-6 mt-2 grid gap-1">
               <li>loss of income or revenue;</li>
               <li>loss of business;</li>
               <li>loss of profits or contracts;</li>
@@ -171,7 +171,7 @@ export default function TermsOfServicePage() {
           You may use the Site only for lawful purposes. You may not use the
           Site:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             in any way that breaches any applicable local, national or
             international law or regulation;
@@ -202,14 +202,14 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
         <p>You also agree:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             not to reproduce, duplicate, copy or resell any part of the Site in
             contravention of the provisions of our terms of website use;
           </li>
           <li>
             not to access without authority, interfere with, damage or disrupt:
-            <ul className="list-circle pl-6 mt-2 flex flex-col gap-1">
+            <ul className="list-circle pl-6 mt-2 grid gap-1">
               <li>any part of the Site;</li>
               <li>any equipment or network on which the Site is stored;</li>
               <li>any software used in the provision of the Site; or</li>
@@ -228,7 +228,7 @@ export default function TermsOfServicePage() {
           We may from time to time provide interactive services on the Site,
           including, without limitation:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>chat rooms;</li>
           <li>bulletin boards;</li>
           <li>reviews</li>
@@ -280,7 +280,7 @@ export default function TermsOfServicePage() {
           well as to its whole.
         </p>
         <p>Contributions must:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>be accurate (where they state facts);</li>
           <li>be genuinely held (where they state opinions); and</li>
           <li>
@@ -289,7 +289,7 @@ export default function TermsOfServicePage() {
           </li>
         </ul>
         <p>Contributions must not:</p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>contain any material which is defamatory;</li>
           <li>
             contain any material which is obscene, offensive, hateful or
@@ -347,7 +347,7 @@ export default function TermsOfServicePage() {
           breach of these terms of use and may result in our taking all or any
           of the following actions:
         </p>
-        <ul className="list-disc pl-6 flex flex-col gap-2">
+        <ul className="list-disc pl-6 grid gap-2">
           <li>
             immediate, temporary or permanent withdrawal of your right to use
             the Site;

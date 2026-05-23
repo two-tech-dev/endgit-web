@@ -376,29 +376,28 @@ export default function DevDashboardPage() {
             </SkeletonCard>
           ))}
         </div>
-        <SkeletonCard className="p-4 md:px-5 mb-5">
-          <div className="flex items-center gap-3">
+        <SkeletonCard className="p-4 lg:px-5 mb-5">
+          <div className="grid grid-flow-col auto-cols-max items-center gap-3">
             <Skeleton width={20} height={20} borderRadius="9999px" />
             <Skeleton width="10rem" height="0.875rem" />
           </div>
         </SkeletonCard>
-        <div className="flex gap-3 mb-5 items-center">
+        <div className="grid grid-flow-col auto-cols-max gap-3 mb-5 items-center">
           <Skeleton
             width="100%"
             height="2.5rem"
             borderRadius="10px"
-            className="flex-1"
           />
           <Skeleton width="14rem" height="2.5rem" borderRadius="10px" />
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="grid gap-3">
           {Array.from({ length: 5 }, (_, i) => (
             <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
-              <div className="flex justify-between items-start">
-                <div className="flex items-start gap-4 flex-1">
+              <div className="grid grid-cols-[1fr_auto] items-start">
+                <div className="grid grid-flow-col auto-cols-max items-start gap-4">
                   <Skeleton width={40} height={40} borderRadius="6px" />
-                  <div className="flex-1">
-                    <div className="flex gap-2 mb-1 flex-wrap">
+                  <div>
+                    <div className="grid grid-flow-col auto-cols-max gap-2 mb-1">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
@@ -411,7 +410,7 @@ export default function DevDashboardPage() {
                       height="0.8125rem"
                       className="mb-1.5"
                     />
-                    <div className="flex gap-4">
+                    <div className="grid grid-flow-col auto-cols-max gap-4">
                       <Skeleton width="2rem" height="0.75rem" />
                       <Skeleton width="3rem" height="0.75rem" />
                       <Skeleton width="4rem" height="0.75rem" />
@@ -443,20 +442,20 @@ export default function DevDashboardPage() {
       process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL ||
       "https://github.com/apps/endgit-app/installations/new";
     return (
-      <div className="container py-12 min-h-[60vh] flex items-center justify-center">
-        <div className="card max-w-[600px] p-6 md:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="container py-12 min-h-[60vh] grid place-items-center">
+        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full grid place-items-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
           <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
-          <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8">
+          <p className="text-text-secondary text-base lg:text-lg leading-relaxed mb-8">
             To enable CI/CD pipelines, you must install the EndGit GitHub App on
             your repositories. The app will automatically detect your Bedrock
             plugins, build them, and publish them to the marketplace.
           </p>
           <a
             href={installUrl}
-            className="btn btn-primary inline-flex items-center gap-2 text-lg py-3 px-8"
+            className="btn btn-primary inline-grid grid-cols-[auto_1fr_auto] items-center gap-2 text-lg py-3 px-8"
           >
             <ExternalLink size={20} /> Install GitHub App{" "}
             <ArrowRight size={20} />
@@ -467,11 +466,11 @@ export default function DevDashboardPage() {
   }
 
   return (
-    <div className="container py-6 md:py-8 ">
+    <div className="container py-6 lg:py-8 ">
       {/* Header */}
-      <div className="flex justify-between items-start md:items-center mb-6 flex-wrap gap-3">
+      <div className="grid grid-cols-[1fr_auto] items-start lg:items-center mb-6 gap-3">
         <div>
-          <h1 className="heading-2 flex items-center gap-3">
+          <h1 className="heading-2 grid grid-flow-col auto-cols-max items-center gap-3">
             <Settings size={28} className="text-accent" /> Dev Dashboard
           </h1>
           <p className="text-text-muted mt-1">
@@ -510,8 +509,8 @@ export default function DevDashboardPage() {
 
       {/* Build Quota */}
       {quota && (
-        <div className="card p-4 md:px-5 mb-6 flex items-center gap-4 flex-wrap">
-          <div className="flex-[0_0_auto]">
+        <div className="card p-4 lg:px-5 mb-6 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+          <div>
             <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
               Weekly Builds
             </div>
@@ -521,7 +520,7 @@ export default function DevDashboardPage() {
               {quota.used}/{quota.limit}
             </div>
           </div>
-          <div className="flex-1 min-w-[120px]">
+          <div className="min-w-[120px]">
             <div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
               <div
                 className={`h-full rounded-full transition-[width] duration-300 ${
@@ -556,14 +555,14 @@ export default function DevDashboardPage() {
       {/* Org Selector Section */}
       {orgsLoading && (
         <SkeletonCard className="p-5 mb-5">
-          <div className="flex items-center justify-between mb-4">
+          <div className="grid grid-cols-[1fr_auto] items-center mb-4">
             <div>
               <Skeleton width="5rem" height="0.6875rem" className="mb-1" />
               <Skeleton width="10rem" height="0.875rem" />
             </div>
             <Skeleton width="4rem" height="2rem" borderRadius="10px" />
           </div>
-          <div className="flex gap-2 flex-wrap">
+          <div className="grid grid-flow-col auto-cols-max gap-2">
             {Array.from({ length: 3 }, (_, i) => (
               <Skeleton
                 key={i}
@@ -582,7 +581,7 @@ export default function DevDashboardPage() {
       )}
       {!orgsLoading && !orgsError && orgs.length > 1 && (
         <div className="card p-5 mb-5">
-          <div className="flex items-center justify-between mb-4">
+          <div className="grid grid-cols-[1fr_auto] items-center mb-4">
             <div>
               <div className="text-[0.6875rem] uppercase tracking-wider text-text-muted mb-0.5">
                 Organization
@@ -596,7 +595,7 @@ export default function DevDashboardPage() {
             <div ref={orgDropdownRef} className="relative">
               <button
                 onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
-                className="flex items-center gap-2 py-2 px-3 rounded-md border border-border bg-surface-secondary text-xs font-medium text-text-primary cursor-pointer transition-colors duration-150"
+                className="grid grid-flow-col auto-cols-max items-center gap-2 py-2 px-3 rounded-md border border-border bg-surface-secondary text-xs font-medium text-text-primary cursor-pointer transition-colors duration-150"
               >
                 Switch
                 <ChevronDown
@@ -608,7 +607,7 @@ export default function DevDashboardPage() {
                 <div className="absolute top-full right-0 mt-1 min-w-[280px] bg-surface-card border border-border rounded-md shadow-lg z-50 overflow-hidden">
                   <button
                     onClick={() => handleOrgChange(null)}
-                    className={`flex items-center gap-3 w-full py-3 px-4 border-none text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
+                    className={`grid grid-flow-col auto-cols-max items-center gap-3 w-full py-3 px-4 border-none text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
                       selectedOrg === null
                         ? "bg-surface-secondary"
                         : "bg-transparent"
@@ -621,7 +620,7 @@ export default function DevDashboardPage() {
                     <button
                       key={org.id}
                       onClick={() => handleOrgChange(org.login)}
-                      className={`flex items-center gap-3 w-full py-3 px-4 border-none border-t border-border text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
+                      className={`grid grid-flow-col auto-cols-max items-center gap-3 w-full py-3 px-4 border-none border-t border-border text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
                         selectedOrg === org.login
                           ? "bg-surface-secondary"
                           : "bg-transparent"
@@ -634,7 +633,7 @@ export default function DevDashboardPage() {
                         height={20}
                         className="rounded-full"
                       />
-                      <div className="flex-1 min-w-0">
+                      <div className="min-w-0">
                         <div className="font-medium">{org.login}</div>
                         {org.description && (
                           <div className="text-[0.75rem] text-text-muted overflow-hidden text-ellipsis whitespace-nowrap">
@@ -643,7 +642,7 @@ export default function DevDashboardPage() {
                         )}
                       </div>
                       {selectedOrg === org.login && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                       )}
                     </button>
                   ))}
@@ -651,10 +650,10 @@ export default function DevDashboardPage() {
               )}
             </div>
           </div>
-          <div className="flex gap-2 flex-wrap">
+          <div className="grid grid-flow-col auto-cols-max gap-2">
             <button
               onClick={() => handleOrgChange(null)}
-              className={`inline-flex items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+              className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
                 selectedOrg === null
                   ? "border-accent bg-accent/10 font-semibold text-accent"
                   : "border-border bg-surface-secondary font-normal text-text-muted"
@@ -667,7 +666,7 @@ export default function DevDashboardPage() {
               <button
                 key={org.id}
                 onClick={() => handleOrgChange(org.login)}
-                className={`inline-flex items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+                className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
                   selectedOrg === org.login
                     ? "border-accent bg-accent/10 font-semibold text-accent"
                     : "border-border bg-surface-secondary font-normal text-text-muted"
@@ -688,8 +687,8 @@ export default function DevDashboardPage() {
       )}
 
       {/* Search + Filter */}
-      <div className="dev-search-filter flex gap-3 mb-5 items-center flex-wrap">
-        <div className="flex-1 relative">
+      <div className="dev-search-filter grid grid-cols-[1fr_auto] gap-3 mb-5 items-center">
+        <div className="relative">
           <Search
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
@@ -702,7 +701,7 @@ export default function DevDashboardPage() {
             className="w-full py-2.5 pl-9 pr-3 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none"
           />
         </div>
-        <div className="flex gap-[2px] bg-surface-secondary p-[3px] rounded-md">
+        <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-md">
           {(["all", "enabled", "disabled"] as const).map((f) => (
             <button
               key={f}
@@ -726,14 +725,14 @@ export default function DevDashboardPage() {
 
       {/* Loading / Error */}
       {loading && (
-        <div className="flex flex-col gap-3">
+        <div className="grid gap-3">
           {Array.from({ length: 5 }, (_, i) => (
             <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
-              <div className="flex justify-between items-start">
-                <div className="flex items-start gap-4 flex-1">
+              <div className="grid grid-cols-[1fr_auto] items-start">
+                <div className="grid grid-flow-col auto-cols-max items-start gap-4">
                   <Skeleton width={40} height={40} borderRadius="6px" />
-                  <div className="flex-1">
-                    <div className="flex gap-2 mb-1 flex-wrap">
+                  <div>
+                    <div className="grid grid-flow-col auto-cols-max gap-2 mb-1">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
@@ -751,7 +750,7 @@ export default function DevDashboardPage() {
                       height="0.8125rem"
                       className="mb-1.5"
                     />
-                    <div className="flex gap-4">
+                    <div className="grid grid-flow-col auto-cols-max gap-4">
                       <Skeleton width="2rem" height="0.75rem" />
                       <Skeleton width="3rem" height="0.75rem" />
                       <Skeleton width="4rem" height="0.75rem" />
@@ -777,20 +776,20 @@ export default function DevDashboardPage() {
 
       {/* Repo List */}
       {!loading && !error && (
-        <div className="flex flex-col gap-3">
+        <div className="grid gap-3">
           {filteredRepos.map((repo) => {
             const badge = statusBadge(repo.pluginStatus);
             return (
               <div
                 key={repo.id}
-                className={`card p-4 md:p-5 border-l-[3px] transition-all duration-200 ${
+                className={`card p-4 lg:p-5 border-l-[3px] transition-all duration-200 ${
                   repo.ciEnabled ? "border-l-success" : "border-l-border"
                 }`}
               >
-                <div className="dev-repo-card-inner flex justify-between items-start">
-                  <div className="flex items-start gap-4 flex-1">
+                <div className="dev-repo-card-inner grid grid-cols-[1fr_auto] items-start">
+                  <div className="grid grid-flow-col auto-cols-max items-start gap-4">
                     <div
-                      className="w-10 h-10 rounded-md flex items-center justify-center flex-shrink-0"
+                      className="w-10 h-10 rounded-md grid place-items-center shrink-0"
                       style={{
                         background: `${langColor(repo.language)}15`,
                         border: `1px solid ${langColor(repo.language)}30`,
@@ -802,21 +801,21 @@ export default function DevDashboardPage() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
+                      <div className="grid grid-flow-col auto-cols-max items-center gap-2">
                         <span className="font-semibold text-[0.9375rem] text-text-primary">
                           {repo.name}
                         </span>
                         {repo.isPrivate ? (
-                          <span className="inline-flex items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-warning/10 text-warning border border-warning/20">
+                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-warning/10 text-warning border border-warning/20">
                             <Lock size={10} /> Private
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-success/8 text-text-muted">
+                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-success/8 text-text-muted">
                             <Globe size={10} /> Public
                           </span>
                         )}
                         {repo.language && (
-                          <span className="inline-flex items-center gap-1 text-[0.6875rem]">
+                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-1 text-[0.6875rem]">
                             <span
                               className="w-2 h-2 rounded-full inline-block"
                               style={{
@@ -845,7 +844,7 @@ export default function DevDashboardPage() {
                       <p className="text-xs text-text-muted mt-0.5 overflow-wrap-anywhere break-words normal-case max-w-full">
                         {repo.description || "No description"}
                       </p>
-                      <div className="flex gap-4 mt-1 text-xs text-text-muted">
+                      <div className="grid grid-flow-col auto-cols-max gap-4 mt-1 text-xs text-text-muted">
                         <span>⭐ {repo.stargazersCount}</span>
                         <span>
                           <GitBranch
@@ -858,11 +857,11 @@ export default function DevDashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="dev-repo-actions flex items-center gap-3 flex-shrink-0">
+                  <div className="dev-repo-actions grid grid-flow-col auto-cols-max items-center gap-3 shrink-0">
                     {repo.ciEnabled && repo.pluginSlug && (
                       <Link
                         href={`/plugins/${repo.pluginSlug}/builds`}
-                        className="inline-flex items-center gap-1 text-xs text-accent font-medium"
+                        className="inline-grid grid-cols-[auto_1fr] items-center gap-1 text-xs text-accent font-medium"
                       >
                         View Builds <ExternalLink size={12} />
                       </Link>
@@ -870,7 +869,7 @@ export default function DevDashboardPage() {
                     <button
                       onClick={() => toggleCI(repo)}
                       disabled={toggling === repo.id}
-                      className={`flex items-center gap-1.5 py-1.5 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
+                      className={`grid grid-flow-col auto-cols-max items-center gap-1.5 py-1.5 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
                         toggling === repo.id
                           ? "cursor-wait opacity-50"
                           : "cursor-pointer"
@@ -899,7 +898,7 @@ export default function DevDashboardPage() {
           {filteredRepos.length > 0 && hasMore && (
             <div className="text-center mt-6">
               <button
-                className="btn btn-secondary min-w-[150px] inline-flex justify-center"
+                className="btn btn-secondary min-w-[150px] inline-grid place-items-center"
                 onClick={() =>
                   fetchRepos(page + 1, selectedOrg, debouncedSearch)
                 }

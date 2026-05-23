@@ -98,7 +98,7 @@ export default function LiveBuildLog({
     }
 
     return (
-      <div key={index} className="flex gap-4 min-h-[1.5rem]">
+      <div key={index} className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
         <span className="text-[#334155] min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
@@ -114,22 +114,22 @@ export default function LiveBuildLog({
   return (
     <div className="card overflow-hidden border border-white/5 shadow-2xl bg-[#09090b]">
       {/* Header */}
-      <div className="live-build-header flex justify-between items-center px-3 md:px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md flex-wrap gap-3">
-        <div className="flex items-center gap-3">
+      <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md gap-3">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-3">
           <Terminal size={16} className="text-accent" />
           <span className="font-semibold text-sm text-[#f8fafc] tracking-wide">
             Execution Log
           </span>
           {isRunning && (
-            <span className="inline-flex items-center gap-1.5 text-[0.6875rem] text-accent font-bold tracking-wider bg-accent/10 px-2 py-0.5 rounded-full">
+            <span className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 text-[0.6875rem] text-accent font-bold tracking-wider bg-accent/10 px-2 py-0.5 rounded-full">
               <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               LIVE
             </span>
           )}
         </div>
-        <div className="flex items-center gap-4 text-[0.8125rem]">
+        <div className="grid grid-flow-col auto-cols-max items-center gap-4 text-[0.8125rem]">
           {duration !== null && (
-            <span className="flex items-center gap-1.5 text-text-muted">
+            <span className="grid grid-flow-col auto-cols-max items-center gap-1.5 text-text-muted">
               <Clock size={14} /> {duration}s
             </span>
           )}
@@ -166,7 +166,7 @@ export default function LiveBuildLog({
         {logs ? (
           visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
-          <div className="flex gap-4 min-h-[1.5rem]">
+          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
             <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
               1
             </span>
@@ -176,7 +176,7 @@ export default function LiveBuildLog({
           </div>
         )}
         {isRunning && (
-          <div className="flex gap-4 min-h-[1.5rem]">
+          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
             <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
               {logs ? allLines.length + 1 : 2}
             </span>
