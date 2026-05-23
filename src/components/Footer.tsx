@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
 
         {/* Links */}
-        <div className="footer-links grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-8 lg:gap-12">
+        <div className="footer-links grid grid-cols-[repeat(3,auto)] justify-items-end gap-4 lg:gap-6 justify-end">
           <div>
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Platform
