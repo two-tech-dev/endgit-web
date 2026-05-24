@@ -99,18 +99,18 @@ export default async function DashboardPage() {
 
   return (
     <div className="container py-6 lg:py-8">
-      <div className="grid grid-cols-[1fr_auto] items-end mb-6 lg:mb-8 gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end mb-6 lg:mb-8 gap-4">
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
           <p className="text-text-muted">
             Manage your plugins and track performance.
           </p>
         </div>
-        <div className="grid grid-flow-col auto-cols-max gap-4">
+        <div className="flex flex-wrap gap-4 sm:ml-auto">
           <a
             href={installUrl}
             target="_blank"
-            className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2"
+            className="btn btn-secondary flex items-center gap-2"
           >
             <Settings size={18} /> Manage App Installation
           </a>
@@ -119,11 +119,11 @@ export default async function DashboardPage() {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 lg:gap-6 mb-10 lg:mb-12">
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-[#7c3aed]/10 p-3 rounded-sm text-[#7c3aed]">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
+          <div className="bg-[#7c3aed]/10 p-3 rounded-sm text-[#7c3aed] shrink-0">
             <PackagePlus size={24} />
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="text-text-muted text-sm mb-1">Total Plugins</div>
             <div className="heading-2">
               {stats.totalPlugins?.toLocaleString() ?? 0}
@@ -131,11 +131,11 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-cyan-500/10 p-3 rounded-sm text-cyan-500">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
+          <div className="bg-cyan-500/10 p-3 rounded-sm text-cyan-500 shrink-0">
             <Activity size={24} />
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="text-text-muted text-sm mb-1">Total Downloads</div>
             <div className="heading-2">
               {stats.totalDownloads?.toLocaleString() ?? 0}
@@ -143,11 +143,11 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-warning/10 p-3 rounded-sm text-warning">
+        <div className="card p-4 lg:p-6 flex items-center gap-4">
+          <div className="bg-warning/10 p-3 rounded-sm text-warning shrink-0">
             <AlertCircle size={24} />
           </div>
-          <div>
+          <div className="min-w-0">
             <div className="text-text-muted text-sm mb-1">Pending Review</div>
             <div className="heading-2">
               {stats.pendingReviews?.toLocaleString() ?? 0}
@@ -197,32 +197,32 @@ export default async function DashboardPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 py-4 border-y border-border text-text-secondary text-sm">
-                <div className="">
-                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
+              <div className="grid grid-cols-3 gap-3 sm:gap-4 py-4 border-y border-border text-text-secondary text-sm">
+                <div className="min-w-0">
+                  <div className="text-text-muted text-[0.625rem] sm:text-[0.75rem] mb-1 uppercase tracking-wider">
                     Downloads
                   </div>
-                  <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-text-primary">
-                    <Activity size={14} className="text-accent" />{" "}
-                    {plugin.downloads?.toLocaleString() ?? 0}
+                  <div className="flex items-center gap-1 font-medium text-text-primary">
+                    <Activity size={14} className="text-accent shrink-0" />{" "}
+                    <span className="truncate">{plugin.downloads?.toLocaleString() ?? 0}</span>
                   </div>
                 </div>
-                <div className="">
-                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
-                    Latest Version
+                <div className="min-w-0">
+                  <div className="text-text-muted text-[0.625rem] sm:text-[0.75rem] mb-1 uppercase tracking-wider">
+                    Version
                   </div>
-                  <div className="font-medium text-text-primary">
+                  <div className="font-medium text-text-primary truncate">
                     {plugin.latestVersion
                       ? `v${plugin.latestVersion}`
-                      : "No versions"}
+                      : "None"}
                   </div>
                 </div>
-                <div className="">
-                  <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
+                <div className="min-w-0">
+                  <div className="text-text-muted text-[0.625rem] sm:text-[0.75rem] mb-1 uppercase tracking-wider">
                     Status
                   </div>
                   <div
-                    className={`font-medium break-all ${
+                    className={`font-medium break-words ${
                       plugin.status === "APPROVED"
                         ? "text-success"
                         : "text-warning"

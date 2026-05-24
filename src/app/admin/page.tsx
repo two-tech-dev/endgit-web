@@ -500,7 +500,7 @@ export default function AdminPage() {
       </div>
 
       {/* Tabs */}
-      <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-sm mb-6 w-fit">
+      <div className="flex flex-wrap gap-[2px] bg-surface-secondary p-[3px] rounded-sm mb-6 w-fit max-w-full overflow-x-auto">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -512,7 +512,7 @@ export default function AdminPage() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-4 py-2 rounded-sm text-[13px] font-medium transition-all cursor-pointer border-none shadow-none ${
+            className={`flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-sm text-[12px] sm:text-[13px] font-medium transition-all cursor-pointer border-none shadow-none whitespace-nowrap ${
               tab === t.key
                 ? "bg-surface-card text-text-primary shadow-sm"
                 : "bg-transparent text-text-muted hover:text-text-primary"
@@ -954,7 +954,7 @@ export default function AdminPage() {
                       email.
                     </p>
 
-                    <div className="grid grid-flow-col auto-cols-max gap-3 mt-5 justify-items-end">
+                    <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:justify-end">
                       <button
                         onClick={() => {
                           setRejectModal(null);
@@ -974,7 +974,7 @@ export default function AdminPage() {
                           )
                         }
                         disabled={!rejectReason.trim() || reviewLoading}
-                        className="px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
+                        className="px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer flex items-center justify-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
                       >
                         {reviewLoading && (
                           <Loader2 size={14} className="animate-spin" />
@@ -999,8 +999,8 @@ export default function AdminPage() {
           return (
             <div className="card p-4 lg:p-6">
               {/* Search + Filter Bar */}
-              <div className="grid grid-flow-col auto-cols-max gap-4 mb-4">
-                <div className="relative min-w-[240px]">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4">
+                <div className="relative flex-1 min-w-0">
                   <Search
                     size={16}
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
@@ -1020,7 +1020,7 @@ export default function AdminPage() {
               </div>
 
               {/* Status Filter Pills */}
-              <div className="grid grid-flow-col auto-cols-max gap-1.5 mb-5 items-center">
+              <div className="flex flex-wrap gap-1.5 mb-5 items-center">
                 <Filter size={14} className="mr-1 text-text-muted" />
                 {PLUGIN_STATUSES.map((s) => {
                   const isActive = pluginStatusFilter === s;
@@ -1054,7 +1054,8 @@ export default function AdminPage() {
               </div>
 
               {loading ? (
-                <table className="w-full border-collapse">
+                <div className="overflow-x-auto -mx-4 lg:-mx-6 px-4 lg:px-6">
+                  <table className="w-full border-collapse min-w-[640px]">
                   <thead>
                     <tr className="border-b border-border text-left">
                       {["Plugin", "Author", "Status", "Actions"].map((h) => (
@@ -1109,8 +1110,10 @@ export default function AdminPage() {
                     ))}
                   </tbody>
                 </table>
+                </div>
               ) : (
-                <table className="w-full border-collapse">
+                <div className="overflow-x-auto -mx-4 lg:-mx-6 px-4 lg:px-6">
+                  <table className="w-full border-collapse min-w-[640px]">
                   <thead>
                     <tr className="border-b border-border text-left">
                       <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
@@ -1133,7 +1136,7 @@ export default function AdminPage() {
                         <React.Fragment key={plugin.id}>
                           <tr className="border-b border-border hover:bg-surface-secondary/20 transition-colors">
                             <td className="p-4 text-sm">
-                              <div className="grid grid-flow-col auto-cols-max items-center gap-3">
+                              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                                 <div className="font-semibold text-text-primary">
                                   {plugin.displayName}
                                 </div>
@@ -1255,7 +1258,7 @@ export default function AdminPage() {
                                       return (
                                         <div
                                           key={v.id}
-                                          className={`grid grid-flow-col auto-cols-max items-center gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
+                                          className={`flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
                                             v.status,
                                           )}`}
                                         >
@@ -1314,6 +1317,7 @@ export default function AdminPage() {
                     )}
                   </tbody>
                 </table>
+                </div>
               )}
             </div>
           );
@@ -1410,7 +1414,7 @@ export default function AdminPage() {
                 className="w-full p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[120px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
               />
 
-              <div className="grid grid-flow-col auto-cols-max gap-3 mt-5 justify-items-end">
+              <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:justify-end">
                 <button
                   onClick={() => {
                     setPluginRejectModal(null);
@@ -1423,7 +1427,7 @@ export default function AdminPage() {
                 <button
                   onClick={confirmPluginReject}
                   disabled={!pluginRejectReason.trim() || pluginRejectLoading}
-                  className={`px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 transition-all ${
+                  className={`px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer flex items-center justify-center gap-1.5 transition-all ${
                     pluginRejectReason.trim()
                       ? pluginRejectModal.targetStatus === "SUSPENDED"
                         ? "bg-red-500 hover:bg-red-600"

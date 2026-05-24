@@ -1019,6 +1019,15 @@
   .card.p-5 {
     grid-template-columns: 1fr;
   }
+
+  .admin-plugin-actions {
+    flex-wrap: wrap;
+  }
+
+  .admin-plugin-actions > * {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 @media (max-width: 480px) {
