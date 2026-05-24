@@ -237,7 +237,7 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <form onSubmit={handleSearch} className="flex gap-3 max-w-lg">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 max-w-lg">
           <div className="flex-1 relative">
             <Search
               size={16}
@@ -251,10 +251,10 @@ export default function HomeContent({
               className="w-full pl-9 pr-4 py-2.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors"
             />
           </div>
-          <div className="flex gap-2 shrink-0">
+          <div className="grid grid-cols-2 sm:flex gap-2 shrink-0">
             <Link
               href="/dashboard/dev"
-              className="btn btn-primary shrink-0 text-sm px-4"
+              className="btn btn-primary text-sm px-4"
             >
               Start Publishing
             </Link>
@@ -262,7 +262,7 @@ export default function HomeContent({
               href="https://github.com/two-tech-dev/endgit-cli#installation"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary shrink-0 text-sm px-4"
+              className="btn btn-secondary text-sm px-4"
             >
               <Terminal size={16} />
               Install CLI
