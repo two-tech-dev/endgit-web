@@ -162,7 +162,9 @@ export default function BuildsList({
               href={`/plugins/${build.plugin?.slug}/builds`}
               className="flex items-center gap-4 p-4 border border-transparent hover:border-border hover:bg-surface-secondary transition-all no-underline"
             >
-              <div className={`w-1.5 h-10 rounded-full shrink-0 ${statusBgClass(build.status)}`} />
+              <div
+                className={`w-1.5 h-10 rounded-full shrink-0 ${statusBgClass(build.status)}`}
+              />
 
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-text-primary truncate">
@@ -188,7 +190,9 @@ export default function BuildsList({
                 <div className="flex items-center gap-2">
                   <StatusIcon status={build.status} />
 
-                  <span className={`text-xs font-medium ${statusTextClass(build.status)}`}>
+                  <span
+                    className={`text-xs font-medium ${statusTextClass(build.status)}`}
+                  >
                     {build.status}
                   </span>
                 </div>
