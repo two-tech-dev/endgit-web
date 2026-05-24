@@ -97,7 +97,10 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
             setComments((prev) =>
               prev.map((c) =>
                 c.id === data.parentId
-                  ? { ...c, replies: c.replies.filter((r) => r.id !== data.commentId) }
+                  ? {
+                      ...c,
+                      replies: c.replies.filter((r) => r.id !== data.commentId),
+                    }
                   : c,
               ),
             );
