@@ -19,9 +19,9 @@ export default function PluginSidebarFilters() {
   const currentType = searchParams.get("type") || "";
 
   const sortOptions = [
-    { value: "trending", label: "Trending" },
+    { value: "hot", label: "Hottest" },
     { value: "downloads", label: "Most Downloaded" },
-    { value: "stars", label: "Highest Rated" },
+    { value: "comments", label: "Most Discussed" },
     { value: "date", label: "Newest" },
     { value: "name", label: "A-Z" },
   ];

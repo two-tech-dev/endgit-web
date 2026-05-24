@@ -11,7 +11,8 @@ import {
   BookOpen,
   Cpu,
   Download,
-  Star,
+  MessageCircle,
+  Flame,
   BadgeCheck,
   FlaskConical,
 } from "lucide-react";
@@ -30,6 +31,8 @@ interface Plugin {
   latestVersion?: string;
   stars?: number;
   downloads?: number;
+  commentCount?: number;
+  heatScore?: number;
   isPreRelease?: boolean;
   author?: { displayName?: string; username?: string };
 }
@@ -49,9 +52,6 @@ const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
 function PluginCard({ plugin }: { plugin: Plugin }) {
   const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
   const isVerified = repoOwner ? VERIFIED_ORGS.includes(repoOwner) : false;
-  const avgRating = plugin.stars
-    ? Math.round((plugin.stars / 20) * 10) / 10
-    : 0;
 
   return (
     <Link
@@ -82,10 +82,16 @@ function PluginCard({ plugin }: { plugin: Plugin }) {
             <Download size={12} />
             {plugin.downloads?.toLocaleString() ?? 0}
           </span>
-          {avgRating > 0 && (
-            <span className="flex items-center gap-0.5 text-amber-400/70">
-              <Star size={12} className="fill-current" />
-              {avgRating.toFixed(1)}
+          {(plugin.heatScore || 0) > 0 && (
+            <span className="flex items-center gap-0.5 text-orange-400/70">
+              <Flame size={12} />
+              {plugin.heatScore}
+            </span>
+          )}
+          {(plugin.commentCount || 0) > 0 && (
+            <span className="flex items-center gap-0.5 text-white/40">
+              <MessageCircle size={12} />
+              {plugin.commentCount}
             </span>
           )}
           <span>v{plugin.latestVersion || "1.0.0"}</span>

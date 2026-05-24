@@ -1,4 +1,10 @@
-import { Search, BadgeCheck, Download, Star } from "lucide-react";
+import {
+  Search,
+  BadgeCheck,
+  Download,
+  MessageCircle,
+  Flame,
+} from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
@@ -56,9 +62,6 @@ export default async function AuthorPluginsPage({
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 align-content-start">
           {realPlugins.map((plugin: any) => {
-            const avgRating = plugin.stars
-              ? Math.round((plugin.stars / 20) * 10) / 10
-              : 0;
             const isFeatured = plugin.isFeatured;
             const repoOwner =
               plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
@@ -114,10 +117,15 @@ export default async function AuthorPluginsPage({
                       <Download size={13} className="text-text-muted" />
                       {plugin.downloads?.toLocaleString() ?? 0}
                     </span>
-                    {avgRating > 0 ? (
-                      <span className="text-warning text-xs grid grid-flow-col auto-cols-max items-center gap-0.5 font-medium">
-                        <Star size={13} className="fill-current" />
-                        <span>{avgRating.toFixed(1)}</span>
+                    {(plugin.heatScore || 0) > 0 ? (
+                      <span className="text-orange-400 text-xs grid grid-flow-col auto-cols-max items-center gap-0.5 font-medium">
+                        <Flame size={13} />
+                        <span>{plugin.heatScore}</span>
+                      </span>
+                    ) : (plugin.commentCount || 0) > 0 ? (
+                      <span className="text-text-muted text-xs grid grid-flow-col auto-cols-max items-center gap-0.5 font-medium">
+                        <MessageCircle size={13} />
+                        <span>{plugin.commentCount}</span>
                       </span>
                     ) : (
                       <span className="text-[11px]">

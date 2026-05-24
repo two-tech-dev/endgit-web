@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BadgeCheck, Download, Star } from "lucide-react";
+import { BadgeCheck, Download, MessageCircle, Flame } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 
 interface Plugin {
@@ -13,6 +13,8 @@ interface Plugin {
   latestVersion?: string;
   stars?: number;
   downloads?: number;
+  commentCount?: number;
+  heatScore?: number;
   createdAt?: string;
   isFeatured?: boolean;
   isPreRelease?: boolean;
@@ -25,9 +27,6 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 align-content-start">
       {plugins.map((plugin, i) => {
-        const avgRating = plugin.stars
-          ? Math.round((plugin.stars / 20) * 10) / 10
-          : 0;
         const isFeatured = plugin.isFeatured;
         const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
         const isVerified = repoOwner
@@ -96,10 +95,16 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                     {plugin.downloads?.toLocaleString() ?? 0}
                   </span>
                   <div className="flex items-center gap-2">
-                    {avgRating > 0 && (
-                      <span className="text-warning flex items-center gap-0.5 font-medium">
-                        <Star size={12} className="fill-current" />
-                        {avgRating.toFixed(1)}
+                    {(plugin.heatScore || 0) > 0 && (
+                      <span className="flex items-center gap-0.5 font-medium text-orange-400">
+                        <Flame size={12} />
+                        {plugin.heatScore}
+                      </span>
+                    )}
+                    {(plugin.commentCount || 0) > 0 && (
+                      <span className="flex items-center gap-0.5 font-medium text-text-muted">
+                        <MessageCircle size={12} />
+                        {plugin.commentCount}
                       </span>
                     )}
                     <span className="text-text-muted">

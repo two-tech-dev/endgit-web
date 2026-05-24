@@ -1,4 +1,11 @@
-import { ArrowLeft, Trophy, Download, BadgeCheck, Star } from "lucide-react";
+import {
+  ArrowLeft,
+  Trophy,
+  Download,
+  BadgeCheck,
+  MessageCircle,
+  Flame,
+} from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
 import Link from "next/link";
@@ -66,9 +73,6 @@ export default async function TopPluginsPage() {
   };
 
   const renderCard = (plugin: any, rank: number, isPodium: boolean = false) => {
-    const avgRating = plugin.stars
-      ? Math.round((plugin.stars / 20) * 10) / 10
-      : 0;
     const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
     const isVerified = repoOwner
       ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
@@ -120,16 +124,16 @@ export default async function TopPluginsPage() {
                 <Download size={14} className="text-brand" />
                 {plugin.downloads?.toLocaleString() ?? 0}
               </span>
-              {avgRating > 0 && (
-                <span className="text-warning text-xs flex items-center gap-1 font-semibold">
-                  <Star size={12} className="fill-current" />
-                  <span>{avgRating.toFixed(1)}</span>
+              {(plugin.heatScore || 0) > 0 && (
+                <span className="text-orange-400 text-xs flex items-center gap-1 font-semibold">
+                  <Flame size={12} />
+                  <span>{plugin.heatScore}</span>
                 </span>
               )}
             </div>
           </div>
 
-          <div className="flex-1 flex flex-col justify-end mt-6 pr-20 lg:pr-28">
+          <div className="flex-1 flex flex-col justify-end mt-6 pr-16 lg:pr-20">
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">
                 {repoOwner ||

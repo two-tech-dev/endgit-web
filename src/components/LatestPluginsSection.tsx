@@ -1,4 +1,10 @@
-import { ArrowRight, BadgeCheck, Download, Star } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Download,
+  MessageCircle,
+  Flame,
+} from "lucide-react";
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
 import FadeIn from "@/components/FadeIn";
@@ -16,6 +22,8 @@ interface Plugin {
   latestVersion?: string;
   stars?: number;
   downloads?: number;
+  commentCount?: number;
+  heatScore?: number;
   createdAt?: string;
   author?: { displayName?: string; username?: string };
 }
@@ -155,14 +163,16 @@ export default async function LatestPluginsSection() {
                         {plugin.downloads?.toLocaleString() ?? 0}
                       </span>
                       <div className="flex items-center gap-2">
-                        {(plugin.stars
-                          ? Math.round((plugin.stars / 20) * 10) / 10
-                          : 0) > 0 && (
-                          <span className="text-warning flex items-center gap-0.5 font-medium text-xs">
-                            <Star size={12} className="fill-current" />
-                            {(
-                              Math.round(((plugin.stars ?? 0) / 20) * 10) / 10
-                            ).toFixed(1)}
+                        {(plugin.heatScore || 0) > 0 && (
+                          <span className="flex items-center gap-0.5 font-medium text-xs text-orange-400">
+                            <Flame size={12} />
+                            {plugin.heatScore}
+                          </span>
+                        )}
+                        {(plugin.commentCount || 0) > 0 && (
+                          <span className="flex items-center gap-0.5 font-medium text-xs text-text-muted">
+                            <MessageCircle size={12} />
+                            {plugin.commentCount}
                           </span>
                         )}
                         <span className="text-text-muted text-xs">
@@ -174,30 +184,17 @@ export default async function LatestPluginsSection() {
 
                   {isLarge &&
                     (() => {
-                      const avgRating = plugin.stars
-                        ? Math.round((plugin.stars / 20) * 10) / 10
-                        : 0;
                       return (
                         <div className="mt-8 pt-8 border-t border-border flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            {avgRating > 0 ? (
-                              <>
-                                <div className="flex items-center gap-1.5">
-                                  <Star
-                                    size={20}
-                                    className="text-warning fill-current"
-                                  />
-                                  <span className="text-2xl font-extrabold text-text-primary">
-                                    {avgRating.toFixed(1)}
-                                  </span>
-                                </div>
-                                <span className="text-xs text-text-muted">
-                                  / 5.0
-                                </span>
-                              </>
+                            {(plugin.commentCount || 0) > 0 ? (
+                              <span className="flex items-center gap-1.5 text-text-muted text-sm">
+                                <MessageCircle size={16} />
+                                {plugin.commentCount} comments
+                              </span>
                             ) : (
                               <span className="text-xs text-text-muted">
-                                No ratings yet
+                                No comments yet
                               </span>
                             )}
                           </div>

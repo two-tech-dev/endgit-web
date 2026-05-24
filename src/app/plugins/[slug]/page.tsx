@@ -1,7 +1,6 @@
 import {
   Download,
   ShieldCheck,
-  Star,
   CheckCircle,
   Tag,
   GitBranch,
@@ -49,14 +48,17 @@ const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
     </div>
   ),
 });
-const PluginRatings = dynamic(() => import("@/components/PluginRatings"), {
-  ssr: false,
-  loading: () => (
-    <div className="card p-6 h-[200px] grid place-items-center">
-      <p className="text-text-muted text-sm">Loading ratings...</p>
-    </div>
-  ),
-});
+const PluginDiscussion = dynamic(
+  () => import("@/components/PluginDiscussion"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="card p-6 h-[200px] grid place-items-center">
+        <p className="text-text-muted text-sm">Loading discussion...</p>
+      </div>
+    ),
+  },
+);
 const VirusTotalCard = dynamic(() => import("@/components/VirusTotalCard"), {
   ssr: false,
   loading: () => (
@@ -333,13 +335,6 @@ export default async function PluginDetailPage({
               versions={displayVersions}
             />
             <div className="flex flex-wrap justify-end gap-4 lg:gap-6 mt-2">
-              <div className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold">
-                <Star size={16} className="text-warning" />{" "}
-                {(plugin.averageRating || 0).toLocaleString(undefined, {
-                  minimumFractionDigits: 1,
-                  maximumFractionDigits: 1,
-                })}
-              </div>
               <div
                 className="grid grid-flow-col auto-cols-max items-center gap-1 font-semibold"
                 title="Total Downloads"
@@ -426,7 +421,7 @@ export default async function PluginDetailPage({
 
           {/* Ratings & Reviews */}
           <div className="plugin-ratings w-full">
-            <PluginRatings slug={plugin.slug} authorId={plugin.authorId} />
+            <PluginDiscussion slug={plugin.slug} />
           </div>
         </div>
 
@@ -588,19 +583,6 @@ export default async function PluginDetailPage({
                 </div>
                 <div className="bg-surface-secondary p-2 rounded-sm text-[11px] font-mono text-text-muted overflow-x-auto whitespace-nowrap">
                   [![Version](https://endgit.dev/shield.version/{plugin.slug}
-                  )](https://endgit.dev/plugins/{plugin.slug})
-                </div>
-              </div>
-
-              <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
-                  <img
-                    src={`https://endgit.dev/shield.rating/${plugin.slug}`}
-                    alt="Rating Badge"
-                  />
-                </div>
-                <div className="bg-surface-secondary p-2 rounded-sm text-[11px] font-mono text-text-muted overflow-x-auto whitespace-nowrap">
-                  [![Rating](https://endgit.dev/shield.rating/{plugin.slug}
                   )](https://endgit.dev/plugins/{plugin.slug})
                 </div>
               </div>
