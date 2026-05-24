@@ -344,35 +344,49 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               )}
             </label>
             <p className="text-xs text-text-muted mb-1.5">
-              All plugins must have an OSI-approved open source license (Rule
-              D6).
+              {plugin?.isProprietary
+                ? "Proprietary plugins use the Proprietary license."
+                : "All plugins must have an OSI-approved open source license (Rule D6)."}
             </p>
             <div className="relative">
-              <select
-                value={license}
-                onChange={(e) => setLicense(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary pr-10 outline-none focus:border-accent appearance-none cursor-pointer"
-              >
-                <option value="">Select a license...</option>
-                {COMMON_LICENSES.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
-                ))}
-                {license && !COMMON_LICENSES.includes(license) && (
-                  <option value={license}>{license} (Custom/Fetched)</option>
-                )}
-              </select>
-              {repoUrl && (
-                <button
-                  type="button"
-                  onClick={fetchLicense}
-                  disabled={isFetchingLicense}
-                  className="absolute right-7 top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer text-accent hover:opacity-80 transition-opacity duration-150 disabled:opacity-50"
-                  title="Fetch from GitHub"
-                >
-                  <Download size={16} />
-                </button>
+              {plugin?.isProprietary ? (
+                <input
+                  type="text"
+                  value="Proprietary"
+                  disabled
+                  className="w-full px-3 py-2 rounded-md border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
+                />
+              ) : (
+                <>
+                  <select
+                    value={license}
+                    onChange={(e) => setLicense(e.target.value)}
+                    className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary pr-10 outline-none focus:border-accent appearance-none cursor-pointer"
+                  >
+                    <option value="">Select a license...</option>
+                    {COMMON_LICENSES.map((l) => (
+                      <option key={l} value={l}>
+                        {l}
+                      </option>
+                    ))}
+                    {license && !COMMON_LICENSES.includes(license) && (
+                      <option value={license}>
+                        {license} (Custom/Fetched)
+                      </option>
+                    )}
+                  </select>
+                  {repoUrl && (
+                    <button
+                      type="button"
+                      onClick={fetchLicense}
+                      disabled={isFetchingLicense}
+                      className="absolute right-7 top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer text-accent hover:opacity-80 transition-opacity duration-150 disabled:opacity-50"
+                      title="Fetch from GitHub"
+                    >
+                      <Download size={16} />
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -390,20 +404,22 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-1.5">
-              Repository URL
-            </label>
-            <p className="text-xs text-text-muted mb-1.5">
-              This field cannot be changed after creation.
-            </p>
-            <input
-              type="text"
-              value={repoUrl}
-              disabled
-              className="w-full px-3 py-2 rounded-md border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
-            />
-          </div>
+          {!plugin?.isProprietary && (
+            <div>
+              <label className="block text-sm font-medium mb-1.5">
+                Repository URL
+              </label>
+              <p className="text-xs text-text-muted mb-1.5">
+                This field cannot be changed after creation.
+              </p>
+              <input
+                type="text"
+                value={repoUrl}
+                disabled
+                className="w-full px-3 py-2 rounded-md border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
+              />
+            </div>
+          )}
 
           <div className="grid justify-items-end gap-3 mt-2 pt-4 border-t border-border">
             <button

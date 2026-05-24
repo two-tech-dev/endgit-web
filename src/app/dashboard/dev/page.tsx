@@ -20,6 +20,7 @@ import {
   ArrowRight,
   ChevronDown,
   Building2,
+  Upload,
 } from "lucide-react";
 import { Skeleton, SkeletonText, SkeletonCard } from "@/components/Skeleton";
 
@@ -449,13 +450,21 @@ export default function DevDashboardPage() {
             your repositories. The app will automatically detect your Bedrock
             plugins, build them, and publish them to the marketplace.
           </p>
-          <a
-            href={installUrl}
-            className="btn btn-primary inline-grid grid-cols-[auto_1fr_auto] items-center gap-2 text-lg py-3 px-8"
-          >
-            <ExternalLink size={20} /> Install GitHub App{" "}
-            <ArrowRight size={20} />
-          </a>
+          <div className="grid gap-3">
+            <a
+              href={installUrl}
+              className="btn btn-primary inline-grid grid-cols-[auto_1fr_auto] items-center gap-2 text-lg py-3 px-8"
+            >
+              <ExternalLink size={20} /> Install GitHub App{" "}
+              <ArrowRight size={20} />
+            </a>
+            <Link
+              href="/dashboard/upload"
+              className="btn btn-secondary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-base py-3 px-8"
+            >
+              <Upload size={18} /> Upload Proprietary Plugin
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -473,6 +482,12 @@ export default function DevDashboardPage() {
             Manage your GitHub repositories and CI/CD pipelines
           </p>
         </div>
+        <Link
+          href="/dashboard/upload"
+          className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2 text-sm"
+        >
+          <Upload size={16} /> Upload Proprietary Plugin
+        </Link>
       </div>
 
       {/* Stats */}

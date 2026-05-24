@@ -77,6 +77,7 @@ export default function SubmitReviewForm({
   );
   const [license, setLicense] = useState(plugin?.license || "");
   const [iconPath, setIconPath] = useState("");
+  const [iconUrl, setIconUrl] = useState(plugin?.iconUrl || "");
   const [keywords, setKeywords] = useState(
     plugin?.keywords ? plugin.keywords.join(", ") : "",
   );
@@ -113,7 +114,8 @@ export default function SubmitReviewForm({
     useState<string[]>(initialTags);
 
   useEffect(() => {
-    if (!license) fetchLicense();
+    if (!license && !plugin?.isProprietary) fetchLicense();
+    if (plugin?.isProprietary) setLicense("Proprietary");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -418,35 +420,49 @@ export default function SubmitReviewForm({
               )}
             </label>
             <p className="text-xs text-text-muted mb-1.5">
-              All plugins must have an OSI-approved open source license (Rule
-              D6).
+              {plugin?.isProprietary
+                ? "Proprietary plugins are automatically assigned the Proprietary license."
+                : "All plugins must have an OSI-approved open source license (Rule D6)."}
             </p>
             <div className="relative">
-              <select
-                value={license}
-                onChange={(e) => setLicense(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150 pr-10 appearance-none"
-              >
-                <option value="">Select a license...</option>
-                {COMMON_LICENSES.map((l) => (
-                  <option key={l} value={l}>
-                    {l}
-                  </option>
-                ))}
-                {license && !COMMON_LICENSES.includes(license) && (
-                  <option value={license}>{license} (Custom/Fetched)</option>
-                )}
-              </select>
-              {plugin?.repoUrl && (
-                <button
-                  type="button"
-                  onClick={fetchLicense}
-                  disabled={isFetchingLicense}
-                  className="absolute right-7 top-1/2 -translate-y-1/2 text-accent bg-transparent hover:text-accent-hover transition-colors disabled:opacity-50"
-                  title="Fetch from GitHub"
-                >
-                  <Download size={16} />
-                </button>
+              {plugin?.isProprietary ? (
+                <input
+                  type="text"
+                  value="Proprietary"
+                  disabled
+                  className="w-full px-3 py-2 rounded-md border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
+                />
+              ) : (
+                <>
+                  <select
+                    value={license}
+                    onChange={(e) => setLicense(e.target.value)}
+                    className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150 pr-10 appearance-none"
+                  >
+                    <option value="">Select a license...</option>
+                    {COMMON_LICENSES.map((l) => (
+                      <option key={l} value={l}>
+                        {l}
+                      </option>
+                    ))}
+                    {license && !COMMON_LICENSES.includes(license) && (
+                      <option value={license}>
+                        {license} (Custom/Fetched)
+                      </option>
+                    )}
+                  </select>
+                  {plugin?.repoUrl && (
+                    <button
+                      type="button"
+                      onClick={fetchLicense}
+                      disabled={isFetchingLicense}
+                      className="absolute right-7 top-1/2 -translate-y-1/2 text-accent bg-transparent hover:text-accent-hover transition-colors disabled:opacity-50"
+                      title="Fetch from GitHub"
+                    >
+                      <Download size={16} />
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -525,18 +541,29 @@ export default function SubmitReviewForm({
 
           <div>
             <label className="block text-sm font-medium mb-1.5">
-              Icon Path (Optional)
+              {plugin?.isProprietary
+                ? "Icon URL (Optional)"
+                : "Icon Path (Optional)"}
             </label>
             <input
               type="text"
-              value={iconPath}
-              onChange={(e) => setIconPath(e.target.value)}
-              placeholder="e.g. assets/icon.png (Default: icon.png)"
+              value={plugin?.isProprietary ? iconUrl || iconPath : iconPath}
+              onChange={(e) =>
+                plugin?.isProprietary
+                  ? setIconUrl(e.target.value)
+                  : setIconPath(e.target.value)
+              }
+              placeholder={
+                plugin?.isProprietary
+                  ? "https://..."
+                  : "e.g. assets/icon.png (Default: icon.png)"
+              }
               className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
             <p className="text-xs text-text-muted mt-1">
-              Relative path to the icon file in your repository. If not found,
-              the default EndGit logo will be used.
+              {plugin?.isProprietary
+                ? "Direct URL to the plugin icon image."
+                : "Relative path to the icon file in your repository. If not found, the default EndGit logo will be used."}
             </p>
           </div>
 

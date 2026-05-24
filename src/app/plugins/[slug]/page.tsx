@@ -11,6 +11,8 @@ import {
   Pencil,
   FlaskConical,
   BadgeCheck,
+  Lock,
+  Upload,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { cache } from "react";
@@ -218,6 +220,14 @@ export default async function PluginDetailPage({
                       <FlaskConical size={20} />
                     </span>
                   )}
+                  {plugin.isProprietary && (
+                    <span
+                      title="This is a proprietary plugin"
+                      className="badge badge-outline inline-grid grid-cols-[auto_1fr] items-center gap-1 text-xs"
+                    >
+                      <Lock size={12} /> Proprietary
+                    </span>
+                  )}
                   {plugin.repoUrl && (
                     <a
                       href={
@@ -256,6 +266,14 @@ export default async function PluginDetailPage({
                     className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3 py-1 rounded-md text-[13px] font-medium no-underline bg-purple-500/10 text-accent border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200"
                   >
                     <Pencil size={14} /> Edit
+                  </Link>
+                )}
+                {isAuthor && plugin.isProprietary && (
+                  <Link
+                    href={`/dashboard/upload/${plugin.slug}/version`}
+                    className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3 py-1 rounded-md text-[13px] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
+                  >
+                    <Upload size={14} /> New Version
                   </Link>
                 )}
               </div>

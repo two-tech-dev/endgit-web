@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { GitBranch, Loader2, ArrowLeft, Send } from "lucide-react";
+import { GitBranch, Loader2, ArrowLeft, Send, Upload } from "lucide-react";
 import Link from "next/link";
 
 function timeAgo(dateStr: string) {
@@ -101,13 +101,26 @@ export function BuildsTableClient({
         <ArrowLeft size={16} /> Back to Dev Dashboard
       </Link>
 
-      <div className="mb-6">
-        <h1 className="heading-2 m-0 break-words">
-          {plugin.displayName} CI Builds
-        </h1>
-        <p className="text-text-muted mt-1">
-          View build history and logs for this plugin.
-        </p>
+      <div className="grid grid-cols-[1fr_auto] items-start mb-6 gap-4">
+        <div>
+          <h1 className="heading-2 m-0 break-words">
+            {plugin.displayName}{" "}
+            {plugin.pluginType === "PYTHON" ? "Python" : "C++"} Builds
+          </h1>
+          <p className="text-text-muted mt-1">
+            {plugin.isProprietary
+              ? "Upload new artifacts and submit them for review."
+              : "View build history and logs for this plugin."}
+          </p>
+        </div>
+        {isOwner && plugin.isProprietary && (
+          <Link
+            href={`/dashboard/upload/${slug}/version`}
+            className="btn btn-primary grid grid-flow-col auto-cols-max items-center gap-2 whitespace-nowrap"
+          >
+            <Upload size={16} /> Upload New Version
+          </Link>
+        )}
       </div>
 
       <div className="card p-4 lg:p-6">
