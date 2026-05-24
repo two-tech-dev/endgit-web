@@ -11,6 +11,7 @@ import {
   Download,
   BadgeCheck,
   Package,
+  Terminal,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { useState, useEffect } from "react";
@@ -68,7 +69,7 @@ function PluginRow({
   return (
     <Link
       href={`/plugins/${plugin.slug}`}
-      className="flex items-center gap-4 p-4 rounded-xl border border-transparent hover:border-border hover:bg-surface-card transition-all group"
+      className="flex items-center gap-4 p-4 rounded-xl border border-transparent hover:border-border hover:bg-surface-secondary transition-all group"
     >
       <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
         <PluginImage
@@ -238,7 +239,7 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <form onSubmit={handleSearch} className="flex gap-3 max-w-md">
+        <form onSubmit={handleSearch} className="flex gap-3 max-w-lg">
           <div className="flex-1 relative">
             <Search
               size={16}
@@ -252,12 +253,23 @@ export default function HomeContent({
               className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors"
             />
           </div>
-          <Link
-            href="/dashboard/dev"
-            className="btn btn-primary shrink-0 text-sm px-4"
-          >
-            Start Publishing
-          </Link>
+          <div className="flex gap-2 shrink-0">
+            <Link
+              href="/dashboard/dev"
+              className="btn btn-primary shrink-0 text-sm px-4"
+            >
+              Start Publishing
+            </Link>
+            <a
+              href="https://github.com/two-tech-dev/endgit-cli#installation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary shrink-0 text-sm px-4"
+            >
+              <Terminal size={16} />
+              Install CLI
+            </a>
+          </div>
         </form>
       </div>
 
