@@ -120,29 +120,34 @@ export function BuildsTableClient({
             </p>
           </div>
         ) : (
-          <div
-            ref={wrapperRef}
-            className="builds-table-wrapper overflow-auto max-h-[600px]"
-          >
-            <table className="builds-table w-full border-collapse text-sm">
+          <div ref={wrapperRef} className="max-h-[600px] overflow-y-auto">
+            <table className="w-full border-collapse text-sm table-fixed">
+              <colgroup>
+                <col className="w-[10%]" />
+                <col className="w-[10%]" />
+                <col className="w-[7%]" />
+                <col className="w-[43%]" />
+                <col className="w-[15%]" />
+                <col className="w-[15%]" />
+              </colgroup>
               <thead className="bg-surface-secondary sticky top-0 z-10">
                 <tr className="border-b border-border text-left">
-                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                  <th className="px-3 py-3 text-text-primary font-semibold">
                     Build #
                   </th>
-                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                  <th className="px-3 py-3 text-text-primary font-semibold">
                     Date
                   </th>
-                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                  <th className="px-3 py-3 text-text-primary font-semibold">
                     Lint
                   </th>
-                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
+                  <th className="px-3 py-3 text-text-primary font-semibold">
                     Commit
                   </th>
-                  <th className="px-4 py-3 text-text-primary font-semibold border-r border-border">
-                    Branch or Pull Request number
+                  <th className="px-3 py-3 text-text-primary font-semibold">
+                    Branch / PR
                   </th>
-                  <th className="px-4 py-3 text-text-primary font-semibold text-right">
+                  <th className="px-3 py-3 text-text-primary font-semibold text-right">
                     Action
                   </th>
                 </tr>
@@ -153,7 +158,7 @@ export function BuildsTableClient({
                     key={build.id}
                     className="border-b border-border bg-surface-card hover:bg-surface-secondary/30 transition-colors"
                   >
-                    <td className="p-4 border-r border-border align-top">
+                    <td className="p-3 align-top">
                       <div className="grid gap-[2px]">
                         <Link
                           href={`/builds/${build.id}`}
@@ -171,7 +176,7 @@ export function BuildsTableClient({
                         )}
                       </div>
                     </td>
-                    <td className="p-4 border-r border-border align-top text-text-secondary">
+                    <td className="p-3 align-top text-text-secondary whitespace-nowrap">
                       {timeAgo(build.createdAt)}
                       {build.duration ? (
                         <span className="text-[13px] text-text-muted">
@@ -180,7 +185,7 @@ export function BuildsTableClient({
                         </span>
                       ) : null}
                     </td>
-                    <td className="p-4 border-r border-border align-top">
+                    <td className="p-3 align-top">
                       {build.status === "SUCCESS" ? (
                         <span className="text-success font-medium">OK</span>
                       ) : build.status === "FAILED" ? (
@@ -191,9 +196,9 @@ export function BuildsTableClient({
                         <span className="text-text-muted">Queued</span>
                       )}
                     </td>
-                    <td className="p-4 border-r border-border align-top">
+                    <td className="p-3 align-top">
                       <div className="flex flex-col gap-1.5">
-                        <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 break-all">
+                        <div className="flex flex-wrap items-center gap-1.5">
                           {build.commitHash && (
                             <a
                               href={`${plugin.repoUrl}/commit/${build.commitHash}`}
@@ -204,11 +209,11 @@ export function BuildsTableClient({
                               {build.commitHash.slice(0, 7)}
                             </a>
                           )}
-                          <span className="text-text-primary">
+                          <span className="text-text-primary break-words">
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>
-                        <div className="grid grid-flow-col auto-cols-max gap-1.5">
+                        <div className="flex flex-wrap gap-1.5">
                           {isOwner && build.versionStatus === "PENDING" && (
                             <span className="badge bg-warning/10 text-warning border border-warning/20 text-xs font-semibold">
                               PENDING REVIEW
@@ -227,18 +232,18 @@ export function BuildsTableClient({
                         </div>
                       </div>
                     </td>
-                    <td className="p-4 border-r border-border align-top">
+                    <td className="p-3 align-top">
                       <a
                         href={`${plugin.repoUrl}/tree/${build.branch || "master"}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 no-underline hover:underline font-mono"
+                        className="text-accent inline-flex items-center gap-1 no-underline hover:underline font-mono break-all"
                       >
                         {build.branch || "master"}
                       </a>
                     </td>
-                    <td className="p-4 text-right align-top">
-                      <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                    <td className="p-3 text-right align-top">
+                      <div className="flex flex-wrap gap-2 justify-end">
                         <Link
                           href={`/builds/${build.id}`}
                           className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
@@ -252,7 +257,7 @@ export function BuildsTableClient({
                           !hasPendingVersion && (
                             <Link
                               href={`/builds/${build.id}/submit`}
-                              className="btn btn-primary py-1.5 px-3 text-[13px] grid grid-flow-col auto-cols-max items-center gap-1 whitespace-nowrap"
+                              className="btn btn-primary py-1.5 px-3 text-[13px] inline-flex items-center gap-1 whitespace-nowrap"
                             >
                               <Send size={14} /> Submit
                             </Link>
