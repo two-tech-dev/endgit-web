@@ -54,7 +54,7 @@ async function HomeData() {
 
   try {
     const [hotRes, newRes, topRes, featuredRes] = await Promise.all([
-      fetch(`${apiUrl}/api/v1/plugins?sort=hot&pageSize=8`, {
+      fetch(`${apiUrl}/api/v1/plugins?sort=hot&pageSize=4`, {
         next: { revalidate: 60 },
       }),
       fetch(`${apiUrl}/api/v1/plugins?sort=date&pageSize=5`, {

@@ -10,9 +10,11 @@ import {
   MessageCircle,
   Download,
   BadgeCheck,
+  Package,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 interface Plugin {
   id: string;
@@ -355,8 +357,81 @@ export default function HomeContent({
               </Link>
             </section>
           )}
+
+          {/* Your Plugins */}
+          <YourPlugins />
         </aside>
       </div>
     </div>
+  );
+}
+
+function YourPlugins() {
+  const { data: session } = useSession();
+  const [plugins, setPlugins] = useState<Plugin[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!session?.user) return;
+    const token = (session.user as any)?.apiToken;
+    const username = (session.user as any)?.username;
+    if (!username) return;
+
+    setLoading(true);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    fetch(`${apiUrl}/api/v1/plugins?author=${username}&pageSize=5`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json?.data?.plugins) setPlugins(json.data.plugins);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [session]);
+
+  if (!session?.user) return null;
+  if (loading) return null;
+  if (plugins.length === 0) return null;
+
+  return (
+    <section>
+      <div className="flex items-center gap-2 mb-3">
+        <Package size={16} className="text-brand" />
+        <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">
+          Your Plugins
+        </h3>
+      </div>
+      <div className="border border-border rounded-xl overflow-hidden bg-surface-card p-2 space-y-0.5">
+        {plugins.map((plugin) => (
+          <Link
+            key={plugin.id}
+            href={`/plugins/${plugin.slug}`}
+            className="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-secondary transition-colors group"
+          >
+            <div className="w-8 h-8 shrink-0 rounded-md overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+              <PluginImage
+                iconUrl={plugin.iconUrl}
+                repoUrl={plugin.repoUrl}
+                alt={plugin.displayName}
+              />
+            </div>
+            <span className="flex-1 font-medium text-sm text-text-primary group-hover:text-brand transition-colors truncate">
+              {plugin.displayName}
+            </span>
+            <span className="text-xs text-text-muted flex items-center gap-0.5 shrink-0">
+              <Download size={11} />
+              {plugin.downloads?.toLocaleString() ?? 0}
+            </span>
+          </Link>
+        ))}
+      </div>
+      <Link
+        href="/dashboard/dev"
+        className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-brand mt-3 transition-colors"
+      >
+        Manage your plugins →
+      </Link>
+    </section>
   );
 }
