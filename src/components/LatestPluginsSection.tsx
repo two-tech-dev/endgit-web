@@ -65,7 +65,7 @@ export default async function LatestPluginsSection() {
           </div>
           <Link
             href="/plugins"
-            className="btn btn-secondary !bg-white/5 !border-white/10 hover:!bg-white/10 inline-flex items-center gap-2 no-underline text-[11px] sm:text-xs uppercase tracking-widest font-bold px-4 sm:px-6"
+            className="btn btn-secondary bg-white/5! border-white/10! hover:bg-white/10! inline-flex items-center gap-2 no-underline text-[11px] sm:text-xs uppercase tracking-widest font-bold px-4 sm:px-6"
           >
             View Releases <ArrowRight size={14} />
           </Link>
@@ -92,7 +92,7 @@ export default async function LatestPluginsSection() {
                   href={`/plugins/${plugin.slug}`}
                   className={`group flex flex-col no-underline transition-all duration-500 ${
                     isLarge
-                      ? "h-full glass-panel p-8 lg:p-12 !rounded-sm border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
+                      ? "h-full glass-panel p-8 lg:p-12 rounded-sm! border-brand/20 bg-brand/5 dark:bg-brand/5 hover:bg-brand/10 hover:border-brand/40"
                       : "h-full card p-6 bg-surface-card border-border hover:border-brand/30 overflow-hidden"
                   }`}
                   style={
@@ -198,7 +198,7 @@ export default async function LatestPluginsSection() {
                               </span>
                             )}
                           </div>
-                          <div className="btn !bg-brand !text-black font-black uppercase tracking-tighter px-8 group-hover:scale-105 transition-transform">
+                          <div className="btn bg-brand! text-black! font-black uppercase tracking-tighter px-8 group-hover:scale-105 transition-transform">
                             Explore <ArrowRight size={18} />
                           </div>
                         </div>

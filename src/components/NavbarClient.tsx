@@ -59,7 +59,7 @@ export default function NavbarClient({
     <div
       className={`${
         mobile ? "w-8 h-8" : "w-7 h-7"
-      } rounded-full bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center text-white text-xs font-bold shrink-0`}
+      } rounded-full bg-linear-to-br from-brand to-brand-dark flex items-center justify-center text-white text-xs font-bold shrink-0`}
     >
       {initials}
     </div>

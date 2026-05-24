@@ -279,7 +279,7 @@ export default function RulesPage() {
     <div className="container max-w-4xl py-12 lg:py-20">
       {/* Hero Header */}
       <div className="text-center mb-12">
-        <div className="w-16 h-16 rounded-sm bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
+        <div className="w-16 h-16 rounded-sm bg-linear-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
           <Shield size={32} className="text-accent" />
         </div>
         <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>

@@ -30,7 +30,7 @@ interface RatingSummary {
 
 function StarDisplay({ score, size = 14 }: { score: number; size?: number }) {
   return (
-    <div className="grid grid-flow-col auto-cols-max gap-[1px]">
+    <div className="grid grid-flow-col auto-cols-max gap-px">
       {[1, 2, 3, 4, 5].map((i) => (
         <Star
           key={i}
@@ -176,7 +176,7 @@ export default function PluginRatings({
     <div className="card p-4 lg:p-6">
       <div className="flex flex-wrap items-center justify-between mb-5 gap-3">
         <h3 className="text-lg font-semibold flex items-center gap-2 m-0">
-          <Star size={20} className="text-[#f59e0b] fill-[#f59e0b]" /> Ratings &
+          <Star size={20} className="text-warning fill-warning" /> Ratings &
           Reviews
         </h3>
 
@@ -204,7 +204,7 @@ export default function PluginRatings({
               ))}
             </div>
             {myScore > 0 && (
-              <span className="text-[13px] text-[#f59e0b] font-semibold w-6 text-right">
+              <span className="text-[13px] text-warning font-semibold w-6 text-right">
                 {myScore}/5
               </span>
             )}
@@ -267,7 +267,7 @@ export default function PluginRatings({
               {/* Top row: avatar + username + stars + version badge + date */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-3">
-                  <div className="w-7 h-7 rounded-sm bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
+                  <div className="w-7 h-7 rounded-sm bg-linear-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
                     {rating.user.avatarUrl ? (
                       <Image
                         src={rating.user.avatarUrl}

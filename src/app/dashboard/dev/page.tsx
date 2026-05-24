@@ -837,7 +837,7 @@ export default function DevDashboardPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-text-muted mt-0.5 break-all sm:break-words normal-case min-w-0">
+                      <p className="text-xs text-text-muted mt-0.5 break-all sm:wrap-break-word normal-case min-w-0">
                         {repo.description || "No description"}
                       </p>
                       <div className="flex flex-wrap gap-4 mt-1 text-xs text-text-muted">

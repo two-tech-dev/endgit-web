@@ -75,7 +75,7 @@ export default function LiveBuildLog({
 
   // Custom log parser for syntax highlighting
   const parseLogLine = (line: string, index: number) => {
-    let colorClass = "text-[#cbd5e1]"; // default slate-300
+    let colorClass = "text-border-highlight"; // default slate-300
     let fontWeightClass = "font-normal";
 
     if (line.includes("✅")) {
@@ -100,13 +100,13 @@ export default function LiveBuildLog({
     return (
       <div
         key={index}
-        className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]"
+        className="grid grid-flow-col auto-cols-max gap-4 min-h-6"
       >
-        <span className="text-[#334155] min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
+        <span className="text-[#334155] min-w-8 text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
         <span
-          className={`whitespace-pre-wrap break-words flex-1 font-mono ${colorClass} ${fontWeightClass}`}
+          className={`whitespace-pre-wrap wrap-break-word flex-1 font-mono ${colorClass} ${fontWeightClass}`}
         >
           {line}
         </span>
@@ -117,10 +117,10 @@ export default function LiveBuildLog({
   return (
     <div className="card overflow-hidden border border-white/5 shadow-2xl bg-[#09090b]">
       {/* Header */}
-      <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-white/5 bg-white/[0.02] backdrop-blur-md gap-3">
+      <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-white/5 bg-white/2 backdrop-blur-md gap-3">
         <div className="grid grid-flow-col auto-cols-max items-center gap-3">
           <Terminal size={16} className="text-accent" />
-          <span className="font-semibold text-sm text-[#f8fafc] tracking-wide">
+          <span className="font-semibold text-sm text-surface-secondary tracking-wide">
             Execution Log
           </span>
           {isRunning && (
@@ -169,8 +169,8 @@ export default function LiveBuildLog({
         {logs ? (
           visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
-          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
-            <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
+          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
+            <span className="text-[#334155] min-w-8 text-right text-xs pt-0.5 font-mono">
               1
             </span>
             <span className="text-text-muted italic">
@@ -179,8 +179,8 @@ export default function LiveBuildLog({
           </div>
         )}
         {isRunning && (
-          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-[1.5rem]">
-            <span className="text-[#334155] min-w-[2rem] text-right text-xs pt-0.5 font-mono">
+          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
+            <span className="text-[#334155] min-w-8 text-right text-xs pt-0.5 font-mono">
               {logs ? allLines.length + 1 : 2}
             </span>
             <span className="text-accent animate-pulse font-mono">▋</span>

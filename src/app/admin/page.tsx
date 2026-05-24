@@ -666,7 +666,7 @@ export default function AdminPage() {
                       >
                         <td className="px-4 py-3">
                           <div className="grid grid-flow-col auto-cols-max items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-brand text-white grid place-items-center text-xs font-bold overflow-hidden flex-shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-brand text-white grid place-items-center text-xs font-bold overflow-hidden shrink-0">
                               {user.avatarUrl ? (
                                 <Image
                                   src={user.avatarUrl}
@@ -826,7 +826,7 @@ export default function AdminPage() {
                   <div className="p-4 flex flex-col gap-2.5">
                     <div className="grid grid-cols-[1fr_auto] items-start">
                       <div className="flex gap-2.5 items-center min-w-0">
-                        <div className="w-10 h-10 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
+                        <div className="w-10 h-10 rounded-sm bg-surface-secondary grid place-items-center border border-border shrink-0 overflow-hidden">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
@@ -1502,7 +1502,7 @@ export default function AdminPage() {
               >
                 <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-3">
                   <div
-                    className={`w-10 h-10 rounded-sm grid place-items-center flex-shrink-0 ${s.bg}`}
+                    className={`w-10 h-10 rounded-sm grid place-items-center shrink-0 ${s.bg}`}
                   >
                     {s.icon}
                   </div>

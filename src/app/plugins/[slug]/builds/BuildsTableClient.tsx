@@ -102,7 +102,7 @@ export function BuildsTableClient({
       </Link>
 
       <div className="mb-6">
-        <h1 className="heading-2 m-0 break-words">
+        <h1 className="heading-2 m-0 wrap-break-word">
           {plugin.displayName} CI Builds
         </h1>
         <p className="text-text-muted mt-1">
@@ -209,7 +209,7 @@ export function BuildsTableClient({
                               {build.commitHash.slice(0, 7)}
                             </a>
                           )}
-                          <span className="text-text-primary break-words">
+                          <span className="text-text-primary wrap-break-word">
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>

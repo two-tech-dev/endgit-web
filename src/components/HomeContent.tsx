@@ -237,7 +237,10 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 max-w-lg">
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col sm:flex-row gap-3 max-w-lg"
+        >
           <div className="flex-1 relative">
             <Search
               size={16}

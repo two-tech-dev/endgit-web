@@ -79,7 +79,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
           </div>
           <div className="grid grid-cols-[1fr_auto] text-sm gap-2">
             <span className="text-text-muted">Detection</span>
-            <span className="font-semibold text-text-primary text-right break-words">
+            <span className="font-semibold text-text-primary text-right wrap-break-word">
               {malicious}/{vt.total ?? 0} engines flagged
             </span>
           </div>

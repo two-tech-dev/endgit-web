@@ -185,7 +185,7 @@ export default async function PluginDetailPage({
     plugin.description;
 
   return (
-    <div className="container !py-6 lg:!py-8">
+    <div className="container py-6! lg:py-8!">
       {/* Header Section */}
       <div className="card p-4 lg:p-6 mb-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-start gap-4 lg:flex-nowrap">
@@ -361,7 +361,7 @@ export default async function PluginDetailPage({
             <h3 className="font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-2">
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
-            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-3 rounded-sm font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
+            <div className="bg-text-primary text-border px-3 lg:px-4 py-3 rounded-sm font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
               <code className="whitespace-nowrap">
                 endgit install {plugin.slug}
               </code>

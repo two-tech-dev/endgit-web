@@ -80,7 +80,7 @@ export default function NewVersionForm({
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] grid place-items-center p-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-100 grid place-items-center p-4">
           <div className="card p-6 w-full max-w-[500px]">
             <h3 className="text-xl font-semibold text-text-primary mb-4">
               Submit New Version

@@ -12,7 +12,7 @@ export default function Error({
       <h2 className="text-text-primary text-xl font-semibold mb-2">
         Something went wrong
       </h2>
-      <p className="text-text-muted text-sm break-words">{error.message}</p>
+      <p className="text-text-muted text-sm wrap-break-word">{error.message}</p>
       <button
         onClick={reset}
         className="mt-4 px-4 py-2 bg-brand hover:bg-brand-dark text-white font-medium rounded-sm shadow-sm transition-all"

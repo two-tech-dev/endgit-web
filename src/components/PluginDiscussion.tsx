@@ -375,7 +375,7 @@ function CommentItem({
           </span>
         </div>
         <p
-          className={`mt-1 text-text-secondary whitespace-pre-wrap break-words ${
+          className={`mt-1 text-text-secondary whitespace-pre-wrap wrap-break-word ${
             isReply ? "text-xs" : "text-sm"
           }`}
         >
