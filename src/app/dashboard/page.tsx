@@ -82,12 +82,6 @@ export default async function DashboardPage() {
               <ExternalLink size={20} /> Install GitHub App{" "}
               <ArrowRight size={20} />
             </a>
-            <Link
-              href="/dashboard/upload"
-              className="btn btn-secondary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-base py-3 px-8"
-            >
-              <Lock size={18} /> Upload Proprietary Plugin
-            </Link>
           </div>
         </div>
       </div>
@@ -113,12 +107,6 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="grid grid-flow-col auto-cols-max gap-4">
-          <Link
-            href="/dashboard/upload"
-            className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2"
-          >
-            <Lock size={18} /> Upload Proprietary Plugin
-          </Link>
           <a
             href={installUrl}
             target="_blank"
