@@ -10,7 +10,6 @@ import {
   Loader2,
   Package,
   Search,
-  User,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -68,6 +67,19 @@ function statusTextClass(status: string) {
       return "text-accent";
     default:
       return "text-text-muted";
+  }
+}
+
+function statusBorderClass(status: string) {
+  switch (status) {
+    case "SUCCESS":
+      return "border-l-success";
+    case "FAILED":
+      return "border-l-error";
+    case "RUNNING":
+      return "border-l-accent";
+    default:
+      return "border-l-text-muted";
   }
 }
 
@@ -155,51 +167,41 @@ export default function BuildsList({
           <p>No matching builds</p>
         </div>
       ) : (
-        <div className="divide-y divide-border border border-border rounded-xl overflow-hidden bg-surface-card">
-          {filteredBuilds.map((build: any) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          {filteredBuilds.map((build: any, i: number) => (
             <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
-              className="flex items-center gap-4 p-4 border border-transparent hover:border-border hover:bg-surface-secondary transition-all no-underline"
+              className={`card p-0 flex flex-col no-underline bg-surface-card overflow-hidden transition-all border-l-4 ${statusBorderClass(build.status)}`}
+              style={{
+                animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(i * 0.04, 0.3)}s both`,
+              }}
             >
-              <div
-                className={`w-1.5 h-10 rounded-full shrink-0 ${statusBgClass(build.status)}`}
-              />
-
-              <div className="flex-1 min-w-0">
-                <div className="font-semibold text-text-primary truncate">
-                  {build.plugin?.displayName || build.plugin?.name}
+              <div className="p-3 flex gap-3 items-center">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap">
+                    {build.plugin?.displayName || build.plugin?.name}
+                  </h3>
+                  <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
+                    <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                      {build.plugin?.author?.username || "unknown"}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <GitBranch size={11} />
+                      {build.branch}
+                    </span>
+                    <span>#{build.buildNumber}</span>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-text-muted">
-                  <span className="flex items-center gap-1">
-                    <User size={12} />
-                    {build.plugin?.author?.username || "unknown"}
-                  </span>
-
-                  <span className="flex items-center gap-1">
-                    <GitBranch size={12} />
-                    {build.branch}
-                  </span>
-
-                  <span>#{build.buildNumber}</span>
-                </div>
-              </div>
-
-              <div className="shrink-0 grid gap-0.5 justify-items-end">
-                <div className="flex items-center gap-2">
+                <div className="shrink-0 flex items-center gap-1.5 text-xs">
                   <StatusIcon status={build.status} />
-
                   <span
-                    className={`text-xs font-medium ${statusTextClass(build.status)}`}
+                    className={`font-medium ${statusTextClass(build.status)}`}
                   >
                     {build.status}
                   </span>
                 </div>
-
-                <span className="text-xs text-text-muted">
-                  {timeAgo(build.createdAt)}
-                </span>
               </div>
             </Link>
           ))}
