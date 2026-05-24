@@ -6,6 +6,7 @@ import {
   AlertCircle,
   ExternalLink,
   ArrowRight,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
@@ -73,13 +74,21 @@ export default async function DashboardPage() {
             detect your Bedrock plugins, build them using our CI/CD pipeline,
             and publish them to the marketplace.
           </p>
-          <a
-            href={installUrl}
-            className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-lg py-3 px-8"
-          >
-            <ExternalLink size={20} /> Install GitHub App{" "}
-            <ArrowRight size={20} />
-          </a>
+          <div className="grid gap-3">
+            <a
+              href={installUrl}
+              className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-lg py-3 px-8"
+            >
+              <ExternalLink size={20} /> Install GitHub App{" "}
+              <ArrowRight size={20} />
+            </a>
+            <Link
+              href="/dashboard/upload"
+              className="btn btn-secondary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-base py-3 px-8"
+            >
+              <Lock size={18} /> Upload Proprietary Plugin
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -104,6 +113,12 @@ export default async function DashboardPage() {
           </p>
         </div>
         <div className="grid grid-flow-col auto-cols-max gap-4">
+          <Link
+            href="/dashboard/upload"
+            className="btn btn-secondary grid grid-flow-col auto-cols-max items-center gap-2"
+          >
+            <Lock size={18} /> Upload Proprietary Plugin
+          </Link>
           <a
             href={installUrl}
             target="_blank"
@@ -165,9 +180,9 @@ export default async function DashboardPage() {
               }`}
             />
 
-            <div className="p-4 lg:p-5 grid gap-4">
+            <div className="p-4 lg:p-5 flex flex-col gap-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
-                <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
+                <div className="flex gap-3 items-center min-w-0">
                   <div className="w-12 h-12 rounded-lg bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
@@ -175,10 +190,10 @@ export default async function DashboardPage() {
                       alt={`${plugin.displayName} icon`}
                     />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <Link
                       href={`/plugins/${plugin.slug}`}
-                      className="heading-3 text-xl text-text-primary block mb-1"
+                      className="heading-3 text-xl text-text-primary block mb-1 truncate"
                     >
                       {plugin.displayName}
                     </Link>
@@ -194,7 +209,7 @@ export default async function DashboardPage() {
                 </span>
               </div>
 
-              <div className="grid grid-flow-col auto-cols-max gap-4 py-4 border-y border-border text-text-secondary text-sm">
+              <div className="grid grid-cols-3 gap-4 py-4 border-y border-border text-text-secondary text-sm">
                 <div className="">
                   <div className="text-text-muted text-[0.75rem] mb-1 uppercase tracking-wider">
                     Downloads
@@ -219,13 +234,13 @@ export default async function DashboardPage() {
                     Status
                   </div>
                   <div
-                    className={`font-medium ${
+                    className={`font-medium break-all ${
                       plugin.status === "APPROVED"
                         ? "text-success"
                         : "text-warning"
                     }`}
                   >
-                    {plugin.status}
+                    {plugin.status.replace(/_/g, " ")}
                   </div>
                 </div>
               </div>
@@ -236,7 +251,7 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <button className="btn btn-secondary w-full grid place-items-center p-2">
+                  <button className="btn btn-secondary w-full flex items-center justify-center gap-2 p-2">
                     <Settings size={16} /> Manage Plugin
                   </button>
                 )}
