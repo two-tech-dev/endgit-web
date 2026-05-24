@@ -762,7 +762,7 @@ export default function AdminPage() {
       {/* Review Queue Tab — shows pending PLUGINS */}
       {tab === "queue" &&
         (loading ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {Array.from({ length: 3 }, (_, i) => (
               <SkeletonCard key={i} className="p-0 border-t-4 border-t-border">
                 <div className="p-5 grid gap-3">
@@ -806,7 +806,7 @@ export default function AdminPage() {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {queue.length === 0 ? (
               <div className="card p-12 text-center col-span-full">
                 <CheckCircle size={40} className="text-success mx-auto mb-3" />
@@ -821,21 +821,21 @@ export default function AdminPage() {
               queue.map((plugin: any) => (
                 <div
                   key={plugin.id}
-                  className="card p-0 grid overflow-hidden border-t-4 border-t-warning border border-border shadow-sm hover:shadow-md transition-shadow"
+                  className="card p-0 overflow-hidden border-t-4 border-t-warning border border-border shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="p-5 grid gap-3">
+                  <div className="p-4 flex flex-col gap-2.5">
                     <div className="grid grid-cols-[1fr_auto] items-start">
-                      <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
-                        <div className="w-12 h-12 rounded-md bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
+                      <div className="flex gap-2.5 items-center min-w-0">
+                        <div className="w-10 h-10 rounded-md bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
                             alt={`${plugin.displayName} icon`}
                           />
                         </div>
-                        <div>
-                          <h3 className="heading-3 text-lg font-bold m-0 text-text-primary grid grid-flow-col auto-cols-max items-center gap-1.5">
-                            {plugin.displayName}
+                        <div className="min-w-0">
+                          <h3 className="heading-3 text-base font-bold m-0 text-text-primary flex items-center gap-1.5">
+                            <span className="truncate">{plugin.displayName}</span>
                             {plugin.versions?.[0]?.isPreRelease && (
                               <span
                                 title="This is a pre-release"
@@ -861,18 +861,18 @@ export default function AdminPage() {
                       {plugin.description}
                     </p>
 
-                    <div className="grid grid-flow-col auto-cols-max gap-2 mt-2 pt-3 border-t border-border">
+                    <div className="flex gap-2 mt-2 pt-3 border-t border-border">
                       <button
                         onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
                         disabled={reviewLoading}
-                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         {reviewingSlug === plugin.slug && reviewLoading ? (
-                          <Loader2 size={16} className="animate-spin" />
+                          <Loader2 size={13} className="animate-spin" />
                         ) : (
-                          <CheckCircle size={16} />
+                          <CheckCircle size={13} />
                         )}{" "}
-                        Approve Plugin
+                        Approve
                       </button>
                       <button
                         onClick={() =>
@@ -882,15 +882,15 @@ export default function AdminPage() {
                           })
                         }
                         disabled={reviewLoading}
-                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <XCircle size={16} /> Reject Plugin
+                        <XCircle size={13} /> Reject
                       </button>
                     </div>
-                    <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-center mt-1">
+                    <div className="flex flex-wrap gap-3 mt-1">
                       <Link
                         href={`/plugins/${plugin.slug}`}
-                        className="text-xs text-brand hover:underline text-center"
+                        className="text-xs text-brand hover:underline"
                       >
                         View Plugin →
                       </Link>
@@ -899,7 +899,7 @@ export default function AdminPage() {
                           href={`${plugin.repoUrl}/commit/${plugin.versions[0].fileHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-text-muted hover:text-text-primary text-center"
+                          className="text-xs text-text-muted hover:text-text-primary"
                         >
                           View Commit →
                         </a>
@@ -1190,7 +1190,7 @@ export default function AdminPage() {
                               </select>
                             </td>
                             <td className="p-4 text-right">
-                              <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end items-center">
+                              <div className="flex justify-end items-center gap-2">
                                 {/* Quick reject button — only shown for approved plugins */}
                                 {plugin.status === "APPROVED" && (
                                   <button
@@ -1205,7 +1205,7 @@ export default function AdminPage() {
                                       setPluginRejectReason("");
                                     }}
                                     title="Reject this approved plugin"
-                                    className="grid place-items-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
                                   >
                                     <ShieldAlert size={14} /> Reject
                                   </button>
