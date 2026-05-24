@@ -124,7 +124,7 @@ export default function BuildsList({
 
       {/* Search */}
       <div className="mb-6">
-        <div className="card grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
+        <div className="card rounded-xl grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -138,7 +138,7 @@ export default function BuildsList({
       </div>
 
       {/* Warning */}
-      <div className="card p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
+      <div className="card rounded-xl p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
         <AlertTriangle size={20} className="text-warning shrink-0" />
 
         <div>
@@ -149,35 +149,33 @@ export default function BuildsList({
 
       {/* Builds */}
       {filteredBuilds.length === 0 ? (
-        <div className="card p-12 text-center">
+        <div className="card rounded-xl p-12 text-center">
           <Package size={48} className="text-text-muted mx-auto mb-4" />
 
           <p>No matching builds</p>
         </div>
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-4">
+        <div className="divide-y divide-border border border-border rounded-xl overflow-hidden bg-surface-card">
           {filteredBuilds.map((build: any) => (
             <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
-              className="card p-3 lg:p-4 lg:px-5 grid grid-flow-col auto-cols-max items-center gap-3 lg:gap-4 no-underline hover:border-border-highlight transition-colors duration-200"
+              className="flex items-center gap-4 p-4 border border-transparent hover:border-border hover:bg-surface-secondary transition-all no-underline"
             >
-              <div
-                className={`w-1 h-10 rounded-xs shrink-0 ${statusBgClass(build.status)}`}
-              />
+              <div className={`w-1.5 h-10 rounded-full shrink-0 ${statusBgClass(build.status)}`} />
 
-              <div className="min-w-0">
+              <div className="flex-1 min-w-0">
                 <div className="font-semibold text-text-primary truncate">
                   {build.plugin?.displayName || build.plugin?.name}
                 </div>
 
-                <div className="grid grid-flow-col auto-cols-max gap-3 text-[0.8125rem] text-text-muted">
-                  <span className="grid grid-flow-col auto-cols-max items-center gap-[3px]">
+                <div className="flex items-center gap-3 text-xs text-text-muted">
+                  <span className="flex items-center gap-1">
                     <User size={12} />
                     {build.plugin?.author?.username || "unknown"}
                   </span>
 
-                  <span className="grid grid-flow-col auto-cols-max items-center gap-[3px]">
+                  <span className="flex items-center gap-1">
                     <GitBranch size={12} />
                     {build.branch}
                   </span>
@@ -186,13 +184,11 @@ export default function BuildsList({
                 </div>
               </div>
 
-              <div className="grid gap-0.5 justify-items-end shrink-0">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
+              <div className="shrink-0 grid gap-0.5 justify-items-end">
+                <div className="flex items-center gap-2">
                   <StatusIcon status={build.status} />
 
-                  <span
-                    className={`text-[0.8125rem] font-medium ${statusTextClass(build.status)}`}
-                  >
+                  <span className={`text-xs font-medium ${statusTextClass(build.status)}`}>
                     {build.status}
                   </span>
                 </div>
