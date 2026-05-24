@@ -130,7 +130,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
               contentStyle={{
                 background: "#0f172a",
                 border: "none",
-                borderRadius: "8px",
+                borderRadius: "2px",
                 color: "#e2e8f0",
                 fontSize: "0.8125rem",
                 padding: "8px 12px",

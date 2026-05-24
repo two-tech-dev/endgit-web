@@ -182,7 +182,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
 
       <div className="card p-4 lg:p-6">
         <h1 className="heading-2 mb-2">Edit Plugin Details</h1>
-        <div className="mb-6 p-3 lg:p-4 bg-accent/5 rounded-md border-l-4 border-accent">
+        <div className="mb-6 p-3 lg:p-4 bg-accent/5 rounded-sm border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Updating {plugin.name}
           </p>
@@ -212,7 +212,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               disabled={(session?.user as any)?.trustLevel !== "ADMIN"}
-              className={`w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+              className={`w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
                 (session?.user as any)?.trustLevel !== "ADMIN"
                   ? "opacity-60 cursor-not-allowed"
                   : "cursor-text"
@@ -241,7 +241,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               onChange={(e) => setDescription(e.target.value)}
               maxLength={100}
               placeholder="A brief summary of what your plugin does..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
@@ -255,7 +255,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded-xs px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -273,7 +273,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               onChange={(e) => setLongDescription(e.target.value)}
               rows={12}
               placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
             />
           </div>
 
@@ -293,7 +293,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(160px,100%),1fr))] gap-2 bg-surface-secondary p-3 lg:p-4 rounded-md border border-border">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(160px,100%),1fr))] gap-2 bg-surface-secondary p-3 lg:p-4 rounded-sm border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
@@ -351,7 +351,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               <select
                 value={license}
                 onChange={(e) => setLicense(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary pr-10 outline-none focus:border-accent appearance-none cursor-pointer"
+                className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary pr-10 outline-none focus:border-accent appearance-none cursor-pointer"
               >
                 <option value="">Select a license...</option>
                 {COMMON_LICENSES.map((l) => (
@@ -386,7 +386,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               value={iconUrl}
               onChange={(e) => setIconUrl(e.target.value)}
               placeholder="https://..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
           </div>
 
@@ -401,7 +401,7 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
               type="text"
               value={repoUrl}
               disabled
-              className="w-full px-3 py-2 rounded-md border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-black/20 dark:bg-white/5 text-text-muted cursor-not-allowed opacity-70 outline-none"
             />
           </div>
 

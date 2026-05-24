@@ -130,7 +130,7 @@ const FAQ_ITEMS: FAQItemType[] = [
           <div className="text-xs font-semibold text-text-primary mb-1">
             Windows (PowerShell):
           </div>
-          <pre className="p-3 bg-surface-secondary border border-border rounded-md font-mono text-xs overflow-x-auto text-brand">
+          <pre className="p-3 bg-surface-secondary border border-border rounded-sm font-mono text-xs overflow-x-auto text-brand">
             irm https://endgit.dev/installer.ps1 | iex
           </pre>
         </div>
@@ -138,7 +138,7 @@ const FAQ_ITEMS: FAQItemType[] = [
           <div className="text-xs font-semibold text-text-primary mb-1">
             Linux / macOS (Bash):
           </div>
-          <pre className="p-3 bg-surface-secondary border border-border rounded-md font-mono text-xs overflow-x-auto text-brand">
+          <pre className="p-3 bg-surface-secondary border border-border rounded-sm font-mono text-xs overflow-x-auto text-brand">
             curl -sSL https://endgit.dev/installer.sh | bash
           </pre>
         </div>
@@ -247,7 +247,7 @@ function FAQItem({ item }: { item: FAQItemType }) {
 
   return (
     <div
-      className={`border border-border bg-surface-card overflow-hidden transition-all duration-200 rounded-lg ${open ? "border-brand/30" : ""}`}
+      className={`border border-border bg-surface-card overflow-hidden transition-all duration-200 rounded-sm ${open ? "border-brand/30" : ""}`}
     >
       <button
         onClick={() => setOpen(!open)}
@@ -257,7 +257,7 @@ function FAQItem({ item }: { item: FAQItemType }) {
           <span className="font-semibold text-sm text-text-primary leading-snug">
             {item.q}
           </span>
-          <span className="text-[10px] uppercase font-bold tracking-wider text-text-muted px-1.5 py-0.5 rounded bg-surface-secondary border border-border shrink-0">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-text-muted px-1.5 py-0.5 rounded-xs bg-surface-secondary border border-border shrink-0">
             {item.category === "cli"
               ? "CLI"
               : item.category === "publishing"
@@ -325,7 +325,7 @@ export default function FAQPage() {
             placeholder="Search FAQs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2.5 bg-surface-secondary border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-brand transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 bg-surface-secondary border border-border rounded-sm text-text-primary text-sm focus:outline-none focus:border-brand transition-colors"
           />
         </div>
         <div className="flex gap-2">
@@ -333,7 +333,7 @@ export default function FAQPage() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3 py-2 rounded-md text-xs font-semibold border transition-all cursor-pointer ${
+              className={`px-3 py-2 rounded-sm text-xs font-semibold border transition-all cursor-pointer ${
                 selectedCategory === cat.id
                   ? "bg-surface-card text-text-primary border-border shadow-sm"
                   : "bg-transparent text-text-muted border-transparent hover:text-text-secondary"
@@ -347,7 +347,7 @@ export default function FAQPage() {
 
       {/* FAQ List */}
       {filteredItems.length === 0 ? (
-        <div className="border border-border bg-surface-card rounded-lg p-8 text-center max-w-3xl mx-auto">
+        <div className="border border-border bg-surface-card rounded-sm p-8 text-center max-w-3xl mx-auto">
           <Search
             size={28}
             className="text-text-muted mx-auto mb-3 opacity-50"

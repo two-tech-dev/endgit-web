@@ -13,7 +13,7 @@ export default function BuildDetailLoading() {
               <Skeleton
                 width="5rem"
                 height="1.5rem"
-                borderRadius="var(--radius-full)"
+                borderRadius="var(--radius-sm)"
               />
             </div>
             <Skeleton width="8rem" height="0.875rem" />
@@ -21,7 +21,7 @@ export default function BuildDetailLoading() {
           <Skeleton
             width="10rem"
             height="2.25rem"
-            borderRadius="var(--radius-md)"
+            borderRadius="var(--radius-sm)"
           />
         </div>
 

@@ -6,6 +6,8 @@ import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import NavbarMobile from "@/components/NavbarMobile";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +65,7 @@ export default function RootLayout({
                    document.documentElement.setAttribute('data-theme', 'dark');
                  }
                } catch (e) {}
-             })();
+              })();
           `,
           }}
         />
@@ -85,7 +87,7 @@ export default function RootLayout({
         />
         <AuthProvider>
           <Navbar />
-          <main className="">{children}</main>
+          <main>{children}</main>
           <Footer />
         </AuthProvider>
         <Analytics />
@@ -94,9 +96,6 @@ export default function RootLayout({
     </html>
   );
 }
-
-import NavbarMobile from "@/components/NavbarMobile";
-import Footer from "@/components/Footer";
 
 function Navbar() {
   return (

@@ -124,7 +124,7 @@ export default function BuildsList({
         <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
           <h1 className="heading-2">Dev Builds</h1>
 
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-accent/10 text-accent border border-accent/20">
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-sm bg-accent/10 text-accent border border-accent/20">
             Today ({today})
           </span>
         </div>
@@ -136,7 +136,7 @@ export default function BuildsList({
 
       {/* Search */}
       <div className="mb-6">
-        <div className="card rounded-xl grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
+        <div className="card rounded-sm grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -150,7 +150,7 @@ export default function BuildsList({
       </div>
 
       {/* Warning */}
-      <div className="card rounded-xl p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
+      <div className="card rounded-sm p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
         <AlertTriangle size={20} className="text-warning shrink-0" />
 
         <div>
@@ -161,7 +161,7 @@ export default function BuildsList({
 
       {/* Builds */}
       {filteredBuilds.length === 0 ? (
-        <div className="card rounded-xl p-12 text-center">
+        <div className="card rounded-sm p-12 text-center">
           <Package size={48} className="text-text-muted mx-auto mb-4" />
 
           <p>No matching builds</p>

@@ -3,7 +3,7 @@ import { Skeleton, SkeletonCard } from "@/components/Skeleton";
 function StatCardSkeleton() {
   return (
     <SkeletonCard className="p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-      <Skeleton width={48} height={48} className="rounded-md" />
+      <Skeleton width={48} height={48} className="rounded-sm" />
       <div>
         <Skeleton width="5rem" height="0.875rem" className="mb-1" />
         <Skeleton width="3rem" height="2rem" />
@@ -20,7 +20,7 @@ export default function DashboardLoading() {
           <Skeleton width="14rem" height="2rem" className="mb-2" />
           <Skeleton width="18rem" height="0.875rem" />
         </div>
-        <Skeleton width="12rem" height="2.5rem" className="rounded-md" />
+        <Skeleton width="12rem" height="2.5rem" className="rounded-sm" />
       </div>
 
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(240px,100%),1fr))] gap-6 mb-10">
@@ -47,7 +47,7 @@ export default function DashboardLoading() {
                 <Skeleton
                   width="4rem"
                   height="1.25rem"
-                  className="rounded-full"
+                  className="rounded-sm"
                 />
               </div>
               <div className="grid grid-flow-col auto-cols-max gap-4 py-4 border-y border-border">

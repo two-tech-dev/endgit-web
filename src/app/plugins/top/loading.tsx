@@ -17,7 +17,7 @@ function PluginCardSkeleton() {
           gap: "var(--space-4)",
         }}
       >
-        <Skeleton width={64} height={64} borderRadius="var(--radius-md)" />
+        <Skeleton width={64} height={64} borderRadius="var(--radius-sm)" />
         <div style={{ minWidth: 0 }}>
           <Skeleton
             width="60%"

@@ -279,7 +279,7 @@ export default function RulesPage() {
     <div className="container max-w-4xl py-12 lg:py-20">
       {/* Hero Header */}
       <div className="text-center mb-12">
-        <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
+        <div className="w-16 h-16 rounded-sm bg-gradient-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
           <Shield size={32} className="text-accent" />
         </div>
         <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>
@@ -303,7 +303,7 @@ export default function RulesPage() {
               color: cat.color,
               borderColor: `${cat.color}25`,
             }}
-            className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold no-underline border transition-all hover:opacity-85"
+            className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3.5 py-1.5 rounded-sm text-xs font-semibold no-underline border transition-all hover:opacity-85"
           >
             <CategoryIcon icon={cat.icon} color={cat.color} />
             {cat.label}
@@ -325,7 +325,7 @@ export default function RulesPage() {
             >
               <div
                 style={{ background: `${cat.color}15` }}
-                className="w-9 h-9 rounded-md grid place-items-center"
+                className="w-9 h-9 rounded-sm grid place-items-center"
               >
                 <CategoryIcon icon={cat.icon} color={cat.color} />
               </div>
@@ -380,7 +380,7 @@ export default function RulesPage() {
       </div>
 
       {/* Footer Note */}
-      <div className="mt-12 p-6 bg-error/5 rounded-lg border border-error/15 text-center">
+      <div className="mt-12 p-6 bg-error/5 rounded-sm border border-error/15 text-center">
         <p className="font-semibold text-text-primary mb-2">⚠️ Enforcement</p>
         <p className="text-text-secondary text-sm max-w-xl mx-auto leading-relaxed m-0">
           Violations of these rules may result in the plugin being rejected

@@ -134,7 +134,7 @@ function TreeNode({
         </span>
         <span className="text-text-muted text-xs">{node.version}</span>
         {!node.required ? (
-          <span className="text-xs text-text-muted bg-surface-secondary px-1 py-0 rounded border border-border">
+          <span className="text-xs text-text-muted bg-surface-secondary px-1 py-0 rounded-xs border border-border">
             optional
           </span>
         ) : null}

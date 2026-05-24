@@ -26,7 +26,7 @@ export default function BuildsLoading() {
               <Skeleton
                 width="4rem"
                 height="1.5rem"
-                borderRadius="var(--radius-full)"
+                borderRadius="var(--radius-sm)"
               />
               <Skeleton width="3rem" height="0.875rem" />
             </div>

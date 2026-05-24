@@ -27,7 +27,7 @@ export default function NavbarClient({
     return (
       <div
         className={`animate-pulse bg-surface-secondary ${
-          mobile ? "w-full rounded-md" : "w-[100px] rounded-full"
+          mobile ? "w-full rounded-sm" : "w-[100px] rounded-sm"
         } h-[36px]`}
       />
     );
@@ -129,7 +129,7 @@ export default function NavbarClient({
       <div className="grid gap-1">
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className={`grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2.5 px-3 rounded-md border-0 w-full cursor-pointer transition-all ${
+          className={`grid grid-cols-[auto_1fr_auto] items-center gap-3 py-2.5 px-3 rounded-sm border-0 w-full cursor-pointer transition-all ${
             dropdownOpen ? "bg-surface-secondary" : "bg-transparent"
           }`}
         >
@@ -169,7 +169,7 @@ export default function NavbarClient({
     <div className="relative">
       <button
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="grid grid-cols-[auto_1fr_auto] items-center gap-2 py-1.5 px-3 rounded-full border border-border bg-surface-card cursor-pointer transition-all hover:bg-surface-secondary"
+        className="grid grid-cols-[auto_1fr_auto] items-center gap-2 py-1.5 px-3 rounded-sm border border-border bg-surface-card cursor-pointer transition-all hover:bg-surface-secondary"
       >
         {userAvatar}
         <span className="font-medium text-sm text-text-primary max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap">
@@ -190,7 +190,7 @@ export default function NavbarClient({
             className="fixed inset-0 z-40"
           />
 
-          <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[220px] max-w-[calc(100vw-2rem)] bg-surface-card border border-border rounded-lg shadow-lg overflow-hidden animate-fade-in">
+          <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[220px] max-w-[calc(100vw-2rem)] bg-surface-card border border-border rounded-sm shadow-lg overflow-hidden animate-fade-in">
             <div className="py-3 px-4 border-b border-border bg-surface-secondary">
               <div className="font-semibold text-sm text-text-primary">
                 {user?.name}

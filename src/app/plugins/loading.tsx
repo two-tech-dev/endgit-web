@@ -4,7 +4,7 @@ function PluginCardSkeleton() {
   return (
     <SkeletonCard className="p-0 flex flex-col overflow-hidden">
       <div className="p-4 flex gap-4 items-center">
-        <Skeleton width={56} height={56} borderRadius="var(--radius-lg)" />
+        <Skeleton width={56} height={56} borderRadius="var(--radius-sm)" />
         <div className="flex-1 min-w-0">
           <Skeleton width="60%" height="1.25rem" className="mb-2" />
           <div className="flex items-center gap-2">
@@ -32,20 +32,19 @@ export default function PluginsLoading() {
         <Skeleton
           width="300px"
           height="2.5rem"
-          borderRadius="var(--radius-md)"
+          borderRadius="var(--radius-sm)"
           className="hidden lg:block"
         />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* Sidebar Filters Skeleton */}
         <div className="hidden lg:flex flex-col gap-6 w-[250px] shrink-0">
           <SkeletonCard className="p-4">
             <Skeleton width="5rem" height="0.875rem" className="mb-3" />
             <Skeleton
               width="100%"
               height="2.5rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="var(--radius-sm)"
             />
           </SkeletonCard>
           <SkeletonCard className="p-4">
@@ -63,7 +62,6 @@ export default function PluginsLoading() {
           </SkeletonCard>
         </div>
 
-        {/* Plugin Grid Skeleton */}
         <div className="flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 align-content-start">
             {Array.from({ length: 6 }, (_, i) => (

@@ -5,7 +5,6 @@ export default function Footer() {
   return (
     <footer className="border-t border-border py-8 lg:py-12 mt-auto bg-surface-secondary">
       <div className="container grid grid-cols-[1fr] lg:grid-cols-[280px_1fr] justify-between gap-6 lg:gap-8">
-        {/* Brand */}
         <div className="max-w-[280px]">
           <div className="grid grid-cols-[auto_1fr] items-center gap-2 mb-3">
             <Image
@@ -24,29 +23,19 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Links */}
         <div className="footer-links grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-8 lg:gap-12">
           <div>
             <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
               Platform
             </h4>
             <div className="grid gap-2">
-              <Link
-                href="/plugins"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/plugins" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Releases
               </Link>
-              <Link
-                href="/builds"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/builds" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Dev Builds
               </Link>
-              <Link
-                href="/rules"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/rules" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Submission Rules
               </Link>
             </div>
@@ -56,34 +45,16 @@ export default function Footer() {
               Community
             </h4>
             <div className="grid gap-2">
-              <a
-                href="https://discord.gg/9eZhP9y26Q"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <a href="https://discord.gg/9eZhP9y26Q" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Discord
               </a>
-              <a
-                href="https://github.com/two-tech-dev/endgit-web"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <a href="https://github.com/two-tech-dev/endgit-web" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Source code
               </a>
-              <a
-                href="https://github.com/apps/endgit-local-dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <a href="https://github.com/apps/endgit-local-dev" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 GitHub App
               </a>
-              <Link
-                href="/faq"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/faq" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 FAQ
               </Link>
             </div>
@@ -93,16 +64,10 @@ export default function Footer() {
               Legal
             </h4>
             <div className="grid gap-2">
-              <Link
-                href="/terms"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/terms" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Terms of Service
               </Link>
-              <Link
-                href="/privacy"
-                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
-              >
+              <Link href="/privacy" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
                 Privacy Policy
               </Link>
             </div>
@@ -110,7 +75,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
       <div className="container mt-8 pt-6 border-t border-border grid grid-cols-[1fr_auto] items-center flex-wrap gap-2">
         <p className="text-text-muted text-xs m-0" suppressHydrationWarning>
           &copy; {new Date().getFullYear()} EndGit. All rights reserved.
@@ -129,12 +93,7 @@ export default function Footer() {
         </p>
         <p className="text-text-muted text-xs m-0">
           Powered by{" "}
-          <a
-            href="https://2tech.studio"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand no-underline font-semibold"
-          >
+          <a href="https://2tech.studio" target="_blank" rel="noopener noreferrer" className="text-brand no-underline font-semibold">
             2Tech Studio
           </a>
         </p>

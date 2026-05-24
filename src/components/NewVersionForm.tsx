@@ -74,7 +74,7 @@ export default function NewVersionForm({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="grid grid-flow-col auto-cols-max items-center gap-1.5 px-4 py-2 rounded-md bg-accent text-white hover:bg-accent-hover font-semibold text-sm cursor-pointer mt-2"
+        className="grid grid-flow-col auto-cols-max items-center gap-1.5 px-4 py-2 rounded-sm bg-accent text-white hover:bg-accent-hover font-semibold text-sm cursor-pointer mt-2"
       >
         <Plus size={16} /> Submit New Version
       </button>
@@ -87,7 +87,7 @@ export default function NewVersionForm({
             </h3>
 
             {error && (
-              <div className="bg-error/10 text-error p-3 rounded-md mb-4 text-sm">
+              <div className="bg-error/10 text-error p-3 rounded-sm mb-4 text-sm">
                 {error}
               </div>
             )}
@@ -102,7 +102,7 @@ export default function NewVersionForm({
                   required
                   value={version}
                   onChange={(e) => setVersion(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
+                  className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
                 />
               </div>
 
@@ -114,7 +114,7 @@ export default function NewVersionForm({
                   value={changelog}
                   onChange={(e) => setChangelog(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
+                  className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
                 />
               </div>
 
@@ -142,7 +142,7 @@ export default function NewVersionForm({
                       }}
                       placeholder="e.g. clt3x..."
                       disabled={!!fileUrl}
-                      className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                      className={`w-full px-3 py-2 rounded-sm border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
                         fileUrl
                           ? "opacity-50 cursor-not-allowed bg-surface-secondary"
                           : ""
@@ -165,7 +165,7 @@ export default function NewVersionForm({
                       }}
                       placeholder="https://example.com/plugin.zip"
                       disabled={!!buildId}
-                      className={`w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                      className={`w-full px-3 py-2 rounded-sm border border-border bg-surface-card text-text-primary outline-none transition-all duration-150 focus:border-accent ${
                         buildId
                           ? "opacity-50 cursor-not-allowed bg-surface-secondary"
                           : ""
@@ -183,7 +183,7 @@ export default function NewVersionForm({
                         value={fileName}
                         onChange={(e) => setFileName(e.target.value)}
                         placeholder="plugin-1.0.0.zip"
-                        className="w-full px-3 py-2 rounded-md border border-border bg-surface-card text-text-primary outline-none focus:border-accent transition-all duration-150"
+                        className="w-full px-3 py-2 rounded-sm border border-border bg-surface-card text-text-primary outline-none focus:border-accent transition-all duration-150"
                       />
                     </div>
                   )}
@@ -194,14 +194,14 @@ export default function NewVersionForm({
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 rounded-md bg-transparent text-text-primary border border-border hover:bg-surface-secondary cursor-pointer text-sm font-medium transition-all"
+                  className="px-4 py-2 rounded-sm bg-transparent text-text-primary border border-border hover:bg-surface-secondary cursor-pointer text-sm font-medium transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting || (!buildId && !fileUrl)}
-                  className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-md bg-accent text-white font-semibold text-sm transition-all ${
+                  className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-sm bg-accent text-white font-semibold text-sm transition-all ${
                     submitting || (!buildId && !fileUrl)
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-accent-hover cursor-pointer"

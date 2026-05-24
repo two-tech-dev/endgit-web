@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
+import { VERIFIED_ORGS } from "@/lib/constants";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -66,7 +67,7 @@ export default async function AuthorPluginsPage({
             const repoOwner =
               plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
             const isVerified = repoOwner
-              ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
+              ? VERIFIED_ORGS.includes(repoOwner)
               : false;
 
             return (
@@ -77,7 +78,7 @@ export default async function AuthorPluginsPage({
               >
                 <div className="plugin-card-inner p-4 grid grid-flow-col auto-cols-max gap-4 items-center">
                   {/* Left: Icon */}
-                  <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border grid place-items-center">
+                  <div className="w-14 h-14 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border grid place-items-center">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}
@@ -99,7 +100,7 @@ export default async function AuthorPluginsPage({
                       )}
                     </h3>
                     <div className="grid grid-flow-col auto-cols-max items-center gap-2 text-xs text-text-muted mt-1">
-                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded text-[11px]">
+                      <span className="font-mono bg-surface-secondary px-1.5 py-0.5 rounded-xs text-[11px]">
                         v{plugin.latestVersion || "1.0.0"}
                       </span>
                       <span>•</span>
@@ -144,7 +145,7 @@ export default async function AuthorPluginsPage({
                 {/* Bottom: Featured Banner */}
                 {isFeatured && (
                   <div className="px-3 pb-3 grid justify-items-center">
-                    <div className="w-full py-1 text-center bg-emerald-500/10 text-emerald-500 text-xs font-semibold rounded border border-emerald-500/20">
+                    <div className="w-full py-1 text-center bg-emerald-500/10 text-emerald-500 text-xs font-semibold rounded-xs border border-emerald-500/20">
                       Featured
                     </div>
                   </div>

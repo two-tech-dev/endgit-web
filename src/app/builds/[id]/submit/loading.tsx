@@ -13,7 +13,7 @@ export default function SubmitReviewLoading() {
             <Skeleton
               width="100%"
               height="2.5rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="var(--radius-sm)"
             />
           </div>
 
@@ -22,7 +22,7 @@ export default function SubmitReviewLoading() {
             <Skeleton
               width="100%"
               height="6rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="var(--radius-sm)"
             />
           </div>
 
@@ -34,7 +34,7 @@ export default function SubmitReviewLoading() {
                   key={i}
                   width="5rem"
                   height="1.75rem"
-                  borderRadius="var(--radius-full)"
+                  borderRadius="var(--radius-sm)"
                 />
               ))}
             </div>
@@ -43,7 +43,7 @@ export default function SubmitReviewLoading() {
           <Skeleton
             width="100%"
             height="2.75rem"
-            borderRadius="var(--radius-md)"
+            borderRadius="var(--radius-sm)"
           />
         </div>
       </SkeletonCard>

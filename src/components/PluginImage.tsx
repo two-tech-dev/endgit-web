@@ -33,7 +33,7 @@ export default function PluginImage({ iconUrl, repoUrl, alt }: Props) {
       loading="lazy"
       decoding="async"
       unoptimized
-      className="w-full h-full rounded-lg object-cover p-0"
+      className="w-full h-full rounded-sm object-cover p-0"
       onError={() => setErrored(true)}
     />
   );

@@ -14,7 +14,7 @@ export default function GlobalError({
         <p className="text-text-muted text-sm break-words">{error.message}</p>
         <button
           onClick={reset}
-          className="mt-4 px-4 py-2 bg-brand hover:bg-brand-dark text-white font-medium rounded-md shadow-sm transition-all"
+          className="mt-4 px-4 py-2 bg-brand hover:bg-brand-dark text-white font-medium rounded-sm shadow-sm transition-all"
         >
           Try again
         </button>

@@ -22,7 +22,7 @@ export default function MarkdownInline({
             </a>
           ),
           code: ({ children }) => (
-            <code className="bg-surface-secondary px-1 py-0.5 rounded text-[0.85em]">
+            <code className="bg-surface-secondary px-1 py-0.5 rounded-xs text-[0.85em]">
               {children}
             </code>
           ),

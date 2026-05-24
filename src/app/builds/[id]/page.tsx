@@ -70,7 +70,7 @@ function StatusBadge({ status }: { status: string }) {
   const c = config[status] || config.QUEUED;
   return (
     <span
-      className={`inline-grid grid-cols-[auto_1fr] items-center gap-1 px-2.5 py-1 rounded-full text-[0.8125rem] font-semibold border ${c.badgeClass}`}
+      className={`inline-grid grid-cols-[auto_1fr] items-center gap-1 px-2.5 py-1 rounded-sm text-[0.8125rem] font-semibold border ${c.badgeClass}`}
     >
       {c.icon} {status}
     </span>

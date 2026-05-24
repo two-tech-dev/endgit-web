@@ -220,13 +220,13 @@ export default function PluginRatings({
             onChange={(e) => setMyComment(e.target.value)}
             placeholder="Share your experience... (optional)"
             rows={3}
-            className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit outline-none min-h-[80px]"
+            className="w-full p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit outline-none min-h-[80px]"
           />
           <div className="mt-3 grid justify-items-end">
             <button
               onClick={handleSubmit}
               disabled={myScore === 0 || submitting}
-              className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+              className={`grid grid-flow-col auto-cols-max items-center gap-1.5 px-5 py-2 rounded-sm text-[13px] font-semibold transition-all duration-150 ${
                 myScore > 0
                   ? "bg-accent text-white cursor-pointer hover:bg-accent-hover"
                   : "bg-surface-secondary text-text-muted cursor-not-allowed"
@@ -267,7 +267,7 @@ export default function PluginRatings({
               {/* Top row: avatar + username + stars + version badge + date */}
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex flex-wrap items-center gap-3">
-                  <div className="w-7 h-7 rounded-[4px] bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
+                  <div className="w-7 h-7 rounded-sm bg-gradient-to-br from-accent to-accent flex items-center justify-center text-white text-[11px] font-bold shrink-0 overflow-hidden">
                     {rating.user.avatarUrl ? (
                       <Image
                         src={rating.user.avatarUrl}
@@ -288,7 +288,7 @@ export default function PluginRatings({
                   >
                     {rating.user.displayName || rating.user.username}
                     {rating.user.trustLevel === "ADMIN" && (
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-success/15 text-success font-bold uppercase tracking-wider">
+                      <span className="text-xs px-1.5 py-0.5 rounded-xs bg-success/15 text-success font-bold uppercase tracking-wider">
                         Staff
                       </span>
                     )}
@@ -301,14 +301,14 @@ export default function PluginRatings({
               </div>
               {/* Comment block — indented like Poggit */}
               {rating.comment && (
-                <div className="rating-comment mt-2 ml-0 sm:ml-10 p-3 bg-surface-secondary rounded-md border border-border text-sm text-text-secondary leading-relaxed">
+                <div className="rating-comment mt-2 ml-0 sm:ml-10 p-3 bg-surface-secondary rounded-sm border border-border text-sm text-text-secondary leading-relaxed">
                   {rating.comment}
                 </div>
               )}
 
               {/* Owner Reply */}
               {rating.ownerReply && (
-                <div className="rating-reply mt-2 ml-0 sm:ml-14 p-3 bg-success/5 rounded-md border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
+                <div className="rating-reply mt-2 ml-0 sm:ml-14 p-3 bg-success/5 rounded-sm border border-success/20 border-l-3 border-l-success text-sm text-text-secondary leading-relaxed">
                   <div className="grid grid-flow-col auto-cols-max items-center gap-1.5 mb-1">
                     <span className="text-xs font-bold text-success uppercase">
                       Author Reply
@@ -333,7 +333,7 @@ export default function PluginRatings({
                           onChange={(e) => setReplyText(e.target.value)}
                           placeholder="Write your reply..."
                           rows={2}
-                          className="w-full p-2 rounded-md border border-border bg-surface-secondary text-text-primary text-sm resize-y outline-none font-inherit"
+                          className="w-full p-2 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm resize-y outline-none font-inherit"
                         />
                         <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
                           <button

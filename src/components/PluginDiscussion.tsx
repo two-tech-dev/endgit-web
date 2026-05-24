@@ -192,65 +192,27 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
   const isAdmin = (session?.user as any)?.trustLevel === "ADMIN";
 
   return (
-    <div className="card" style={{ padding: "var(--space-6)" }}>
-      <h3
-        style={{
-          fontSize: "1.125rem",
-          fontWeight: 600,
-          marginBottom: "var(--space-4)",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-        }}
-      >
+    <div className="card p-6">
+      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
         <MessageCircle size={20} /> Discussion
       </h3>
 
       {session && (
-        <form
-          onSubmit={handleSubmit}
-          style={{ marginBottom: "var(--space-6)" }}
-        >
+        <form onSubmit={handleSubmit} className="mb-6">
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
             placeholder="Share your thoughts..."
-            style={{
-              width: "100%",
-              minHeight: "80px",
-              padding: "var(--space-3)",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid var(--border-color)",
-              background: "var(--bg-secondary)",
-              color: "var(--text-primary)",
-              fontSize: "0.875rem",
-              resize: "vertical",
-              fontFamily: "inherit",
-            }}
+            className="w-full min-h-[80px] p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm resize-y font-inherit"
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "var(--space-2)",
-            }}
-          >
+          <div className="flex justify-end mt-2">
             <button
               type="submit"
-              className="btn btn-primary"
+              className="btn btn-primary flex items-center gap-1.5 text-xs"
               disabled={!body.trim() || submitting}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-                fontSize: "0.8125rem",
-              }}
             >
               {submitting ? (
-                <Loader2
-                  size={14}
-                  style={{ animation: "spin 1s linear infinite" }}
-                />
+                <Loader2 size={14} className="animate-spin" />
               ) : (
                 <Send size={14} />
               )}
@@ -261,43 +223,19 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
       )}
 
       {loading ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "var(--space-6)",
-            color: "var(--text-muted)",
-          }}
-        >
-          <Loader2
-            size={24}
-            style={{ animation: "spin 1s linear infinite", margin: "0 auto" }}
-          />
+        <div className="text-center p-6 text-text-muted">
+          <Loader2 size={24} className="animate-spin mx-auto" />
         </div>
       ) : comments.length === 0 ? (
-        <div
-          style={{
-            textAlign: "center",
-            padding: "var(--space-6)",
-            color: "var(--text-muted)",
-          }}
-        >
+        <div className="text-center p-6 text-text-muted">
           <p>No comments yet. Be the first to start a discussion!</p>
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "var(--space-4)",
-          }}
-        >
+        <div className="flex flex-col gap-4">
           {comments.map((comment) => (
             <div
               key={comment.id}
-              style={{
-                borderBottom: "1px solid var(--border-color)",
-                paddingBottom: "var(--space-4)",
-              }}
+              className="border-b border-border pb-4"
             >
               <CommentItem
                 comment={comment}
@@ -311,15 +249,7 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
               />
 
               {comment.replies.length > 0 && (
-                <div
-                  style={{
-                    marginLeft: "var(--space-6)",
-                    marginTop: "var(--space-3)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "var(--space-3)",
-                  }}
-                >
+                <div className="ml-6 mt-3 flex flex-col gap-3">
                   {comment.replies.map((reply) => (
                     <CommentItem
                       key={reply.id}
@@ -334,64 +264,30 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
               )}
 
               {replyingTo === comment.id && (
-                <div
-                  style={{
-                    marginLeft: "var(--space-6)",
-                    marginTop: "var(--space-3)",
-                  }}
-                >
+                <div className="ml-6 mt-3">
                   <textarea
                     value={replyBody}
                     onChange={(e) => setReplyBody(e.target.value)}
                     placeholder="Write a reply..."
-                    style={{
-                      width: "100%",
-                      minHeight: "60px",
-                      padding: "var(--space-3)",
-                      borderRadius: "var(--radius-md)",
-                      border: "1px solid var(--border-color)",
-                      background: "var(--bg-secondary)",
-                      color: "var(--text-primary)",
-                      fontSize: "0.8125rem",
-                      resize: "vertical",
-                      fontFamily: "inherit",
-                    }}
+                    className="w-full min-h-[60px] p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-xs resize-y font-inherit"
                   />
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "var(--space-2)",
-                      marginTop: "var(--space-2)",
-                      justifyContent: "flex-end",
-                    }}
-                  >
+                  <div className="flex gap-2 mt-2 justify-end">
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-secondary text-xs py-1 px-2"
                       onClick={() => {
                         setReplyingTo(null);
                         setReplyBody("");
                       }}
-                      style={{ fontSize: "0.75rem", padding: "0.25rem 0.5rem" }}
                     >
                       Cancel
                     </button>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary text-xs py-1 px-2 flex items-center gap-1"
                       onClick={() => handleReply(comment.id)}
                       disabled={!replyBody.trim() || submitting}
-                      style={{
-                        fontSize: "0.75rem",
-                        padding: "0.25rem 0.5rem",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                      }}
                     >
                       {submitting ? (
-                        <Loader2
-                          size={12}
-                          style={{ animation: "spin 1s linear infinite" }}
-                        />
+                        <Loader2 size={12} className="animate-spin" />
                       ) : (
                         <Send size={12} />
                       )}
@@ -405,9 +301,8 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
 
           {page < totalPages && (
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary self-center text-xs"
               onClick={() => fetchComments(page + 1)}
-              style={{ alignSelf: "center", fontSize: "0.8125rem" }}
             >
               Load more
             </button>
@@ -438,110 +333,62 @@ function CommentItem({
   const canDelete = currentUserId === comment.user.id || isAdmin;
 
   return (
-    <div style={{ display: "flex", gap: "var(--space-3)" }}>
+    <div className="flex gap-3">
       <div
-        style={{
-          width: isReply ? "28px" : "32px",
-          height: isReply ? "28px" : "32px",
-          borderRadius: "var(--radius-full)",
-          background: "var(--bg-secondary)",
-          border: "1px solid var(--border-color)",
-          overflow: "hidden",
-          flexShrink: 0,
-        }}
+        className={`rounded-full bg-surface-secondary border border-border overflow-hidden shrink-0 ${
+          isReply ? "w-7 h-7" : "w-8 h-8"
+        }`}
       >
         {comment.user.avatarUrl ? (
           <img
             src={comment.user.avatarUrl}
             alt={comment.user.username}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            className="w-full h-full object-cover"
           />
         ) : (
           <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: isReply ? "0.6875rem" : "0.75rem",
-              fontWeight: 600,
-              color: "var(--text-muted)",
-            }}
+            className={`w-full h-full flex items-center justify-center font-semibold text-text-muted ${
+              isReply ? "text-[11px]" : "text-xs"
+            }`}
           >
             {(comment.user.displayName ||
               comment.user.username)[0].toUpperCase()}
           </div>
         )}
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            flexWrap: "wrap",
-          }}
-        >
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-1.5 flex-wrap">
           <a
             href={`https://github.com/${comment.user.username}`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              fontWeight: 600,
-              fontSize: isReply ? "0.8125rem" : "0.875rem",
-              color: "var(--text-primary)",
-              textDecoration: "none",
-            }}
+            className={`font-semibold text-text-primary no-underline ${
+              isReply ? "text-xs" : "text-sm"
+            }`}
           >
             {comment.user.displayName || comment.user.username}
           </a>
           {comment.user.trustLevel === "ADMIN" && (
-            <span
-              style={{
-                fontSize: "0.625rem",
-                padding: "1px 6px",
-                borderRadius: "var(--radius-full)",
-                background: "rgba(14, 165, 233, 0.1)",
-                color: "var(--accent-primary)",
-                fontWeight: 600,
-              }}
-            >
+            <span className="text-[10px] px-1.5 py-px rounded-full bg-accent/10 text-accent font-semibold">
               Staff
             </span>
           )}
-          <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>
+          <span className="text-xs text-text-muted">
             {timeAgo(comment.createdAt)}
           </span>
         </div>
         <p
-          style={{
-            marginTop: "4px",
-            fontSize: isReply ? "0.8125rem" : "0.875rem",
-            color: "var(--text-secondary)",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-word",
-          }}
+          className={`mt-1 text-text-secondary whitespace-pre-wrap break-words ${
+            isReply ? "text-xs" : "text-sm"
+          }`}
         >
           {comment.body}
         </p>
-        <div
-          style={{ display: "flex", gap: "var(--space-3)", marginTop: "6px" }}
-        >
+        <div className="flex gap-3 mt-1.5">
           {showReplyBtn && !isReply && onReply && (
             <button
               onClick={onReply}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                fontSize: "0.75rem",
-                color: "var(--text-muted)",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-              }}
+              className="flex items-center gap-1 text-xs text-text-muted bg-transparent border-none cursor-pointer p-0"
             >
               <Reply size={12} /> Reply
             </button>
@@ -549,18 +396,7 @@ function CommentItem({
           {canDelete && (
             <button
               onClick={() => onDelete(comment.id)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                fontSize: "0.75rem",
-                color: "var(--status-error)",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                opacity: 0.7,
-              }}
+              className="flex items-center gap-1 text-xs text-error bg-transparent border-none cursor-pointer p-0 opacity-70"
             >
               <Trash2 size={12} /> Delete
             </button>

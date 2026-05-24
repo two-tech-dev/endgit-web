@@ -44,7 +44,7 @@ function HomeSkeleton() {
         <div className="space-y-4">
           {[1, 2, 3, 4, 5].map((n) => (
             <div key={n} className="skeleton-card p-4 flex items-center gap-4">
-              <div className="skeleton w-12 h-12 shrink-0 rounded-lg" />
+              <div className="skeleton w-12 h-12 shrink-0 rounded-sm" />
               <div className="flex-1 space-y-2">
                 <div className="skeleton h-5 w-1/2" />
                 <div className="skeleton h-3 w-3/4" />
@@ -55,7 +55,7 @@ function HomeSkeleton() {
         <div className="space-y-4">
           {[1, 2, 3].map((n) => (
             <div key={n} className="skeleton-card p-4 flex items-center gap-3">
-              <div className="skeleton w-10 h-10 shrink-0 rounded-lg" />
+              <div className="skeleton w-10 h-10 shrink-0 rounded-sm" />
               <div className="flex-1 space-y-2">
                 <div className="skeleton h-4 w-2/3" />
                 <div className="skeleton h-3 w-1/2" />

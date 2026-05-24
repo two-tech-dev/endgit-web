@@ -124,8 +124,8 @@ export default function LiveBuildLog({
             Execution Log
           </span>
           {isRunning && (
-            <span className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 text-[0.6875rem] text-accent font-bold tracking-wider bg-accent/10 px-2 py-0.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            <span className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 text-[0.6875rem] text-accent font-bold tracking-wider bg-accent/10 px-2 py-0.5 rounded-sm">
+              <span className="w-1.5 h-1.5 rounded-sm bg-accent animate-pulse" />
               LIVE
             </span>
           )}
@@ -160,7 +160,7 @@ export default function LiveBuildLog({
           <div className="text-center py-2 pb-3">
             <button
               onClick={() => setShowAll(true)}
-              className="bg-accent/10 border border-accent/30 text-accent px-4 py-1.5 rounded-md text-xs font-semibold cursor-pointer hover:bg-accent/20 transition-colors duration-150"
+              className="bg-accent/10 border border-accent/30 text-accent px-4 py-1.5 rounded-sm text-xs font-semibold cursor-pointer hover:bg-accent/20 transition-colors duration-150"
             >
               Show all {totalLines} lines ({hiddenCount} hidden)
             </button>
@@ -194,7 +194,7 @@ export default function LiveBuildLog({
         /* Custom scrollbar for the terminal */
         .scrollbar-terminal::-webkit-scrollbar { width: 8px; }
         .scrollbar-terminal::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        .scrollbar-terminal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .scrollbar-terminal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
         .scrollbar-terminal::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
       `,
         }}

@@ -40,7 +40,7 @@ export default async function DashboardPage() {
     return (
       <div className="container py-12 min-h-[60vh] grid place-items-center">
         <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-warning/10 rounded-full grid place-items-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-warning/10 rounded-sm grid place-items-center mx-auto mb-6">
             <AlertCircle size={40} className="text-warning" />
           </div>
           <h1 className="heading-2 mb-4">GitHub Session Expired</h1>
@@ -64,7 +64,7 @@ export default async function DashboardPage() {
     return (
       <div className="container py-12 min-h-[60vh] grid place-items-center">
         <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full grid place-items-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-sm grid place-items-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
           <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
@@ -132,7 +132,7 @@ export default async function DashboardPage() {
       {/* Stats Grid */}
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 lg:gap-6 mb-10 lg:mb-12">
         <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-[#7c3aed]/10 p-3 rounded-md text-[#7c3aed]">
+          <div className="bg-[#7c3aed]/10 p-3 rounded-sm text-[#7c3aed]">
             <PackagePlus size={24} />
           </div>
           <div>
@@ -144,7 +144,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-cyan-500/10 p-3 rounded-md text-cyan-500">
+          <div className="bg-cyan-500/10 p-3 rounded-sm text-cyan-500">
             <Activity size={24} />
           </div>
           <div>
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
         </div>
 
         <div className="card p-4 lg:p-6 grid grid-flow-col auto-cols-max items-center gap-4">
-          <div className="bg-warning/10 p-3 rounded-md text-warning">
+          <div className="bg-warning/10 p-3 rounded-sm text-warning">
             <AlertCircle size={24} />
           </div>
           <div>
@@ -183,7 +183,7 @@ export default async function DashboardPage() {
             <div className="p-4 lg:p-5 flex flex-col gap-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="flex gap-3 items-center min-w-0">
-                  <div className="w-12 h-12 rounded-lg bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}

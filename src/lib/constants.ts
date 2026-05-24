@@ -1,3 +1,5 @@
+export const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
+
 export const PLUGIN_CATEGORIES = [
   "General",
   "Admin Tools",

@@ -51,7 +51,7 @@ export default async function LatestPluginsSection() {
   return (
     <section className="container pb-10 lg:pb-24 relative">
       {/* Premium Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand/5 blur-[120px] rounded-sm pointer-events-none z-0" />
 
       <FadeIn>
         <div className="flex justify-between items-end mb-8 lg:mb-12 flex-wrap gap-4 lg:gap-6 relative z-10">
@@ -108,7 +108,7 @@ export default async function LatestPluginsSection() {
                     className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col flex-1"}`}
                   >
                     <div
-                      className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
+                      className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
                     >
                       <PluginImage
                         iconUrl={plugin.iconUrl}
@@ -126,7 +126,7 @@ export default async function LatestPluginsSection() {
                         {isVerified && (
                           <span
                             title="Officially supported by EndstoneMC/EndGit"
-                            className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-brand bg-brand/10 border border-brand/20 rounded px-1.5 py-0.5 shrink-0"
+                            className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-brand bg-brand/10 border border-brand/20 rounded-xs px-1.5 py-0.5 shrink-0"
                           >
                             <BadgeCheck size={11} />
                             Verified

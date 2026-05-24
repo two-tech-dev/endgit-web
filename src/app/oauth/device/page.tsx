@@ -105,7 +105,7 @@ export default function DeviceAuthPage() {
     <div className="container py-12 min-h-[60vh] grid place-items-center mx-auto px-4">
       <div className="card max-w-[480px] w-full p-10 text-center">
         {/* Icon */}
-        <div className="w-[72px] h-[72px] bg-brand/10 rounded-full grid place-items-center mx-auto mb-6">
+        <div className="w-[72px] h-[72px] bg-brand/10 rounded-sm grid place-items-center mx-auto mb-6">
           <Terminal size={36} className="text-brand" />
         </div>
 
@@ -129,7 +129,7 @@ export default function DeviceAuthPage() {
         ) : !session ? (
           /* Not signed in */
           <div className="grid gap-6 items-center">
-            <div className="p-4 bg-warning/10 rounded-md border border-warning/20 w-full">
+            <div className="p-4 bg-warning/10 rounded-sm border border-warning/20 w-full">
               <div className="grid place-items-center gap-2 text-warning font-medium">
                 <AlertCircle size={16} />
                 You must be signed in to authorize a device
@@ -161,7 +161,7 @@ export default function DeviceAuthPage() {
                   placeholder="XXXX"
                   autoFocus
                   autoComplete="off"
-                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-md border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
+                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-sm border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
                     error ? "border-error" : "border-border"
                   }`}
                 />
@@ -176,7 +176,7 @@ export default function DeviceAuthPage() {
                   maxLength={4}
                   placeholder="XXXX"
                   autoComplete="off"
-                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-md border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
+                  className={`w-[120px] text-center tracking-widest text-2xl font-bold font-mono p-3 rounded-sm border-2 bg-surface-secondary text-text-primary outline-none uppercase transition-all focus:border-brand focus:ring-2 focus:ring-brand/20 ${
                     error ? "border-error" : "border-border"
                   }`}
                 />
@@ -185,7 +185,7 @@ export default function DeviceAuthPage() {
 
             {/* Error message */}
             {error && (
-              <div className="p-3 bg-error/10 rounded-md border border-error/20 grid grid-flow-col auto-cols-max items-center gap-2 text-error text-sm">
+              <div className="p-3 bg-error/10 rounded-sm border border-error/20 grid grid-flow-col auto-cols-max items-center gap-2 text-error text-sm">
                 <AlertCircle size={14} />
                 {error}
               </div>

@@ -159,7 +159,6 @@ export default function NavbarMobile() {
 
   return (
     <div ref={wrapperRef} className="grid items-center">
-      {/* Desktop nav */}
       <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-8 xl:gap-12 items-center">
         <Link
           href="/plugins"
@@ -187,7 +186,7 @@ export default function NavbarMobile() {
         </Link>
         <button
           onClick={toggleTheme}
-          className="grid items-center justify-center w-8 h-8 rounded-full bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
+          className="grid items-center justify-center w-8 h-8 rounded-sm bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
           {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
@@ -195,7 +194,6 @@ export default function NavbarMobile() {
         <NavbarClient />
       </nav>
 
-      {/* Mobile hamburger button */}
       <button
         className="grid lg:hidden items-center justify-center p-1.5 cursor-pointer text-text-primary touch-target"
         onClick={handleToggle}
@@ -219,7 +217,6 @@ export default function NavbarMobile() {
         </div>
       </button>
 
-      {/* Dropdown rendered via portal to body */}
       {mounted && open && createPortal(dropdown, document.body)}
     </div>
   );

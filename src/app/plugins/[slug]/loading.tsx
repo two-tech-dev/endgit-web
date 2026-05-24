@@ -6,14 +6,14 @@ export default function PluginDetailLoading() {
       <SkeletonCard className="p-6 mb-6">
         <div className="grid lg:grid-cols-[1fr_auto] justify-between items-start gap-4">
           <div className="plugin-header-inner grid grid-flow-col auto-cols-max gap-4 min-w-0">
-            <Skeleton width={72} height={72} borderRadius="var(--radius-lg)" />
+            <Skeleton width={72} height={72} borderRadius="var(--radius-sm)" />
             <div className="min-w-0">
               <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
                 <Skeleton width="14rem" height="2rem" />
                 <Skeleton
                   width="5rem"
                   height="1.25rem"
-                  borderRadius="var(--radius-full)"
+                  borderRadius="var(--radius-sm)"
                 />
               </div>
               <Skeleton width="10rem" height="0.875rem" className="mb-2" />
@@ -25,7 +25,7 @@ export default function PluginDetailLoading() {
             <Skeleton
               width="10rem"
               height="2.5rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="var(--radius-sm)"
             />
             <div className="grid grid-flow-col auto-cols-max gap-6">
               <Skeleton width="4rem" height="1rem" />
@@ -42,11 +42,11 @@ export default function PluginDetailLoading() {
             <Skeleton
               width="100%"
               height="2.75rem"
-              borderRadius="var(--radius-md)"
+              borderRadius="var(--radius-sm)"
             />
           </SkeletonCard>
 
-          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full">
+          <div className="plugin-description-panel border border-border rounded-sm bg-surface-secondary overflow-hidden min-w-0 max-w-full">
             <div className="plugin-description-header grid grid-flow-col auto-cols-max gap-4 px-4 py-[10px] border-b border-border">
               <Skeleton width="8rem" height="0.875rem" />
               <Skeleton width="3rem" height="0.875rem" />

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { BadgeCheck, Download, MessageCircle, Flame } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
+import { VERIFIED_ORGS } from "@/lib/constants";
 
 interface Plugin {
   id: string;
@@ -22,8 +23,6 @@ interface Plugin {
 }
 
 export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
-  const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 align-content-start">
       {plugins.map((plugin, i) => {
@@ -43,7 +42,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
             }}
           >
             <div className="plugin-card-inner p-4 flex gap-4 items-center">
-              <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+              <div className="w-14 h-14 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
                 <PluginImage
                   iconUrl={plugin.iconUrl}
                   repoUrl={plugin.repoUrl}
@@ -59,7 +58,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   {plugin.isPreRelease && (
                     <span
                       title="This is a pre-release"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-error bg-error/10 border border-error/20 rounded px-1.5 py-0.5 shrink-0"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-error bg-error/10 border border-error/20 rounded-xs px-1.5 py-0.5 shrink-0"
                     >
                       Pre-release
                     </span>
@@ -67,7 +66,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   {isVerified && (
                     <span
                       title="Officially supported by EndstoneMC/EndGit"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-brand bg-brand/10 border border-brand/20 rounded px-1.5 py-0.5 shrink-0"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-brand bg-brand/10 border border-brand/20 rounded-xs px-1.5 py-0.5 shrink-0"
                     >
                       <BadgeCheck size={11} />
                       Verified
@@ -76,7 +75,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   {isFeatured && (
                     <span
                       title="Featured plugin"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded px-1.5 py-0.5 shrink-0"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-xs px-1.5 py-0.5 shrink-0"
                     >
                       Featured
                     </span>

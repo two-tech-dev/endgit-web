@@ -16,6 +16,7 @@ import {
 import PluginImage from "@/components/PluginImage";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { VERIFIED_ORGS } from "@/lib/constants";
 
 interface Plugin {
   id: string;
@@ -42,8 +43,6 @@ interface HomeContentProps {
   featuredPlugins: Plugin[];
 }
 
-const VERIFIED_ORGS = ["EndstoneMC", "two-tech-dev"];
-
 function timeAgo(dateStr: string) {
   const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
   if (seconds < 60) return `${seconds}s ago`;
@@ -69,9 +68,9 @@ function PluginRow({
   return (
     <Link
       href={`/plugins/${plugin.slug}`}
-      className="flex items-center gap-4 p-4 rounded-xl border border-transparent hover:border-border hover:bg-surface-secondary transition-all group"
+      className="flex items-center gap-4 p-4 rounded-sm border border-transparent hover:border-border hover:bg-surface-secondary transition-all group"
     >
-      <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+      <div className="w-12 h-12 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
         <PluginImage
           iconUrl={plugin.iconUrl}
           repoUrl={plugin.repoUrl}
@@ -88,7 +87,7 @@ function PluginRow({
             <BadgeCheck size={14} className="text-brand shrink-0" />
           )}
           {plugin.isPreRelease && (
-            <span className="text-[9px] font-bold uppercase tracking-wider text-error bg-error/10 border border-error/20 rounded px-1 py-0.5 shrink-0">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-error bg-error/10 border border-error/20 rounded-xs px-1 py-0.5 shrink-0">
               Pre
             </span>
           )}
@@ -98,7 +97,7 @@ function PluginRow({
         </p>
         <div className="flex items-center gap-2 mt-1">
           {plugin.pluginType && (
-            <span className="text-[10px] font-medium text-text-muted bg-surface-secondary border border-border rounded px-1.5 py-0.5">
+            <span className="text-[10px] font-medium text-text-muted bg-surface-secondary border border-border rounded-xs px-1.5 py-0.5">
               {plugin.pluginType === "PYTHON"
                 ? "Python"
                 : plugin.pluginType === "CPP"
@@ -142,9 +141,9 @@ function SidebarFeaturedCard({ plugin }: { plugin: Plugin }) {
   return (
     <Link
       href={`/plugins/${plugin.slug}`}
-      className="flex items-start gap-3 p-3 rounded-lg hover:bg-surface-secondary transition-colors group"
+      className="flex items-start gap-3 p-3 rounded-sm hover:bg-surface-secondary transition-colors group"
     >
-      <div className="w-10 h-10 shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+      <div className="w-10 h-10 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
         <PluginImage
           iconUrl={plugin.iconUrl}
           repoUrl={plugin.repoUrl}
@@ -190,12 +189,12 @@ function SidebarTopItem({ plugin, rank }: { plugin: Plugin; rank: number }) {
   return (
     <Link
       href={`/plugins/${plugin.slug}`}
-      className="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-secondary transition-colors group"
+      className="flex items-center gap-3 p-2 rounded-sm hover:bg-surface-secondary transition-colors group"
     >
       <span className="text-sm font-black text-text-muted w-5 text-center shrink-0">
         {rank}
       </span>
-      <div className="w-8 h-8 shrink-0 rounded-md overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+      <div className="w-8 h-8 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
         <PluginImage
           iconUrl={plugin.iconUrl}
           repoUrl={plugin.repoUrl}
@@ -230,7 +229,6 @@ export default function HomeContent({
 
   return (
     <div className="container py-10 lg:py-14">
-      {/* Header */}
       <div className="mb-10 lg:mb-14 max-w-2xl">
         <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-text-primary mb-3">
           Discover, build and distribute plugins for Endstone.
@@ -250,7 +248,7 @@ export default function HomeContent({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search plugins..."
-              className="w-full pl-9 pr-4 py-2.5 rounded-lg border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors"
             />
           </div>
           <div className="flex gap-2 shrink-0">
@@ -273,11 +271,8 @@ export default function HomeContent({
         </form>
       </div>
 
-      {/* 2-column layout */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10 lg:gap-12">
-        {/* Main Feed */}
         <div className="min-w-0">
-          {/* Hot Today */}
           {hotPlugins.length > 0 && (
             <section className="mb-10">
               <div className="flex items-center gap-2 mb-4">
@@ -286,7 +281,7 @@ export default function HomeContent({
                   Hot Today
                 </h2>
               </div>
-              <div className="divide-y divide-border border border-border rounded-xl overflow-hidden bg-surface-card">
+              <div className="divide-y divide-border border border-border rounded-sm overflow-hidden bg-surface-card">
                 {hotPlugins.map((plugin) => (
                   <PluginRow key={plugin.id} plugin={plugin} metric="heat" />
                 ))}
@@ -300,7 +295,6 @@ export default function HomeContent({
             </section>
           )}
 
-          {/* New Releases */}
           {newPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-4">
@@ -309,7 +303,7 @@ export default function HomeContent({
                   New Releases
                 </h2>
               </div>
-              <div className="divide-y divide-border border border-border rounded-xl overflow-hidden bg-surface-card">
+              <div className="divide-y divide-border border border-border rounded-sm overflow-hidden bg-surface-card">
                 {newPlugins.map((plugin) => (
                   <PluginRow key={plugin.id} plugin={plugin} metric="time" />
                 ))}
@@ -324,9 +318,7 @@ export default function HomeContent({
           )}
         </div>
 
-        {/* Sidebar */}
         <aside className="space-y-8">
-          {/* Featured */}
           {featuredPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
@@ -335,7 +327,7 @@ export default function HomeContent({
                   Featured
                 </h3>
               </div>
-              <div className="border border-border rounded-xl overflow-hidden bg-surface-card divide-y divide-border">
+              <div className="border border-border rounded-sm overflow-hidden bg-surface-card divide-y divide-border">
                 {featuredPlugins.map((plugin) => (
                   <SidebarFeaturedCard key={plugin.id} plugin={plugin} />
                 ))}
@@ -343,7 +335,6 @@ export default function HomeContent({
             </section>
           )}
 
-          {/* Top This Week */}
           {topPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
@@ -352,7 +343,7 @@ export default function HomeContent({
                   Top This Week
                 </h3>
               </div>
-              <div className="border border-border rounded-xl overflow-hidden bg-surface-card p-2 space-y-0.5">
+              <div className="border border-border rounded-sm overflow-hidden bg-surface-card p-2 space-y-0.5">
                 {topPlugins.map((plugin, i) => (
                   <SidebarTopItem
                     key={plugin.id}
@@ -370,12 +361,10 @@ export default function HomeContent({
             </section>
           )}
 
-          {/* Your Plugins */}
           <YourPlugins />
         </aside>
       </div>
 
-      {/* Partners */}
       <div className="mt-16 lg:mt-20 pt-10 border-t border-border">
         <p className="text-center text-base font-semibold text-text-primary mb-6">
           Trusted EndGit Partners
@@ -385,7 +374,7 @@ export default function HomeContent({
             href="https://sparkedhost.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-8 py-3 rounded-lg border border-border bg-surface-card hover:border-brand/30 transition-all"
+            className="flex items-center justify-center px-8 py-3 rounded-sm border border-border bg-surface-card hover:border-brand/30 transition-all"
           >
             <img
               src="/partners/SparkedHost.svg"
@@ -395,7 +384,7 @@ export default function HomeContent({
           </a>
           <a
             href="mailto:partners@endgit.dev"
-            className="flex items-center justify-center px-6 py-4 rounded-lg border border-dashed border-border hover:border-brand/30 transition-all text-sm text-text-muted hover:text-brand font-medium"
+            className="flex items-center justify-center px-6 py-4 rounded-sm border border-dashed border-border hover:border-brand/30 transition-all text-sm text-text-muted hover:text-brand font-medium"
           >
             Become a Partner →
           </a>
@@ -441,14 +430,14 @@ function YourPlugins() {
           Your Plugins
         </h3>
       </div>
-      <div className="border border-border rounded-xl overflow-hidden bg-surface-card p-2 space-y-0.5">
+      <div className="border border-border rounded-sm overflow-hidden bg-surface-card p-2 space-y-0.5">
         {plugins.map((plugin) => (
           <Link
             key={plugin.id}
             href={`/plugins/${plugin.slug}`}
-            className="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-secondary transition-colors group"
+            className="flex items-center gap-3 p-2 rounded-sm hover:bg-surface-secondary transition-colors group"
           >
-            <div className="w-8 h-8 shrink-0 rounded-md overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+            <div className="w-8 h-8 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
               <PluginImage
                 iconUrl={plugin.iconUrl}
                 repoUrl={plugin.repoUrl}

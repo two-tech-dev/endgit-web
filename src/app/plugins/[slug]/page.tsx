@@ -24,6 +24,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import MarkdownInline from "@/components/MarkdownInline";
+import { VERIFIED_ORGS } from "@/lib/constants";
 
 const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
   loading: () => (
@@ -189,7 +190,7 @@ export default async function PluginDetailPage({
       <div className="card p-4 lg:p-6 mb-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-start gap-4 lg:flex-nowrap">
           <div className="plugin-header-inner grid grid-cols-[auto_1fr] gap-4 min-w-0 flex-1">
-            <div className="w-[72px] h-[72px] rounded-lg bg-surface-secondary grid place-items-center border border-border shrink-0 overflow-hidden">
+            <div className="w-[72px] h-[72px] rounded-sm bg-surface-secondary grid place-items-center border border-border shrink-0 overflow-hidden">
               <PluginImage
                 iconUrl={plugin.iconUrl}
                 repoUrl={plugin.repoUrl}
@@ -200,7 +201,7 @@ export default async function PluginDetailPage({
               <div className="flex flex-wrap items-center gap-3">
                 <h1 className="heading-2 m-0 flex flex-wrap items-center gap-3">
                   {plugin.displayName}
-                  {["EndstoneMC", "two-tech-dev"].includes(
+                  {VERIFIED_ORGS.includes(
                     repoOwnerDetail || "",
                   ) && (
                     <span
@@ -253,7 +254,7 @@ export default async function PluginDetailPage({
                 {isAuthor && (
                   <Link
                     href={`/plugins/${plugin.slug}/edit`}
-                    className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3 py-1 rounded-md text-[13px] font-medium no-underline bg-purple-500/10 text-accent border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200"
+                    className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3 py-1 rounded-sm text-[13px] font-medium no-underline bg-purple-500/10 text-accent border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200"
                   >
                     <Pencil size={14} /> Edit
                   </Link>
@@ -362,7 +363,7 @@ export default async function PluginDetailPage({
             <h3 className="font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-2">
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
-            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-3 rounded-md font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
+            <div className="bg-[#0f172a] text-[#e2e8f0] px-3 lg:px-4 py-3 rounded-sm font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
               <code className="whitespace-nowrap">
                 endgit install {plugin.slug}
               </code>
@@ -385,7 +386,7 @@ export default async function PluginDetailPage({
           )}
 
           {/* About — Plugin Description Panel */}
-          <div className="plugin-description-panel border border-border rounded-md bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
+          <div className="plugin-description-panel border border-border rounded-sm bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
             {/* Header */}
             <div className="plugin-description-header grid grid-cols-[1fr_auto] items-center px-4 py-[10px]">
               <div className="grid grid-flow-col auto-cols-max items-center gap-2">
@@ -398,7 +399,7 @@ export default async function PluginDetailPage({
                 href={plugin.repoUrl ? `${plugin.repoUrl}/issues` : "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-surface-card border border-border rounded-[4px] px-4 py-1 text-[13px] text-text-primary no-underline font-medium hover:bg-surface-secondary transition-all"
+                className="bg-surface-card border border-border rounded-sm px-4 py-1 text-[13px] text-text-primary no-underline font-medium hover:bg-surface-secondary transition-all"
               >
                 Bugs
               </a>
@@ -406,7 +407,7 @@ export default async function PluginDetailPage({
 
             {/* Body */}
             <div className="px-3 pb-3">
-              <div className="bg-surface-card border border-border rounded-[4px] overflow-hidden">
+                <div className="bg-surface-card border border-border rounded-sm overflow-hidden">
                 <MarkdownTabs
                   markdown={displayDescription}
                   repoUrl={plugin.repoUrl}
@@ -464,7 +465,7 @@ export default async function PluginDetailPage({
                           @{producer.githubUser}
                         </a>
                         <span
-                          className={`text-xs uppercase font-semibold px-1.5 py-0.5 rounded mt-0.5 w-fit border ${getRoleStyle(
+                          className={`text-xs uppercase font-semibold px-1.5 py-0.5 rounded-xs mt-0.5 w-fit border ${getRoleStyle(
                             producer.role,
                           )}`}
                         >

@@ -47,19 +47,19 @@ export default async function TopPluginsPage() {
     switch (rank) {
       case 1:
         return (
-          <span className="flex items-center gap-2 text-yellow-500 font-black bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-lg text-xl lg:text-2xl shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+          <span className="flex items-center gap-2 text-yellow-500 font-black bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-sm text-xl lg:text-2xl shadow-[0_0_15px_rgba(234,179,8,0.2)]">
             <Trophy size={20} className="mb-0.5" /> #1
           </span>
         );
       case 2:
         return (
-          <span className="flex items-center gap-1.5 text-slate-300 font-black bg-slate-300/10 border border-slate-300/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(203,213,225,0.1)]">
+          <span className="flex items-center gap-1.5 text-slate-300 font-black bg-slate-300/10 border border-slate-300/20 px-3 py-1.5 rounded-sm text-lg lg:text-xl shadow-[0_0_15px_rgba(203,213,225,0.1)]">
             #2
           </span>
         );
       case 3:
         return (
-          <span className="flex items-center gap-1.5 text-amber-600 font-black bg-amber-700/10 border border-amber-700/20 px-3 py-1.5 rounded-lg text-lg lg:text-xl shadow-[0_0_15px_rgba(180,83,9,0.1)]">
+          <span className="flex items-center gap-1.5 text-amber-600 font-black bg-amber-700/10 border border-amber-700/20 px-3 py-1.5 rounded-sm text-lg lg:text-xl shadow-[0_0_15px_rgba(180,83,9,0.1)]">
             #3
           </span>
         );
@@ -102,14 +102,14 @@ export default async function TopPluginsPage() {
       <Link
         href={`/plugins/${plugin.slug}`}
         key={plugin.id}
-        className={`group relative flex flex-col no-underline overflow-hidden rounded-xl border transition-all duration-500 hover:-translate-y-2 ${getRankStyle(
+        className={`group relative flex flex-col no-underline overflow-hidden rounded-sm border transition-all duration-500 hover:-translate-y-2 ${getRankStyle(
           rank,
         )} ${heightClass}`}
       >
         <div className={`relative z-10 flex flex-col h-full ${padding}`}>
           <div className="flex justify-between items-start mb-6">
             <div
-              className={`${iconSize} shrink-0 rounded-xl overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors shadow-inner`}
+              className={`${iconSize} shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors shadow-inner`}
             >
               <PluginImage
                 iconUrl={plugin.iconUrl}
@@ -119,7 +119,7 @@ export default async function TopPluginsPage() {
             </div>
 
             {/* Minimal Stat Badge */}
-            <div className="flex flex-col items-end gap-1.5 backdrop-blur-sm bg-surface-secondary/50 p-2 rounded-lg border border-border">
+            <div className="flex flex-col items-end gap-1.5 backdrop-blur-sm bg-surface-secondary/50 p-2 rounded-sm border border-border">
               <span className="flex items-center gap-1.5 font-bold text-text-primary text-sm tracking-wide">
                 <Download size={14} className="text-brand" />
                 {plugin.downloads?.toLocaleString() ?? 0}
@@ -154,7 +154,7 @@ export default async function TopPluginsPage() {
             </h3>
 
             <div className="mt-4 flex items-center">
-              <span className="font-mono bg-surface-secondary border border-border px-2 py-1 rounded text-xs text-text-secondary">
+              <span className="font-mono bg-surface-secondary border border-border px-2 py-1 rounded-xs text-xs text-text-secondary">
                 v{plugin.latestVersion || "1.0.0"}
               </span>
             </div>
@@ -172,7 +172,7 @@ export default async function TopPluginsPage() {
   return (
     <div className="container py-10 lg:py-16 relative">
       {/* Background Ambience */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-yellow-500/5 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-yellow-500/5 blur-[120px] rounded-sm pointer-events-none z-0" />
 
       <div className="mb-16 relative z-10 text-center flex flex-col items-center">
         <Link

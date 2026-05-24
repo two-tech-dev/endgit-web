@@ -44,7 +44,7 @@ export default function PluginPagination({
 
   const getBtnClassName = (active: boolean, disabled: boolean) => {
     const base =
-      "inline-grid grid-flow-col place-items-center gap-1 px-3 py-2 min-h-[44px] min-w-[44px] rounded-md text-sm transition-all text-center no-underline";
+      "inline-grid grid-flow-col place-items-center gap-1 px-3 py-2 min-h-[44px] min-w-[44px] rounded-sm text-sm transition-all text-center no-underline";
     if (active) {
       return `${base} border border-accent bg-accent/10 text-accent font-bold cursor-pointer`;
     }

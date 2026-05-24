@@ -500,7 +500,7 @@ export default function AdminPage() {
       </div>
 
       {/* Tabs */}
-      <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-md mb-6 w-fit">
+      <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-sm mb-6 w-fit">
         {(
           [
             { key: "users", label: "Users", icon: <Users size={14} /> },
@@ -548,7 +548,7 @@ export default function AdminPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") loadData();
               }}
-              className="w-full max-w-[400px] pl-9 pr-3 py-2.5 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
+              className="w-full max-w-[400px] pl-9 pr-3 py-2.5 rounded-sm border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
             />
           </div>
 
@@ -608,7 +608,7 @@ export default function AdminPage() {
                           <Skeleton
                             width="4rem"
                             height="1.25rem"
-                            borderRadius="9999px"
+                            borderRadius="2px"
                           />
                         </td>
                         <td className="px-4 py-3">
@@ -691,7 +691,7 @@ export default function AdminPage() {
                         </td>
                         <td className="px-4 py-3">
                           <span
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${getTrustBadgeClass(
+                            className={`px-2 py-0.5 rounded-sm text-[10px] font-bold uppercase tracking-wider ${getTrustBadgeClass(
                               user.trustLevel,
                             )}`}
                           >
@@ -826,7 +826,7 @@ export default function AdminPage() {
                   <div className="p-4 flex flex-col gap-2.5">
                     <div className="grid grid-cols-[1fr_auto] items-start">
                       <div className="flex gap-2.5 items-center min-w-0">
-                        <div className="w-10 h-10 rounded-md bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
+                        <div className="w-10 h-10 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                           <PluginImage
                             iconUrl={plugin.iconUrl}
                             repoUrl={plugin.repoUrl}
@@ -867,7 +867,7 @@ export default function AdminPage() {
                       <button
                         onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
                         disabled={reviewLoading}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         {reviewingSlug === plugin.slug && reviewLoading ? (
                           <Loader2 size={13} className="animate-spin" />
@@ -884,7 +884,7 @@ export default function AdminPage() {
                           })
                         }
                         disabled={reviewLoading}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xs text-xs font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         <XCircle size={13} /> Reject
                       </button>
@@ -946,7 +946,7 @@ export default function AdminPage() {
                           "Explain why this plugin is being rejected...\n\nExample:\nA1 — Complete and serve a purpose:\n> The plugin must be complete and serve a purpose.\n\nThe readme is outdated. Please resolve these issues and submit the plugin again."
                         }
                         rows={8}
-                        className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[140px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
+                        className="w-full p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[140px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
                       />
                     </label>
                     <p className="text-text-muted text-xs mt-1">
@@ -960,7 +960,7 @@ export default function AdminPage() {
                           setRejectModal(null);
                           setRejectReason("");
                         }}
-                        className="px-5 py-2.5 rounded-md text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
+                        className="px-5 py-2.5 rounded-sm text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
                       >
                         Cancel
                       </button>
@@ -974,7 +974,7 @@ export default function AdminPage() {
                           )
                         }
                         disabled={!rejectReason.trim() || reviewLoading}
-                        className="px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
+                        className="px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 bg-error hover:bg-error/90 disabled:bg-error/30 disabled:text-white/50 disabled:cursor-not-allowed transition-all"
                       >
                         {reviewLoading && (
                           <Loader2 size={14} className="animate-spin" />
@@ -1008,7 +1008,7 @@ export default function AdminPage() {
                   <input
                     type="text"
                     placeholder="Search plugins by name or slug..."
-                    className="w-full pl-10 pr-3 py-2 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
+                    className="w-full pl-10 pr-3 py-2 rounded-sm border border-border bg-surface-card text-text-primary text-sm outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand"
                     value={pluginSearch}
                     onChange={(e) => setPluginSearch(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && loadData()}
@@ -1032,7 +1032,7 @@ export default function AdminPage() {
                     <button
                       key={s}
                       onClick={() => setPluginStatusFilter(s)}
-                      className={`px-3 py-1 rounded-full text-xs font-semibold border cursor-pointer transition-all grid grid-flow-col auto-cols-max items-center gap-1.5 ${
+                      className={`px-3 py-1 rounded-sm text-xs font-semibold border cursor-pointer transition-all grid grid-flow-col auto-cols-max items-center gap-1.5 ${
                         isActive
                           ? getStatusBadgeClass(s)
                           : "border-border bg-transparent text-text-muted hover:text-text-primary"
@@ -1040,7 +1040,7 @@ export default function AdminPage() {
                     >
                       {s === "ALL" ? "All" : s.replace("_", " ")}
                       <span
-                        className={`px-1.5 rounded-full text-[11px] min-w-[20px] text-center ${
+                        className={`px-1.5 rounded-sm text-[11px] min-w-[20px] text-center ${
                           isActive
                             ? "bg-white/15 dark:bg-white/10"
                             : "bg-surface-secondary text-text-muted"
@@ -1263,7 +1263,7 @@ export default function AdminPage() {
                                             v{v.version}
                                           </span>
                                           <span
-                                            className={`text-[11px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}
+                                            className={`text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}
                                           >
                                             {v.status}
                                           </span>
@@ -1407,7 +1407,7 @@ export default function AdminPage() {
                 autoFocus
                 placeholder={`Explain why this ${pluginRejectModal.type} is being ${pluginRejectModal.targetStatus.toLowerCase()}...\n\nExample:\nSecurity concern — Suspicious network calls detected in decompiled code.\n\nThe plugin will be reverted to non-public status.`}
                 rows={7}
-                className="w-full p-3 rounded-md border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[120px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
+                className="w-full p-3 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm leading-relaxed resize-y outline-none font-inherit min-h-[120px] focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all"
               />
 
               <div className="grid grid-flow-col auto-cols-max gap-3 mt-5 justify-items-end">
@@ -1416,14 +1416,14 @@ export default function AdminPage() {
                     setPluginRejectModal(null);
                     setPluginRejectReason("");
                   }}
-                  className="px-5 py-2.5 rounded-md text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
+                  className="px-5 py-2.5 rounded-sm text-sm font-medium bg-surface-secondary text-text-secondary border border-border cursor-pointer hover:bg-surface-secondary/80 transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={confirmPluginReject}
                   disabled={!pluginRejectReason.trim() || pluginRejectLoading}
-                  className={`px-5 py-2.5 rounded-md text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 transition-all ${
+                  className={`px-5 py-2.5 rounded-sm text-sm font-semibold text-white border-none cursor-pointer grid grid-flow-col auto-cols-max items-center gap-1.5 transition-all ${
                     pluginRejectReason.trim()
                       ? pluginRejectModal.targetStatus === "SUSPENDED"
                         ? "bg-red-500 hover:bg-red-600"
@@ -1498,11 +1498,11 @@ export default function AdminPage() {
             ].map((s) => (
               <div
                 key={s.label}
-                className="card p-6 grid bg-surface-card border border-border rounded-xl shadow-sm"
+                className="card p-6 grid bg-surface-card border border-border rounded-sm shadow-sm"
               >
                 <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-3">
                   <div
-                    className={`w-10 h-10 rounded-md grid place-items-center flex-shrink-0 ${s.bg}`}
+                    className={`w-10 h-10 rounded-sm grid place-items-center flex-shrink-0 ${s.bg}`}
                   >
                     {s.icon}
                   </div>

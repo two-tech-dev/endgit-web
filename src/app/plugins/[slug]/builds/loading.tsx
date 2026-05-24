@@ -37,12 +37,12 @@ export default function PluginBuildsLoading() {
                 <Skeleton
                   width="3rem"
                   height="1.75rem"
-                  className="rounded-md"
+                  className="rounded-sm"
                 />
                 <Skeleton
                   width="4rem"
                   height="1.75rem"
-                  className="rounded-md"
+                  className="rounded-sm"
                 />
               </div>
             </div>

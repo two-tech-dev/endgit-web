@@ -146,7 +146,7 @@ export default function MarkdownTabs({
 
   if (!processedMarkdown.trim()) {
     return (
-      <div className="markdown-body text-text-secondary leading-relaxed italic p-6 bg-surface-card rounded-lg border border-border">
+      <div className="markdown-body text-text-secondary leading-relaxed italic p-6 bg-surface-card rounded-sm border border-border">
         No description provided.
       </div>
     );

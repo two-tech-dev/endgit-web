@@ -383,22 +383,22 @@ export default function DevDashboardPage() {
           </div>
         </SkeletonCard>
         <div className="grid grid-flow-col auto-cols-max gap-3 mb-5 items-center">
-          <Skeleton width="100%" height="2.5rem" borderRadius="10px" />
-          <Skeleton width="14rem" height="2.5rem" borderRadius="10px" />
+          <Skeleton width="100%" height="2.5rem" borderRadius="2px" />
+          <Skeleton width="14rem" height="2.5rem" borderRadius="2px" />
         </div>
         <div className="grid gap-3">
           {Array.from({ length: 5 }, (_, i) => (
             <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="grid grid-flow-col auto-cols-max items-start gap-4">
-                  <Skeleton width={40} height={40} borderRadius="6px" />
+                  <Skeleton width={40} height={40} borderRadius="2px" />
                   <div>
                     <div className="grid grid-flow-col auto-cols-max gap-2 mb-1">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
                         height="0.6875rem"
-                        borderRadius="9999px"
+                        borderRadius="2px"
                       />
                     </div>
                     <Skeleton
@@ -413,7 +413,7 @@ export default function DevDashboardPage() {
                     </div>
                   </div>
                 </div>
-                <Skeleton width="6rem" height="2rem" borderRadius="10px" />
+                <Skeleton width="6rem" height="2rem" borderRadius="2px" />
               </div>
             </SkeletonCard>
           ))}
@@ -440,7 +440,7 @@ export default function DevDashboardPage() {
     return (
       <div className="container py-12 min-h-[60vh] grid place-items-center">
         <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
-          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-full grid place-items-center mx-auto mb-6">
+          <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-sm grid place-items-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
           <h1 className="heading-2 mb-4">Welcome to EndGit!</h1>
@@ -517,9 +517,9 @@ export default function DevDashboardPage() {
             </div>
           </div>
           <div className="min-w-[120px]">
-            <div className="h-2 bg-surface-secondary rounded-full overflow-hidden">
+            <div className="h-2 bg-surface-secondary rounded-sm overflow-hidden">
               <div
-                className={`h-full rounded-full transition-[width] duration-300 ${
+                className={`h-full rounded-sm transition-[width] duration-300 ${
                   quota.used >= quota.limit
                     ? "bg-error"
                     : quota.used >= quota.limit * 0.8
@@ -556,7 +556,7 @@ export default function DevDashboardPage() {
               <Skeleton width="5rem" height="0.6875rem" className="mb-1" />
               <Skeleton width="10rem" height="0.875rem" />
             </div>
-            <Skeleton width="4rem" height="2rem" borderRadius="10px" />
+            <Skeleton width="4rem" height="2rem" borderRadius="2px" />
           </div>
           <div className="grid grid-flow-col auto-cols-max gap-2">
             {Array.from({ length: 3 }, (_, i) => (
@@ -564,7 +564,7 @@ export default function DevDashboardPage() {
                 key={i}
                 width={`${5 + i * 1.5}rem`}
                 height="1.75rem"
-                borderRadius="9999px"
+                borderRadius="2px"
               />
             ))}
           </div>
@@ -591,7 +591,7 @@ export default function DevDashboardPage() {
             <div ref={orgDropdownRef} className="relative">
               <button
                 onClick={() => setOrgDropdownOpen(!orgDropdownOpen)}
-                className="grid grid-flow-col auto-cols-max items-center gap-2 py-2 px-3 rounded-md border border-border bg-surface-secondary text-xs font-medium text-text-primary cursor-pointer transition-colors duration-150"
+                className="grid grid-flow-col auto-cols-max items-center gap-2 py-2 px-3 rounded-sm border border-border bg-surface-secondary text-xs font-medium text-text-primary cursor-pointer transition-colors duration-150"
               >
                 Switch
                 <ChevronDown
@@ -600,7 +600,7 @@ export default function DevDashboardPage() {
                 />
               </button>
               {orgDropdownOpen && (
-                <div className="absolute top-full right-0 mt-1 min-w-[280px] bg-surface-card border border-border rounded-md shadow-lg z-50 overflow-hidden">
+                <div className="absolute top-full right-0 mt-1 min-w-[280px] bg-surface-card border border-border rounded-sm shadow-lg z-50 overflow-hidden">
                   <button
                     onClick={() => handleOrgChange(null)}
                     className={`grid grid-flow-col auto-cols-max items-center gap-3 w-full py-3 px-4 border-none text-sm text-text-primary text-left cursor-pointer transition-colors duration-100 hover:bg-surface-secondary ${
@@ -638,7 +638,7 @@ export default function DevDashboardPage() {
                         )}
                       </div>
                       {selectedOrg === org.login && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        <div className="w-1.5 h-1.5 rounded-sm bg-accent shrink-0" />
                       )}
                     </button>
                   ))}
@@ -649,7 +649,7 @@ export default function DevDashboardPage() {
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => handleOrgChange(null)}
-              className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+              className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-sm border text-xs cursor-pointer transition-all duration-150 ${
                 selectedOrg === null
                   ? "border-accent bg-accent/10 font-semibold text-accent"
                   : "border-border bg-surface-secondary font-normal text-text-muted"
@@ -662,7 +662,7 @@ export default function DevDashboardPage() {
               <button
                 key={org.id}
                 onClick={() => handleOrgChange(org.login)}
-                className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-full border text-xs cursor-pointer transition-all duration-150 ${
+                className={`inline-grid grid-cols-[auto_1fr] items-center gap-2 py-2 px-3 rounded-sm border text-xs cursor-pointer transition-all duration-150 ${
                   selectedOrg === org.login
                     ? "border-accent bg-accent/10 font-semibold text-accent"
                     : "border-border bg-surface-secondary font-normal text-text-muted"
@@ -694,10 +694,10 @@ export default function DevDashboardPage() {
             placeholder="Search repositories..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full py-2.5 pl-9 pr-3 rounded-md border border-border bg-surface-card text-text-primary text-sm outline-none"
+            className="w-full py-2.5 pl-9 pr-3 rounded-sm border border-border bg-surface-card text-text-primary text-sm outline-none"
           />
         </div>
-        <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-md">
+        <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-sm">
           {(["all", "enabled", "disabled"] as const).map((f) => (
             <button
               key={f}
@@ -726,19 +726,19 @@ export default function DevDashboardPage() {
             <SkeletonCard key={i} className="p-5 border-l-[3px] border-border">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="grid grid-flow-col auto-cols-max items-start gap-4">
-                  <Skeleton width={40} height={40} borderRadius="6px" />
+                  <Skeleton width={40} height={40} borderRadius="2px" />
                   <div>
                     <div className="grid grid-flow-col auto-cols-max gap-2 mb-1">
                       <Skeleton width="8rem" height="0.9375rem" />
                       <Skeleton
                         width="3rem"
                         height="0.6875rem"
-                        borderRadius="9999px"
+                        borderRadius="2px"
                       />
                       <Skeleton
                         width="4rem"
                         height="0.6875rem"
-                        borderRadius="9999px"
+                        borderRadius="2px"
                       />
                     </div>
                     <Skeleton
@@ -753,7 +753,7 @@ export default function DevDashboardPage() {
                     </div>
                   </div>
                 </div>
-                <Skeleton width="6rem" height="2rem" borderRadius="10px" />
+                <Skeleton width="6rem" height="2rem" borderRadius="2px" />
               </div>
             </SkeletonCard>
           ))}
@@ -785,7 +785,7 @@ export default function DevDashboardPage() {
                 <div className="dev-repo-card-inner grid grid-cols-[1fr_auto] items-start">
                   <div className="grid grid-flow-col auto-cols-max items-start gap-4">
                     <div
-                      className="w-10 h-10 rounded-lg grid place-items-center shrink-0"
+                      className="w-10 h-10 rounded-sm grid place-items-center shrink-0"
                       style={{
                         background: `${langColor(repo.language)}15`,
                         border: `1px solid ${langColor(repo.language)}30`,
@@ -802,18 +802,18 @@ export default function DevDashboardPage() {
                           {repo.name}
                         </span>
                         {repo.isPrivate ? (
-                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-warning/10 text-warning border border-warning/20">
+                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-sm bg-warning/10 text-warning border border-warning/20">
                             <Lock size={10} /> Private
                           </span>
                         ) : (
-                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-full bg-success/8 text-text-muted">
+                          <span className="inline-grid grid-cols-[auto_1fr] items-center gap-[3px] text-[0.6875rem] py-0.5 px-1.5 rounded-sm bg-success/8 text-text-muted">
                             <Globe size={10} /> Public
                           </span>
                         )}
                         {repo.language && (
                           <span className="inline-grid grid-cols-[auto_1fr] items-center gap-1 text-[0.6875rem]">
                             <span
-                              className="w-2 h-2 rounded-full inline-block"
+                              className="w-2 h-2 rounded-sm inline-block"
                               style={{
                                 width: "8px",
                                 height: "8px",
@@ -827,7 +827,7 @@ export default function DevDashboardPage() {
                         )}
                         {badge && (
                           <span
-                            className="text-[0.6875rem] py-0.5 px-2 rounded-full font-semibold"
+                            className="text-[0.6875rem] py-0.5 px-2 rounded-sm font-semibold"
                             style={{
                               background: badge.bg,
                               color: badge.color,
@@ -865,7 +865,7 @@ export default function DevDashboardPage() {
                     <button
                       onClick={() => toggleCI(repo)}
                       disabled={toggling === repo.id}
-                      className={`w-full sm:w-auto grid grid-flow-col auto-cols-max items-center justify-center gap-1.5 py-2 px-4 rounded-md text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
+                      className={`w-full sm:w-auto grid grid-flow-col auto-cols-max items-center justify-center gap-1.5 py-2 px-4 rounded-sm text-xs font-semibold transition-all duration-200 border-none opacity-100 ${
                         toggling === repo.id
                           ? "cursor-wait opacity-50"
                           : "cursor-pointer"

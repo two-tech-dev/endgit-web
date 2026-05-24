@@ -96,7 +96,7 @@ export default function VirusTotalCard({ version }: VirusTotalCardProps) {
               href={vt.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="grid grid-flow-col place-items-center gap-1.5 mt-2 px-3 py-2 rounded-md text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
+              className="grid grid-flow-col place-items-center gap-1.5 mt-2 px-3 py-2 rounded-sm text-[0.8125rem] font-medium no-underline bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-all duration-200"
             >
               <ExternalLink size={14} /> View Full Report
             </a>

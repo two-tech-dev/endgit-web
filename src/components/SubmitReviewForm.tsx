@@ -269,7 +269,7 @@ export default function SubmitReviewForm({
 
       <div className="card p-4 lg:p-6">
         <h1 className="heading-2 mb-2">Publish Plugin</h1>
-        <div className="mb-6 p-4 bg-accent/5 rounded-md border-l-4 border-accent">
+        <div className="mb-6 p-4 bg-accent/5 rounded-sm border-l-4 border-accent">
           <p className="text-text-primary font-medium mb-2">
             Submit Build #{buildNumber} for Review
           </p>
@@ -305,7 +305,7 @@ export default function SubmitReviewForm({
               required
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
@@ -324,7 +324,7 @@ export default function SubmitReviewForm({
               onChange={(e) => setDescription(e.target.value)}
               maxLength={100}
               placeholder="A brief summary of what your plugin does..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
@@ -338,7 +338,7 @@ export default function SubmitReviewForm({
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
               placeholder="e.g. economy, shops, gui"
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent"
             />
           </div>
 
@@ -352,7 +352,7 @@ export default function SubmitReviewForm({
                   type="button"
                   onClick={fetchReadme}
                   disabled={isFetchingReadme}
-                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
+                  className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs bg-accent/10 text-accent border border-accent/20 rounded-xs px-2 py-1 cursor-pointer font-medium hover:bg-accent/20 disabled:opacity-60 transition-all duration-150"
                 >
                   <Download size={12} />{" "}
                   {isFetchingReadme ? "Importing..." : "Import from README"}
@@ -370,7 +370,7 @@ export default function SubmitReviewForm({
               onChange={(e) => setLongDescription(e.target.value)}
               rows={12}
               placeholder="# Features&#10;...&#10;&#10;# Commands&#10;..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
             />
           </div>
 
@@ -390,7 +390,7 @@ export default function SubmitReviewForm({
                 {selectedCategories.length}/5
               </span>
             </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 bg-surface-secondary p-4 rounded-sm border border-border">
               {PLUGIN_CATEGORIES.map((cat) => (
                 <label
                   key={cat}
@@ -425,7 +425,7 @@ export default function SubmitReviewForm({
               <select
                 value={license}
                 onChange={(e) => setLicense(e.target.value)}
-                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150 pr-10 appearance-none"
+                className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150 pr-10 appearance-none"
               >
                 <option value="">Select a license...</option>
                 {COMMON_LICENSES.map((l) => (
@@ -467,7 +467,7 @@ export default function SubmitReviewForm({
               value={version}
               onChange={(e) => setVersion(e.target.value)}
               placeholder="e.g. 1.0.0"
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
           </div>
 
@@ -497,7 +497,7 @@ export default function SubmitReviewForm({
               Select the stable Endstone API versions this build is verified to
               work with (Rule B1).
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 bg-surface-secondary p-4 rounded-md border border-border">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 bg-surface-secondary p-4 rounded-sm border border-border">
               {ENDSTONE_APIS.map((api) => (
                 <label
                   key={api}
@@ -532,7 +532,7 @@ export default function SubmitReviewForm({
               value={iconPath}
               onChange={(e) => setIconPath(e.target.value)}
               placeholder="e.g. assets/icon.png (Default: icon.png)"
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
             <p className="text-xs text-text-muted mt-1">
               Relative path to the icon file in your repository. If not found,
@@ -554,7 +554,7 @@ export default function SubmitReviewForm({
                 onChange={(e) => setChangelog(e.target.value)}
                 rows={4}
                 placeholder="- Added new command /example&#10;- Fixed issue with config loading"
-                className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
+                className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none resize-y font-mono text-sm focus:border-accent transition-all duration-150"
               />
             </div>
           )}
@@ -570,7 +570,7 @@ export default function SubmitReviewForm({
                     { githubUser: "", role: "CONTRIBUTOR" },
                   ])
                 }
-                className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs border border-border px-2 py-1 rounded hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
+                className="grid grid-flow-col auto-cols-max items-center gap-1 text-xs border border-border px-2 py-1 rounded-xs hover:bg-surface-secondary hover:border-border-highlight transition-all cursor-pointer"
               >
                 <Plus size={12} /> Add Producer
               </button>
@@ -592,7 +592,7 @@ export default function SubmitReviewForm({
                       newProducers[index].githubUser = e.target.value;
                       setProducers(newProducers);
                     }}
-                    className={`flex-1 px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
+                    className={`flex-1 px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent ${
                       index === 0
                         ? "opacity-60 cursor-not-allowed bg-black/20"
                         : ""
@@ -606,7 +606,7 @@ export default function SubmitReviewForm({
                       newProducers[index].role = e.target.value;
                       setProducers(newProducers);
                     }}
-                    className={`px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent sm:w-[140px] ${
+                    className={`px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none transition-all duration-150 focus:border-accent sm:w-[140px] ${
                       index === 0
                         ? "opacity-60 cursor-not-allowed bg-black/20"
                         : ""
@@ -636,7 +636,7 @@ export default function SubmitReviewForm({
                 </div>
               ))}
             </div>
-            <div className="p-3 bg-accent/5 rounded-md border border-accent/15 mt-2">
+            <div className="p-3 bg-accent/5 rounded-sm border border-accent/15 mt-2">
               <p className="text-xs text-text-secondary m-0 leading-relaxed">
                 <strong>Rule A7:</strong> You must only submit work you have
                 authored. Add all GitHub contributors who helped create this
@@ -659,7 +659,7 @@ export default function SubmitReviewForm({
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
               placeholder="Any specific features to test, or explanations for unusual code patterns..."
-              className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
+              className="w-full px-3 py-2 rounded-sm border border-border bg-surface-secondary text-text-primary outline-none resize-y focus:border-accent transition-all duration-150"
             />
           </div>
 
