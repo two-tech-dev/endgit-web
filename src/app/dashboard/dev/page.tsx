@@ -785,7 +785,7 @@ export default function DevDashboardPage() {
                 <div className="dev-repo-card-inner grid grid-cols-[1fr_auto] items-start">
                   <div className="grid grid-flow-col auto-cols-max items-start gap-4">
                     <div
-                      className="w-10 h-10 rounded-md grid place-items-center shrink-0"
+                      className="w-10 h-10 rounded-lg grid place-items-center shrink-0"
                       style={{
                         background: `${langColor(repo.language)}15`,
                         border: `1px solid ${langColor(repo.language)}30`,

@@ -108,7 +108,7 @@ export default async function LatestPluginsSection() {
                     className={`flex gap-6 ${isLarge ? "flex-col md:flex-row items-start md:items-center" : "flex-col flex-1"}`}
                   >
                     <div
-                      className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
+                      className={`${isLarge ? "w-24 h-24" : "w-14 h-14"} shrink-0 rounded-lg overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors`}
                     >
                       <PluginImage
                         iconUrl={plugin.iconUrl}

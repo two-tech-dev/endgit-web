@@ -168,7 +168,7 @@ export default async function DashboardPage() {
             <div className="p-4 lg:p-5 grid gap-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="grid grid-flow-col auto-cols-max gap-3 items-center">
-                  <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
+                  <div className="w-12 h-12 rounded-lg bg-surface-secondary grid place-items-center border border-border flex-shrink-0 overflow-hidden">
                     <PluginImage
                       iconUrl={plugin.iconUrl}
                       repoUrl={plugin.repoUrl}

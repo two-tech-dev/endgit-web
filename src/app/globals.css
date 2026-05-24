@@ -312,16 +312,14 @@
   .card {
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xs);
+    transition: all 180ms ease;
     position: relative;
     overflow: hidden;
   }
 
   .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
     border-color: var(--color-border-highlight);
     background: color-mix(in srgb, var(--color-surface-card), white 2%);
   }
@@ -600,8 +598,8 @@
   .skeleton-card {
     background: var(--color-surface-card);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xs);
     overflow: hidden;
   }
 
@@ -837,7 +835,6 @@
     font-size: 1.25rem;
   }
 
-  .card:hover,
   .glass-panel:hover {
     transform: none;
   }
