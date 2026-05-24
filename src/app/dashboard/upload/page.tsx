@@ -133,10 +133,7 @@ export default function UploadPluginPage() {
 
   return (
     <div className="container py-6 lg:py-8">
-      <button
-        onClick={() => router.back()}
-        className="btn btn-secondary mb-6"
-      >
+      <button onClick={() => router.back()} className="btn btn-secondary mb-6">
         <ArrowLeft size={16} /> Back
       </button>
 
@@ -233,7 +230,9 @@ export default function UploadPluginPage() {
             </label>
             <select
               value={pluginType}
-              onChange={(e) => setPluginType(e.target.value as "PYTHON" | "CPP")}
+              onChange={(e) =>
+                setPluginType(e.target.value as "PYTHON" | "CPP")
+              }
               className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             >
               <option value="PYTHON">Python (.whl)</option>

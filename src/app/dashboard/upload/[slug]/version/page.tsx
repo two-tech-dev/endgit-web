@@ -3,12 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useParams } from "next/navigation";
-import {
-  ArrowLeft,
-  Upload,
-  AlertTriangle,
-  CheckCircle,
-} from "lucide-react";
+import { ArrowLeft, Upload, AlertTriangle, CheckCircle } from "lucide-react";
 
 export default function UploadVersionPage() {
   const { data: session } = useSession();
@@ -128,10 +123,7 @@ export default function UploadVersionPage() {
 
   return (
     <div className="container py-6 lg:py-8">
-      <button
-        onClick={() => router.back()}
-        className="btn btn-secondary mb-6"
-      >
+      <button onClick={() => router.back()} className="btn btn-secondary mb-6">
         <ArrowLeft size={16} /> Back
       </button>
 

@@ -370,7 +370,9 @@ export default function EditPluginForm({ plugin }: { plugin: any }) {
                       </option>
                     ))}
                     {license && !COMMON_LICENSES.includes(license) && (
-                      <option value={license}>{license} (Custom/Fetched)</option>
+                      <option value={license}>
+                        {license} (Custom/Fetched)
+                      </option>
                     )}
                   </select>
                   {repoUrl && (

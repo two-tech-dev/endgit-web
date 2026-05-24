@@ -541,13 +541,23 @@ export default function SubmitReviewForm({
 
           <div>
             <label className="block text-sm font-medium mb-1.5">
-              {plugin?.isProprietary ? "Icon URL (Optional)" : "Icon Path (Optional)"}
+              {plugin?.isProprietary
+                ? "Icon URL (Optional)"
+                : "Icon Path (Optional)"}
             </label>
             <input
               type="text"
-              value={plugin?.isProprietary ? (iconUrl || iconPath) : iconPath}
-              onChange={(e) => plugin?.isProprietary ? setIconUrl(e.target.value) : setIconPath(e.target.value)}
-              placeholder={plugin?.isProprietary ? "https://..." : "e.g. assets/icon.png (Default: icon.png)"}
+              value={plugin?.isProprietary ? iconUrl || iconPath : iconPath}
+              onChange={(e) =>
+                plugin?.isProprietary
+                  ? setIconUrl(e.target.value)
+                  : setIconPath(e.target.value)
+              }
+              placeholder={
+                plugin?.isProprietary
+                  ? "https://..."
+                  : "e.g. assets/icon.png (Default: icon.png)"
+              }
               className="w-full px-3 py-2 rounded-md border border-border bg-surface-secondary text-text-primary outline-none focus:border-accent transition-all duration-150"
             />
             <p className="text-xs text-text-muted mt-1">
