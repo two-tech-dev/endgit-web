@@ -264,13 +264,16 @@ export default function AdminPage() {
   } | null>(null);
   const [rejectReason, setRejectReason] = useState("");
   const [reviewLoading, setReviewLoading] = useState(false);
+  const [reviewingSlug, setReviewingSlug] = useState<string | null>(null);
 
   const reviewPlugin = async (
     slug: string,
     decision: string,
     comment?: string,
   ) => {
+    if (reviewLoading) return;
     setReviewLoading(true);
+    setReviewingSlug(slug);
     try {
       const res = await fetch(`${apiUrl}/api/v1/reviews/${slug}`, {
         method: "POST",
@@ -293,6 +296,7 @@ export default function AdminPage() {
       /* noop */
     } finally {
       setReviewLoading(false);
+      setReviewingSlug(null);
     }
   };
 
@@ -860,9 +864,15 @@ export default function AdminPage() {
                     <div className="grid grid-flow-col auto-cols-max gap-2 mt-2 pt-3 border-t border-border">
                       <button
                         onClick={() => reviewPlugin(plugin.slug, "APPROVED")}
-                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 transition-colors"
+                        disabled={reviewLoading}
+                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-success text-white border-none cursor-pointer hover:bg-success/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
-                        <CheckCircle size={16} /> Approve Plugin
+                        {reviewingSlug === plugin.slug && reviewLoading ? (
+                          <Loader2 size={16} className="animate-spin" />
+                        ) : (
+                          <CheckCircle size={16} />
+                        )}{" "}
+                        Approve Plugin
                       </button>
                       <button
                         onClick={() =>
@@ -871,7 +881,8 @@ export default function AdminPage() {
                             name: plugin.displayName,
                           })
                         }
-                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 transition-colors"
+                        disabled={reviewLoading}
+                        className="grid place-items-center gap-1.5 p-2 rounded-md text-sm font-semibold bg-error/10 text-error border border-error/20 cursor-pointer hover:bg-error/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                       >
                         <XCircle size={16} /> Reject Plugin
                       </button>
