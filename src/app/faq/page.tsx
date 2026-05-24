@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, HelpCircle, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
 import Link from "next/link";
-import FadeIn from "@/components/FadeIn";
-import StaggerContainer, { StaggerItem } from "@/components/StaggerContainer";
 
 interface FAQItemType {
   q: string;
@@ -238,10 +236,10 @@ const FAQ_ITEMS: FAQItemType[] = [
 ];
 
 const CATEGORIES = [
-  { id: "all", label: "All Questions" },
+  { id: "all", label: "All" },
   { id: "general", label: "General" },
   { id: "publishing", label: "Publishing & CI" },
-  { id: "cli", label: "CLI & Install" },
+  { id: "cli", label: "CLI" },
 ];
 
 function FAQItem({ item }: { item: FAQItemType }) {
@@ -249,21 +247,21 @@ function FAQItem({ item }: { item: FAQItemType }) {
 
   return (
     <div
-      className={`card overflow-hidden transition-all duration-200 ${open ? "border-brand/40 bg-surface-secondary/40 shadow-sm" : ""}`}
+      className={`border border-border bg-surface-card overflow-hidden transition-all duration-200 rounded-lg ${open ? "border-brand/30" : ""}`}
     >
       <button
         onClick={() => setOpen(!open)}
-        className="w-full p-5 grid grid-cols-[1fr_auto] items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
+        className="w-full p-4 grid grid-cols-[1fr_auto] items-center gap-4 bg-transparent border-0 cursor-pointer text-left focus:outline-none"
       >
-        <div className="grid gap-2">
-          <span className="font-semibold text-[15px] text-text-primary leading-snug">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="font-semibold text-sm text-text-primary leading-snug">
             {item.q}
           </span>
-          <span className="text-[10px] uppercase font-bold tracking-wider text-text-muted px-2 py-0.5 rounded bg-surface-secondary border border-border w-fit">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-text-muted px-1.5 py-0.5 rounded bg-surface-secondary border border-border shrink-0">
             {item.category === "cli"
-              ? "CLI & Setup"
+              ? "CLI"
               : item.category === "publishing"
-                ? "CI & Publishing"
+                ? "CI"
                 : item.category}
           </span>
         </div>
@@ -272,16 +270,16 @@ function FAQItem({ item }: { item: FAQItemType }) {
             open ? "rotate-180" : ""
           }`}
         >
-          <ChevronDown size={18} className="text-text-muted" />
+          <ChevronDown size={16} className="text-text-muted" />
         </div>
       </button>
       <div
-        className={`grid transition-all duration-300 ease-in-out ${
+        className={`grid transition-all duration-200 ease-in-out ${
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
         <div className="overflow-hidden">
-          <div className="px-5 pb-5 text-sm text-text-secondary leading-relaxed border-t border-border/10 pt-4">
+          <div className="px-4 pb-4 text-sm text-text-secondary leading-relaxed border-t border-border pt-3">
             {item.a}
           </div>
         </div>
@@ -304,100 +302,88 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="container py-8 lg:py-12 lg:py-16">
+    <div className="container py-10 lg:py-14">
       {/* Header */}
-      <FadeIn>
-        <div className="text-center mb-10">
-          <div className="w-14 h-14 rounded-lg bg-cyan-500/10 grid place-items-center mx-auto mb-4 border border-cyan-500/15">
-            <HelpCircle size={28} className="text-accent" />
-          </div>
-          <h1 className="heading-1 mb-2">Frequently Asked Questions</h1>
-          <p className="text-text-secondary text-[17px]">
-            Find answers to commonly asked questions about EndGit.
-          </p>
-        </div>
-      </FadeIn>
+      <div className="mb-8 max-w-3xl mx-auto text-center">
+        <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-text-primary mb-3">
+          Frequently Asked Questions
+        </h1>
+        <p className="text-text-secondary text-base lg:text-lg">
+          Find answers to commonly asked questions about EndGit.
+        </p>
+      </div>
 
-      {/* Interactive Controls */}
-      <FadeIn delay={0.1}>
-        <div className="relative mb-6 max-w-lg mx-auto">
+      {/* Controls */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-8 max-w-3xl mx-auto">
+        <div className="flex-1 relative max-w-md">
           <Search
-            size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
+            size={16}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
           />
           <input
             type="text"
             placeholder="Search FAQs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 bg-surface-secondary border border-border rounded-xl text-text-primary text-sm focus:outline-none focus:border-brand transition-colors"
+            className="w-full pl-9 pr-4 py-2.5 bg-surface-secondary border border-border rounded-lg text-text-primary text-sm focus:outline-none focus:border-brand transition-colors"
           />
         </div>
-
-        <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-center mb-8">
+        <div className="flex gap-2">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all cursor-pointer ${
+              className={`px-3 py-2 rounded-md text-xs font-semibold border transition-all cursor-pointer ${
                 selectedCategory === cat.id
-                  ? "bg-brand text-white border-brand shadow-sm shadow-brand/10"
-                  : "bg-surface-secondary text-text-secondary border-border hover:bg-surface-secondary/85"
+                  ? "bg-surface-card text-text-primary border-border shadow-sm"
+                  : "bg-transparent text-text-muted border-transparent hover:text-text-secondary"
               }`}
             >
               {cat.label}
             </button>
           ))}
         </div>
-      </FadeIn>
+      </div>
 
       {/* FAQ List */}
       {filteredItems.length === 0 ? (
-        <FadeIn delay={0.2}>
-          <div className="card p-8 text-center mt-6">
-            <Search
-              size={32}
-              className="text-text-muted mx-auto mb-3 opacity-50"
-            />
-            <h3 className="text-base font-semibold text-text-primary">
-              No matching questions found
-            </h3>
-            <p className="text-text-muted mt-1 text-sm">
-              Try searching for something else, or select another category tab
-              above.
-            </p>
-          </div>
-        </FadeIn>
+        <div className="border border-border bg-surface-card rounded-lg p-8 text-center max-w-3xl mx-auto">
+          <Search
+            size={28}
+            className="text-text-muted mx-auto mb-3 opacity-50"
+          />
+          <h3 className="text-base font-semibold text-text-primary">
+            No matching questions found
+          </h3>
+          <p className="text-text-muted mt-1 text-sm">
+            Try searching for something else, or select another category.
+          </p>
+        </div>
       ) : (
-        <StaggerContainer staggerDelay={0.04} className="grid gap-3">
+        <div className="grid gap-2 max-w-3xl mx-auto">
           {filteredItems.map((item) => (
-            <StaggerItem key={item.q}>
-              <FAQItem item={item} />
-            </StaggerItem>
+            <FAQItem key={item.q} item={item} />
           ))}
-        </StaggerContainer>
+        </div>
       )}
 
       {/* Still have questions? */}
-      <FadeIn delay={0.25}>
-        <div className="mt-12 p-6 text-center bg-cyan-500/5 rounded-lg border border-cyan-500/10">
-          <p className="font-semibold text-text-primary mb-2">
-            Still have questions?
-          </p>
-          <p className="text-text-muted text-sm mb-4">
-            Join our active Discord communities for direct developer help and
-            server support.
-          </p>
-          <a
-            href="https://discord.gg/9eZhP9y26Q"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-sm"
-          >
-            Join Discord Community
-          </a>
-        </div>
-      </FadeIn>
+      <div className="mt-12 pt-8 border-t border-border max-w-3xl mx-auto">
+        <p className="font-semibold text-text-primary mb-1">
+          Still have questions?
+        </p>
+        <p className="text-text-muted text-sm mb-4">
+          Join our Discord communities for direct developer help.
+        </p>
+        <a
+          href="https://discord.gg/9eZhP9y26Q"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-primary inline-grid grid-cols-[auto_1fr] items-center gap-2 text-sm"
+        >
+          Join Discord
+        </a>
+      </div>
     </div>
   );
 }
