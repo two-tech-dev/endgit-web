@@ -362,6 +362,33 @@ export default function HomeContent({
           <YourPlugins />
         </aside>
       </div>
+
+      {/* Partners */}
+      <div className="mt-16 lg:mt-20 pt-10 border-t border-border">
+        <p className="text-center text-base font-semibold text-text-primary mb-6">
+          Trusted EndGit Partners
+        </p>
+        <div className="flex flex-wrap justify-center items-center gap-4">
+          <a
+            href="https://sparkedhost.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center px-8 py-3 rounded-lg border border-border bg-surface-card hover:border-brand/30 transition-all"
+          >
+            <img
+              src="/partners/SparkedHost.svg"
+              alt="Sparked Host"
+              className="h-7 object-contain opacity-80 hover:opacity-100 transition-opacity"
+            />
+          </a>
+          <a
+            href="mailto:partners@endgit.dev"
+            className="flex items-center justify-center px-6 py-4 rounded-lg border border-dashed border-border hover:border-brand/30 transition-all text-sm text-text-muted hover:text-brand font-medium"
+          >
+            Become a Partner →
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

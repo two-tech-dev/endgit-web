@@ -5,7 +5,31 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "EndGit - Plugin Registry for Endstone",
   description:
-    "Discover, build and distribute plugins for Endstone. The official plugin registry with automated CI/CD.",
+    "Discover, build and distribute plugins for Endstone. The official plugin registry with automated CI/CD pipeline.",
+  keywords: [
+    "Endstone plugins",
+    "Minecraft Bedrock plugins",
+    "plugin registry",
+    "Endstone CI/CD",
+    "Bedrock server plugins",
+    "EndGit",
+  ],
+  openGraph: {
+    title: "EndGit - Plugin Registry for Endstone",
+    description:
+      "Discover, build and distribute plugins for Endstone. The official plugin registry with automated CI/CD pipeline.",
+    type: "website",
+    url: "https://endgit.dev",
+  },
+  twitter: {
+    card: "summary",
+    title: "EndGit - Plugin Registry for Endstone",
+    description:
+      "Discover, build and distribute plugins for Endstone. The official plugin registry with automated CI/CD pipeline.",
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 function HomeSkeleton() {

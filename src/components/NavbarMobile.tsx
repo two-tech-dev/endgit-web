@@ -94,7 +94,6 @@ export default function NavbarMobile() {
           { href: "/plugins", label: "Releases" },
           { href: "/plugins/top", label: "Top Plugins" },
           { href: "/builds", label: "Dev Builds" },
-          { href: "/partners", label: "Partners" },
           { href: "/faq", label: "FAQ" },
         ].map((item, i) => (
           <div
@@ -179,12 +178,6 @@ export default function NavbarMobile() {
           className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           Dev Builds
-        </Link>
-        <Link
-          href="/partners"
-          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
-        >
-          Partners
         </Link>
         <Link
           href="/faq"
