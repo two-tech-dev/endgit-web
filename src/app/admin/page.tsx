@@ -835,7 +835,9 @@ export default function AdminPage() {
                         </div>
                         <div className="min-w-0">
                           <h3 className="heading-3 text-base font-bold m-0 text-text-primary flex items-center gap-1.5">
-                            <span className="truncate">{plugin.displayName}</span>
+                            <span className="truncate">
+                              {plugin.displayName}
+                            </span>
                             {plugin.versions?.[0]?.isPreRelease && (
                               <span
                                 title="This is a pre-release"
