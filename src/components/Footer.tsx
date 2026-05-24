@@ -29,13 +29,22 @@ export default function Footer() {
               Platform
             </h4>
             <div className="grid gap-2">
-              <Link href="/plugins" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/plugins"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Releases
               </Link>
-              <Link href="/builds" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/builds"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Dev Builds
               </Link>
-              <Link href="/rules" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/rules"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Submission Rules
               </Link>
             </div>
@@ -45,16 +54,34 @@ export default function Footer() {
               Community
             </h4>
             <div className="grid gap-2">
-              <a href="https://discord.gg/9eZhP9y26Q" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <a
+                href="https://discord.gg/9eZhP9y26Q"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Discord
               </a>
-              <a href="https://github.com/two-tech-dev/endgit-web" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <a
+                href="https://github.com/two-tech-dev/endgit-web"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Source code
               </a>
-              <a href="https://github.com/apps/endgit-local-dev" target="_blank" rel="noopener noreferrer" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <a
+                href="https://github.com/apps/endgit-local-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 GitHub App
               </a>
-              <Link href="/faq" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/faq"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 FAQ
               </Link>
             </div>
@@ -64,10 +91,16 @@ export default function Footer() {
               Legal
             </h4>
             <div className="grid gap-2">
-              <Link href="/terms" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/terms"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Terms of Service
               </Link>
-              <Link href="/privacy" className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline">
+              <Link
+                href="/privacy"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
                 Privacy Policy
               </Link>
             </div>
@@ -93,7 +126,12 @@ export default function Footer() {
         </p>
         <p className="text-text-muted text-xs m-0">
           Powered by{" "}
-          <a href="https://2tech.studio" target="_blank" rel="noopener noreferrer" className="text-brand no-underline font-semibold">
+          <a
+            href="https://2tech.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand no-underline font-semibold"
+          >
             2Tech Studio
           </a>
         </p>

@@ -201,9 +201,7 @@ export default async function PluginDetailPage({
               <div className="flex flex-wrap items-center gap-3">
                 <h1 className="heading-2 m-0 flex flex-wrap items-center gap-3">
                   {plugin.displayName}
-                  {VERIFIED_ORGS.includes(
-                    repoOwnerDetail || "",
-                  ) && (
+                  {VERIFIED_ORGS.includes(repoOwnerDetail || "") && (
                     <span
                       title="This plugin is officially supported by EndstoneMC/EndGit"
                       className="inline-grid grid-cols-[auto_1fr] items-center text-accent"
@@ -407,7 +405,7 @@ export default async function PluginDetailPage({
 
             {/* Body */}
             <div className="px-3 pb-3">
-                <div className="bg-surface-card border border-border rounded-sm overflow-hidden">
+              <div className="bg-surface-card border border-border rounded-sm overflow-hidden">
                 <MarkdownTabs
                   markdown={displayDescription}
                   repoUrl={plugin.repoUrl}

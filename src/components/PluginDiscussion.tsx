@@ -233,10 +233,7 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
       ) : (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <div
-              key={comment.id}
-              className="border-b border-border pb-4"
-            >
+            <div key={comment.id} className="border-b border-border pb-4">
               <CommentItem
                 comment={comment}
                 currentUserId={currentUserId}
