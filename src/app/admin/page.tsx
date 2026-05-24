@@ -1056,267 +1056,267 @@ export default function AdminPage() {
               {loading ? (
                 <div className="overflow-x-auto -mx-4 lg:-mx-6 px-4 lg:px-6">
                   <table className="w-full border-collapse min-w-[640px]">
-                  <thead>
-                    <tr className="border-b border-border text-left">
-                      {["Plugin", "Author", "Status", "Actions"].map((h) => (
-                        <th
-                          key={h}
-                          className="px-4 py-3 text-text-muted text-[13px] font-semibold"
-                        >
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Array.from({ length: 4 }, (_, i) => (
-                      <tr key={i} className="border-b border-border">
-                        <td className="p-4">
-                          <div className="grid grid-flow-col auto-cols-max items-center gap-3">
-                            <Skeleton width="8rem" height="0.875rem" />
-                            <Skeleton width="4rem" height="0.75rem" />
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          <Skeleton width="6rem" height="0.875rem" />
-                        </td>
-                        <td className="p-4">
-                          <Skeleton
-                            width="5rem"
-                            height="1.5rem"
-                            borderRadius="var(--radius-sm)"
-                          />
-                        </td>
-                        <td className="p-4 text-right">
-                          <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
-                            <Skeleton
-                              width="2rem"
-                              height="2rem"
-                              borderRadius="var(--radius-sm)"
-                            />
-                            <Skeleton
-                              width="2rem"
-                              height="2rem"
-                              borderRadius="var(--radius-sm)"
-                            />
-                            <Skeleton
-                              width="2.5rem"
-                              height="2rem"
-                              borderRadius="var(--radius-sm)"
-                            />
-                          </div>
-                        </td>
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        {["Plugin", "Author", "Status", "Actions"].map((h) => (
+                          <th
+                            key={h}
+                            className="px-4 py-3 text-text-muted text-[13px] font-semibold"
+                          >
+                            {h}
+                          </th>
+                        ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {Array.from({ length: 4 }, (_, i) => (
+                        <tr key={i} className="border-b border-border">
+                          <td className="p-4">
+                            <div className="grid grid-flow-col auto-cols-max items-center gap-3">
+                              <Skeleton width="8rem" height="0.875rem" />
+                              <Skeleton width="4rem" height="0.75rem" />
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <Skeleton width="6rem" height="0.875rem" />
+                          </td>
+                          <td className="p-4">
+                            <Skeleton
+                              width="5rem"
+                              height="1.5rem"
+                              borderRadius="var(--radius-sm)"
+                            />
+                          </td>
+                          <td className="p-4 text-right">
+                            <div className="grid grid-flow-col auto-cols-max gap-2 justify-items-end">
+                              <Skeleton
+                                width="2rem"
+                                height="2rem"
+                                borderRadius="var(--radius-sm)"
+                              />
+                              <Skeleton
+                                width="2rem"
+                                height="2rem"
+                                borderRadius="var(--radius-sm)"
+                              />
+                              <Skeleton
+                                width="2.5rem"
+                                height="2rem"
+                                borderRadius="var(--radius-sm)"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               ) : (
                 <div className="overflow-x-auto -mx-4 lg:-mx-6 px-4 lg:px-6">
                   <table className="w-full border-collapse min-w-[640px]">
-                  <thead>
-                    <tr className="border-b border-border text-left">
-                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
-                        Plugin
-                      </th>
-                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
-                        Author
-                      </th>
-                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
-                        Status
-                      </th>
-                      <th className="px-4 py-3 text-text-muted text-[13px] font-semibold text-right">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filtered.map((plugin: any) => {
-                      return (
-                        <React.Fragment key={plugin.id}>
-                          <tr className="border-b border-border hover:bg-surface-secondary/20 transition-colors">
-                            <td className="p-4 text-sm">
-                              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                                <div className="font-semibold text-text-primary">
-                                  {plugin.displayName}
+                    <thead>
+                      <tr className="border-b border-border text-left">
+                        <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
+                          Plugin
+                        </th>
+                        <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
+                          Author
+                        </th>
+                        <th className="px-4 py-3 text-text-muted text-[13px] font-semibold">
+                          Status
+                        </th>
+                        <th className="px-4 py-3 text-text-muted text-[13px] font-semibold text-right">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filtered.map((plugin: any) => {
+                        return (
+                          <React.Fragment key={plugin.id}>
+                            <tr className="border-b border-border hover:bg-surface-secondary/20 transition-colors">
+                              <td className="p-4 text-sm">
+                                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                                  <div className="font-semibold text-text-primary">
+                                    {plugin.displayName}
+                                  </div>
+                                  <div className="text-xs text-text-muted font-mono">
+                                    {plugin.slug}
+                                  </div>
+                                  {plugin.versions &&
+                                    plugin.versions.length > 0 && (
+                                      <button
+                                        onClick={() =>
+                                          togglePluginExpanded(plugin.id)
+                                        }
+                                        className={`grid grid-flow-col auto-cols-max items-center gap-1 px-2 py-0.5 rounded-sm border border-border hover:bg-surface-secondary text-xs text-text-muted font-semibold transition-colors cursor-pointer ${
+                                          expandedPlugins.has(plugin.id)
+                                            ? "bg-surface-secondary"
+                                            : "bg-transparent"
+                                        }`}
+                                      >
+                                        {expandedPlugins.has(plugin.id) ? (
+                                          <ChevronDown size={14} />
+                                        ) : (
+                                          <ChevronRight size={14} />
+                                        )}
+                                        Releases ({plugin.versions.length})
+                                      </button>
+                                    )}
                                 </div>
-                                <div className="text-xs text-text-muted font-mono">
-                                  {plugin.slug}
-                                </div>
-                                {plugin.versions &&
-                                  plugin.versions.length > 0 && (
+                              </td>
+                              <td className="p-4 text-sm text-text-secondary">
+                                {plugin.author?.displayName ||
+                                  plugin.author?.username}
+                              </td>
+                              <td className="p-4">
+                                <select
+                                  value={plugin.status}
+                                  onChange={(e) =>
+                                    handlePluginStatusChange(
+                                      plugin.id,
+                                      plugin.status,
+                                      e.target.value,
+                                      plugin.displayName,
+                                    )
+                                  }
+                                  className={`px-2 py-1 rounded-sm text-xs font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ${getStatusBadgeClass(
+                                    plugin.status,
+                                  )}`}
+                                >
+                                  <option value="DRAFT">DRAFT</option>
+                                  <option value="PENDING_REVIEW">
+                                    PENDING_REVIEW
+                                  </option>
+                                  <option value="APPROVED">APPROVED</option>
+                                  <option value="REJECTED">REJECTED</option>
+                                  <option value="SUSPENDED">SUSPENDED</option>
+                                  <option value="FLAGGED">FLAGGED</option>
+                                </select>
+                              </td>
+                              <td className="p-4 text-right">
+                                <div className="flex justify-end items-center gap-2">
+                                  {/* Quick reject button — only shown for approved plugins */}
+                                  {plugin.status === "APPROVED" && (
                                     <button
-                                      onClick={() =>
-                                        togglePluginExpanded(plugin.id)
-                                      }
-                                      className={`grid grid-flow-col auto-cols-max items-center gap-1 px-2 py-0.5 rounded-sm border border-border hover:bg-surface-secondary text-xs text-text-muted font-semibold transition-colors cursor-pointer ${
-                                        expandedPlugins.has(plugin.id)
-                                          ? "bg-surface-secondary"
-                                          : "bg-transparent"
-                                      }`}
+                                      onClick={() => {
+                                        setPluginRejectModal({
+                                          type: "plugin",
+                                          pluginId: plugin.id,
+                                          name: plugin.displayName,
+                                          currentStatus: plugin.status,
+                                          targetStatus: "REJECTED",
+                                        });
+                                        setPluginRejectReason("");
+                                      }}
+                                      title="Reject this approved plugin"
+                                      className="flex items-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
                                     >
-                                      {expandedPlugins.has(plugin.id) ? (
-                                        <ChevronDown size={14} />
-                                      ) : (
-                                        <ChevronRight size={14} />
-                                      )}
-                                      Releases ({plugin.versions.length})
+                                      <ShieldAlert size={14} /> Reject
                                     </button>
                                   )}
-                              </div>
-                            </td>
-                            <td className="p-4 text-sm text-text-secondary">
-                              {plugin.author?.displayName ||
-                                plugin.author?.username}
-                            </td>
-                            <td className="p-4">
-                              <select
-                                value={plugin.status}
-                                onChange={(e) =>
-                                  handlePluginStatusChange(
-                                    plugin.id,
-                                    plugin.status,
-                                    e.target.value,
-                                    plugin.displayName,
-                                  )
-                                }
-                                className={`px-2 py-1 rounded-sm text-xs font-semibold border cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ${getStatusBadgeClass(
-                                  plugin.status,
-                                )}`}
-                              >
-                                <option value="DRAFT">DRAFT</option>
-                                <option value="PENDING_REVIEW">
-                                  PENDING_REVIEW
-                                </option>
-                                <option value="APPROVED">APPROVED</option>
-                                <option value="REJECTED">REJECTED</option>
-                                <option value="SUSPENDED">SUSPENDED</option>
-                                <option value="FLAGGED">FLAGGED</option>
-                              </select>
-                            </td>
-                            <td className="p-4 text-right">
-                              <div className="flex justify-end items-center gap-2">
-                                {/* Quick reject button — only shown for approved plugins */}
-                                {plugin.status === "APPROVED" && (
                                   <button
-                                    onClick={() => {
-                                      setPluginRejectModal({
-                                        type: "plugin",
-                                        pluginId: plugin.id,
-                                        name: plugin.displayName,
-                                        currentStatus: plugin.status,
-                                        targetStatus: "REJECTED",
-                                      });
-                                      setPluginRejectReason("");
-                                    }}
-                                    title="Reject this approved plugin"
-                                    className="flex items-center gap-1 px-2.5 h-8 rounded-sm border border-error/30 bg-error/10 text-error hover:bg-error/20 transition-all text-[11px] font-semibold cursor-pointer"
-                                  >
-                                    <ShieldAlert size={14} /> Reject
-                                  </button>
-                                )}
-                                <button
-                                  onClick={() => toggleFeatured(plugin.id)}
-                                  title={
-                                    plugin.isFeatured
-                                      ? "Remove Featured"
-                                      : "Mark as Featured"
-                                  }
-                                  className={`grid place-items-center w-8 h-8 rounded-sm border cursor-pointer transition-all ${
-                                    plugin.isFeatured
-                                      ? "border-amber-400 bg-amber-400/15 hover:bg-amber-400/25"
-                                      : "border-border bg-surface-secondary text-text-muted hover:bg-surface-secondary/80"
-                                  }`}
-                                >
-                                  <Star
-                                    size={16}
-                                    className={
+                                    onClick={() => toggleFeatured(plugin.id)}
+                                    title={
                                       plugin.isFeatured
-                                        ? "text-amber-400 fill-amber-400"
-                                        : "text-text-muted"
+                                        ? "Remove Featured"
+                                        : "Mark as Featured"
                                     }
-                                  />
-                                </button>
-                                <a
-                                  href={`/plugins/${plugin.slug}`}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="btn btn-secondary px-2.5 py-1 text-xs"
-                                >
-                                  View
-                                </a>
-                              </div>
-                            </td>
-                          </tr>
-                          {expandedPlugins.has(plugin.id) &&
-                            plugin.versions &&
-                            plugin.versions.length > 0 && (
-                              <tr className="border-b border-border bg-surface-secondary/10">
-                                <td colSpan={4} className="p-3 px-4 pl-8">
-                                  <div className="grid gap-1.5">
-                                    {plugin.versions.map((v: any) => {
-                                      return (
-                                        <div
-                                          key={v.id}
-                                          className={`flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
-                                            v.status,
-                                          )}`}
-                                        >
-                                          <span className="text-[13px] font-bold text-text-primary min-w-[56px]">
-                                            v{v.version}
-                                          </span>
-                                          <span
-                                            className={`text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}
+                                    className={`grid place-items-center w-8 h-8 rounded-sm border cursor-pointer transition-all ${
+                                      plugin.isFeatured
+                                        ? "border-amber-400 bg-amber-400/15 hover:bg-amber-400/25"
+                                        : "border-border bg-surface-secondary text-text-muted hover:bg-surface-secondary/80"
+                                    }`}
+                                  >
+                                    <Star
+                                      size={16}
+                                      className={
+                                        plugin.isFeatured
+                                          ? "text-amber-400 fill-amber-400"
+                                          : "text-text-muted"
+                                      }
+                                    />
+                                  </button>
+                                  <a
+                                    href={`/plugins/${plugin.slug}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="btn btn-secondary px-2.5 py-1 text-xs"
+                                  >
+                                    View
+                                  </a>
+                                </div>
+                              </td>
+                            </tr>
+                            {expandedPlugins.has(plugin.id) &&
+                              plugin.versions &&
+                              plugin.versions.length > 0 && (
+                                <tr className="border-b border-border bg-surface-secondary/10">
+                                  <td colSpan={4} className="p-3 px-4 pl-8">
+                                    <div className="grid gap-1.5">
+                                      {plugin.versions.map((v: any) => {
+                                        return (
+                                          <div
+                                            key={v.id}
+                                            className={`flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 px-2.5 py-1.5 rounded-sm border ${getVersionRowClass(
+                                              v.status,
+                                            )}`}
                                           >
-                                            {v.status}
-                                          </span>
-                                          <select
-                                            value={v.status}
-                                            onChange={(e) =>
-                                              handleVersionStatusChange(
-                                                plugin.id,
-                                                v.id,
-                                                v.status,
-                                                e.target.value,
-                                                `${plugin.displayName} v${v.version}`,
-                                              )
-                                            }
-                                            className="px-1.5 py-0.5 rounded-sm bg-surface-secondary border border-border text-text-primary text-[11px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ml-auto"
-                                          >
-                                            <option value="PENDING">
-                                              PENDING
-                                            </option>
-                                            <option value="APPROVED">
-                                              APPROVED
-                                            </option>
-                                            <option value="REJECTED">
-                                              REJECTED
-                                            </option>
-                                          </select>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                </td>
-                              </tr>
-                            )}
-                        </React.Fragment>
-                      );
-                    })}
-                    {filtered.length === 0 && (
-                      <tr>
-                        <td
-                          colSpan={4}
-                          className="p-8 text-center text-text-muted"
-                        >
-                          {pluginStatusFilter !== "ALL"
-                            ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
-                            : "No plugins found"}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
+                                            <span className="text-[13px] font-bold text-text-primary min-w-[56px]">
+                                              v{v.version}
+                                            </span>
+                                            <span
+                                              className={`text-[11px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider ${getStatusBadgeClass(v.status)}`}
+                                            >
+                                              {v.status}
+                                            </span>
+                                            <select
+                                              value={v.status}
+                                              onChange={(e) =>
+                                                handleVersionStatusChange(
+                                                  plugin.id,
+                                                  v.id,
+                                                  v.status,
+                                                  e.target.value,
+                                                  `${plugin.displayName} v${v.version}`,
+                                                )
+                                              }
+                                              className="px-1.5 py-0.5 rounded-sm bg-surface-secondary border border-border text-text-primary text-[11px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand ml-auto"
+                                            >
+                                              <option value="PENDING">
+                                                PENDING
+                                              </option>
+                                              <option value="APPROVED">
+                                                APPROVED
+                                              </option>
+                                              <option value="REJECTED">
+                                                REJECTED
+                                              </option>
+                                            </select>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </td>
+                                </tr>
+                              )}
+                          </React.Fragment>
+                        );
+                      })}
+                      {filtered.length === 0 && (
+                        <tr>
+                          <td
+                            colSpan={4}
+                            className="p-8 text-center text-text-muted"
+                          >
+                            {pluginStatusFilter !== "ALL"
+                              ? `No ${pluginStatusFilter.replace("_", " ").toLowerCase()} plugins found`
+                              : "No plugins found"}
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>

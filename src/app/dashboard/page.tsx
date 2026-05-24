@@ -204,7 +204,9 @@ export default async function DashboardPage() {
                   </div>
                   <div className="flex items-center gap-1 font-medium text-text-primary">
                     <Activity size={14} className="text-accent shrink-0" />{" "}
-                    <span className="truncate">{plugin.downloads?.toLocaleString() ?? 0}</span>
+                    <span className="truncate">
+                      {plugin.downloads?.toLocaleString() ?? 0}
+                    </span>
                   </div>
                 </div>
                 <div className="min-w-0">
@@ -212,9 +214,7 @@ export default async function DashboardPage() {
                     Version
                   </div>
                   <div className="font-medium text-text-primary truncate">
-                    {plugin.latestVersion
-                      ? `v${plugin.latestVersion}`
-                      : "None"}
+                    {plugin.latestVersion ? `v${plugin.latestVersion}` : "None"}
                   </div>
                 </div>
                 <div className="min-w-0">
