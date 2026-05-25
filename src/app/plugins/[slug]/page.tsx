@@ -6,7 +6,6 @@ import {
   GitBranch,
   Terminal,
   Activity,
-  Copy,
   Zap,
   Pencil,
   FlaskConical,
@@ -25,6 +24,7 @@ import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import MarkdownInline from "@/components/MarkdownInline";
 import { VERIFIED_ORGS } from "@/lib/constants";
+import CopyCommand from "@/components/CopyCommand";
 
 const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
   loading: () => (
@@ -361,14 +361,7 @@ export default async function PluginDetailPage({
             <h3 className="font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-2">
               <Terminal size={18} className="text-accent" /> Quick Install (CLI)
             </h3>
-            <div className="bg-text-primary text-border px-3 lg:px-4 py-3 rounded-sm font-mono text-xs lg:text-sm grid grid-cols-[1fr_auto] items-center gap-2 overflow-x-auto">
-              <code className="whitespace-nowrap">
-                endgit install {plugin.slug}
-              </code>
-              <button className="touch-target bg-transparent border-none cursor-pointer p-3 grid place-items-center">
-                <Copy size={16} className="text-text-muted" />
-              </button>
-            </div>
+            <CopyCommand command={`endgit install ${plugin.slug}`} />
           </div>
 
           {/* What's New — based on active version */}
