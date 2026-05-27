@@ -75,7 +75,7 @@ export default function LiveBuildLog({
 
   // Custom log parser for syntax highlighting
   const parseLogLine = (line: string, index: number) => {
-    let colorClass = "text-border-highlight"; // default slate-300
+    let colorClass = "text-text-secondary"; // default log text color
     let fontWeightClass = "font-normal";
 
     if (line.includes("✅")) {
@@ -102,7 +102,7 @@ export default function LiveBuildLog({
         key={index}
         className="grid grid-flow-col auto-cols-max gap-4 min-h-6"
       >
-        <span className="text-[#334155] min-w-8 text-right select-none text-xs pt-0.5 font-mono shrink-0">
+        <span className="text-text-muted min-w-8 text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
         <span
@@ -115,12 +115,12 @@ export default function LiveBuildLog({
   };
 
   return (
-    <div className="card overflow-hidden border border-white/5 shadow-2xl bg-[#09090b]">
+    <div className="card overflow-hidden border border-border shadow-2xl bg-surface-secondary">
       {/* Header */}
-      <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-white/5 bg-white/2 backdrop-blur-md gap-3">
+      <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-border bg-surface backdrop-blur-md gap-3">
         <div className="grid grid-flow-col auto-cols-max items-center gap-3">
           <Terminal size={16} className="text-accent" />
-          <span className="font-semibold text-sm text-surface-secondary tracking-wide">
+          <span className="font-semibold text-sm text-text-secondary tracking-wide">
             Execution Log
           </span>
           {isRunning && (
@@ -170,7 +170,7 @@ export default function LiveBuildLog({
           visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
           <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
-            <span className="text-[#334155] min-w-8 text-right text-xs pt-0.5 font-mono">
+            <span className="text-text-muted min-w-8 text-right text-xs pt-0.5 font-mono">
               1
             </span>
             <span className="text-text-muted italic">
@@ -180,7 +180,7 @@ export default function LiveBuildLog({
         )}
         {isRunning && (
           <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
-            <span className="text-[#334155] min-w-8 text-right text-xs pt-0.5 font-mono">
+            <span className="text-text-muted min-w-8 text-right text-xs pt-0.5 font-mono">
               {logs ? allLines.length + 1 : 2}
             </span>
             <span className="text-accent animate-pulse font-mono">▋</span>
@@ -193,9 +193,9 @@ export default function LiveBuildLog({
           __html: `
         /* Custom scrollbar for the terminal */
         .scrollbar-terminal::-webkit-scrollbar { width: 8px; }
-        .scrollbar-terminal::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-        .scrollbar-terminal::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .scrollbar-terminal::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        .scrollbar-terminal::-webkit-scrollbar-track { background: var(--color-surface); }
+        .scrollbar-terminal::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+        .scrollbar-terminal::-webkit-scrollbar-thumb:hover { background: var(--color-border-highlight); }
       `,
         }}
       />
