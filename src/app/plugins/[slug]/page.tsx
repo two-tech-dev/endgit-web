@@ -26,11 +26,7 @@ import MarkdownInline from "@/components/MarkdownInline";
 import { VERIFIED_ORGS } from "@/lib/constants";
 import CopyCommand from "@/components/CopyCommand";
 
-const MarkdownTabs = dynamic(() => import("@/components/MarkdownTabs"), {
-  loading: () => (
-    <div className="p-6 text-text-muted text-sm">Loading description...</div>
-  ),
-});
+import VersionDescription from "@/components/VersionDescription";
 const PluginAnalyticsChart = dynamic(
   () => import("@/components/PluginAnalyticsChart"),
   {
@@ -399,8 +395,10 @@ export default async function PluginDetailPage({
             {/* Body */}
             <div className="px-3 pb-3">
               <div className="bg-surface-card border border-border rounded-sm overflow-hidden">
-                <MarkdownTabs
-                  markdown={displayDescription}
+                <VersionDescription
+                  slug={plugin.slug}
+                  version={activeVersion?.version || null}
+                  fallbackDescription={displayDescription}
                   repoUrl={plugin.repoUrl}
                   commitHash={activeVersion?.fileHash}
                 />
