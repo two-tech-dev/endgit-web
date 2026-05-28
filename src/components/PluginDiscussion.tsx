@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
 import { MessageCircle, Send, Loader2, Trash2, Reply } from "lucide-react";
 
 interface Comment {
@@ -31,7 +32,6 @@ function timeAgo(dateStr: string) {
 export default function PluginDiscussion({ slug }: { slug: string }) {
   const { data: session } = useSession();
   const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading] = useState(true);
   const [body, setBody] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
@@ -42,32 +42,34 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   const token = (session?.user as any)?.apiToken;
 
-  const fetchComments = useCallback(
-    async (p: number = 1) => {
-      try {
-        const res = await fetch(
-          `${apiUrl}/api/v1/comments/${slug}?page=${p}&limit=20`,
-        );
-        const json = await res.json();
-        if (json.success) {
-          if (p === 1) {
-            setComments(json.data);
-          } else {
-            setComments((prev) => [...prev, ...json.data]);
-          }
-          setPage(p);
-          setTotalPages(json.pagination?.totalPages || 1);
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
-    [apiUrl, slug],
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+  const { data, isLoading: loading } = useSWR(
+    `${apiUrl}/api/v1/comments/${slug}?page=1&limit=20`,
+    fetcher,
+    { revalidateOnFocus: false, dedupingInterval: 30000 },
   );
 
   useEffect(() => {
-    fetchComments(1);
-  }, [fetchComments]);
+    if (data?.success) {
+      setComments(data.data);
+      setTotalPages(data.pagination?.totalPages || 1);
+      setPage(1);
+    }
+  }, [data]);
+
+  const loadMore = async () => {
+    const nextPage = page + 1;
+    const res = await fetch(
+      `${apiUrl}/api/v1/comments/${slug}?page=${nextPage}&limit=20`,
+    );
+    const json = await res.json();
+    if (json.success) {
+      setComments((prev) => [...prev, ...json.data]);
+      setPage(nextPage);
+      setTotalPages(json.pagination?.totalPages || 1);
+    }
+  };
 
   useEffect(() => {
     const eventSource = new EventSource(
@@ -299,7 +301,7 @@ export default function PluginDiscussion({ slug }: { slug: string }) {
           {page < totalPages && (
             <button
               className="btn btn-secondary self-center text-xs"
-              onClick={() => fetchComments(page + 1)}
+              onClick={() => loadMore()}
             >
               Load more
             </button>

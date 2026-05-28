@@ -36,9 +36,9 @@ function HomeSkeleton() {
   return (
     <div className="container py-10">
       <div className="space-y-4 mb-12">
-        <div className="skeleton h-10 w-3/4 max-w-[500px]" />
-        <div className="skeleton h-5 w-1/2 max-w-[400px]" />
-        <div className="skeleton h-12 w-full max-w-[400px] mt-6" />
+        <div className="skeleton h-10 w-3/4 max-w-125" />
+        <div className="skeleton h-5 w-1/2 max-w-100" />
+        <div className="skeleton h-12 w-full max-w-100 mt-6" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10">
         <div className="space-y-4">
@@ -77,32 +77,16 @@ async function HomeData() {
   let featuredPlugins: any[] = [];
 
   try {
-    const [hotRes, newRes, topRes, featuredRes] = await Promise.all([
-      fetch(`${apiUrl}/api/v1/plugins?sort=hot&pageSize=4`, {
-        next: { revalidate: 60 },
-      }),
-      fetch(`${apiUrl}/api/v1/plugins?sort=date&pageSize=5`, {
-        next: { revalidate: 60 },
-      }),
-      fetch(`${apiUrl}/api/v1/plugins?sort=downloads&order=desc&pageSize=5`, {
-        next: { revalidate: 60 },
-      }),
-      fetch(`${apiUrl}/api/v1/plugins?isFeatured=true&pageSize=4`, {
-        next: { revalidate: 60 },
-      }),
-    ]);
-
-    const [hotJson, newJson, topJson, featuredJson] = await Promise.all([
-      hotRes.json(),
-      newRes.json(),
-      topRes.json(),
-      featuredRes.json(),
-    ]);
-
-    hotPlugins = hotJson?.data?.plugins || [];
-    newPlugins = newJson?.data?.plugins || [];
-    topPlugins = topJson?.data?.plugins || [];
-    featuredPlugins = featuredJson?.data?.plugins || [];
+    const res = await fetch(`${apiUrl}/api/v1/plugins/home`, {
+      next: { revalidate: 60 },
+    });
+    const json = await res.json();
+    if (json.success) {
+      hotPlugins = json.data.hotPlugins || [];
+      newPlugins = json.data.newPlugins || [];
+      topPlugins = json.data.topPlugins || [];
+      featuredPlugins = json.data.featuredPlugins || [];
+    }
   } catch {}
 
   return (

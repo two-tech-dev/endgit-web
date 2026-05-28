@@ -14,9 +14,10 @@ import {
   Terminal,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { VERIFIED_ORGS } from "@/lib/constants";
+import useSWR from "swr";
 
 interface Plugin {
   id: string;
@@ -399,30 +400,23 @@ export default function HomeContent({
 
 function YourPlugins() {
   const { data: session } = useSession();
-  const [plugins, setPlugins] = useState<Plugin[]>([]);
-  const [loading, setLoading] = useState(false);
+  const username = (session?.user as any)?.username;
+  const token = (session?.user as any)?.apiToken;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
-  useEffect(() => {
-    if (!session?.user) return;
-    const token = (session.user as any)?.apiToken;
-    const username = (session.user as any)?.username;
-    if (!username) return;
+  const { data, isLoading } = useSWR(
+    username ? `${apiUrl}/api/v1/plugins?author=${username}&pageSize=5` : null,
+    (url: string) =>
+      fetch(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      }).then((r) => r.json()),
+    { revalidateOnFocus: false, dedupingInterval: 60000 },
+  );
 
-    setLoading(true);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
-    fetch(`${apiUrl}/api/v1/plugins?author=${username}&pageSize=5`, {
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data?.plugins) setPlugins(json.data.plugins);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, [session]);
+  const plugins: Plugin[] = data?.data?.plugins || [];
 
   if (!session?.user) return null;
-  if (loading) return null;
+  if (isLoading) return null;
   if (plugins.length === 0) return null;
 
   return (
