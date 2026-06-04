@@ -25,9 +25,6 @@ export const metadata: Metadata = {
     "endgit",
   ],
   metadataBase: new URL("https://endgit.dev"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "endgit — endstone plugin marketplace",
     description:

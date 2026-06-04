@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Live Builds - EndGit",
   description: "View recent plugin builds across the Endstone ecosystem.",
+  alternates: {
+    canonical: "/builds",
+  },
 };
 
 async function getTodayBuilds() {
