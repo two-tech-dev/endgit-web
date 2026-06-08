@@ -121,7 +121,83 @@ export function BuildsTableClient({
           </div>
         ) : (
           <div ref={wrapperRef} className="max-h-[600px] overflow-y-auto">
-            <table className="w-full border-collapse text-sm table-fixed">
+            <div className="grid gap-3 md:hidden">
+              {builds.map((build: any) => (
+                <div key={build.id} className="card p-4 border border-border">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <Link
+                        href={`/builds/${build.id}`}
+                        className="text-accent no-underline font-semibold hover:underline"
+                      >
+                        Dev #{build.buildNumber}
+                      </Link>
+                      <div className="mt-1 text-xs text-text-muted">
+                        {timeAgo(build.createdAt)}
+                        {build.duration ? ` • ${build.duration}s` : ""} • {build.branch || "master"}
+                      </div>
+                    </div>
+                    <Link
+                      href={`/builds/${build.id}`}
+                      className="btn btn-secondary py-1.5 px-3 text-[13px] whitespace-nowrap"
+                    >
+                      Logs
+                    </Link>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 text-sm">
+                    {build.status === "SUCCESS" ? (
+                      <span className="text-success font-medium">OK</span>
+                    ) : build.status === "FAILED" ? (
+                      <span className="text-error font-medium">Failed</span>
+                    ) : build.status === "RUNNING" ? (
+                      <span className="text-brand font-medium">Running</span>
+                    ) : (
+                      <span className="text-text-muted">Queued</span>
+                    )}
+                    {build.commitHash && (
+                      <a
+                        href={`${plugin.repoUrl}/commit/${build.commitHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-accent font-mono no-underline hover:underline"
+                      >
+                        {build.commitHash.slice(0, 7)}
+                      </a>
+                    )}
+                    {build.triggerType === "WEBHOOK" && (
+                      <span className="badge text-xs">AUTO</span>
+                    )}
+                  </div>
+
+                  <p
+                    className="mt-2 text-sm text-text-primary break-words"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {build.commitMessage || "No commit message"}
+                  </p>
+
+                  {isOwner &&
+                    build.canSubmit &&
+                    Number(build.buildNumber) > Number(reviewedBuildNumber) &&
+                    !hasPendingVersion && (
+                      <Link
+                        href={`/builds/${build.id}/submit`}
+                        className="btn btn-primary mt-3 py-1.5 px-3 text-[13px] inline-flex items-center gap-1 whitespace-nowrap"
+                      >
+                        <Send size={14} /> Submit
+                      </Link>
+                    )}
+                </div>
+              ))}
+            </div>
+
+            <table className="hidden md:table w-full border-collapse text-sm table-fixed">
               <colgroup>
                 <col className="w-[10%]" />
                 <col className="w-[10%]" />
