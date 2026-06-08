@@ -168,7 +168,7 @@ export function BuildsTableClient({
                         </Link>
                         {build.commitHash && (
                           <span className="text-accent text-[13px]">
-                            (&amp;{build.commitHash.slice(0, 5)})
+                            ({build.commitHash.slice(0, 5)})
                           </span>
                         )}
                         {build.triggerType === "WEBHOOK" && (
@@ -209,7 +209,15 @@ export function BuildsTableClient({
                               {build.commitHash.slice(0, 7)}
                             </a>
                           )}
-                          <span className="text-text-primary wrap-break-word">
+                          <span
+                            className="text-text-primary break-words"
+                            style={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                            }}
+                          >
                             {build.commitMessage || "No commit message"}
                           </span>
                         </div>
