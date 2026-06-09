@@ -47,6 +47,8 @@ const markdownSchema = {
 
     img: ["src", "alt", "title", "width", "height"],
 
+    code: [...(defaultSchema.attributes?.code || []), "className"],
+
     "*": ["title", "align"],
   },
 };
@@ -105,9 +107,13 @@ function MarkdownContent({ content }: { content: string }) {
             </div>
           );
         },
-        code({ node, inline, className, children, ...props }: any) {
+        code({ node, className, children, ...props }: any) {
           const match = /language-(\w+)/.exec(className || "");
-          return !inline && match ? (
+          const isInline =
+            !match ||
+            (node?.position?.start?.line === node?.position?.end?.line &&
+              !String(children).includes("\n"));
+          return !isInline && match ? (
             <SyntaxHighlighter
               style={vscDarkPlus}
               language={match[1]}
