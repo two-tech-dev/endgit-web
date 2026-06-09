@@ -1,6 +1,37 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PLUGIN_CATEGORIES } from "@/lib/constants";
+import { ChevronDown } from "lucide-react";
+import { type ReactNode, useState } from "react";
+
+function FilterSection({
+  title,
+  children,
+  defaultOpen = true,
+}: {
+  title: string;
+  children: ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <section className="card overflow-hidden p-0">
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="grid w-full grid-cols-[1fr_auto] items-center border-b border-border px-4 py-3 text-left font-semibold text-text-primary"
+      >
+        {title}
+        <ChevronDown
+          size={15}
+          className={`text-text-muted transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && <div className="p-4">{children}</div>}
+    </section>
+  );
+}
 
 export default function PluginSidebarFilters() {
   const router = useRouter();
@@ -26,12 +57,15 @@ export default function PluginSidebarFilters() {
     { value: "name", label: "A-Z" },
   ];
 
+  const typeOptions = [
+    { value: "", label: "All Types" },
+    { value: "PYTHON", label: "Python (.whl)" },
+    { value: "CPP", label: "C++ (.so)" },
+  ];
+
   return (
     <aside className="sidebar-filters grid w-[250px] shrink-0 gap-4">
-      <div className="card p-4">
-        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
-          Categories
-        </h3>
+      <FilterSection title="Categories">
         <select
           className="input w-full cursor-pointer rounded-sm border border-border bg-surface-secondary p-2 text-text-primary"
           value={currentCategory}
@@ -44,75 +78,45 @@ export default function PluginSidebarFilters() {
             </option>
           ))}
         </select>
-      </div>
+      </FilterSection>
 
-      <div className="card p-4">
-        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
-          Sort By
-        </h3>
-        <ul className="m-0 grid gap-2 p-0">
+      <FilterSection title="Sort By">
+        <div className="grid gap-2">
           {sortOptions.map((opt) => (
-            <li
+            <button
+              type="button"
               key={opt.value}
               onClick={() => updateFilter("sort", opt.value)}
-              className={`cursor-pointer transition-colors ${
+              className={`rounded-sm border px-3 py-2 text-left text-sm transition-colors ${
                 currentSort === opt.value
-                  ? "font-semibold text-text-primary underline underline-offset-4"
-                  : "font-normal text-text-secondary hover:text-text-primary hover:underline"
+                  ? "border-[#7c3aed]/45 bg-[#7c3aed]/15 text-[#7c3aed] dark:text-[#c4b5fd]"
+                  : "border-border bg-surface text-text-secondary hover:border-[#7c3aed]/40 hover:bg-[#7c3aed]/10 hover:text-text-primary"
               }`}
             >
               {opt.label}
-            </li>
+            </button>
           ))}
-        </ul>
-      </div>
+        </div>
+      </FilterSection>
 
-      <div className="card p-4">
-        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
-          Type
-        </h3>
-        <ul className="m-0 grid gap-2 p-0">
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
-            <input
-              type="radio"
-              name="type"
-              id="type-all"
-              checked={currentType === ""}
-              onChange={() => updateFilter("type", "")}
-              className="accent-brand"
-            />
-            <label htmlFor="type-all" className="cursor-pointer">
-              All Types
-            </label>
-          </li>
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
-            <input
-              type="radio"
-              name="type"
-              id="type-python"
-              checked={currentType === "PYTHON"}
-              onChange={() => updateFilter("type", "PYTHON")}
-              className="accent-brand"
-            />
-            <label htmlFor="type-python" className="cursor-pointer">
-              Python (.whl)
-            </label>
-          </li>
-          <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
-            <input
-              type="radio"
-              name="type"
-              id="type-cpp"
-              checked={currentType === "CPP"}
-              onChange={() => updateFilter("type", "CPP")}
-              className="accent-brand"
-            />
-            <label htmlFor="type-cpp" className="cursor-pointer">
-              C++ (.so)
-            </label>
-          </li>
-        </ul>
-      </div>
+      <FilterSection title="Type">
+        <div className="flex flex-wrap gap-2">
+          {typeOptions.map((opt) => (
+            <button
+              type="button"
+              key={opt.value || "all"}
+              onClick={() => updateFilter("type", opt.value)}
+              className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                currentType === opt.value
+                  ? "border-[#7c3aed]/50 bg-[#7c3aed]/15 text-[#7c3aed] dark:text-[#c4b5fd]"
+                  : "border-border bg-surface text-text-secondary hover:border-[#7c3aed]/40 hover:bg-[#7c3aed]/10 hover:text-text-primary"
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </FilterSection>
     </aside>
   );
 }
