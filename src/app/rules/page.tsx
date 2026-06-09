@@ -10,66 +10,37 @@ export const metadata: Metadata = {
 const RULE_CATEGORIES = [
   {
     id: "purpose",
-    label: "Purpose & Ethics",
+    label: "What We Accept",
     prefix: "A",
     icon: "shield",
     color: "#8b5cf6",
-    description: "Plugins must be purposeful, original, and ethical.",
+    description:
+      "Plugins should be useful, honest, and appropriate for public servers.",
     rules: [
       {
         id: "A1",
-        title: "Must serve a purpose",
-        text: "Plugins must serve a purpose that cannot be replicated using Endstone's built-in features. Plugins that only provide command aliases or shortcuts to built-in functionality will not be approved.",
+        title: "Useful for server owners",
+        text: "Your plugin should have a clear use case for Endstone servers. Small utilities, focused tools, and quality-of-life plugins are welcome as long as the description explains who it helps and why.",
       },
       {
         id: "A2",
-        title: "Serve a specific purpose",
-        text: 'The plugin must serve a **specific** purpose and be useful to the majority of server operators. Core/private-server-only plugins are not accepted. Plugins containing many mutually irrelevant features bundled together ("kitchen sink" plugins) are also not allowed.',
+        title: "Be honest about scope",
+        text: "Experimental, beta, or server-specific features are allowed, but they must be clearly labeled. Do not present unfinished features as stable or production-ready.",
       },
       {
         id: "A3",
-        title: "No duplicates",
-        text: "If an existing approved plugin covers every feature your plugin provides, you must not submit yours — unless the existing one has been unmaintained for **more than 30 days**. If submitting a competing plugin, explain why yours is better or different in the description.",
+        title: "Original work or permitted forks",
+        text: "Submit your own work, or a fork you are allowed to maintain. Forks and alternatives are allowed when they add meaningful changes, fix abandoned work, or explain how they differ from existing plugins.",
       },
       {
         id: "A4",
-        title: "No remote code execution",
-        text: "Plugins must not execute code fetched from remote sources at runtime. If the plugin requires an external API, it must be from a reputable provider or have high transparency. Auto-updaters that bypass EndGit's CI/CD pipeline are strictly prohibited.",
+        title: "No harmful or deceptive behavior",
+        text: "Plugins must not hide malicious behavior, mislead users, steal data, abuse permissions, or run code from remote sources to bypass EndGit review.",
       },
       {
-        id: "A5a",
-        title: "No artificial limitations",
-        text: "Artificially created limitations (e.g., feature-gating behind paid plans, license keys, or subscriptions to unlock self-imposed restrictions) are not allowed.",
-      },
-      {
-        id: "A5b",
-        title: "No unsolicited advertisement",
-        text: "Plugins must not be used as a medium to advertise external servers, products, or resources unless explicitly requested by the user (e.g., through a help command). Reasonable contact information in the description is permitted.",
-      },
-      {
-        id: "A5c",
-        title: "Use of external APIs",
-        text: "External APIs (especially HTTP/HTTPS requests) should only be used when reasonably necessary, such as when involving a public database or large dataset that cannot practically be distributed with the plugin.",
-      },
-      {
-        id: "A5d",
-        title: "Availability of external APIs",
-        text: "Any external API used by a plugin must offer a free tier with a reasonable rate limit. Plugins that depend entirely on paid-only APIs will not be approved.",
-      },
-      {
-        id: "A6",
-        title: "Libraries must be bundled",
-        text: 'Shared libraries must be bundled with the plugin (e.g., statically linked for C++ or included as Python packages). Standalone "API-only" plugins that serve no purpose on their own are not accepted — convert them to libraries.',
-      },
-      {
-        id: "A7",
-        title: "Only submit your own work",
-        text: "You may only submit plugins you have authored. To submit a fork of an abandoned plugin, you must provide proof of the original author's permission, or evidence that the original author did not respond within 14 days of a request to update. Forks must be submitted under a different name.",
-      },
-      {
-        id: "A8",
-        title: "Complete and functional",
-        text: "Plugins must be complete and functional. Partially implemented features must be clearly marked as experimental and must not be listed as stable features in the description.",
+        id: "A5",
+        title: "External services are allowed when transparent",
+        text: "Plugins may use external APIs or services if the dependency is clearly documented, failure is handled gracefully, and users can understand what data is sent outside their server.",
       },
     ],
   },
@@ -80,97 +51,32 @@ const RULE_CATEGORIES = [
     icon: "code",
     color: "#06b6d4",
     description:
-      "Code must meet quality, readability, and compatibility standards.",
+      "Code should be maintainable enough for review and safe enough to run.",
     rules: [
       {
         id: "B1",
-        title: "Supported Endstone versions",
-        text: "Plugins must declare the minimum supported Endstone API version. Only officially released Endstone versions are accepted — development/nightly API versions must not be declared as requirements.",
+        title: "Declare compatibility",
+        text: "Declare the supported Endstone API version and any required dependencies in the manifest and submission form. If a dependency is optional, document what happens when it is missing.",
       },
       {
         id: "B2",
-        title: "No obfuscation",
-        text: "Source code must be readable and not obfuscated. For C++ plugins, the source repository must contain the complete, readable source. For Python plugins, no bytecode-only submissions are allowed.",
+        title: "Readable source required",
+        text: "Reviewers must be able to inspect the source code. Obfuscated code, bytecode-only Python submissions, or missing C++ source may be rejected.",
       },
       {
         id: "B3",
-        title: "No unnecessary console output",
-        text: 'Plugins must not output unnecessary status messages on startup/shutdown (e.g., "Plugin enabled!", "Author: Xxx", ASCII art banners). Console output is only acceptable if startup genuinely takes significant time (>1 second) or for critical error reporting.',
+        title: "Keep startup output reasonable",
+        text: "Console output is fine when it helps diagnose setup or errors. Avoid noisy banners, repeated logs, or promotional output on every startup.",
       },
       {
-        id: "B4a",
-        title: "Default language must be English",
-        text: "Multi-language support is encouraged, but the default language must be English. All command descriptions, help text, and console output must be available in English.",
-      },
-      {
-        id: "B4b",
-        title: "Political and religious neutrality",
-        text: "Plugins must not contain politically or religiously biased content.",
+        id: "B4",
+        title: "Use stable APIs when possible",
+        text: "Prefer Endstone APIs over raw protocol manipulation or fragile internals. Low-level approaches are acceptable when there is no practical API alternative and the reason is explained.",
       },
       {
         id: "B5",
-        title: "Declare dependencies",
-        text: "All plugin dependencies must be declared in both the plugin manifest (plugin.toml / plugin.yml) and the submission form. Required dependencies that are not available on EndGit must not be used.",
-      },
-      {
-        id: "B6",
-        title: "No hardcoded data",
-        text: "Plugins should use Endstone API methods and constants for vanilla game data where available. Hardcoded block/item IDs, entity type strings, etc. should be avoided in favor of API-provided constants.",
-      },
-      {
-        id: "B7",
-        title: "Clean plugin name",
-        text: 'Plugin names must not include version information (e.g., no "-v2", "-PM5" suffixes), must match the name declared in the plugin manifest exactly, and use only alphanumeric characters, hyphens, and underscores.',
-      },
-      {
-        id: "B8",
-        title: "Use API over protocol",
-        text: "Plugins must not use raw packet handling to implement features that can be accomplished using the Endstone API. Direct protocol manipulation is only acceptable when no API alternative exists.",
-      },
-    ],
-  },
-  {
-    id: "structure",
-    label: "Naming & Structure",
-    prefix: "C",
-    icon: "file",
-    color: "#f59e0b",
-    description: "Proper naming, namespacing, and structural conventions.",
-    rules: [
-      {
-        id: "C1a",
-        title: "Unique namespace (C++)",
-        text: "C++ plugins must use a unique namespace that will not collide with other plugins. The recommended format is author_name::plugin_name. The author/org name should correspond to the GitHub username or organization.",
-      },
-      {
-        id: "C1b",
-        title: "Unique module name (Python)",
-        text: "Python plugins must use a unique top-level module/package name. The recommended format is author_pluginname or a similarly distinctive name that avoids collision.",
-      },
-      {
-        id: "C1c",
-        title: "Stay in your namespace",
-        text: "All classes, types, and symbols declared by a plugin must reside within the plugin's own namespace/package. Do not pollute the global namespace or other plugins' namespaces.",
-      },
-      {
-        id: "C2",
-        title: "Command registration",
-        text: "All commands must be properly registered through the Endstone API. Commands must be associated with the registering plugin. Fallback prefixes must match the plugin name (no abbreviations or acronyms).",
-      },
-      {
-        id: "C3",
-        title: "Permission naming",
-        text: "All permissions must start with the plugin name (lowercase), use only lowercase letters, digits, hyphens, and dots, and be consistently declared in both the manifest and code.",
-      },
-      {
-        id: "C4",
-        title: "Data isolation",
-        text: "Plugin-specific data must be stored in the plugin's data folder. Entity/world-specific data must be stored in a namespaced compound tag. Database tables must use a plugin-prefixed naming convention to prevent collisions.",
-      },
-      {
-        id: "C5",
-        title: "No hardcoded command dispatch",
-        text: "Plugins must not use command dispatch (dispatchCommand) to invoke other plugins' functionality. Use the proper API or declare explicit dependencies instead.",
+        title: "Names should not collide",
+        text: "Use distinctive plugin names, permission names, package/module names, and database table names so your plugin does not conflict with other plugins.",
       },
     ],
   },
@@ -180,37 +86,28 @@ const RULE_CATEGORIES = [
     prefix: "D",
     icon: "book",
     color: "#10b981",
-    description: "Clear, complete, and well-formatted documentation.",
+    description:
+      "Users should understand what the plugin does before installing it.",
     rules: [
       {
         id: "D1",
-        title: "Detailed description",
-        text: "The description must explain what the plugin does, why it is useful, and how to configure/use it. Do not assume the reader already knows the context. Screenshots or videos alone are not sufficient.",
+        title: "Explain the plugin clearly",
+        text: "Include what the plugin does, basic setup steps, important commands or permissions, and any known limitations. A short but clear README is better than a long vague one.",
       },
       {
         id: "D2",
-        title: "English description required",
-        text: "The plugin description must be available in English. Translations in other languages are welcome but English must come first.",
+        title: "English summary required",
+        text: "The main description should include an English summary. Additional languages are welcome and encouraged.",
       },
       {
         id: "D3",
-        title: "Clean description",
-        text: "Do not include irrelevant, duplicated, or misleading information. Do not advertise external products. A reasonable number of contact links (Discord, GitHub) is acceptable.",
+        title: "Changelogs should help users",
+        text: "Updates should include user-readable changelogs for meaningful changes. Tiny maintenance-only updates can be brief.",
       },
       {
         id: "D4",
-        title: "Formatted description",
-        text: "Format your description using Markdown. Use headings, lists, code blocks, and screenshots to make the description easy to read and visually appealing.",
-      },
-      {
-        id: "D5",
-        title: "Informative changelog",
-        text: 'Every update must include a changelog with user-readable information about what changed. Do not include trivial entries like "fixed typo" or "updated README" without meaningful context.',
-      },
-      {
-        id: "D6",
-        title: "Open source license required",
-        text: "All plugins must be published under an OSI-approved open source license. A LICENSE file must be present in the root of the repository. Choose your license carefully — it cannot easily be changed after submission.",
+        title: "License required",
+        text: "Include a license file so users know how the plugin may be used, shared, and modified. Open-source licenses are strongly preferred for marketplace trust.",
       },
     ],
   },
@@ -220,37 +117,33 @@ const RULE_CATEGORIES = [
     prefix: "S",
     icon: "lock",
     color: "#ef4444",
-    description: "Plugins must be safe, efficient, and well-behaved.",
+    description:
+      "These are the rules most likely to block approval because they protect servers.",
     rules: [
       {
         id: "S1",
-        title: "Do not block the main thread",
-        text: "Plugins must not block the server's main thread with long-running operations such as network requests, heavy file I/O, or expensive algorithms. Use std::async / thread pools (C++) or asyncio / threading (Python).",
+        title: "Do not freeze the server",
+        text: "Long network calls, heavy file I/O, expensive database work, and large computations should not run on the main server thread.",
       },
       {
         id: "S2",
-        title: "SQL injection prevention",
-        text: "All SQL queries must use parameterized queries or prepared statements. Never interpolate user input directly into SQL strings, even if the input appears to be validated.",
+        title: "Protect user data and credentials",
+        text: "Never log tokens, passwords, API keys, or private user data. Do not commit credentials to source code, and use encrypted connections for sensitive communication.",
       },
       {
         id: "S3",
-        title: "No unbounded memory growth",
-        text: "Plugins must not allocate memory proportional to persistent quantities (e.g., total registered players). Do not load entire player databases into memory. Use pagination and implement proper cleanup/expiration.",
+        title: "Prevent injection vulnerabilities",
+        text: "Use prepared statements or parameterized queries for SQL. Treat player input, config values, and external API responses as untrusted.",
       },
       {
         id: "S4",
-        title: "Use permissions for access control",
-        text: "Do not intercept command events to block players from running commands. Use the permission system instead. Event-based command blocking is vulnerable to alias attacks and formatting exploits.",
+        title: "Clean up resources",
+        text: "Close database connections, cancel scheduled tasks, release file handles, and stop background workers when the plugin is disabled.",
       },
       {
         id: "S5",
-        title: "Secure credential handling",
-        text: "Plugins must never log passwords, tokens, or API keys to console, include credentials in source code, or transmit credentials over unencrypted connections. Sensitive configuration should be loaded from config files excluded from version control.",
-      },
-      {
-        id: "S6",
-        title: "Resource cleanup",
-        text: "Plugins must properly clean up resources on disable: close database connections, cancel scheduled tasks, release file handles, and stop background threads. Failure to clean up can cause memory leaks and server instability.",
+        title: "Use permissions for protected actions",
+        text: "Commands or actions that affect other players, economy, files, worlds, or server state should be protected by clear permissions.",
       },
     ],
   },
@@ -282,10 +175,11 @@ export default function RulesPage() {
         <div className="w-16 h-16 rounded-sm bg-linear-to-br from-purple-500/10 to-cyan-500/10 grid place-items-center mx-auto mb-5 border border-purple-500/15">
           <Shield size={32} className="text-accent" />
         </div>
-        <h1 className="heading-1 mb-3">Plugin Submission Rules</h1>
+        <h1 className="heading-1 mb-3">Plugin Submission Guidelines</h1>
         <p className="text-text-secondary max-w-2xl mx-auto text-[17px] leading-relaxed">
-          All plugins submitted to the EndGit Marketplace must comply with the
-          following rules. Violations may result in rejection during review.
+          EndGit review focuses on safety, transparency, and usefulness. These
+          guidelines are intentionally practical: they explain what reviewers
+          look for, not how to write your plugin.
         </p>
       </div>
 
@@ -381,12 +275,14 @@ export default function RulesPage() {
 
       {/* Footer Note */}
       <div className="mt-12 p-6 bg-error/5 rounded-sm border border-error/15 text-center">
-        <p className="font-semibold text-text-primary mb-2">⚠️ Enforcement</p>
+        <p className="font-semibold text-text-primary mb-2">
+          Review Philosophy
+        </p>
         <p className="text-text-secondary text-sm max-w-xl mx-auto leading-relaxed m-0">
-          Violations of these rules may result in the plugin being rejected
-          during review. Repeated or severe violations may lead to submission
-          privileges being restricted. If you have questions about a specific
-          rule, reach out on our Discord.
+          Most issues can be fixed during review. Rejection is mainly for unsafe
+          behavior, misleading submissions, missing source, or plugins that
+          cannot reasonably be reviewed. If you are unsure about a guideline,
+          ask on Discord before submitting.
         </p>
       </div>
     </div>
