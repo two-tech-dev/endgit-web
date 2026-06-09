@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
@@ -9,7 +9,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NavbarMobile from "@/components/NavbarMobile";
 import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "endgit — ci/cd & plugin marketplace for endstone",
@@ -50,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <meta name="theme-color" content="#38BDF8" />
+      <meta name="theme-color" content="#fdfcfc" />
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -67,7 +71,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={geistMono.className}>
         <script
           dangerouslySetInnerHTML={{
             __html: `
