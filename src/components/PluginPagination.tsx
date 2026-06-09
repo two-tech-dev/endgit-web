@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PluginPaginationProps {
   currentPage: number;
@@ -46,7 +45,7 @@ export default function PluginPagination({
     const base =
       "inline-grid grid-flow-col place-items-center gap-1 px-3 py-2 min-h-[44px] min-w-[44px] rounded-sm text-sm transition-all text-center no-underline";
     if (active) {
-      return `${base} border border-accent bg-accent/10 text-accent font-bold cursor-pointer`;
+      return `${base} border border-border-highlight bg-surface-secondary text-text-primary font-bold cursor-pointer`;
     }
     if (disabled) {
       return `${base} border border-border bg-surface-secondary text-text-muted font-medium cursor-not-allowed opacity-50`;
@@ -61,12 +60,10 @@ export default function PluginPagination({
           onClick={() => goToPage(currentPage - 1)}
           className={getBtnClassName(false, false)}
         >
-          <ChevronLeft size={16} /> Prev
+          ← Prev
         </button>
       ) : (
-        <span className={getBtnClassName(false, true)}>
-          <ChevronLeft size={16} /> Prev
-        </span>
+        <span className={getBtnClassName(false, true)}>← Prev</span>
       )}
 
       {getPageNumbers(currentPage, totalPages).map((p, i) =>
@@ -90,12 +87,10 @@ export default function PluginPagination({
           onClick={() => goToPage(currentPage + 1)}
           className={getBtnClassName(false, false)}
         >
-          Next <ChevronRight size={16} />
+          Next →
         </button>
       ) : (
-        <span className={getBtnClassName(false, true)}>
-          Next <ChevronRight size={16} />
-        </span>
+        <span className={getBtnClassName(false, true)}>Next →</span>
       )}
     </div>
   );

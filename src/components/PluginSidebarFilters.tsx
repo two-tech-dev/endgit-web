@@ -27,11 +27,13 @@ export default function PluginSidebarFilters() {
   ];
 
   return (
-    <aside className="sidebar-filters w-[250px] shrink-0 grid gap-6">
+    <aside className="sidebar-filters grid w-[250px] shrink-0 gap-4">
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">Categories</h3>
+        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
+          Categories
+        </h3>
         <select
-          className="input w-full p-2 rounded-sm border border-border bg-surface-secondary text-text-primary cursor-pointer"
+          className="input w-full cursor-pointer rounded-sm border border-border bg-surface-secondary p-2 text-text-primary"
           value={currentCategory}
           onChange={(e) => updateFilter("category", e.target.value)}
         >
@@ -45,16 +47,18 @@ export default function PluginSidebarFilters() {
       </div>
 
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">Sort By</h3>
-        <ul className="grid gap-2 p-0 m-0">
+        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
+          Sort By
+        </h3>
+        <ul className="m-0 grid gap-2 p-0">
           {sortOptions.map((opt) => (
             <li
               key={opt.value}
               onClick={() => updateFilter("sort", opt.value)}
               className={`cursor-pointer transition-colors ${
                 currentSort === opt.value
-                  ? "text-brand font-semibold"
-                  : "text-text-secondary font-normal hover:text-brand"
+                  ? "font-semibold text-text-primary underline underline-offset-4"
+                  : "font-normal text-text-secondary hover:text-text-primary hover:underline"
               }`}
             >
               {opt.label}
@@ -64,8 +68,10 @@ export default function PluginSidebarFilters() {
       </div>
 
       <div className="card p-4">
-        <h3 className="font-semibold mb-3 text-text-primary">Type</h3>
-        <ul className="grid gap-2 p-0 m-0">
+        <h3 className="mb-3 border-b border-border pb-2 font-semibold text-text-primary">
+          Type
+        </h3>
+        <ul className="m-0 grid gap-2 p-0">
           <li className="grid grid-flow-col auto-cols-max items-center gap-2 text-text-secondary">
             <input
               type="radio"

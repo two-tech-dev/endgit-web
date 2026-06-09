@@ -121,7 +121,7 @@ function PluginRow({
 
       <div className="shrink-0 text-right">
         {metric === "heat" ? (
-          <div className="flex items-center gap-1 text-text-muted font-bold text-sm">
+          <div className="flex items-center gap-1 text-warning font-bold text-sm">
             <Flame size={14} />
             {plugin.heatScore || 0}
           </div>
@@ -177,7 +177,7 @@ function SidebarFeaturedCard({ plugin }: { plugin: Plugin }) {
         </div>
       </div>
       {(plugin.heatScore || 0) > 0 && (
-        <div className="flex items-center gap-0.5 text-text-muted font-bold text-xs shrink-0">
+        <div className="flex items-center gap-0.5 text-warning font-bold text-xs shrink-0">
           <Flame size={12} />
           {plugin.heatScore}
         </div>
@@ -280,7 +280,7 @@ export default function HomeContent({
           {hotPlugins.length > 0 && (
             <section className="mb-10">
               <div className="flex items-center gap-2 mb-4">
-                <Flame size={18} className="text-text-muted" />
+                <Flame size={18} className="text-warning" />
                 <h2 className="text-lg font-bold text-text-primary">
                   Hot Today
                 </h2>
@@ -326,7 +326,7 @@ export default function HomeContent({
           {featuredPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles size={16} className="text-text-muted" />
+                <Sparkles size={16} className="text-warning" />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">
                   Featured
                 </h3>
@@ -342,7 +342,7 @@ export default function HomeContent({
           {topPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <TrendingUp size={16} className="text-text-muted" />
+                <TrendingUp size={16} className="text-success" />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">
                   Top This Week
                 </h3>

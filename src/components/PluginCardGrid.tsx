@@ -24,7 +24,7 @@ interface Plugin {
 
 export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 align-content-start">
+    <div className="grid grid-cols-1 gap-4 align-content-start lg:grid-cols-2 xl:grid-cols-3">
       {plugins.map((plugin, i) => {
         const isFeatured = plugin.isFeatured;
         const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
@@ -36,13 +36,13 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
           <Link
             href={`/plugins/${plugin.slug}`}
             key={plugin.id}
-            className="card p-0 flex flex-col no-underline bg-surface-card overflow-hidden transition-all"
+            className="card flex flex-col overflow-hidden bg-surface-card p-0 no-underline transition-colors"
             style={{
               animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(i * 0.04, 0.3)}s both`,
             }}
           >
-            <div className="plugin-card-inner p-4 flex gap-4 items-center">
-              <div className="w-14 h-14 shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center">
+            <div className="plugin-card-inner flex items-center gap-4 p-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary">
                 <PluginImage
                   iconUrl={plugin.iconUrl}
                   repoUrl={plugin.repoUrl}
@@ -51,7 +51,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h3 className="text-base font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap">
+                <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-text-primary">
                   {plugin.displayName}
                 </h3>
                 <div className="flex items-center gap-2 min-w-0 flex-wrap mt-1">
@@ -75,7 +75,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   {isFeatured && (
                     <span
                       title="Featured plugin"
-                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-xs px-1.5 py-0.5 shrink-0"
+                      className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-success bg-success/10 border border-success/20 rounded-xs px-1.5 py-0.5 shrink-0"
                     >
                       Featured
                     </span>
@@ -95,7 +95,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
                   </span>
                   <div className="flex items-center gap-2">
                     {(plugin.heatScore || 0) > 0 && (
-                      <span className="flex items-center gap-0.5 font-medium text-orange-400">
+                      <span className="flex items-center gap-0.5 font-medium text-warning">
                         <Flame size={12} />
                         {plugin.heatScore}
                       </span>

@@ -48,7 +48,7 @@ export default function PluginSearch() {
         size={18}
       />
       <input
-        className="input pl-10 w-full"
+        className="input w-full pl-10"
         placeholder="Search plugins..."
         value={search}
         onChange={handleChange}
