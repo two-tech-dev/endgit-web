@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  Search,
   Flame,
   Sparkles,
   TrendingUp,
@@ -14,7 +13,6 @@ import {
   Terminal,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { VERIFIED_ORGS } from "@/lib/constants";
 import useSWR from "swr";
@@ -81,7 +79,7 @@ function PluginRow({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-text-primary group-hover:text-brand transition-colors truncate">
+          <span className="font-semibold text-text-primary group-hover:text-text-primary transition-colors truncate">
             {plugin.displayName}
           </span>
           {isVerified && (
@@ -121,7 +119,7 @@ function PluginRow({
 
       <div className="shrink-0 text-right">
         {metric === "heat" ? (
-          <div className="flex items-center gap-1 text-orange-400 font-bold text-sm">
+          <div className="flex items-center gap-1 text-warning font-bold text-sm">
             <Flame size={14} />
             {plugin.heatScore || 0}
           </div>
@@ -153,7 +151,7 @@ function SidebarFeaturedCard({ plugin }: { plugin: Plugin }) {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
-          <span className="font-semibold text-sm text-text-primary group-hover:text-brand transition-colors truncate">
+          <span className="font-semibold text-sm text-text-primary group-hover:text-text-primary transition-colors truncate">
             {plugin.displayName}
           </span>
           {isVerified && (
@@ -177,7 +175,7 @@ function SidebarFeaturedCard({ plugin }: { plugin: Plugin }) {
         </div>
       </div>
       {(plugin.heatScore || 0) > 0 && (
-        <div className="flex items-center gap-0.5 text-orange-400 font-bold text-xs shrink-0">
+        <div className="flex items-center gap-0.5 text-warning font-bold text-xs shrink-0">
           <Flame size={12} />
           {plugin.heatScore}
         </div>
@@ -202,7 +200,7 @@ function SidebarTopItem({ plugin, rank }: { plugin: Plugin; rank: number }) {
           alt={plugin.displayName}
         />
       </div>
-      <span className="flex-1 font-medium text-sm text-text-primary group-hover:text-brand transition-colors truncate">
+      <span className="flex-1 font-medium text-sm text-text-primary group-hover:text-text-primary transition-colors truncate">
         {plugin.displayName}
       </span>
       <span className="text-xs text-text-muted flex items-center gap-0.5 shrink-0">
@@ -219,15 +217,6 @@ export default function HomeContent({
   topPlugins,
   featuredPlugins,
 }: HomeContentProps) {
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      window.location.href = `/plugins?q=${encodeURIComponent(search.trim())}`;
-    }
-  };
-
   return (
     <div className="container py-10 lg:py-14">
       <div className="mb-10 lg:mb-14 max-w-2xl">
@@ -238,41 +227,20 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <form
-          onSubmit={handleSearch}
-          className="flex flex-col sm:flex-row gap-3 max-w-lg"
-        >
-          <div className="flex-1 relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search plugins..."
-              className="w-full pl-9 pr-4 py-2.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-brand transition-colors"
-            />
-          </div>
-          <div className="grid grid-cols-2 sm:flex gap-2 shrink-0">
-            <Link
-              href="/dashboard/dev"
-              className="btn btn-primary text-sm px-4"
-            >
-              Start Publishing
-            </Link>
-            <a
-              href="https://github.com/two-tech-dev/endgit-cli#installation"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary text-sm px-4"
-            >
-              <Terminal size={16} />
-              Install CLI
-            </a>
-          </div>
-        </form>
+        <div className="grid max-w-lg grid-cols-2 gap-2 sm:flex">
+          <Link href="/dashboard/dev" className="btn btn-primary text-sm px-4">
+            Start Publishing
+          </Link>
+          <a
+            href="https://github.com/two-tech-dev/endgit-cli#installation"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary text-sm px-4"
+          >
+            <Terminal size={16} />
+            Install CLI
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10 lg:gap-12">
@@ -280,7 +248,7 @@ export default function HomeContent({
           {hotPlugins.length > 0 && (
             <section className="mb-10">
               <div className="flex items-center gap-2 mb-4">
-                <Flame size={18} className="text-orange-400" />
+                <Flame size={18} className="text-warning" />
                 <h2 className="text-lg font-bold text-text-primary">
                   Hot Today
                 </h2>
@@ -292,7 +260,7 @@ export default function HomeContent({
               </div>
               <Link
                 href="/plugins?sort=hot"
-                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-brand mt-3 transition-colors"
+                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary mt-3 transition-colors"
               >
                 See all hot plugins →
               </Link>
@@ -314,7 +282,7 @@ export default function HomeContent({
               </div>
               <Link
                 href="/plugins?sort=date"
-                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-brand mt-3 transition-colors"
+                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary mt-3 transition-colors"
               >
                 See all new plugins →
               </Link>
@@ -326,7 +294,7 @@ export default function HomeContent({
           {featuredPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles size={16} className="text-yellow-400" />
+                <Sparkles size={16} className="text-warning" />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">
                   Featured
                 </h3>
@@ -342,7 +310,7 @@ export default function HomeContent({
           {topPlugins.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-3">
-                <TrendingUp size={16} className="text-emerald-400" />
+                <TrendingUp size={16} className="text-success" />
                 <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">
                   Top This Week
                 </h3>
@@ -358,7 +326,7 @@ export default function HomeContent({
               </div>
               <Link
                 href="/plugins/top"
-                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-brand mt-3 transition-colors"
+                className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary mt-3 transition-colors"
               >
                 See full leaderboard →
               </Link>
@@ -378,7 +346,7 @@ export default function HomeContent({
             href="https://sparkedhost.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center px-8 py-3 rounded-sm border border-border bg-surface-card hover:border-brand/30 transition-all"
+            className="flex items-center justify-center px-8 py-3 rounded-sm border border-border bg-surface-card hover:border-border-highlight transition-all"
           >
             <img
               src="/partners/SparkedHost.svg"
@@ -388,7 +356,7 @@ export default function HomeContent({
           </a>
           <a
             href="mailto:partners@endgit.dev"
-            className="flex items-center justify-center px-6 py-4 rounded-sm border border-dashed border-border hover:border-brand/30 transition-all text-sm text-text-muted hover:text-brand font-medium"
+            className="flex items-center justify-center px-6 py-4 rounded-sm border border-dashed border-border hover:border-border-highlight transition-all text-sm text-text-muted hover:text-text-primary font-medium"
           >
             Become a Partner →
           </a>
@@ -441,7 +409,7 @@ function YourPlugins() {
                 alt={plugin.displayName}
               />
             </div>
-            <span className="flex-1 font-medium text-sm text-text-primary group-hover:text-brand transition-colors truncate">
+            <span className="flex-1 font-medium text-sm text-text-primary group-hover:text-text-primary transition-colors truncate">
               {plugin.displayName}
             </span>
             <span className="text-xs text-text-muted flex items-center gap-0.5 shrink-0">
@@ -453,7 +421,7 @@ function YourPlugins() {
       </div>
       <Link
         href="/dashboard/dev"
-        className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-brand mt-3 transition-colors"
+        className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary mt-3 transition-colors"
       >
         Manage your plugins →
       </Link>

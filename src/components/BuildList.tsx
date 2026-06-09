@@ -37,7 +37,7 @@ function StatusIcon({ status }: { status: string }) {
       return <XCircle size={16} className="text-error" />;
 
     case "RUNNING":
-      return <Loader2 size={16} className="text-accent animate-spin" />;
+      return <Loader2 size={16} className="animate-spin text-[#7c3aed]" />;
 
     default:
       return <Clock size={16} className="text-text-muted" />;
@@ -51,7 +51,7 @@ function statusBgClass(status: string) {
     case "FAILED":
       return "bg-error";
     case "RUNNING":
-      return "bg-accent";
+      return "bg-[#7c3aed]";
     default:
       return "bg-text-muted";
   }
@@ -64,7 +64,7 @@ function statusTextClass(status: string) {
     case "FAILED":
       return "text-error";
     case "RUNNING":
-      return "text-accent";
+      return "text-[#7c3aed] dark:text-[#c4b5fd]";
     default:
       return "text-text-muted";
   }
@@ -77,7 +77,7 @@ function statusBorderClass(status: string) {
     case "FAILED":
       return "border-l-error";
     case "RUNNING":
-      return "border-l-accent";
+      return "border-l-[#7c3aed]";
     default:
       return "border-l-text-muted";
   }
@@ -120,11 +120,11 @@ export default function BuildsList({
   return (
     <>
       {/* Header */}
-      <div className="mb-8">
-        <div className="grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
+      <div className="mb-5">
+        <div className="mb-2 grid grid-flow-col auto-cols-max items-center gap-3">
           <h1 className="heading-2">Dev Builds</h1>
 
-          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-sm bg-accent/10 text-accent border border-accent/20">
+          <span className="rounded-sm border border-[#7c3aed]/25 bg-[#7c3aed]/10 px-2.5 py-0.5 text-xs font-semibold text-[#7c3aed] dark:text-[#c4b5fd]">
             Today ({today})
           </span>
         </div>
@@ -135,8 +135,8 @@ export default function BuildsList({
       </div>
 
       {/* Search */}
-      <div className="mb-6">
-        <div className="card rounded-sm grid grid-flow-col auto-cols-max items-center gap-3 px-3 lg:px-4 py-0">
+      <div className="mb-4">
+        <div className="card grid grid-flow-col auto-cols-max items-center gap-3 rounded-sm px-3 py-0 transition-colors focus-within:border-[#7c3aed]/45 lg:px-4">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -150,7 +150,7 @@ export default function BuildsList({
       </div>
 
       {/* Warning */}
-      <div className="card rounded-sm p-3 lg:p-4 lg:px-5 mb-8 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
+      <div className="card mb-5 grid grid-flow-col auto-cols-max items-center gap-3 rounded-sm border-l-4 border-warning bg-warning/8 p-3 lg:px-5 lg:py-4">
         <AlertTriangle size={20} className="text-warning shrink-0" />
 
         <div>
@@ -167,22 +167,22 @@ export default function BuildsList({
           <p>No matching builds</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {filteredBuilds.map((build: any, i: number) => (
             <Link
               key={build.id}
               href={`/plugins/${build.plugin?.slug}/builds`}
-              className={`card p-0 flex flex-col no-underline bg-surface-card overflow-hidden transition-all border-l-4 ${statusBorderClass(build.status)}`}
+              className={`card flex flex-col overflow-hidden border-l-4 bg-surface-card p-0 no-underline transition-all hover:border-[#7c3aed]/45 hover:bg-surface-secondary hover:shadow-[0_0_24px_rgba(124,58,237,0.14)] ${statusBorderClass(build.status)}`}
               style={{
                 animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(i * 0.04, 0.3)}s both`,
               }}
             >
-              <div className="p-3 flex gap-3 items-center">
+              <div className="flex items-center gap-3 p-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold m-0 text-brand overflow-hidden text-ellipsis whitespace-nowrap">
+                  <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-bold text-text-primary">
                     {build.plugin?.displayName || build.plugin?.name}
                   </h3>
-                  <div className="flex items-center gap-2 text-xs text-text-muted mt-1">
+                  <div className="mt-1 flex items-center gap-2 text-xs text-text-muted">
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                       {build.plugin?.author?.username || "unknown"}
                     </span>

@@ -1,13 +1,7 @@
-import {
-  ArrowLeft,
-  Trophy,
-  Download,
-  BadgeCheck,
-  MessageCircle,
-  Flame,
-} from "lucide-react";
+import { Download, BadgeCheck, Flame } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { fetchApi } from "@/lib/api";
+import { VERIFIED_ORGS } from "@/lib/constants";
 import Link from "next/link";
 
 export const metadata = {
@@ -19,7 +13,7 @@ export default async function TopPluginsPage() {
   let plugins: any[] = [];
   try {
     const { data: responseData } = await fetchApi(
-      "/api/v1/plugins?sort=downloads&order=desc&pageSize=12",
+      "/api/v1/plugins?sort=downloads&order=desc&pageSize=25",
       { revalidate: 300 },
     );
     plugins = responseData?.data?.plugins || [];
@@ -27,189 +21,148 @@ export default async function TopPluginsPage() {
     plugins = [];
   }
 
-  const top3 = [plugins[1], plugins[0], plugins[2]].filter(Boolean); // Order: 2nd, 1st, 3rd for podium
-  const rest = plugins.slice(3);
+  const topDownloads = plugins[0]?.downloads || 0;
 
-  const getRankStyle = (rank: number) => {
+  const rankAccent = (rank: number) => {
     switch (rank) {
       case 1:
-        return "rank-1-card";
+        return "text-amber-300";
       case 2:
-        return "rank-2-card";
+        return "text-slate-300";
       case 3:
-        return "rank-3-card";
+        return "text-amber-600";
       default:
-        return "border-border bg-surface-card hover:border-brand/30 shadow-lg hover:shadow-brand/10";
+        return "text-text-muted";
     }
-  };
-
-  const getRankBadge = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return (
-          <span className="flex items-center gap-2 text-yellow-500 font-black bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-sm text-xl lg:text-2xl shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-            <Trophy size={20} className="mb-0.5" /> #1
-          </span>
-        );
-      case 2:
-        return (
-          <span className="flex items-center gap-1.5 text-slate-300 font-black bg-slate-300/10 border border-slate-300/20 px-3 py-1.5 rounded-sm text-lg lg:text-xl shadow-[0_0_15px_rgba(203,213,225,0.1)]">
-            #2
-          </span>
-        );
-      case 3:
-        return (
-          <span className="flex items-center gap-1.5 text-amber-600 font-black bg-amber-700/10 border border-amber-700/20 px-3 py-1.5 rounded-sm text-lg lg:text-xl shadow-[0_0_15px_rgba(180,83,9,0.1)]">
-            #3
-          </span>
-        );
-      default:
-        return (
-          <span className="text-text-muted font-black text-lg lg:text-xl px-2">
-            #{rank}
-          </span>
-        );
-    }
-  };
-
-  const renderCard = (plugin: any, rank: number, isPodium: boolean = false) => {
-    const repoOwner = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
-    const isVerified = repoOwner
-      ? ["EndstoneMC", "two-tech-dev"].includes(repoOwner)
-      : false;
-
-    // Adjust sizes for podium
-    let padding = "p-5";
-    let iconSize = "w-14 h-14";
-    let titleSize = "text-base";
-    let heightClass = "h-full";
-
-    if (isPodium) {
-      if (rank === 1) {
-        padding = "p-8 lg:p-10";
-        iconSize = "w-24 h-24";
-        titleSize = "text-2xl lg:text-3xl";
-        heightClass = "h-full lg:min-h-[380px]";
-      } else {
-        padding = "p-6 lg:p-8";
-        iconSize = "w-16 h-16";
-        titleSize = "text-lg lg:text-xl";
-        heightClass = "h-full lg:min-h-[320px]";
-      }
-    }
-
-    return (
-      <Link
-        href={`/plugins/${plugin.slug}`}
-        key={plugin.id}
-        className={`group relative flex flex-col no-underline overflow-hidden rounded-sm border transition-all duration-500 hover:-translate-y-2 ${getRankStyle(
-          rank,
-        )} ${heightClass}`}
-      >
-        <div className={`relative z-10 flex flex-col h-full ${padding}`}>
-          <div className="flex justify-between items-start mb-6">
-            <div
-              className={`${iconSize} shrink-0 rounded-sm overflow-hidden bg-surface-secondary border border-border flex items-center justify-center group-hover:border-brand/50 transition-colors shadow-inner`}
-            >
-              <PluginImage
-                iconUrl={plugin.iconUrl}
-                repoUrl={plugin.repoUrl}
-                alt={`${plugin.displayName} icon`}
-              />
-            </div>
-
-            {/* Minimal Stat Badge */}
-            <div className="flex flex-col items-end gap-1.5 backdrop-blur-sm bg-surface-secondary/50 p-2 rounded-sm border border-border">
-              <span className="flex items-center gap-1.5 font-bold text-text-primary text-sm tracking-wide">
-                <Download size={14} className="text-brand" />
-                {plugin.downloads?.toLocaleString() ?? 0}
-              </span>
-              {(plugin.heatScore || 0) > 0 && (
-                <span className="text-orange-400 text-xs flex items-center gap-1 font-semibold">
-                  <Flame size={12} />
-                  <span>{plugin.heatScore}</span>
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="flex-1 flex flex-col justify-end mt-6 pr-16 lg:pr-20">
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-text-muted">
-                {repoOwner ||
-                  plugin.author?.displayName ||
-                  plugin.author?.username ||
-                  "Community"}
-              </span>
-              {isVerified && (
-                <span className="text-brand shrink-0">
-                  <BadgeCheck size={12} />
-                </span>
-              )}
-            </div>
-            <h3
-              className={`${titleSize} font-extrabold m-0 text-text-primary group-hover:text-brand transition-colors tracking-tight line-clamp-1`}
-            >
-              {plugin.displayName}
-            </h3>
-
-            <div className="mt-4 flex items-center">
-              <span className="font-mono bg-surface-secondary border border-border px-2 py-1 rounded-xs text-xs text-text-secondary">
-                v{plugin.latestVersion || "1.0.0"}
-              </span>
-            </div>
-          </div>
-
-          {/* Enlarged Bottom-Right Rank Badge */}
-          <div className="absolute bottom-5 right-5 lg:bottom-8 lg:right-8 shrink-0">
-            {getRankBadge(rank)}
-          </div>
-        </div>
-      </Link>
-    );
   };
 
   return (
-    <div className="container py-10 lg:py-16 relative">
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-yellow-500/5 blur-[120px] rounded-sm pointer-events-none z-0" />
-
-      <div className="mb-16 relative z-10 text-center flex flex-col items-center">
+    <div className="container py-6 lg:py-10">
+      <div className="mb-6 flex flex-col gap-2 border-b border-border pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="mb-1 font-mono text-xs uppercase tracking-wider text-text-muted">
+            Leaderboard
+          </p>
+          <h1 className="heading-2 m-0">Top Plugins</h1>
+          <p className="mt-1 text-sm text-text-muted">
+            Ranked by total downloads across the registry.
+          </p>
+        </div>
         <Link
           href="/plugins"
-          className="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors mb-6 text-sm no-underline font-semibold uppercase tracking-widest"
+          className="text-sm text-text-muted hover:text-text-primary hover:underline"
         >
-          <ArrowLeft size={16} /> Registry
+          ← Back to registry
         </Link>
-        <Trophy
-          size={48}
-          className="text-yellow-500 mb-6 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)]"
-        />
-        <h1 className="heading-1 m-0 mb-4">Top Plugins</h1>
-        <p className="text-text-secondary text-lg max-w-lg font-medium">
-          The most downloaded Endstone plugins of all time.
-        </p>
       </div>
 
-      {/* The Podium (Top 3) */}
-      {top3.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-end mb-12 relative z-10 lg:px-12">
-          <div className="order-2 lg:order-1">
-            {top3[0] && renderCard(top3[0], 2, true)}
-          </div>
-          <div className="order-1 lg:order-2 z-10 -translate-y-4 lg:-translate-y-8">
-            {top3[1] && renderCard(top3[1], 1, true)}
-          </div>
-          <div className="order-3 lg:order-3">
-            {top3[2] && renderCard(top3[2], 3, true)}
-          </div>
+      {plugins.length === 0 ? (
+        <div className="card grid place-items-center p-12 text-center text-sm text-text-muted">
+          No plugins available yet.
         </div>
-      )}
+      ) : (
+        <div className="overflow-hidden rounded-sm border border-border bg-surface-card">
+          {/* Header row (desktop) */}
+          <div className="hidden grid-cols-[3rem_minmax(0,1fr)_8rem_6rem_5rem] items-center gap-4 border-b border-border bg-surface-secondary px-4 py-2.5 font-mono text-[11px] font-bold uppercase tracking-wider text-text-muted lg:grid">
+            <span className="text-center">#</span>
+            <span>Plugin</span>
+            <span className="text-right">Downloads</span>
+            <span className="text-right">Heat</span>
+            <span className="text-right">Version</span>
+          </div>
 
-      {/* Perfect Grid (Ranks 4-12) */}
-      {rest.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-          {rest.map((plugin, index) => renderCard(plugin, index + 4))}
+          {plugins.map((plugin, index) => {
+            const rank = index + 1;
+            const repoOwner =
+              plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
+            const isVerified = repoOwner
+              ? VERIFIED_ORGS.includes(repoOwner)
+              : false;
+            const author =
+              repoOwner ||
+              plugin.author?.displayName ||
+              plugin.author?.username ||
+              "Community";
+            const share = topDownloads
+              ? Math.max(
+                  4,
+                  Math.round(((plugin.downloads || 0) / topDownloads) * 100),
+                )
+              : 0;
+
+            return (
+              <Link
+                key={plugin.id}
+                href={`/plugins/${plugin.slug}`}
+                className="group grid grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-3 border-b border-border px-3 py-3 no-underline transition-colors last:border-b-0 hover:bg-surface-secondary lg:grid-cols-[3rem_minmax(0,1fr)_8rem_6rem_5rem] lg:gap-4 lg:px-4"
+              >
+                {/* Rank */}
+                <span
+                  className={`text-center font-mono text-base font-bold ${rankAccent(rank)}`}
+                >
+                  {String(rank).padStart(2, "0")}
+                </span>
+
+                {/* Plugin identity */}
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary">
+                    <PluginImage
+                      iconUrl={plugin.iconUrl}
+                      repoUrl={plugin.repoUrl}
+                      alt={`${plugin.displayName} icon`}
+                    />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="truncate font-bold text-text-primary group-hover:text-[#c4b5fd]">
+                        {plugin.displayName}
+                      </span>
+                      {isVerified && (
+                        <BadgeCheck size={13} className="shrink-0 text-brand" />
+                      )}
+                    </div>
+                    <div className="mt-0.5 flex items-center gap-2 text-xs text-text-muted">
+                      <span className="truncate">{author}</span>
+                      {/* mobile-only stats */}
+                      <span className="flex items-center gap-1 lg:hidden">
+                        <Download size={11} />
+                        {plugin.downloads?.toLocaleString() ?? 0}
+                      </span>
+                    </div>
+                    {/* progress bar */}
+                    <div className="mt-1.5 hidden h-1 w-full overflow-hidden rounded-full bg-surface-secondary lg:block">
+                      <div
+                        className="h-full rounded-full bg-[#7c3aed]/70"
+                        style={{ width: `${share}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Downloads (desktop) */}
+                <span className="hidden text-right font-mono text-sm font-semibold text-text-primary lg:block">
+                  {plugin.downloads?.toLocaleString() ?? 0}
+                </span>
+
+                {/* Heat (desktop) */}
+                <span className="hidden items-center justify-end gap-1 text-right font-mono text-sm text-warning lg:flex">
+                  {(plugin.heatScore || 0) > 0 ? (
+                    <>
+                      <Flame size={12} />
+                      {plugin.heatScore}
+                    </>
+                  ) : (
+                    <span className="text-text-muted">—</span>
+                  )}
+                </span>
+
+                {/* Version (desktop) + mobile compact column */}
+                <span className="text-right font-mono text-xs text-text-muted">
+                  v{plugin.latestVersion || "1.0.0"}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
