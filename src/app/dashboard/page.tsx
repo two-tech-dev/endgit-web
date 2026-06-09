@@ -39,7 +39,7 @@ export default async function DashboardPage() {
   if (githubTokenExpired) {
     return (
       <div className="container py-12 min-h-[60vh] grid place-items-center">
-        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
+        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight ">
           <div className="w-20 h-20 bg-warning/10 rounded-sm grid place-items-center mx-auto mb-6">
             <AlertCircle size={40} className="text-warning" />
           </div>
@@ -63,7 +63,7 @@ export default async function DashboardPage() {
   if (!hasAppInstalled) {
     return (
       <div className="container py-12 min-h-[60vh] grid place-items-center">
-        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight shadow-lg">
+        <div className="card max-w-[600px] p-6 lg:p-10 text-center border border-border-highlight ">
           <div className="w-20 h-20 bg-[#7c3aed]/10 rounded-sm grid place-items-center mx-auto mb-6">
             <PackagePlus size={40} className="text-[#7c3aed]" />
           </div>
@@ -98,8 +98,8 @@ export default async function DashboardPage() {
   const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
-    <div className="container py-6 lg:py-8">
-      <div className="flex flex-col sm:flex-row sm:items-end mb-6 lg:mb-8 gap-4">
+    <div className="container py-4 lg:py-6">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end">
         <div>
           <h1 className="heading-2">Developer Dashboard</h1>
           <p className="text-text-muted">
@@ -118,8 +118,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-5 lg:gap-6 mb-10 lg:mb-12">
-        <div className="card p-4 lg:p-6 flex items-center gap-4">
+      <div className="mb-8 grid grid-cols-[repeat(auto-fit,minmax(min(200px,100%),1fr))] gap-4">
+        <div className="card flex items-center gap-4 p-4 transition-colors hover:border-[#7c3aed]/35 hover:bg-surface-secondary">
           <div className="bg-[#7c3aed]/10 p-3 rounded-sm text-[#7c3aed] shrink-0">
             <PackagePlus size={24} />
           </div>
@@ -131,8 +131,8 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 flex items-center gap-4">
-          <div className="bg-cyan-500/10 p-3 rounded-sm text-cyan-500 shrink-0">
+        <div className="card flex items-center gap-4 p-4 transition-colors hover:border-[#7c3aed]/35 hover:bg-surface-secondary">
+          <div className="shrink-0 rounded-sm bg-[#7c3aed]/10 p-3 text-[#7c3aed] dark:text-[#c4b5fd]">
             <Activity size={24} />
           </div>
           <div className="min-w-0">
@@ -143,7 +143,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="card p-4 lg:p-6 flex items-center gap-4">
+        <div className="card flex items-center gap-4 p-4 transition-colors hover:border-[#7c3aed]/35 hover:bg-surface-secondary">
           <div className="bg-warning/10 p-3 rounded-sm text-warning shrink-0">
             <AlertCircle size={24} />
           </div>
@@ -157,10 +157,13 @@ export default async function DashboardPage() {
       </div>
 
       {/* Plugins List */}
-      <h2 className="heading-3 mb-5 lg:mb-6">My Plugins</h2>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-5 lg:gap-6">
+      <h2 className="mb-4 text-base font-bold text-text-primary">My Plugins</h2>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(280px,100%),1fr))] gap-4">
         {myPlugins.map((plugin) => (
-          <div key={plugin.id} className="card grid overflow-hidden">
+          <div
+            key={plugin.id}
+            className="card grid overflow-hidden transition-all hover:border-[#7c3aed]/40 hover:bg-surface-secondary hover:shadow-[0_0_24px_rgba(124,58,237,0.12)]"
+          >
             {/* Status Bar */}
             <div
               className={`h-1 w-full ${
@@ -168,7 +171,7 @@ export default async function DashboardPage() {
               }`}
             />
 
-            <div className="p-4 lg:p-5 flex flex-col gap-4">
+            <div className="flex flex-col gap-4 p-4">
               <div className="grid grid-cols-[1fr_auto] items-start">
                 <div className="flex gap-3 items-center min-w-0">
                   <div className="w-12 h-12 rounded-sm bg-surface-secondary grid place-items-center border border-border shrink-0 overflow-hidden">
@@ -181,7 +184,7 @@ export default async function DashboardPage() {
                   <div className="min-w-0">
                     <Link
                       href={`/plugins/${plugin.slug}`}
-                      className="heading-3 text-xl text-text-primary block mb-1 truncate"
+                      className="mb-1 block truncate text-lg font-bold text-text-primary"
                     >
                       {plugin.displayName}
                     </Link>
@@ -203,7 +206,7 @@ export default async function DashboardPage() {
                     Downloads
                   </div>
                   <div className="flex items-center gap-1 font-medium text-text-primary">
-                    <Activity size={14} className="text-accent shrink-0" />{" "}
+                    <Activity size={14} className="shrink-0 text-[#7c3aed]" />{" "}
                     <span className="truncate">
                       {plugin.downloads?.toLocaleString() ?? 0}
                     </span>
@@ -235,7 +238,7 @@ export default async function DashboardPage() {
 
               <div className="mt-auto">
                 {plugin.status === "PENDING_REVIEW" ? (
-                  <div className="w-full bg-warning text-black font-semibold p-2 rounded-sm text-center">
+                  <div className="w-full rounded-sm border border-warning/25 bg-warning/15 p-2 text-center font-semibold text-warning">
                     Submitted
                   </div>
                 ) : (
