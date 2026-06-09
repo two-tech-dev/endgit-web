@@ -1020,3 +1020,110 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Plugin README markdown overrides */
+.plugin-readme {
+  color: #d1d5db;
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.plugin-readme h1,
+.plugin-readme h2,
+.plugin-readme h3,
+.plugin-readme h4 {
+  color: #f9fafb;
+  letter-spacing: 0;
+}
+
+.plugin-readme p {
+  color: #d1d5db;
+  margin-bottom: 1.25rem;
+}
+
+.plugin-readme ul,
+.plugin-readme ol {
+  color: #d1d5db;
+  margin-bottom: 1.5rem;
+  padding-left: 1.35rem;
+}
+
+.plugin-readme li {
+  margin-top: 0.35rem;
+  padding-left: 0.15rem;
+}
+
+.plugin-readme li::marker {
+  color: #a78bfa;
+}
+
+.plugin-readme .table-wrapper,
+.plugin-readme > table,
+.plugin-readme table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0 !important;
+  border-radius: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.plugin-readme .table-wrapper {
+  display: block;
+  margin: 1.5rem 0 2rem;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.025);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.plugin-readme th,
+.plugin-readme td {
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09) !important;
+  padding: 0.85rem 1rem !important;
+  text-align: left;
+  vertical-align: top;
+  color: #d1d5db;
+  background: transparent !important;
+}
+
+.plugin-readme th {
+  background: rgba(255, 255, 255, 0.055) !important;
+  color: #f9fafb !important;
+  font-size: 0.72rem !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.plugin-readme tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.plugin-readme tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.018) !important;
+}
+
+.plugin-readme code {
+  border: 1px solid rgba(124, 58, 237, 0.28) !important;
+  border-radius: 4px !important;
+  background: rgba(124, 58, 237, 0.16) !important;
+  color: #c4b5fd !important;
+  padding: 0.18rem 0.42rem !important;
+  font-size: 0.86em !important;
+  font-family: var(--font-mono) !important;
+}
+
+.plugin-readme pre code,
+.plugin-readme div > code {
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+}

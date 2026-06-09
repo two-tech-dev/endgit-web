@@ -89,10 +89,10 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
     <div className="card p-4 lg:p-6">
       <div className="chart-header grid grid-cols-[1fr_auto] items-center mb-5 gap-2">
         <h3 className="text-base font-semibold grid grid-flow-col auto-cols-max items-center gap-2 text-text-primary">
-          <BarChart3 size={18} className="text-accent" /> Downloads (Last 30
+          <BarChart3 size={18} className="text-[#7c3aed]" /> Downloads (Last 30
           Days)
         </h3>
-        <span className="text-xl font-bold text-accent">
+        <span className="text-xl font-bold text-[#7c3aed] dark:text-[#c4b5fd]">
           {totalDownloads.toLocaleString()}
         </span>
       </div>
@@ -105,19 +105,19 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
           >
             <defs>
               <linearGradient id="colorDownloads" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.28} />
+                <stop offset="95%" stopColor="#7c3aed" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="#e2e8f0"
+              stroke="rgba(154,152,152,0.22)"
               vertical={false}
             />
             <XAxis
               dataKey="date"
               tick={{ fontSize: 11, fill: "#94a3b8" }}
-              axisLine={{ stroke: "#e2e8f0" }}
+              axisLine={{ stroke: "rgba(154,152,152,0.22)" }}
               tickLine={false}
               interval="preserveStartEnd"
             />
@@ -141,13 +141,13 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
             <Area
               type="monotone"
               dataKey="downloads"
-              stroke="#0ea5e9"
+              stroke="#7c3aed"
               strokeWidth={2}
               fill="url(#colorDownloads)"
               dot={false}
               activeDot={{
                 r: 4,
-                fill: "#0ea5e9",
+                fill: "#7c3aed",
                 stroke: "white",
                 strokeWidth: 2,
               }}

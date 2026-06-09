@@ -166,7 +166,7 @@ export default async function PluginDetailPage({
       case "CONTRIBUTOR":
         return "bg-accent/10 text-accent border-accent/20";
       case "TRANSLATOR":
-        return "bg-purple-500/10 text-accent border-purple-500/20";
+        return "bg-[#7c3aed]/10 text-[#7c3aed] dark:text-[#c4b5fd] border-[#7c3aed]/25";
       case "REQUESTER":
         return "bg-warning/10 text-warning border-warning/20";
       default:
@@ -181,9 +181,9 @@ export default async function PluginDetailPage({
     plugin.description;
 
   return (
-    <div className="container py-6! lg:py-8!">
+    <div className="container py-4! lg:py-6!">
       {/* Header Section */}
-      <div className="card p-4 lg:p-6 mb-6">
+      <div className="card mb-5 overflow-visible border-border-highlight p-4 transition-colors lg:p-5">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-start gap-4 lg:flex-nowrap">
           <div className="plugin-header-inner grid grid-cols-[auto_1fr] gap-4 min-w-0 flex-1">
             <div className="w-[72px] h-[72px] rounded-sm bg-surface-secondary grid place-items-center border border-border shrink-0 overflow-hidden">
@@ -248,7 +248,7 @@ export default async function PluginDetailPage({
                 {isAuthor && (
                   <Link
                     href={`/plugins/${plugin.slug}/edit`}
-                    className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3 py-1 rounded-sm text-[13px] font-medium no-underline bg-purple-500/10 text-accent border border-purple-500/20 hover:bg-purple-500/20 transition-all duration-200"
+                    className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 rounded-sm border border-[#7c3aed]/25 bg-[#7c3aed]/10 px-3 py-1 text-[13px] font-medium text-[#7c3aed] no-underline transition-all duration-200 hover:bg-[#7c3aed]/20 dark:text-[#c4b5fd]"
                   >
                     <Pencil size={14} /> Edit
                   </Link>
@@ -265,7 +265,7 @@ export default async function PluginDetailPage({
                       <>
                         <Link
                           href={`/plugins/by/${repoOwner}`}
-                          className="text-accent no-underline hover:underline"
+                          className="text-brand no-underline hover:underline"
                         >
                           {repoOwner}
                         </Link>
@@ -291,7 +291,7 @@ export default async function PluginDetailPage({
                     <>
                       <Link
                         href={`/plugins/by/${plugin.author.username}`}
-                        className="text-accent no-underline hover:underline"
+                        className="text-brand no-underline hover:underline"
                       >
                         {plugin.author.displayName || plugin.author.username}
                       </Link>
@@ -355,7 +355,8 @@ export default async function PluginDetailPage({
           {/* Quick Install */}
           <div className="card p-4 lg:p-5">
             <h3 className="font-semibold mb-3 grid grid-flow-col auto-cols-max items-center gap-2">
-              <Terminal size={18} className="text-accent" /> Quick Install (CLI)
+              <Terminal size={18} className="text-[#7c3aed]" /> Quick Install
+              (CLI)
             </h3>
             <CopyCommand command={`endgit install ${plugin.slug}`} />
           </div>
@@ -373,7 +374,7 @@ export default async function PluginDetailPage({
           )}
 
           {/* About — Plugin Description Panel */}
-          <div className="plugin-description-panel border border-border rounded-sm bg-surface-secondary overflow-hidden min-w-0 max-w-full plugin-description-container">
+          <div className="plugin-description-panel min-w-0 max-w-full overflow-hidden rounded-sm border border-border bg-surface-secondary plugin-description-container">
             {/* Header */}
             <div className="plugin-description-header grid grid-cols-[1fr_auto] items-center px-4 py-[10px]">
               <div className="grid grid-flow-col auto-cols-max items-center gap-2">
@@ -416,7 +417,7 @@ export default async function PluginDetailPage({
         </div>
 
         {/* Right Sidebar */}
-        <aside className="plugin-sidebar w-full xl:max-w-[280px] min-w-0 grid gap-6">
+        <aside className="plugin-sidebar grid w-full min-w-0 gap-5 xl:max-w-[280px]">
           {/* VirusTotal Scan */}
           <VirusTotalCard version={activeVersion} />
 
@@ -449,7 +450,7 @@ export default async function PluginDetailPage({
                           href={`https://github.com/${producer.githubUser}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm font-medium text-text-primary no-underline hover:text-accent"
+                          className="text-sm font-medium text-text-primary no-underline hover:text-brand"
                         >
                           @{producer.githubUser}
                         </a>
@@ -496,7 +497,7 @@ export default async function PluginDetailPage({
                   <span className="text-text-muted">Repository</span>
                   <a
                     href={plugin.repoUrl}
-                    className="text-accent grid grid-flow-col auto-cols-max items-center gap-1 font-medium hover:underline"
+                    className="grid grid-flow-col auto-cols-max items-center gap-1 font-medium text-brand hover:underline"
                   >
                     <GitBranch size={14} /> GitHub
                   </a>
