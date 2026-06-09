@@ -1,14 +1,6 @@
 "use client";
 
 import { useSession, signIn, signOut } from "next-auth/react";
-import {
-  LogIn,
-  ChevronDown,
-  LogOut,
-  LayoutDashboard,
-  Package,
-  Shield,
-} from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -39,7 +31,7 @@ export default function NavbarClient({
         onClick={() => signIn("github")}
         className={`btn btn-primary text-sm py-2 px-4 ${mobile ? "w-full" : ""}`}
       >
-        <LogIn size={16} /> Sign In
+        [+] Sign In
       </button>
     );
   }
@@ -59,7 +51,7 @@ export default function NavbarClient({
     <div
       className={`${
         mobile ? "w-8 h-8" : "w-7 h-7"
-      } rounded-full bg-linear-to-br from-brand to-brand-dark flex items-center justify-center text-white text-xs font-bold shrink-0`}
+      } rounded-full border border-border bg-surface-secondary flex items-center justify-center text-text-primary text-xs font-bold shrink-0`}
     >
       {initials}
     </div>
@@ -77,7 +69,7 @@ export default function NavbarClient({
           mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
         }`}
       >
-        <LayoutDashboard size={16} /> Dev Dashboard
+        <span>[+]</span> Dev Dashboard
       </Link>
       <Link
         href="/dashboard"
@@ -89,7 +81,7 @@ export default function NavbarClient({
           mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
         }`}
       >
-        <Package size={16} /> My Plugins
+        <span>[+]</span> My Plugins
       </Link>
       {((session?.user as any)?.trustLevel === "ADMIN" ||
         (session?.user as any)?.trustLevel === "TRUSTED") && (
@@ -99,11 +91,11 @@ export default function NavbarClient({
             setDropdownOpen(false);
             onNavigate?.();
           }}
-          className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-[#8b5cf6] hover:bg-[#8b5cf6]/5 transition-colors ${
+          className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary hover:text-text-primary transition-colors ${
             mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
           }`}
         >
-          <Shield size={16} /> Admin Panel
+          <span>[x]</span> Admin Panel
         </Link>
       )}
     </>
@@ -116,11 +108,11 @@ export default function NavbarClient({
         setDropdownOpen(false);
         onNavigate?.();
       }}
-      className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-error hover:bg-error/5 w-full text-left transition-colors ${
+      className={`grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm text-text-secondary hover:bg-surface-secondary hover:text-text-primary w-full text-left transition-colors ${
         mobile ? "py-2.5 px-3 text-[15px]" : "py-2 px-3 text-sm"
       }`}
     >
-      <LogOut size={16} /> Sign Out
+      <span>[-]</span> Sign Out
     </button>
   );
 
@@ -142,12 +134,9 @@ export default function NavbarClient({
               <div className="text-xs text-text-muted">{user.email}</div>
             )}
           </div>
-          <ChevronDown
-            size={16}
-            className={`text-text-muted transition-transform duration-200 shrink-0 ${
-              dropdownOpen ? "rotate-180" : ""
-            }`}
-          />
+          <span className="text-text-muted shrink-0">
+            {dropdownOpen ? "[-]" : "[+]"}
+          </span>
         </button>
 
         <div
@@ -175,12 +164,7 @@ export default function NavbarClient({
         <span className="font-medium text-sm text-text-primary max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap">
           {user?.name || user?.email}
         </span>
-        <ChevronDown
-          size={14}
-          className={`text-text-muted transition-transform duration-200 ${
-            dropdownOpen ? "rotate-180" : ""
-          }`}
-        />
+        <span className="text-text-muted">{dropdownOpen ? "[-]" : "[+]"}</span>
       </button>
 
       {dropdownOpen && (
@@ -190,7 +174,7 @@ export default function NavbarClient({
             className="fixed inset-0 z-40"
           />
 
-          <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[220px] max-w-[calc(100vw-2rem)] bg-surface-card border border-border rounded-sm shadow-lg overflow-hidden animate-fade-in">
+          <div className="absolute right-0 top-[calc(100%+8px)] z-50 w-[220px] max-w-[calc(100vw-2rem)] bg-surface-card border border-border rounded-sm overflow-hidden animate-fade-in">
             <div className="py-3 px-4 border-b border-border bg-surface-secondary">
               <div className="font-semibold text-sm text-text-primary">
                 {user?.name}
