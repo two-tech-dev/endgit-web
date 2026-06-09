@@ -360,8 +360,8 @@ export default function MarkdownTabs({
   return (
     <div className="markdown-body plugin-readme min-w-0 w-full max-w-full bg-[#111111]/40 text-slate-300">
       {sections.length > 1 && (
-        <div className="border-b border-white/10 bg-transparent px-4 lg:px-6">
-          <div className="flex gap-6 overflow-x-auto [scrollbar-width:thin]">
+        <div className="border-b border-white/10 bg-transparent px-3 sm:px-4 lg:px-6">
+          <div className="flex gap-4 overflow-x-auto [scrollbar-width:thin] sm:gap-6">
             {sections.map((section) => (
               <button
                 key={section.id}
@@ -379,7 +379,7 @@ export default function MarkdownTabs({
           </div>
         </div>
       )}
-      <div className="p-6 lg:p-7">
+      <div className="p-4 sm:p-6 lg:p-7">
         {activeSection && <MarkdownContent content={activeSection.content} />}
       </div>
     </div>

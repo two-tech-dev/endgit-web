@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { VERIFIED_ORGS } from "@/lib/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Plugin {
   id: string;
@@ -127,9 +127,9 @@ function PluginCard({
         <CopyInstallButton slug={plugin.slug} />
         <Link
           href={`/plugins/${plugin.slug}`}
-          className="flex items-center gap-4 no-underline md:contents"
+          className="flex flex-col gap-3 no-underline sm:flex-row sm:items-center md:contents"
         >
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary sm:h-14 sm:w-14">
             <PluginImage
               iconUrl={plugin.iconUrl}
               repoUrl={plugin.repoUrl}
@@ -137,7 +137,7 @@ function PluginCard({
             />
           </div>
 
-          <div className="min-w-0 pr-10">
+          <div className="min-w-0 pr-10 sm:pr-10">
             <div className="flex min-w-0 flex-wrap items-center gap-2">
               <h3 className="m-0 truncate text-lg font-bold leading-tight text-text-primary">
                 {plugin.displayName}
@@ -184,9 +184,9 @@ function PluginCard({
       <CopyInstallButton slug={plugin.slug} />
       <Link
         href={`/plugins/${plugin.slug}`}
-        className="grid grid-cols-[56px_minmax(0,1fr)] gap-4 p-4 no-underline"
+        className="grid grid-cols-[48px_minmax(0,1fr)] gap-3 p-3 no-underline sm:grid-cols-[56px_minmax(0,1fr)] sm:gap-4 sm:p-4"
       >
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary sm:h-14 sm:w-14">
           <PluginImage
             iconUrl={plugin.iconUrl}
             repoUrl={plugin.repoUrl}
@@ -194,8 +194,8 @@ function PluginCard({
           />
         </div>
 
-        <div className="grid min-w-0 content-start pr-7">
-          <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold leading-tight text-text-primary">
+        <div className="grid min-w-0 content-start pr-8 sm:pr-7">
+          <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-bold leading-tight text-text-primary sm:text-lg">
             {plugin.displayName}
           </h3>
           <div className="mt-1 flex min-w-0 flex-wrap items-center gap-1.5">
@@ -235,13 +235,23 @@ function PluginCard({
 export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
 
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 639px)");
+    const syncMobileView = () => {
+      if (media.matches) setView("grid");
+    };
+    syncMobileView();
+    media.addEventListener("change", syncMobileView);
+    return () => media.removeEventListener("change", syncMobileView);
+  }, []);
+
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <div className="mb-3 flex shrink-0 items-center justify-between gap-3">
+      <div className="mb-3 flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="m-0 text-sm text-text-muted">
           {plugins.length} plugin{plugins.length === 1 ? "" : "s"} loaded
         </p>
-        <div className="grid grid-cols-2 overflow-hidden rounded-sm border border-border bg-surface-card">
+        <div className="hidden grid-cols-2 overflow-hidden rounded-sm border border-border bg-surface-card sm:grid">
           <button
             type="button"
             onClick={() => setView("grid")}
@@ -270,8 +280,8 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
       <div
         className={
           view === "grid"
-            ? "grid flex-1 grid-cols-1 content-start items-start gap-4 overflow-y-auto pr-2 [scrollbar-width:thin] lg:grid-cols-2 xl:grid-cols-3"
-            : "grid flex-1 content-start gap-3 overflow-y-auto pr-2 [scrollbar-width:thin]"
+            ? "grid flex-1 grid-cols-1 content-start items-start gap-3 overflow-visible sm:gap-4 lg:grid-cols-2 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-width:thin] xl:grid-cols-3"
+            : "grid flex-1 content-start gap-3 overflow-visible lg:overflow-y-auto lg:pr-2 lg:[scrollbar-width:thin]"
         }
       >
         {plugins.map((plugin, i) => (

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  Search,
   Flame,
   Sparkles,
   TrendingUp,
@@ -14,7 +13,6 @@ import {
   Terminal,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { VERIFIED_ORGS } from "@/lib/constants";
 import useSWR from "swr";
@@ -219,15 +217,6 @@ export default function HomeContent({
   topPlugins,
   featuredPlugins,
 }: HomeContentProps) {
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      window.location.href = `/plugins?q=${encodeURIComponent(search.trim())}`;
-    }
-  };
-
   return (
     <div className="container py-10 lg:py-14">
       <div className="mb-10 lg:mb-14 max-w-2xl">
@@ -238,41 +227,20 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <form
-          onSubmit={handleSearch}
-          className="flex flex-col sm:flex-row gap-3 max-w-lg"
-        >
-          <div className="flex-1 relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
-            />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search plugins..."
-              className="w-full pl-9 pr-4 py-2.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-sm placeholder:text-text-muted focus:outline-none focus:border-text-primary transition-colors"
-            />
-          </div>
-          <div className="grid grid-cols-2 sm:flex gap-2 shrink-0">
-            <Link
-              href="/dashboard/dev"
-              className="btn btn-primary text-sm px-4"
-            >
-              Start Publishing
-            </Link>
-            <a
-              href="https://github.com/two-tech-dev/endgit-cli#installation"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary text-sm px-4"
-            >
-              <Terminal size={16} />
-              Install CLI
-            </a>
-          </div>
-        </form>
+        <div className="grid max-w-lg grid-cols-2 gap-2 sm:flex">
+          <Link href="/dashboard/dev" className="btn btn-primary text-sm px-4">
+            Start Publishing
+          </Link>
+          <a
+            href="https://github.com/two-tech-dev/endgit-cli#installation"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary text-sm px-4"
+          >
+            <Terminal size={16} />
+            Install CLI
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-10 lg:gap-12">

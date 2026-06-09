@@ -64,7 +64,7 @@ export default function PluginSidebarFilters() {
   ];
 
   return (
-    <aside className="sidebar-filters grid w-[250px] shrink-0 gap-4 lg:max-h-full lg:overflow-y-auto lg:pr-1 lg:[scrollbar-width:thin]">
+    <aside className="sidebar-filters grid w-full shrink-0 gap-3 lg:w-[250px] lg:max-h-full lg:overflow-y-auto lg:pr-1 lg:[scrollbar-width:thin]">
       <FilterSection title="Categories">
         <select
           className="input w-full cursor-pointer rounded-sm border border-border bg-surface-secondary p-2 text-text-primary"
@@ -81,7 +81,7 @@ export default function PluginSidebarFilters() {
       </FilterSection>
 
       <FilterSection title="Sort By">
-        <div className="grid gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
           {sortOptions.map((opt) => (
             <button
               type="button"

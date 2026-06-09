@@ -44,8 +44,8 @@ export default async function PluginsPage({
   };
 
   return (
-    <div className="container py-4 lg:py-6">
-      <div className="grid grid-cols-1 gap-4 lg:mb-4 lg:grid-cols-[1fr_auto] lg:items-start lg:justify-between">
+    <div className="container py-4 sm:py-5 lg:py-6">
+      <div className="mb-4 grid grid-cols-1 gap-3 lg:grid-cols-[1fr_auto] lg:items-start lg:justify-between">
         <div>
           <h1 className="heading-2">Releases</h1>
           {pagination.total > 0 && (

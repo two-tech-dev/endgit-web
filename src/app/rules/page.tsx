@@ -183,31 +183,6 @@ export default function RulesPage() {
         </p>
       </div>
 
-      {/* Quick Navigation */}
-      <div className="card p-5 mb-10 grid grid-flow-col auto-cols-max items-center gap-3">
-        <span className="font-semibold text-sm text-text-muted mr-2">
-          Jump to:
-        </span>
-        {RULE_CATEGORIES.map((cat) => (
-          <a
-            key={cat.id}
-            href={`#${cat.id}`}
-            style={{
-              background: `${cat.color}10`,
-              color: cat.color,
-              borderColor: `${cat.color}25`,
-            }}
-            className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 px-3.5 py-1.5 rounded-sm text-xs font-semibold no-underline border transition-all hover:opacity-85"
-          >
-            <CategoryIcon icon={cat.icon} color={cat.color} />
-            {cat.label}
-            <span className="opacity-60 text-[10px] ml-0.5">
-              ({cat.rules.length})
-            </span>
-          </a>
-        ))}
-      </div>
-
       {/* Rule Categories */}
       <div className="grid gap-12">
         {RULE_CATEGORIES.map((cat) => (
