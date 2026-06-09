@@ -1,86 +1,140 @@
+import Image from "next/image";
 import Link from "next/link";
-
-const footerLinks = [
-  { href: "/plugins", label: "Plugins" },
-  { href: "/builds", label: "Builds" },
-  { href: "/faq", label: "FAQ" },
-  { href: "https://discord.gg/9eZhP9y26Q", label: "Discord" },
-  { href: "https://github.com/two-tech-dev/endgit-web", label: "GitHub" },
-];
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-surface py-8 text-sm text-text-secondary lg:mt-32">
-      <div className="container">
-        <div className="grid grid-cols-1 border border-border sm:grid-cols-2 lg:grid-cols-5">
-          {footerLinks.map((link) => {
-            const external = link.href.startsWith("http");
-            const className =
-              "flex min-h-11 items-center justify-center border-b border-border px-4 py-3 text-center hover:bg-surface-secondary hover:text-text-primary hover:underline sm:[&:nth-child(2n-1)]:border-r lg:border-b-0 lg:border-r lg:last:border-r-0";
+    <footer className="border-t border-border py-8 lg:py-12 mt-auto bg-surface-secondary">
+      <div className="container grid grid-cols-[1fr] lg:grid-cols-[280px_1fr] justify-between gap-6 lg:gap-8">
+        <div className="max-w-[280px]">
+          <div className="grid grid-cols-[auto_1fr] items-center gap-2 mb-3">
+            <Image
+              src="/logo.png"
+              alt="EndGit"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
+            <span className="font-bold text-lg text-text-primary">
+              endgit<span className="text-brand">.</span>
+            </span>
+          </div>
+          <p className="text-text-muted text-xs leading-relaxed m-0">
+            The modern CI/CD and plugin marketplace for the Endstone ecosystem.
+          </p>
+        </div>
 
-            if (external) {
-              return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={className}
-                >
-                  {link.label}
-                </a>
-              );
-            }
-
-            return (
-              <Link key={link.href} href={link.href} className={className}>
-                {link.label}
+        <div className="footer-links grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-8 lg:gap-12">
+          <div>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
+              Platform
+            </h4>
+            <div className="grid gap-2">
+              <Link
+                href="/plugins"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Releases
               </Link>
-            );
-          })}
+              <Link
+                href="/builds"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Dev Builds
+              </Link>
+              <Link
+                href="/rules"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Submission Rules
+              </Link>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
+              Community
+            </h4>
+            <div className="grid gap-2">
+              <a
+                href="https://discord.gg/9eZhP9y26Q"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Discord
+              </a>
+              <a
+                href="https://github.com/two-tech-dev/endgit-web"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Source code
+              </a>
+              <a
+                href="https://github.com/apps/endgit-local-dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                GitHub App
+              </a>
+              <Link
+                href="/faq"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                FAQ
+              </Link>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-semibold text-xs text-text-primary uppercase tracking-wider mb-3">
+              Legal
+            </h4>
+            <div className="grid gap-2">
+              <Link
+                href="/terms"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-text-muted text-sm hover:text-text-primary transition-colors no-underline"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div className="mt-6 grid gap-3 text-xs text-text-muted lg:grid-cols-[1fr_auto] lg:items-center">
-          <p className="m-0" suppressHydrationWarning>
-            © {new Date().getFullYear()} EndGit
-            {process.env.VERCEL_GIT_COMMIT_SHA && (
-              <span className="ml-2 opacity-70">
-                <a
-                  href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-inherit hover:underline"
-                >
-                  ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
-                </a>
-              </span>
-            )}
-          </p>
-          <p className="m-0">
-            <Link
-              href="/terms"
-              className="hover:text-text-primary hover:underline"
-            >
-              Terms
-            </Link>
-            <span className="px-2">·</span>
-            <Link
-              href="/privacy"
-              className="hover:text-text-primary hover:underline"
-            >
-              Privacy
-            </Link>
-            <span className="px-2">·</span>
-            <a
-              href="https://2tech.studio"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-text-primary hover:underline"
-            >
-              2Tech Studio
-            </a>
-          </p>
-        </div>
+      <div className="container mt-8 pt-6 border-t border-border grid grid-cols-[1fr_auto] items-center flex-wrap gap-2">
+        <p className="text-text-muted text-xs m-0" suppressHydrationWarning>
+          &copy; {new Date().getFullYear()} EndGit. All rights reserved.
+          {process.env.VERCEL_GIT_COMMIT_SHA && (
+            <span className="ml-2 opacity-70 font-mono text-[11px]">
+              <a
+                href={`https://github.com/two-tech-dev/endgit-web/commit/${process.env.VERCEL_GIT_COMMIT_SHA}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-inherit no-underline"
+              >
+                ({process.env.VERCEL_GIT_COMMIT_SHA.substring(0, 7)})
+              </a>
+            </span>
+          )}
+        </p>
+        <p className="text-text-muted text-xs m-0">
+          Powered by{" "}
+          <a
+            href="https://2tech.studio"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand no-underline font-semibold"
+          >
+            2Tech Studio
+          </a>
+        </p>
       </div>
     </footer>
   );

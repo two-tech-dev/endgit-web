@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import NavbarClient from "./NavbarClient";
 import { useTheme } from "@/components/ThemeToggle";
@@ -84,16 +85,16 @@ export default function NavbarMobile() {
     <div
       ref={dropdownRef}
       style={{ top: dropdownTop }}
-      className={`fixed left-0 right-0 z-49 bg-surface border-b border-border overflow-hidden transition-all duration-250 ease-in-out ${
+      className={`fixed left-0 right-0 z-49 bg-surface/80 backdrop-blur-md border-b border-border shadow-sm rounded-b-sm overflow-hidden transition-all duration-250 ease-in-out ${
         visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
       }`}
     >
       <div className="container grid pt-4 gap-1">
         {[
-          { href: "/plugins", label: "[+] Releases" },
-          { href: "/plugins/top", label: "[+] Top Plugins" },
-          { href: "/builds", label: "[+] Dev Builds" },
-          { href: "/faq", label: "[?] FAQ" },
+          { href: "/plugins", label: "Releases" },
+          { href: "/plugins/top", label: "Top Plugins" },
+          { href: "/builds", label: "Dev Builds" },
+          { href: "/faq", label: "FAQ" },
         ].map((item, i) => (
           <div
             key={item.href}
@@ -135,7 +136,7 @@ export default function NavbarMobile() {
               onClick={toggleTheme}
               className="flex items-center gap-2 py-2.5 text-text-secondary font-medium text-base w-full text-left hover:text-text-primary transition-colors"
             >
-              <span>{theme === "light" ? "[-]" : "[+]"}</span>
+              {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
               {theme === "light" ? "Dark mode" : "Light mode"}
             </button>
           </div>
@@ -158,37 +159,37 @@ export default function NavbarMobile() {
 
   return (
     <div ref={wrapperRef} className="grid items-center">
-      <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-6 xl:gap-8 items-center">
+      <nav className="hidden lg:grid lg:grid-flow-col lg:auto-cols-auto gap-8 xl:gap-12 items-center">
         <Link
           href="/plugins"
-          className="text-text-secondary font-medium hover:text-text-primary hover:underline transition-colors"
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
-          Plugins
+          Releases
         </Link>
         <Link
           href="/plugins/top"
-          className="text-text-secondary font-medium hover:text-text-primary hover:underline transition-colors"
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
-          Top [100]
+          Top Plugins
         </Link>
         <Link
           href="/builds"
-          className="text-text-secondary font-medium hover:text-text-primary hover:underline transition-colors"
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
-          Builds
+          Dev Builds
         </Link>
         <Link
           href="/faq"
-          className="text-text-secondary font-medium hover:text-text-primary hover:underline transition-colors"
+          className="text-text-secondary font-medium hover:text-text-primary transition-colors"
         >
           FAQ
         </Link>
         <button
           onClick={toggleTheme}
-          className="grid items-center justify-center h-9 px-3 rounded-sm border border-border bg-surface text-text-secondary transition-colors hover:border-border-highlight hover:text-text-primary"
+          className="grid items-center justify-center w-8 h-8 rounded-sm bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
           title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
         >
-          {theme === "light" ? "[-]" : "[+]"}
+          {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
         </button>
         <NavbarClient />
       </nav>
@@ -198,7 +199,22 @@ export default function NavbarMobile() {
         onClick={handleToggle}
         aria-label="Toggle menu"
       >
-        <span className="font-mono text-base">{open ? "[-]" : "[+]"}</span>
+        <div className="relative w-6 h-6">
+          <div
+            className={`absolute inset-0 grid items-center justify-center transition-all duration-200 ${
+              open ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+            }`}
+          >
+            <Menu size={24} />
+          </div>
+          <div
+            className={`absolute inset-0 grid items-center justify-center transition-all duration-200 ${
+              open ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
+            }`}
+          >
+            <X size={24} />
+          </div>
+        </div>
       </button>
 
       {mounted && open && createPortal(dropdown, document.body)}

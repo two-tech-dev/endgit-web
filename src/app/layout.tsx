@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Image from "next/image";
 import Link from "next/link";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider";
@@ -99,15 +100,23 @@ export default function RootLayout({
 
 function Navbar() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-surface py-3">
-      <div className="container grid grid-cols-[1fr_auto] items-center gap-4">
+    <header className="sticky top-0 z-50 border-b border-border bg-surface py-2.5 lg:py-3">
+      <div className="container grid grid-cols-[1fr_auto] items-center relative">
         <Link
           href="/"
-          className="font-mono text-base font-bold leading-none tracking-normal text-text-primary no-underline shrink-0"
-          aria-label="EndGit home"
+          className="text-2xl font-bold grid grid-cols-[auto_1fr] items-center gap-3 no-underline shrink-0"
         >
-          <span className="hidden sm:inline">[endgit]</span>
-          <span className="sm:hidden">[eg]</span>
+          <Image
+            src="/logo.png"
+            alt="EndGit Logo"
+            width={42}
+            height={42}
+            className="object-contain"
+            priority
+          />
+          <span className="text-text-primary">
+            endgit<span className="text-brand">.</span>{" "}
+          </span>
         </Link>
         <NavbarMobile />
       </div>
