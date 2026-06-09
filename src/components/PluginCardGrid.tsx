@@ -10,6 +10,7 @@ import {
   Grid2X2,
   List,
   MessageCircle,
+  Sparkles,
 } from "lucide-react";
 import PluginImage from "@/components/PluginImage";
 import { VERIFIED_ORGS } from "@/lib/constants";
@@ -34,15 +35,22 @@ interface Plugin {
 }
 
 function PluginBadge({ kind }: { kind: "pre" | "verified" | "featured" }) {
+  if (kind === "featured") {
+    return (
+      <span className="inline-flex shrink-0 items-center gap-1 rounded-sm border border-amber-400/45 bg-linear-to-r from-amber-400/20 via-success/15 to-emerald-400/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-amber-300 shadow-[0_0_18px_rgba(245,158,11,0.18)]">
+        <Sparkles size={11} className="text-amber-300" />
+        Featured
+      </span>
+    );
+  }
+
   const styles = {
     pre: "border-error/25 bg-error/15 text-error",
     verified: "border-brand/25 bg-brand/15 text-brand",
-    featured: "border-success/25 bg-success/15 text-success",
   };
   const labels = {
     pre: "Pre-release",
     verified: "Verified",
-    featured: "Featured",
   };
 
   return (
@@ -228,10 +236,10 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
 
   return (
-    <div>
-      <div className="mb-4 flex items-center justify-between gap-3">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="mb-3 flex shrink-0 items-center justify-between gap-3">
         <p className="m-0 text-sm text-text-muted">
-          {plugins.length} package{plugins.length === 1 ? "" : "s"} loaded
+          {plugins.length} plugin{plugins.length === 1 ? "" : "s"} loaded
         </p>
         <div className="grid grid-cols-2 overflow-hidden rounded-sm border border-border bg-surface-card">
           <button
@@ -262,8 +270,8 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
       <div
         className={
           view === "grid"
-            ? "grid grid-cols-1 items-start gap-4 align-content-start lg:grid-cols-2 xl:grid-cols-3"
-            : "grid gap-3"
+            ? "grid flex-1 grid-cols-1 content-start items-start gap-4 overflow-y-auto pr-2 [scrollbar-width:thin] lg:grid-cols-2 xl:grid-cols-3"
+            : "grid flex-1 content-start gap-3 overflow-y-auto pr-2 [scrollbar-width:thin]"
         }
       >
         {plugins.map((plugin, i) => (

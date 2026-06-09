@@ -54,7 +54,7 @@ export default function PluginPagination({
   };
 
   return (
-    <div className="grid grid-flow-col auto-cols-max gap-2 mt-6 place-content-center">
+    <div className="sticky bottom-0 z-10 mt-3 grid shrink-0 grid-flow-col auto-cols-max place-content-center gap-2 border-t border-border bg-surface/95 py-3 backdrop-blur-sm">
       {currentPage > 1 ? (
         <button
           onClick={() => goToPage(currentPage - 1)}

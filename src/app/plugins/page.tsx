@@ -44,10 +44,9 @@ export default async function PluginsPage({
   };
 
   return (
-    <div className="container py-8 lg:py-10">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] justify-between items-start mb-6 gap-4">
+    <div className="container py-4 lg:py-6">
+      <div className="grid grid-cols-1 gap-4 lg:mb-4 lg:grid-cols-[1fr_auto] lg:items-start lg:justify-between">
         <div>
-          <p className="mb-2 text-sm font-medium text-brand">Marketplace</p>
           <h1 className="heading-2">Releases</h1>
           {pagination.total > 0 && (
             <p className="text-text-muted text-sm mt-1">
@@ -62,14 +61,14 @@ export default async function PluginsPage({
         </div>
       </div>
 
-      <div className="plugins-layout grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6">
+      <div className="plugins-layout grid grid-cols-1 gap-4 lg:h-[calc(100vh-154px)] lg:min-h-[520px] lg:grid-cols-[auto_1fr] lg:overflow-hidden">
         {/* Sidebar Filters */}
         <MobileFiltersWrapper searchComponent={<PluginSearch />}>
           <PluginSidebarFilters />
         </MobileFiltersWrapper>
 
         {/* Plugin Grid */}
-        <div id="plugin-grid" className="flex-1">
+        <div id="plugin-grid" className="flex min-h-0 flex-1 flex-col">
           <PluginCardGrid plugins={realPlugins} />
 
           {pagination.totalPages > 1 && (
