@@ -168,7 +168,7 @@ function PluginCard({
 
   return (
     <article
-      className="card group relative flex min-h-[112px] flex-col overflow-hidden bg-surface-card p-0 transition-all hover:border-[#7c3aed]/50 hover:bg-surface-secondary hover:shadow-[0_0_30px_rgba(124,58,237,0.18)]"
+      className="card group relative flex flex-col self-start overflow-hidden bg-surface-card p-0 transition-all hover:border-[#7c3aed]/50 hover:bg-surface-secondary hover:shadow-[0_0_30px_rgba(124,58,237,0.18)]"
       style={{
         animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(index * 0.04, 0.3)}s both`,
       }}
@@ -176,7 +176,7 @@ function PluginCard({
       <CopyInstallButton slug={plugin.slug} />
       <Link
         href={`/plugins/${plugin.slug}`}
-        className="grid flex-1 grid-cols-[56px_minmax(0,1fr)] gap-4 p-4 no-underline"
+        className="grid grid-cols-[56px_minmax(0,1fr)] gap-4 p-4 no-underline"
       >
         <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-border bg-surface-secondary">
           <PluginImage
@@ -186,11 +186,11 @@ function PluginCard({
           />
         </div>
 
-        <div className="grid min-w-0 content-start pr-8">
+        <div className="grid min-w-0 content-start pr-7">
           <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-lg font-bold leading-tight text-text-primary">
             {plugin.displayName}
           </h3>
-          <div className="mt-1 flex min-w-0 flex-wrap items-center gap-2">
+          <div className="mt-1 flex min-w-0 flex-wrap items-center gap-1.5">
             {plugin.isPreRelease && <PluginBadge kind="pre" />}
             {isVerified && <PluginBadge kind="verified" />}
             {isFeatured && <PluginBadge kind="featured" />}
@@ -200,25 +200,23 @@ function PluginCard({
               {author}
             </span>
           </div>
-          <div className="mt-2 flex items-center justify-between gap-2 text-xs text-text-muted">
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text-muted">
             <span className="flex items-center gap-1 font-semibold text-text-secondary">
               <Download size={13} /> {plugin.downloads?.toLocaleString() ?? 0}
             </span>
-            <div className="flex items-center gap-2">
-              {(plugin.heatScore || 0) > 0 && (
-                <span className="flex items-center gap-0.5 font-medium text-warning">
-                  <Flame size={12} /> {plugin.heatScore}
-                </span>
-              )}
-              {(plugin.commentCount || 0) > 0 && (
-                <span className="flex items-center gap-0.5 font-medium text-text-muted">
-                  <MessageCircle size={12} /> {plugin.commentCount}
-                </span>
-              )}
-              <code className="font-mono text-text-muted">
-                v{plugin.latestVersion || "1.0.0"}
-              </code>
-            </div>
+            {(plugin.heatScore || 0) > 0 && (
+              <span className="flex items-center gap-0.5 font-medium text-warning">
+                <Flame size={12} /> {plugin.heatScore}
+              </span>
+            )}
+            {(plugin.commentCount || 0) > 0 && (
+              <span className="flex items-center gap-0.5 font-medium text-text-muted">
+                <MessageCircle size={12} /> {plugin.commentCount}
+              </span>
+            )}
+            <code className="font-mono text-text-muted">
+              v{plugin.latestVersion || "1.0.0"}
+            </code>
           </div>
         </div>
       </Link>
@@ -264,7 +262,7 @@ export default function PluginCardGrid({ plugins }: { plugins: Plugin[] }) {
       <div
         className={
           view === "grid"
-            ? "grid grid-cols-1 gap-4 align-content-start lg:grid-cols-2 xl:grid-cols-3"
+            ? "grid grid-cols-1 items-start gap-4 align-content-start lg:grid-cols-2 xl:grid-cols-3"
             : "grid gap-3"
         }
       >
