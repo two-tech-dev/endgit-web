@@ -145,7 +145,7 @@ export default async function PluginDetailPage({
 
   if (!plugin) return notFound();
 
-  const isAuthor = session?.user?.id === plugin.authorId;
+  const isAuthor = !!session?.user?.id && session?.user?.id === plugin.authorId;
   const isAdmin = session?.user?.trustLevel === "ADMIN";
   const canEdit = isAuthor || isAdmin;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
