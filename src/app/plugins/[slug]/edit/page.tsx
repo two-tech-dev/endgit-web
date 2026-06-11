@@ -24,7 +24,9 @@ export default async function EditPluginPage({
 
   if (!plugin) return notFound();
 
-  const isAuthor = !!session?.user?.id && session?.user?.id === plugin.authorId;
+  const sessionUsername = (session?.user as any)?.username;
+  const pluginAuthorUsername = plugin.author?.username;
+  const isAuthor = !!sessionUsername && !!pluginAuthorUsername && sessionUsername === pluginAuthorUsername;
 
   if (!isAuthor) {
     redirect(`/plugins/${plugin.slug}`);
