@@ -253,6 +253,12 @@ export default async function PluginDetailPage({
                     <Pencil size={14} /> Edit
                   </Link>
                 )}
+                {/* Temp Debug Panel */}
+                <span className="hidden" data-debug-auth={JSON.stringify({
+                  sessionUserId: session?.user?.id || null,
+                  pluginAuthorId: plugin.authorId || null,
+                  match: session?.user?.id === plugin.authorId
+                })} />
               </div>
               <p className="text-text-muted mt-1 grid grid-flow-col auto-cols-max items-center gap-1.5">
                 by{" "}
