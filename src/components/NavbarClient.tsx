@@ -112,7 +112,7 @@ export default function NavbarClient({
   const signOutButton = (
     <button
       onClick={() => {
-        signOut();
+        signOut({ callbackUrl: "/" });
         setDropdownOpen(false);
         onNavigate?.();
       }}
