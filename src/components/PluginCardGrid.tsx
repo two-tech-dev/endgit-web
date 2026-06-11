@@ -24,7 +24,6 @@ interface Plugin {
   iconUrl?: string;
   repoUrl?: string;
   latestVersion?: string;
-  stars?: number;
   downloads?: number;
   commentCount?: number;
   heatScore?: number;
