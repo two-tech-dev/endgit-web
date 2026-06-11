@@ -11,8 +11,7 @@ import {
   FlaskConical,
   BadgeCheck,
 } from "lucide-react";
-import dynamic from "next/dynamic";
-import { cache } from "react";
+import nextDynamic from "next/dynamic";
 import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
@@ -27,7 +26,7 @@ import { VERIFIED_ORGS } from "@/lib/constants";
 import CopyCommand from "@/components/CopyCommand";
 
 import VersionDescription from "@/components/VersionDescription";
-const PluginAnalyticsChart = dynamic(
+const PluginAnalyticsChart = nextDynamic(
   () => import("@/components/PluginAnalyticsChart"),
   {
     loading: () => (
@@ -37,7 +36,7 @@ const PluginAnalyticsChart = dynamic(
     ),
   },
 );
-const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
+const DependencyGraph = nextDynamic(() => import("@/components/DependencyGraph"), {
   ssr: false,
   loading: () => (
     <div className="card p-6 h-[200px] grid place-items-center">
@@ -45,7 +44,7 @@ const DependencyGraph = dynamic(() => import("@/components/DependencyGraph"), {
     </div>
   ),
 });
-const PluginDiscussion = dynamic(
+const PluginDiscussion = nextDynamic(
   () => import("@/components/PluginDiscussion"),
   {
     ssr: false,
@@ -56,7 +55,7 @@ const PluginDiscussion = dynamic(
     ),
   },
 );
-const VirusTotalCard = dynamic(() => import("@/components/VirusTotalCard"), {
+const VirusTotalCard = nextDynamic(() => import("@/components/VirusTotalCard"), {
   ssr: false,
   loading: () => (
     <div className="card p-6 h-[200px] grid place-items-center">
@@ -65,12 +64,12 @@ const VirusTotalCard = dynamic(() => import("@/components/VirusTotalCard"), {
   ),
 });
 
-const getPlugin = cache(async function getPlugin(slug: string) {
-  const { data } = await fetchApi(`/api/v1/plugins/${slug}`, {
-    revalidate: 30,
-  });
+export const dynamic = "force-dynamic";
+
+async function getPlugin(slug: string) {
+  const { data } = await fetchApi(`/api/v1/plugins/${slug}`);
   return data?.data || null;
-});
+}
 
 export async function generateMetadata({
   params,
