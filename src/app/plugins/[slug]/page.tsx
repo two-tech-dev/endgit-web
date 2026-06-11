@@ -147,10 +147,12 @@ export default async function PluginDetailPage({
   if (!plugin) return notFound();
 
   const isAuthor = session?.user?.id === plugin.authorId;
+  const isAdmin = session?.user?.trustLevel === "ADMIN";
+  const canEdit = isAuthor || isAdmin;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
 
   const displayVersions =
-    plugin.versions?.filter((v: any) => isAuthor || v.status === "APPROVED") ||
+    plugin.versions?.filter((v: any) => canEdit || v.status === "APPROVED") ||
     [];
 
   // Determine active version from URL param or default to latest
@@ -245,7 +247,7 @@ export default async function PluginDetailPage({
                   </span>
                 )}
 
-                {isAuthor && (
+                {canEdit && (
                   <Link
                     href={`/plugins/${plugin.slug}/edit`}
                     className="inline-grid grid-cols-[auto_1fr] items-center gap-1.5 rounded-sm border border-[#7c3aed]/25 bg-[#7c3aed]/10 px-3 py-1 text-[13px] font-medium text-[#7c3aed] no-underline transition-all duration-200 hover:bg-[#7c3aed]/20 dark:text-[#c4b5fd]"
@@ -524,7 +526,7 @@ export default async function PluginDetailPage({
           </div>
 
           {/* Badges for Markdown */}
-          {isAuthor && (
+          {canEdit && (
             <div className="card p-4 lg:p-5 overflow-hidden">
               <h3 className="font-semibold mb-4 text-sm">Markdown Badges</h3>
               <p className="text-xs text-text-muted mb-3">
