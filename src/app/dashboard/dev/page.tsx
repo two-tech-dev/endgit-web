@@ -89,8 +89,8 @@ export default function DevDashboardPage() {
   useEffect(() => {
     if (!initialFetchDone.current) return;
     if (sessionStatus !== "authenticated") return;
-    fetchRepos(1, selectedOrg, debouncedSearch);
-  }, [debouncedSearch]);
+    fetchRepos(1, selectedOrg, debouncedSearch, filter);
+  }, [debouncedSearch, filter]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -141,6 +141,7 @@ export default function DevDashboardPage() {
     pageNumber: number = 1,
     org: string | null = selectedOrg,
     searchQuery: string = debouncedSearch,
+    currentFilter: string = filter,
   ) => {
     if (pageNumber === 1) setLoading(true);
     else setIsFetchingMore(true);
@@ -179,8 +180,11 @@ export default function DevDashboardPage() {
       const searchParam = searchQuery
         ? `&search=${encodeURIComponent(searchQuery)}`
         : "";
+      const filterParam = currentFilter !== "all"
+        ? `&filter=${encodeURIComponent(currentFilter)}`
+        : "";
       const res = await fetch(
-        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=10${orgParam}${searchParam}`,
+        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=10${orgParam}${searchParam}${filterParam}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         },
@@ -221,7 +225,7 @@ export default function DevDashboardPage() {
   const handleOrgChange = (orgLogin: string | null) => {
     setSelectedOrg(orgLogin);
     setOrgDropdownOpen(false);
-    fetchRepos(1, orgLogin, debouncedSearch);
+    fetchRepos(1, orgLogin, debouncedSearch, filter);
   };
 
   const toggleCI = async (repo: Repo) => {
@@ -285,7 +289,7 @@ export default function DevDashboardPage() {
       }
 
       // Refresh current repos by reloading page 1
-      await fetchRepos(1, selectedOrg, debouncedSearch);
+      await fetchRepos(1, selectedOrg, debouncedSearch, filter);
     } catch (err: any) {
       alert(`An error occurred while toggling CI: ${err.message}`);
     } finally {
@@ -293,13 +297,7 @@ export default function DevDashboardPage() {
     }
   };
 
-  const filteredRepos = repos.filter((r) => {
-    if (filter === "enabled" && !r.ciEnabled) return false;
-    if (filter === "disabled" && r.ciEnabled) return false;
-    if (search && !r.name.toLowerCase().includes(search.toLowerCase()))
-      return false;
-    return true;
-  });
+  const filteredRepos = repos;
 
   const enabledCount = repos.filter((r) => r.ciEnabled).length;
   const disabledCount = repos.filter((r) => !r.ciEnabled).length;
