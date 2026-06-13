@@ -16,7 +16,7 @@ import Image from "next/image";
 import PluginImage from "@/components/PluginImage";
 import VersionSelector from "@/components/VersionSelector";
 import NewVersionForm from "@/components/NewVersionForm";
-import { fetchApi } from "@/lib/api";
+import { fetchGraphQL } from "@/lib/api";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
@@ -66,9 +66,23 @@ const VirusTotalCard = nextDynamic(() => import("@/components/VirusTotalCard"), 
 
 export const dynamic = "force-dynamic";
 
+const GET_PLUGIN = `
+  query GetPlugin($slug: String!) {
+    plugin(slug: $slug) {
+      id name slug displayName description longDescription iconUrl repoUrl license tags keywords pluginType downloads stars commentCount heatScore status qualityBadge isVerified isFeatured createdAt updatedAt 
+      author { id username displayName avatarUrl bio } 
+      versions { id version changelog longDescription fileName fileSize fileHash minApiVersion supportedApis downloads isLatest isPreRelease status statusReason createdAt producers { githubUser role } virustotal { scanId status malicious suspicious undetected total permalink scanDate } }
+    }
+  }
+`;
+
 async function getPlugin(slug: string) {
-  const { data } = await fetchApi(`/api/v1/plugins/${slug}`);
-  return data?.data || null;
+  try {
+    const { data } = await fetchGraphQL(GET_PLUGIN, { slug }, { revalidate: 60, noAuth: true });
+    return data?.plugin || null;
+  } catch (err) {
+    return null;
+  }
 }
 
 export async function generateMetadata({
@@ -258,8 +272,8 @@ export default async function PluginDetailPage({
                 {/* Temp Debug Panel */}
                 <span className="hidden" data-debug-auth={JSON.stringify({
                   sessionUserId: session?.user?.id || null,
-                  pluginAuthorId: plugin.authorId || null,
-                  match: session?.user?.id === plugin.authorId
+                  pluginAuthorId: plugin.author?.id || null,
+                  match: session?.user?.id === plugin.author?.id
                 })} />
               </div>
               <p className="text-text-muted mt-1 grid grid-flow-col auto-cols-max items-center gap-1.5">

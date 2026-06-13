@@ -68,26 +68,36 @@ function HomeSkeleton() {
   );
 }
 
-async function HomeData() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+import { fetchGraphQL } from "@/lib/api";
 
+const GET_HOME_PLUGINS = `
+  query GetHomePlugins {
+    homePlugins {
+      hotPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      newPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      topPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      featuredPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+    }
+  }
+`;
+
+async function HomeData() {
   let hotPlugins: any[] = [];
   let newPlugins: any[] = [];
   let topPlugins: any[] = [];
   let featuredPlugins: any[] = [];
 
   try {
-    const res = await fetch(`${apiUrl}/api/v1/plugins/home`, {
-      next: { revalidate: 60 },
-    });
-    const json = await res.json();
-    if (json.success) {
-      hotPlugins = json.data.hotPlugins || [];
-      newPlugins = json.data.newPlugins || [];
-      topPlugins = json.data.topPlugins || [];
-      featuredPlugins = json.data.featuredPlugins || [];
+    const { data } = await fetchGraphQL(GET_HOME_PLUGINS, {}, { revalidate: 60, noAuth: true });
+    if (data?.homePlugins) {
+      hotPlugins = data.homePlugins.hotPlugins || [];
+      newPlugins = data.homePlugins.newPlugins || [];
+      topPlugins = data.homePlugins.topPlugins || [];
+      featuredPlugins = data.homePlugins.featuredPlugins || [];
     }
-  } catch {}
+  } catch (err) {
+    console.error("Failed to load home plugins:", err);
+  }
 
   return (
     <HomeContent

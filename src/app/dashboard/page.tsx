@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import PluginImage from "@/components/PluginImage";
 
-import { fetchApi } from "@/lib/api";
+import { fetchGraphQL } from "@/lib/api";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -23,15 +23,48 @@ export default async function DashboardPage() {
     redirect("/api/auth/signin");
   }
 
-  // Fetch real data from backend
-  const [pluginsRes, statsRes, statusRes] = await Promise.all([
-    fetchApi("/api/v1/dashboard/plugins"),
-    fetchApi("/api/v1/dashboard/stats"),
-    fetchApi("/api/v1/dashboard/status"),
-  ]);
+  const GET_DASHBOARD_DATA = `
+    query GetDashboardData {
+      dashboardStatus {
+        hasAppInstalled
+        githubTokenExpired
+      }
+      myStats {
+        totalPlugins
+        totalDownloads
+        totalVersions
+        pendingReviews
+      }
+      myPlugins {
+        id
+        slug
+        displayName
+        iconUrl
+        repoUrl
+        pluginType
+        downloads
+        status
+        latestVersion
+      }
+    }
+  `;
 
-  const hasAppInstalled = statusRes.data?.data?.hasAppInstalled || false;
-  const githubTokenExpired = statusRes.data?.data?.githubTokenExpired || false;
+  let hasAppInstalled = false;
+  let githubTokenExpired = false;
+  let stats = { totalPlugins: 0, totalDownloads: 0, totalVersions: 0, pendingReviews: 0 };
+  let myPlugins: any[] = [];
+
+  try {
+    const { data } = await fetchGraphQL(GET_DASHBOARD_DATA, {}, { cache: "no-store" });
+    if (data) {
+      hasAppInstalled = data.dashboardStatus?.hasAppInstalled || false;
+      githubTokenExpired = data.dashboardStatus?.githubTokenExpired || false;
+      stats = data.myStats || stats;
+      myPlugins = data.myPlugins || [];
+    }
+  } catch (err) {
+    console.error("Failed to load dashboard data:", err);
+  }
   const installUrl =
     process.env.NEXT_PUBLIC_GITHUB_APP_INSTALL_URL ||
     "https://github.com/apps/endgit-app/installations/new";
@@ -88,14 +121,7 @@ export default async function DashboardPage() {
     );
   }
 
-  const stats = statsRes.data?.data || {
-    totalPlugins: 0,
-    totalDownloads: 0,
-    totalVersions: 0,
-    pendingReviews: 0,
-  };
 
-  const myPlugins: any[] = pluginsRes.data?.data || [];
 
   return (
     <div className="container py-4 lg:py-6">
