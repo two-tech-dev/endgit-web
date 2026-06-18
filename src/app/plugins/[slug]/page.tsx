@@ -55,14 +55,6 @@ const PluginDiscussion = nextDynamic(
     ),
   },
 );
-const VirusTotalCard = nextDynamic(() => import("@/components/VirusTotalCard"), {
-  ssr: false,
-  loading: () => (
-    <div className="card p-6 h-[200px] grid place-items-center">
-      <p className="text-text-muted text-sm">Loading security scan...</p>
-    </div>
-  ),
-});
 
 export const dynamic = "force-dynamic";
 
@@ -71,7 +63,7 @@ const GET_PLUGIN = `
     plugin(slug: $slug) {
       id name slug displayName description longDescription iconUrl repoUrl license tags keywords pluginType downloads commentCount heatScore status qualityBadge isVerified isFeatured createdAt updatedAt 
       author { id username displayName avatarUrl bio } 
-      versions { id version changelog longDescription fileName fileSize fileHash minApiVersion supportedApis downloads isLatest isPreRelease status statusReason createdAt producers { githubUser role } virustotal { scanId status malicious suspicious undetected total permalink scanDate } }
+      versions { id version changelog longDescription fileName fileSize fileHash minApiVersion supportedApis downloads isLatest isPreRelease status statusReason createdAt producers { githubUser role } }
     }
   }
 `;
@@ -440,8 +432,7 @@ export default async function PluginDetailPage({
 
         {/* Right Sidebar */}
         <aside className="plugin-sidebar grid w-full min-w-0 gap-5 xl:max-w-[280px]">
-          {/* VirusTotal Scan */}
-          <VirusTotalCard version={activeVersion} />
+
 
           {/* Producers — based on active version */}
           {activeVersion &&
