@@ -73,10 +73,10 @@ import { fetchGraphQL } from "@/lib/api";
 const GET_HOME_PLUGINS = `
   query GetHomePlugins {
     homePlugins {
-      hotPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
-      newPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
-      topPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
-      featuredPlugins { id name slug displayName description iconUrl pluginType stars downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      hotPlugins { id name slug displayName description iconUrl pluginType downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      newPlugins { id name slug displayName description iconUrl pluginType downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      topPlugins { id name slug displayName description iconUrl pluginType downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
+      featuredPlugins { id name slug displayName description iconUrl pluginType downloads commentCount isFeatured isPreRelease latestVersion author { username displayName avatarUrl } }
     }
   }
 `;
