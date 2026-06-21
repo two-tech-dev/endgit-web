@@ -100,13 +100,14 @@ export default function LiveBuildLog({
     return (
       <div
         key={index}
-        className="grid grid-flow-col auto-cols-max gap-4 min-h-6"
+        className="flex items-start gap-3 sm:gap-4 min-h-6 w-full"
       >
-        <span className="text-text-muted min-w-8 text-right select-none text-xs pt-0.5 font-mono shrink-0">
+        <span className="text-text-muted min-w-[2rem] text-right select-none text-xs pt-0.5 font-mono shrink-0">
           {index + 1 + lineOffset}
         </span>
         <span
-          className={`whitespace-pre-wrap wrap-break-word flex-1 font-mono ${colorClass} ${fontWeightClass}`}
+          className={`whitespace-pre-wrap break-all sm:break-normal flex-1 font-mono min-w-0 ${colorClass} ${fontWeightClass}`}
+          style={{ wordBreak: 'break-word' }}
         >
           {line}
         </span>
@@ -115,7 +116,7 @@ export default function LiveBuildLog({
   };
 
   return (
-    <div className="card overflow-hidden border border-border shadow-2xl bg-surface-secondary">
+    <div className="card overflow-hidden border border-border shadow-2xl bg-surface-secondary w-full max-w-full">
       {/* Header */}
       <div className="live-build-header grid grid-cols-[1fr_auto] items-center px-3 lg:px-5 py-3 border-b border-border bg-surface backdrop-blur-md gap-3">
         <div className="grid grid-flow-col auto-cols-max items-center gap-3">
@@ -154,7 +155,7 @@ export default function LiveBuildLog({
             setAutoScroll(scrollHeight - scrollTop - clientHeight < 50);
           }
         }}
-        className="m-0 py-4 font-mono text-[0.8125rem] max-h-[500px] overflow-y-auto scrollbar-terminal"
+        className="m-0 py-4 font-mono text-[0.8125rem] max-h-[500px] overflow-y-auto overflow-x-auto scrollbar-terminal"
       >
         {isTruncated && (
           <div className="text-center py-2 pb-3">
@@ -169,21 +170,21 @@ export default function LiveBuildLog({
         {logs ? (
           visibleLines.map((line, i) => parseLogLine(line, i))
         ) : (
-          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
-            <span className="text-text-muted min-w-8 text-right text-xs pt-0.5 font-mono">
+          <div className="flex items-start gap-3 sm:gap-4 min-h-6 w-full">
+            <span className="text-text-muted min-w-[2rem] text-right text-xs pt-0.5 font-mono shrink-0">
               1
             </span>
-            <span className="text-text-muted italic">
+            <span className="text-text-muted italic flex-1 min-w-0">
               Waiting for build agent to start...
             </span>
           </div>
         )}
         {isRunning && (
-          <div className="grid grid-flow-col auto-cols-max gap-4 min-h-6">
-            <span className="text-text-muted min-w-8 text-right text-xs pt-0.5 font-mono">
+          <div className="flex items-start gap-3 sm:gap-4 min-h-6 w-full">
+            <span className="text-text-muted min-w-[2rem] text-right text-xs pt-0.5 font-mono shrink-0">
               {logs ? allLines.length + 1 : 2}
             </span>
-            <span className="text-accent animate-pulse font-mono">▋</span>
+            <span className="text-accent animate-pulse font-mono flex-1 min-w-0">▋</span>
           </div>
         )}
       </div>
