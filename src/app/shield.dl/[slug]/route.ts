@@ -8,18 +8,32 @@ export async function GET(
   try {
     const plugin = await fetchPluginData(params.slug);
     if (!plugin) {
-      return new NextResponse(createBadgeSvg("unknown @endgit", "not found", "#e05d44"), { headers: { "Content-Type": "image/svg+xml" } });
+      return new NextResponse(
+        createBadgeSvg("unknown @endgit", "not found", "#e05d44"),
+        { headers: { "Content-Type": "image/svg+xml" } },
+      );
     }
 
-    const latestVersion = plugin.versions?.find((v: any) => v.isLatest) || plugin.versions?.[0];
-    const versionLabel = latestVersion ? `v${latestVersion.version}@endgit` : `unknown@endgit`;
-    
+    const latestVersion =
+      plugin.versions?.find((v: any) => v.isLatest) || plugin.versions?.[0];
+    const versionLabel = latestVersion
+      ? `v${latestVersion.version}@endgit`
+      : `unknown@endgit`;
+
     let dl = latestVersion?.downloads || 0;
 
-    return new NextResponse(createBadgeSvg(versionLabel, `${dl} downloads`, "#dfb317"), {
-      headers: { "Content-Type": "image/svg+xml", "Cache-Control": "public, max-age=3600" },
-    });
+    return new NextResponse(
+      createBadgeSvg(versionLabel, `${dl} downloads`, "#dfb317"),
+      {
+        headers: {
+          "Content-Type": "image/svg+xml",
+          "Cache-Control": "public, max-age=3600",
+        },
+      },
+    );
   } catch (error) {
-    return new NextResponse(createBadgeSvg("error", "error", "#e05d44"), { headers: { "Content-Type": "image/svg+xml" } });
+    return new NextResponse(createBadgeSvg("error", "error", "#e05d44"), {
+      headers: { "Content-Type": "image/svg+xml" },
+    });
   }
 }

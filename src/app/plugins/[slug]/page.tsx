@@ -443,7 +443,11 @@ export default async function PluginDetailPage({
               <div className="p-4 grid gap-4">
                 <div className="grid gap-2">
                   <div>
-                    <img src={`/shield.state/${plugin.slug}`} alt="State" className="h-5" />
+                    <img
+                      src={`/shield.state/${plugin.slug}`}
+                      alt="State"
+                      className="h-5"
+                    />
                   </div>
                   <div className="text-[12px] font-mono text-error">
                     {`[![State](https://endgit.dev/shield.state/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
@@ -455,7 +459,11 @@ export default async function PluginDetailPage({
                 <hr className="border-border" />
                 <div className="grid gap-2">
                   <div>
-                    <img src={`/shield.api/${plugin.slug}`} alt="API" className="h-5" />
+                    <img
+                      src={`/shield.api/${plugin.slug}`}
+                      alt="API"
+                      className="h-5"
+                    />
                   </div>
                   <div className="text-[12px] font-mono text-error">
                     {`[![API](https://endgit.dev/shield.api/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
@@ -467,7 +475,11 @@ export default async function PluginDetailPage({
                 <hr className="border-border" />
                 <div className="grid gap-2">
                   <div>
-                    <img src={`/shield.dl.total/${plugin.slug}`} alt="Downloads total" className="h-5" />
+                    <img
+                      src={`/shield.dl.total/${plugin.slug}`}
+                      alt="Downloads total"
+                      className="h-5"
+                    />
                   </div>
                   <div className="text-[12px] font-mono text-error">
                     {`[![Downloads total](https://endgit.dev/shield.dl.total/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
@@ -479,7 +491,11 @@ export default async function PluginDetailPage({
                 <hr className="border-border" />
                 <div className="grid gap-2">
                   <div>
-                    <img src={`/shield.dl/${plugin.slug}`} alt="Downloads" className="h-5" />
+                    <img
+                      src={`/shield.dl/${plugin.slug}`}
+                      alt="Downloads"
+                      className="h-5"
+                    />
                   </div>
                   <div className="text-[12px] font-mono text-error">
                     {`[![Downloads](https://endgit.dev/shield.dl/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
@@ -499,8 +515,6 @@ export default async function PluginDetailPage({
           <div className="plugin-ratings w-full">
             <PluginDiscussion slug={plugin.slug} />
           </div>
-
-
         </div>
 
         {/* Right Sidebar */}
@@ -606,7 +620,6 @@ export default async function PluginDetailPage({
               </div>
             )}
           </div>
-
 
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />

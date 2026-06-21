@@ -90,14 +90,17 @@ export default async function PluginDashboardPage({
 
   const eligibleBuildsToSubmit = builds.filter(
     (b: any) =>
-      b.canSubmit && Number(b.buildNumber) > Number(reviewedBuildNumber)
+      b.canSubmit && Number(b.buildNumber) > Number(reviewedBuildNumber),
   );
 
   // builds are usually sorted descending by creation, so [0] is the latest
-  const latestEligibleBuild = eligibleBuildsToSubmit.length > 0 ? eligibleBuildsToSubmit[0] : null;
+  const latestEligibleBuild =
+    eligibleBuildsToSubmit.length > 0 ? eligibleBuildsToSubmit[0] : null;
 
   const hasPublishedVersions = plugin.versions && plugin.versions.length > 0;
-  const submitButtonText = hasPublishedVersions ? "Submit New Version" : "Submit Plugin";
+  const submitButtonText = hasPublishedVersions
+    ? "Submit New Version"
+    : "Submit Plugin";
 
   return (
     <div className="container py-4 lg:py-6">
@@ -134,7 +137,10 @@ export default async function PluginDashboardPage({
 
         <div className="flex flex-wrap gap-3 w-full md:w-auto">
           {hasPendingVersion ? (
-            <button disabled className="btn btn-secondary opacity-50 cursor-not-allowed flex-1 md:flex-none flex items-center justify-center gap-2">
+            <button
+              disabled
+              className="btn btn-secondary opacity-50 cursor-not-allowed flex-1 md:flex-none flex items-center justify-center gap-2"
+            >
               <Send size={16} /> Review Pending
             </button>
           ) : latestEligibleBuild ? (

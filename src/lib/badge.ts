@@ -1,6 +1,10 @@
 import { fetchGraphQL } from "@/lib/api";
 
-export function createBadgeSvg(label: string, message: string, color: string): string {
+export function createBadgeSvg(
+  label: string,
+  message: string,
+  color: string,
+): string {
   const labelWidth = Math.round(label.length * 6.5) + 14;
   const messageWidth = Math.round(message.length * 6.5) + 14;
   const totalWidth = labelWidth + messageWidth;
@@ -44,7 +48,7 @@ export async function fetchPluginData(slug: string) {
         }
       `,
       { slug },
-      { noAuth: true }
+      { noAuth: true },
     );
     return data?.plugin || null;
   } catch (error) {
