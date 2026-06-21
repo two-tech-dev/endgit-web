@@ -268,9 +268,9 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <button className="btn btn-secondary w-full flex items-center justify-center gap-2 p-2">
+                  <Link href={`/dashboard/plugins/${plugin.slug}`} className="btn btn-secondary w-full flex items-center justify-center gap-2 p-2">
                     <Settings size={16} /> Manage Plugin
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>
