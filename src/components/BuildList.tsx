@@ -137,7 +137,7 @@ export default function BuildsList({
       {/* Header */}
       {!hideHeader && (
         <div className="mb-5">
-          <div className="mb-2 grid grid-flow-col auto-cols-max items-center gap-3">
+          <div className="mb-2 flex flex-wrap items-center gap-3">
             <h1 className="heading-2">Dev Builds</h1>
 
             <span className="rounded-sm border border-[#7c3aed]/25 bg-[#7c3aed]/10 px-2.5 py-0.5 text-xs font-semibold text-[#7c3aed] dark:text-[#c4b5fd]">
@@ -153,7 +153,7 @@ export default function BuildsList({
 
       {/* Search */}
       <div className="mb-4">
-        <div className="card grid grid-flow-col auto-cols-max items-center gap-3 rounded-sm px-3 py-0 transition-colors focus-within:border-[#7c3aed]/45 lg:px-4">
+        <div className="card flex items-center gap-3 rounded-sm px-3 py-0 transition-colors focus-within:border-[#7c3aed]/45 lg:px-4">
           <Search size={18} className="text-text-muted shrink-0" />
 
           <input
@@ -168,7 +168,7 @@ export default function BuildsList({
 
       {/* Warning */}
       {!hideWarning && (
-        <div className="card mb-5 grid grid-flow-col auto-cols-max items-center gap-3 rounded-sm border-l-4 border-warning bg-warning/8 p-3 lg:px-5 lg:py-4">
+        <div className="card mb-5 flex items-start gap-3 rounded-sm border-l-4 border-warning bg-warning/8 p-3 lg:px-5 lg:py-4">
           <AlertTriangle size={20} className="text-warning shrink-0" />
 
           <div>
