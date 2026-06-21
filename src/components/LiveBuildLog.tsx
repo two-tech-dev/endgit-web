@@ -107,7 +107,7 @@ export default function LiveBuildLog({
         </span>
         <span
           className={`whitespace-pre-wrap break-all sm:break-normal flex-1 font-mono min-w-0 ${colorClass} ${fontWeightClass}`}
-          style={{ wordBreak: 'break-word' }}
+          style={{ wordBreak: "break-word" }}
         >
           {line}
         </span>
@@ -184,7 +184,9 @@ export default function LiveBuildLog({
             <span className="text-text-muted min-w-[2rem] text-right text-xs pt-0.5 font-mono shrink-0">
               {logs ? allLines.length + 1 : 2}
             </span>
-            <span className="text-accent animate-pulse font-mono flex-1 min-w-0">▋</span>
+            <span className="text-accent animate-pulse font-mono flex-1 min-w-0">
+              ▋
+            </span>
           </div>
         )}
       </div>

@@ -51,11 +51,20 @@ export default async function DashboardPage() {
 
   let hasAppInstalled = false;
   let githubTokenExpired = false;
-  let stats = { totalPlugins: 0, totalDownloads: 0, totalVersions: 0, pendingReviews: 0 };
+  let stats = {
+    totalPlugins: 0,
+    totalDownloads: 0,
+    totalVersions: 0,
+    pendingReviews: 0,
+  };
   let myPlugins: any[] = [];
 
   try {
-    const { data } = await fetchGraphQL(GET_DASHBOARD_DATA, {}, { cache: "no-store" });
+    const { data } = await fetchGraphQL(
+      GET_DASHBOARD_DATA,
+      {},
+      { cache: "no-store" },
+    );
     if (data) {
       hasAppInstalled = data.dashboardStatus?.hasAppInstalled || false;
       githubTokenExpired = data.dashboardStatus?.githubTokenExpired || false;
@@ -120,8 +129,6 @@ export default async function DashboardPage() {
       </div>
     );
   }
-
-
 
   return (
     <div className="container py-4 lg:py-6">
@@ -268,7 +275,10 @@ export default async function DashboardPage() {
                     Submitted
                   </div>
                 ) : (
-                  <Link href={`/dashboard/plugins/${plugin.slug}`} className="btn btn-secondary w-full flex items-center justify-center gap-2 p-2">
+                  <Link
+                    href={`/dashboard/plugins/${plugin.slug}`}
+                    className="btn btn-secondary w-full flex items-center justify-center gap-2 p-2"
+                  >
                     <Settings size={16} /> Manage Plugin
                   </Link>
                 )}

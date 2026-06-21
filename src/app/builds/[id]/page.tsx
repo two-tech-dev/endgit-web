@@ -279,7 +279,10 @@ export default async function BuildDetailPage({
       {/* Not Reviewed Warning */}
       {!build.isRelease ? (
         <div className="card px-4 lg:px-5 py-4 mt-6 flex items-start sm:items-center gap-3 border-l-4 border-warning bg-warning/5">
-          <AlertTriangle size={18} className="text-warning shrink-0 mt-0.5 sm:mt-0" />
+          <AlertTriangle
+            size={18}
+            className="text-warning shrink-0 mt-0.5 sm:mt-0"
+          />
           <span className="text-text-secondary text-sm">
             <strong className="text-text-primary">NOT REVIEWED</strong> — This
             is a development build. It has not been reviewed for safety or

@@ -43,7 +43,10 @@ export default async function PluginBuildsPage({
 
   const sessionUsername = (session?.user as any)?.username;
   const pluginAuthorUsername = plugin.author?.username;
-  const isOwner = !!sessionUsername && !!pluginAuthorUsername && sessionUsername === pluginAuthorUsername;
+  const isOwner =
+    !!sessionUsername &&
+    !!pluginAuthorUsername &&
+    sessionUsername === pluginAuthorUsername;
 
   return (
     <BuildsTableClient

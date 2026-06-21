@@ -134,7 +134,8 @@ export function BuildsTableClient({
                       </Link>
                       <div className="mt-1 text-xs text-text-muted">
                         {timeAgo(build.createdAt)}
-                        {build.duration ? ` • ${build.duration}s` : ""} • {build.branch || "master"}
+                        {build.duration ? ` • ${build.duration}s` : ""} •{" "}
+                        {build.branch || "master"}
                       </div>
                     </div>
                     <Link
@@ -199,12 +200,12 @@ export function BuildsTableClient({
 
             <table className="hidden md:table w-full border-collapse text-sm table-fixed">
               <colgroup>
-                <col className="w-[10%]" />
-                <col className="w-[10%]" />
-                <col className="w-[7%]" />
-                <col className="w-[43%]" />
+                <col className="w-[12%]" />
                 <col className="w-[15%]" />
+                <col className="w-[10%]" />
+                <col className="w-[38%]" />
                 <col className="w-[15%]" />
+                <col className="w-[10%]" />
               </colgroup>
               <thead className="bg-surface-secondary sticky top-0 z-10">
                 <tr className="border-b border-border text-left">
@@ -215,7 +216,7 @@ export function BuildsTableClient({
                     Date
                   </th>
                   <th className="px-3 py-3 text-text-primary font-semibold">
-                    Lint
+                    Status
                   </th>
                   <th className="px-3 py-3 text-text-primary font-semibold">
                     Commit
@@ -252,7 +253,7 @@ export function BuildsTableClient({
                         )}
                       </div>
                     </td>
-                    <td className="p-3 align-top text-text-secondary whitespace-nowrap">
+                    <td className="p-3 align-top text-text-secondary">
                       {timeAgo(build.createdAt)}
                       {build.duration ? (
                         <span className="text-[13px] text-text-muted">

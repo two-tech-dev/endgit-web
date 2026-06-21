@@ -88,7 +88,11 @@ async function HomeData() {
   let featuredPlugins: any[] = [];
 
   try {
-    const { data } = await fetchGraphQL(GET_HOME_PLUGINS, {}, { revalidate: 60, noAuth: true });
+    const { data } = await fetchGraphQL(
+      GET_HOME_PLUGINS,
+      {},
+      { revalidate: 60, noAuth: true },
+    );
     if (data?.homePlugins) {
       hotPlugins = data.homePlugins.hotPlugins || [];
       newPlugins = data.homePlugins.newPlugins || [];

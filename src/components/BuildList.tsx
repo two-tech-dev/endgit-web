@@ -172,8 +172,8 @@ export default function BuildsList({
           <AlertTriangle size={20} className="text-warning shrink-0" />
 
           <div>
-            <span className="font-semibold">Caution:</span> Development builds may
-            be unstable.
+            <span className="font-semibold">Caution:</span> Development builds
+            may be unstable.
           </div>
         </div>
       )}
@@ -186,12 +186,22 @@ export default function BuildsList({
           <p>No matching builds</p>
         </div>
       ) : (
-        <div className={scrollableWrapper ? "max-h-[500px] overflow-y-auto pr-2 custom-scrollbar" : ""}>
+        <div
+          className={
+            scrollableWrapper
+              ? "max-h-[500px] overflow-y-auto pr-2 custom-scrollbar"
+              : ""
+          }
+        >
           <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-2 xl:grid-cols-3">
             {filteredBuilds.map((build: any, i: number) => (
               <Link
                 key={build.id}
-                href={linkToBuildDetail ? `/builds/${build.id}` : `/plugins/${build.plugin?.slug}/builds`}
+                href={
+                  linkToBuildDetail
+                    ? `/builds/${build.id}`
+                    : `/plugins/${build.plugin?.slug}/builds`
+                }
                 className={`card flex flex-col overflow-hidden border-l-4 bg-surface-card p-0 no-underline transition-all hover:border-[#7c3aed]/45 hover:bg-surface-secondary hover:shadow-[0_0_24px_rgba(124,58,237,0.14)] ${statusBorderClass(build.status)}`}
                 style={{
                   animation: `fadeSlideUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) ${Math.min(i * 0.04, 0.3)}s both`,
@@ -200,9 +210,9 @@ export default function BuildsList({
                 <div className="flex items-center gap-3 p-3">
                   <div className="flex-1 min-w-0">
                     <h3 className="m-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-bold text-text-primary">
-                      {showPluginName 
-                        ? (build.plugin?.displayName || build.plugin?.name)
-                        : (build.commitMessage || "Manual/Webhook Build")}
+                      {showPluginName
+                        ? build.plugin?.displayName || build.plugin?.name
+                        : build.commitMessage || "Manual/Webhook Build"}
                     </h3>
                     <div className="mt-1 flex items-center gap-2 text-xs text-text-muted">
                       <span className="overflow-hidden text-ellipsis whitespace-nowrap">

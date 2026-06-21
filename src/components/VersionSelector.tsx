@@ -129,9 +129,7 @@ export default function VersionSelector({
             ? `${(selectedVersion.fileSize / (1024 * 1024)).toFixed(2)} MB`
             : "—"}
         </span>
-        <span>
-          Uploaded: {parseDate(selectedVersion.createdAt)}
-        </span>
+        <span>Uploaded: {parseDate(selectedVersion.createdAt)}</span>
       </div>
     </div>
   );

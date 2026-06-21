@@ -61,7 +61,7 @@ export async function fetchApi(
 export async function fetchGraphQL(
   query: string,
   variables: Record<string, any> = {},
-  options: FetchApiOptions = {}
+  options: FetchApiOptions = {},
 ) {
   const { response, data } = await fetchApi("/api/graphql", {
     ...options,
@@ -76,4 +76,3 @@ export async function fetchGraphQL(
 
   return { response, data: data?.data };
 }
-

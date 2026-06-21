@@ -181,9 +181,10 @@ export default function DevDashboardPage() {
       const searchParam = searchQuery
         ? `&search=${encodeURIComponent(searchQuery)}`
         : "";
-        const filterParam = currentFilter !== "all"
-        ? `&filter=${encodeURIComponent(currentFilter)}`
-        : "";
+      const filterParam =
+        currentFilter !== "all"
+          ? `&filter=${encodeURIComponent(currentFilter)}`
+          : "";
       const res = await fetch(
         `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=50${orgParam}${searchParam}${filterParam}`,
         {

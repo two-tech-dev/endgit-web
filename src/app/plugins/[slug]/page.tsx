@@ -36,14 +36,17 @@ const PluginAnalyticsChart = nextDynamic(
     ),
   },
 );
-const DependencyGraph = nextDynamic(() => import("@/components/DependencyGraph"), {
-  ssr: false,
-  loading: () => (
-    <div className="card p-6 h-[200px] grid place-items-center">
-      <p className="text-text-muted text-sm">Loading dependency graph...</p>
-    </div>
-  ),
-});
+const DependencyGraph = nextDynamic(
+  () => import("@/components/DependencyGraph"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="card p-6 h-[200px] grid place-items-center">
+        <p className="text-text-muted text-sm">Loading dependency graph...</p>
+      </div>
+    ),
+  },
+);
 const PluginDiscussion = nextDynamic(
   () => import("@/components/PluginDiscussion"),
   {
@@ -70,7 +73,11 @@ const GET_PLUGIN = `
 
 async function getPlugin(slug: string) {
   try {
-    const { data } = await fetchGraphQL(GET_PLUGIN, { slug }, { revalidate: 60, noAuth: true });
+    const { data } = await fetchGraphQL(
+      GET_PLUGIN,
+      { slug },
+      { revalidate: 60, noAuth: true },
+    );
     return data?.plugin || null;
   } catch (err) {
     return null;
@@ -153,7 +160,10 @@ export default async function PluginDetailPage({
 
   const sessionUsername = (session?.user as any)?.username;
   const pluginAuthorUsername = plugin.author?.username;
-  const isAuthor = !!sessionUsername && !!pluginAuthorUsername && sessionUsername === pluginAuthorUsername;
+  const isAuthor =
+    !!sessionUsername &&
+    !!pluginAuthorUsername &&
+    sessionUsername === pluginAuthorUsername;
   const canEdit = isAuthor;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
 
@@ -262,11 +272,14 @@ export default async function PluginDetailPage({
                   </Link>
                 )}
                 {/* Temp Debug Panel */}
-                <span className="hidden" data-debug-auth={JSON.stringify({
-                  sessionUserId: session?.user?.id || null,
-                  pluginAuthorId: plugin.author?.id || null,
-                  match: session?.user?.id === plugin.author?.id
-                })} />
+                <span
+                  className="hidden"
+                  data-debug-auth={JSON.stringify({
+                    sessionUserId: session?.user?.id || null,
+                    pluginAuthorId: plugin.author?.id || null,
+                    match: session?.user?.id === plugin.author?.id,
+                  })}
+                />
               </div>
               <p className="text-text-muted mt-1 grid grid-flow-col auto-cols-max items-center gap-1.5">
                 by{" "}
@@ -432,8 +445,6 @@ export default async function PluginDetailPage({
 
         {/* Right Sidebar */}
         <aside className="plugin-sidebar grid w-full min-w-0 gap-5 xl:max-w-[280px]">
-
-
           {/* Producers — based on active version */}
           {activeVersion &&
             activeVersion.producers &&
