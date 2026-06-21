@@ -24,9 +24,7 @@ export default async function PluginBuildsPage({
   params: { slug: string };
 }) {
   const [buildsRes, session] = await Promise.all([
-    fetchApi(`/api/v1/builds/plugin/${params.slug}?page=1&pageSize=10`, {
-      noAuth: true,
-    }),
+    fetchApi(`/api/v1/builds/plugin/${params.slug}?page=1&pageSize=10`),
     getServerSession(authOptions),
   ]);
 
