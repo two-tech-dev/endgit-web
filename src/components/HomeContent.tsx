@@ -219,27 +219,64 @@ export default function HomeContent({
 }: HomeContentProps) {
   return (
     <div className="container py-10 lg:py-14">
-      <div className="mb-10 lg:mb-14 max-w-2xl">
-        <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-text-primary mb-3">
-          Discover, build and distribute plugins for Endstone.
-        </h1>
-        <p className="text-text-secondary text-base lg:text-lg mb-6">
-          The official registry for Endstone plugins. Find what you need, or
-          publish your own.
-        </p>
-        <div className="grid max-w-lg grid-cols-2 gap-2 sm:flex">
-          <Link href="/dashboard/dev" className="btn btn-primary text-sm px-4">
-            Start Publishing
-          </Link>
-          <a
-            href="https://github.com/two-tech-dev/endgit-cli#installation"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-secondary text-sm px-4"
-          >
-            <Terminal size={16} />
-            Install CLI
-          </a>
+      <div className="mb-12 lg:mb-20 flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+        <div className="flex-1 max-w-2xl w-full">
+          <h1 className="text-3xl lg:text-5xl lg:leading-tight font-extrabold tracking-tight text-text-primary mb-4">
+            Discover, build and distribute plugins for Endstone.
+          </h1>
+          <p className="text-text-secondary text-base lg:text-lg mb-8">
+            The official registry for Endstone plugins. Find what you need, or
+            publish your own with automated CI/CD.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/dashboard/dev" className="btn btn-primary px-6 py-2.5">
+              Start Publishing
+            </Link>
+            <a
+              href="https://github.com/two-tech-dev/endgit-cli#installation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary px-6 py-2.5"
+            >
+              <Terminal size={18} />
+              Install CLI
+            </a>
+          </div>
+        </div>
+
+        <div className="w-full lg:w-[480px] shrink-0 hidden md:block">
+          <div className="bg-surface-secondary border border-border rounded-lg overflow-hidden shadow-2xl shadow-[#7c3aed]/5">
+            <div className="bg-surface border-b border-border px-4 py-3 flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+              <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+              <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+              <div className="flex-1 text-center pr-8 text-[11px] text-text-muted font-mono opacity-60">
+                endgit-cli
+              </div>
+            </div>
+            <div className="p-5 font-mono text-[13px] leading-relaxed space-y-2">
+              <div>
+                <span className="text-[#7c3aed] font-bold">~</span>
+                <span className="text-text-muted ml-2">$</span>
+                <span className="text-text-primary ml-2">endgit install AutoBroadcast</span>
+              </div>
+              <div className="text-text-muted opacity-80">Fetching package data from registry...</div>
+              <div className="text-success flex items-center gap-2">
+                <span>✔</span> Installed AutoBroadcast v1.2.0
+              </div>
+              
+              <div className="pt-2">
+                <span className="text-[#7c3aed] font-bold">~/my-plugin</span>
+                <span className="text-text-muted ml-2">$</span>
+                <span className="text-text-primary ml-2">endgit publish</span>
+              </div>
+              <div className="text-text-muted opacity-80">Packaging source code...</div>
+              <div className="text-text-muted opacity-80">Triggering remote CI build...</div>
+              <div className="text-success flex items-center gap-2">
+                <span>✔</span> Plugin built and submitted for review!
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
