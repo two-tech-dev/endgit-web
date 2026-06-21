@@ -54,6 +54,7 @@ export default function DevDashboardPage() {
   const [filter, setFilter] = useState<"all" | "enabled" | "disabled">("all");
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [hideNonEndstone, setHideNonEndstone] = useState(true);
   const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [loading, setLoading] = useState(true);
   const [hasAppInstalled, setHasAppInstalled] = useState<boolean | null>(null);
@@ -89,8 +90,8 @@ export default function DevDashboardPage() {
   useEffect(() => {
     if (!initialFetchDone.current) return;
     if (sessionStatus !== "authenticated") return;
-    fetchRepos(1, selectedOrg, debouncedSearch);
-  }, [debouncedSearch]);
+    fetchRepos(1, selectedOrg, debouncedSearch, filter);
+  }, [debouncedSearch, filter]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -141,6 +142,7 @@ export default function DevDashboardPage() {
     pageNumber: number = 1,
     org: string | null = selectedOrg,
     searchQuery: string = debouncedSearch,
+    currentFilter: string = filter,
   ) => {
     if (pageNumber === 1) setLoading(true);
     else setIsFetchingMore(true);
@@ -179,8 +181,12 @@ export default function DevDashboardPage() {
       const searchParam = searchQuery
         ? `&search=${encodeURIComponent(searchQuery)}`
         : "";
+      const filterParam =
+        currentFilter !== "all"
+          ? `&filter=${encodeURIComponent(currentFilter)}`
+          : "";
       const res = await fetch(
-        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=10${orgParam}${searchParam}`,
+        `${apiUrl}/api/v1/github/repos?page=${pageNumber}&per_page=50${orgParam}${searchParam}${filterParam}`,
         {
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         },
@@ -221,7 +227,7 @@ export default function DevDashboardPage() {
   const handleOrgChange = (orgLogin: string | null) => {
     setSelectedOrg(orgLogin);
     setOrgDropdownOpen(false);
-    fetchRepos(1, orgLogin, debouncedSearch);
+    fetchRepos(1, orgLogin, debouncedSearch, filter);
   };
 
   const toggleCI = async (repo: Repo) => {
@@ -285,7 +291,7 @@ export default function DevDashboardPage() {
       }
 
       // Refresh current repos by reloading page 1
-      await fetchRepos(1, selectedOrg, debouncedSearch);
+      await fetchRepos(1, selectedOrg, debouncedSearch, filter);
     } catch (err: any) {
       alert(`An error occurred while toggling CI: ${err.message}`);
     } finally {
@@ -293,11 +299,16 @@ export default function DevDashboardPage() {
     }
   };
 
-  const filteredRepos = repos.filter((r) => {
-    if (filter === "enabled" && !r.ciEnabled) return false;
-    if (filter === "disabled" && r.ciEnabled) return false;
-    if (search && !r.name.toLowerCase().includes(search.toLowerCase()))
-      return false;
+  const filteredRepos = repos.filter((repo) => {
+    if (hideNonEndstone && !repo.ciEnabled) {
+      if (
+        repo.language !== "C++" &&
+        repo.language !== "Python" &&
+        repo.language !== "C"
+      ) {
+        return false;
+      }
+    }
     return true;
   });
 
@@ -683,8 +694,8 @@ export default function DevDashboardPage() {
       )}
 
       {/* Search + Filter */}
-      <div className="dev-search-filter grid grid-cols-[1fr_auto] gap-3 mb-5 items-center">
-        <div className="relative">
+      <div className="dev-search-filter flex flex-wrap gap-3 mb-5 items-center justify-between">
+        <div className="relative flex-1 min-w-[200px]">
           <Search
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted"
@@ -697,25 +708,36 @@ export default function DevDashboardPage() {
             className="w-full py-2.5 pl-9 pr-3 rounded-sm border border-border bg-surface-card text-text-primary text-sm outline-none"
           />
         </div>
-        <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-sm">
-          {(["all", "enabled", "disabled"] as const).map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`py-2 px-3.5 rounded-sm text-xs font-medium capitalize border-none cursor-pointer transition-all duration-150 ${
-                filter === f
-                  ? "bg-surface-card text-text-primary shadow-sm"
-                  : "bg-transparent text-text-muted hover:text-text-primary"
-              }`}
-            >
-              {f}{" "}
-              {f === "all"
-                ? `(${displayTotal})`
-                : f === "enabled"
-                  ? `(${displayEnabled})`
-                  : `(${displayDisabled})`}
-            </button>
-          ))}
+        <div className="flex items-center gap-4 flex-wrap">
+          <label className="flex items-center gap-2 text-xs font-medium text-text-primary cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={hideNonEndstone}
+              onChange={(e) => setHideNonEndstone(e.target.checked)}
+              className="accent-accent w-4 h-4 rounded-sm border-border bg-surface-secondary cursor-pointer"
+            />
+            Hide non-Endstone repos
+          </label>
+          <div className="grid grid-flow-col auto-cols-max gap-[2px] bg-surface-secondary p-[3px] rounded-sm">
+            {(["all", "enabled", "disabled"] as const).map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`py-2 px-3.5 rounded-sm text-xs font-medium capitalize border-none cursor-pointer transition-all duration-150 ${
+                  filter === f
+                    ? "bg-surface-card text-text-primary shadow-sm"
+                    : "bg-transparent text-text-muted hover:text-text-primary"
+                }`}
+              >
+                {f}{" "}
+                {f === "all"
+                  ? `(${displayTotal})`
+                  : f === "enabled"
+                    ? `(${displayEnabled})`
+                    : `(${displayDisabled})`}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -17,30 +17,20 @@ export async function GET(
     const latestVersion =
       plugin.versions?.find((v: any) => v.isLatest) || plugin.versions?.[0];
     const versionLabel = latestVersion
-      ? `v${latestVersion.version} @endgit`
-      : `unknown @endgit`;
-    const status = latestVersion ? latestVersion.status : plugin.status;
+      ? `v${latestVersion.version}@endgit`
+      : `unknown@endgit`;
 
-    let color = "#9ca3af"; // gray
-    let message = status?.toLowerCase() || "unknown";
+    let dl = latestVersion?.downloads || 0;
 
-    if (status === "APPROVED") {
-      color = "#4c1"; // green
-      message = "Approved";
-    } else if (status === "PENDING") {
-      color = "#dfb317"; // yellow
-      message = "Pending";
-    } else if (status === "REJECTED") {
-      color = "#e05d44"; // red
-      message = "Rejected";
-    }
-
-    return new NextResponse(createBadgeSvg(versionLabel, message, color), {
-      headers: {
-        "Content-Type": "image/svg+xml",
-        "Cache-Control": "public, max-age=3600",
+    return new NextResponse(
+      createBadgeSvg(versionLabel, `${dl} downloads`, "#dfb317"),
+      {
+        headers: {
+          "Content-Type": "image/svg+xml",
+          "Cache-Control": "public, max-age=3600",
+        },
       },
-    });
+    );
   } catch (error) {
     return new NextResponse(createBadgeSvg("error", "error", "#e05d44"), {
       headers: { "Content-Type": "image/svg+xml" },

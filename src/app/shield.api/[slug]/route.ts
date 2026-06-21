@@ -19,23 +19,13 @@ export async function GET(
     const versionLabel = latestVersion
       ? `v${latestVersion.version} @endgit`
       : `unknown @endgit`;
-    const status = latestVersion ? latestVersion.status : plugin.status;
 
-    let color = "#9ca3af"; // gray
-    let message = status?.toLowerCase() || "unknown";
-
-    if (status === "APPROVED") {
-      color = "#4c1"; // green
-      message = "Approved";
-    } else if (status === "PENDING") {
-      color = "#dfb317"; // yellow
-      message = "Pending";
-    } else if (status === "REJECTED") {
-      color = "#e05d44"; // red
-      message = "Rejected";
+    let apis = "unknown";
+    if (latestVersion?.supportedApis?.length) {
+      apis = latestVersion.supportedApis.join(", ");
     }
 
-    return new NextResponse(createBadgeSvg(versionLabel, message, color), {
+    return new NextResponse(createBadgeSvg(versionLabel, apis, "#97ca00"), {
       headers: {
         "Content-Type": "image/svg+xml",
         "Cache-Control": "public, max-age=3600",

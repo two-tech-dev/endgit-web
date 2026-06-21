@@ -122,6 +122,7 @@ export default function PluginAnalyticsChart({ slug }: { slug: string }) {
               interval="preserveStartEnd"
             />
             <YAxis
+              allowDecimals={false}
               tick={{ fontSize: 11, fill: "#94a3b8" }}
               axisLine={false}
               tickLine={false}

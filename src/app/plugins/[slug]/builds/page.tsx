@@ -24,9 +24,7 @@ export default async function PluginBuildsPage({
   params: { slug: string };
 }) {
   const [buildsRes, session] = await Promise.all([
-    fetchApi(`/api/v1/builds/plugin/${params.slug}?page=1&pageSize=10`, {
-      noAuth: true,
-    }),
+    fetchApi(`/api/v1/builds/plugin/${params.slug}?page=1&pageSize=10`),
     getServerSession(authOptions),
   ]);
 
@@ -43,7 +41,10 @@ export default async function PluginBuildsPage({
 
   const sessionUsername = (session?.user as any)?.username;
   const pluginAuthorUsername = plugin.author?.username;
-  const isOwner = !!sessionUsername && !!pluginAuthorUsername && sessionUsername === pluginAuthorUsername;
+  const isOwner =
+    !!sessionUsername &&
+    !!pluginAuthorUsername &&
+    sessionUsername === pluginAuthorUsername;
 
   return (
     <BuildsTableClient

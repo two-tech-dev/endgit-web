@@ -118,10 +118,10 @@ export default async function BuildDetailPage({
 
       {/* Header Card */}
       <div className="card p-4 lg:p-6 mb-6">
-        <div className="grid grid-cols-[1fr_auto] items-start gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto] items-start gap-4 sm:gap-6">
           <div>
-            <div className="build-title-row grid grid-flow-col auto-cols-max items-center gap-3 mb-2">
-              <h1 className="heading-3 m-0">
+            <div className="build-title-row flex flex-wrap items-center gap-2 sm:gap-3 mb-2">
+              <h1 className="heading-3 m-0 break-words min-w-0">
                 {build.plugin?.displayName} — Build #{build.buildNumber}
               </h1>
               <StatusBadge status={build.status} />
@@ -137,7 +137,7 @@ export default async function BuildDetailPage({
           </div>
 
           {build.status === "SUCCESS" && (
-            <div className="grid gap-2 items-end">
+            <div className="grid gap-2 sm:items-end">
               {/* Python or fallback single artifact */}
               {build.artifactUrl &&
                 !build.artifactUrlLinux &&
@@ -171,7 +171,7 @@ export default async function BuildDetailPage({
           {/* C++ build in progress indicators */}
           {build.status === "RUNNING" &&
             (build.winBuildStatus || build.linuxBuildStatus) && (
-              <div className="grid gap-1 items-end text-xs">
+              <div className="grid gap-1 sm:items-end text-xs">
                 {build.linuxBuildStatus && (
                   <span
                     className={
@@ -213,8 +213,8 @@ export default async function BuildDetailPage({
         </div>
 
         {/* Metadata Grid */}
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mt-5 pt-5 border-t border-border">
-          <div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:flex lg:flex-wrap lg:justify-between gap-4 mt-5 pt-5 border-t border-border">
+          <div className="min-w-0">
             <div className="text-[0.6875rem] text-text-muted uppercase tracking-wider mb-1">
               Branch
             </div>
@@ -278,8 +278,11 @@ export default async function BuildDetailPage({
 
       {/* Not Reviewed Warning */}
       {!build.isRelease ? (
-        <div className="card px-4 lg:px-5 py-4 mt-6 grid grid-flow-col auto-cols-max items-center gap-3 border-l-4 border-warning bg-warning/5">
-          <AlertTriangle size={18} className="text-warning shrink-0" />
+        <div className="card px-4 lg:px-5 py-4 mt-6 flex items-start sm:items-center gap-3 border-l-4 border-warning bg-warning/5">
+          <AlertTriangle
+            size={18}
+            className="text-warning shrink-0 mt-0.5 sm:mt-0"
+          />
           <span className="text-text-secondary text-sm">
             <strong className="text-text-primary">NOT REVIEWED</strong> — This
             is a development build. It has not been reviewed for safety or

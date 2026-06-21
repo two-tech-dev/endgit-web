@@ -54,3 +54,25 @@ export async function fetchApi(
 
   return { response, data };
 }
+
+/**
+ * Helper function to execute GraphQL queries/mutations.
+ */
+export async function fetchGraphQL(
+  query: string,
+  variables: Record<string, any> = {},
+  options: FetchApiOptions = {},
+) {
+  const { response, data } = await fetchApi("/api/graphql", {
+    ...options,
+    method: "POST",
+    body: JSON.stringify({ query, variables }),
+  });
+
+  if (data?.errors) {
+    console.error("GraphQL Errors:", data.errors);
+    throw new Error(data.errors[0]?.message || "GraphQL Error");
+  }
+
+  return { response, data: data?.data };
+}
