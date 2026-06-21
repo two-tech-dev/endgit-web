@@ -434,6 +434,64 @@ export default async function PluginDetailPage({
             </div>
           </div>
 
+          {/* Shield Markdown / HTML */}
+          {canEdit && (
+            <div className="card overflow-hidden">
+              <div className="bg-surface-secondary border-b border-border px-4 py-2 text-sm font-medium text-text-secondary">
+                Shield Markdown / HTML
+              </div>
+              <div className="p-4 grid gap-4">
+                <div className="grid gap-2">
+                  <div>
+                    <img src={`/shield.state/${plugin.slug}`} alt="State" className="h-5" />
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`[![State](https://endgit.dev/shield.state/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`<a href="https://endgit.dev/plugins/${plugin.slug}"><img src="https://endgit.dev/shield.state/${plugin.slug}" alt="State"></a>`}
+                  </div>
+                </div>
+                <hr className="border-border" />
+                <div className="grid gap-2">
+                  <div>
+                    <img src={`/shield.api/${plugin.slug}`} alt="API" className="h-5" />
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`[![API](https://endgit.dev/shield.api/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`<a href="https://endgit.dev/plugins/${plugin.slug}"><img src="https://endgit.dev/shield.api/${plugin.slug}" alt="API"></a>`}
+                  </div>
+                </div>
+                <hr className="border-border" />
+                <div className="grid gap-2">
+                  <div>
+                    <img src={`/shield.dl.total/${plugin.slug}`} alt="Downloads total" className="h-5" />
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`[![Downloads total](https://endgit.dev/shield.dl.total/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`<a href="https://endgit.dev/plugins/${plugin.slug}"><img src="https://endgit.dev/shield.dl.total/${plugin.slug}" alt="Downloads total"></a>`}
+                  </div>
+                </div>
+                <hr className="border-border" />
+                <div className="grid gap-2">
+                  <div>
+                    <img src={`/shield.dl/${plugin.slug}`} alt="Downloads" className="h-5" />
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`[![Downloads](https://endgit.dev/shield.dl/${plugin.slug})](https://endgit.dev/plugins/${plugin.slug})`}
+                  </div>
+                  <div className="text-[12px] font-mono text-error">
+                    {`<a href="https://endgit.dev/plugins/${plugin.slug}"><img src="https://endgit.dev/shield.dl/${plugin.slug}" alt="Downloads"></a>`}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Analytics Chart */}
           <PluginAnalyticsChart slug={plugin.slug} />
 
@@ -441,6 +499,8 @@ export default async function PluginDetailPage({
           <div className="plugin-ratings w-full">
             <PluginDiscussion slug={plugin.slug} />
           </div>
+
+
         </div>
 
         {/* Right Sidebar */}
@@ -547,62 +607,6 @@ export default async function PluginDetailPage({
             )}
           </div>
 
-          {/* Badges for Markdown */}
-          {canEdit && (
-            <div className="card p-4 lg:p-5 overflow-hidden">
-              <h3 className="font-semibold mb-4 text-sm">Markdown Badges</h3>
-              <p className="text-xs text-text-muted mb-3">
-                Show off your plugin stats in your README.
-              </p>
-              <div className="grid gap-2">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
-                  <Image
-                    src={`https://endgit.dev/shield.dl.total/${plugin.slug}`}
-                    alt="Downloads Badge"
-                    width={120}
-                    height={20}
-                    unoptimized
-                  />
-                </div>
-                <div className="bg-surface-secondary p-2 rounded-sm text-[11px] font-mono text-text-muted overflow-x-auto whitespace-nowrap">
-                  [![Downloads](https://endgit.dev/shield.dl.total/{plugin.slug}
-                  )](https://endgit.dev/plugins/{plugin.slug})
-                </div>
-              </div>
-
-              <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
-                  <Image
-                    src={`https://endgit.dev/shield.state/${plugin.slug}`}
-                    alt="Status Badge"
-                    width={120}
-                    height={20}
-                    unoptimized
-                  />
-                </div>
-                <div className="bg-surface-secondary p-2 rounded-sm text-[11px] font-mono text-text-muted overflow-x-auto whitespace-nowrap">
-                  [![Status](https://endgit.dev/shield.state/{plugin.slug}
-                  )](https://endgit.dev/plugins/{plugin.slug})
-                </div>
-              </div>
-
-              <div className="grid gap-2 mt-4">
-                <div className="grid grid-flow-col auto-cols-max items-center gap-2">
-                  <Image
-                    src={`https://endgit.dev/shield.version/${plugin.slug}`}
-                    alt="Version Badge"
-                    width={120}
-                    height={20}
-                    unoptimized
-                  />
-                </div>
-                <div className="bg-surface-secondary p-2 rounded-sm text-[11px] font-mono text-text-muted overflow-x-auto whitespace-nowrap">
-                  [![Version](https://endgit.dev/shield.version/{plugin.slug}
-                  )](https://endgit.dev/plugins/{plugin.slug})
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Dependency Graph */}
           <DependencyGraph slug={plugin.slug} />
