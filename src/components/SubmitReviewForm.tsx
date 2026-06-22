@@ -547,7 +547,7 @@ export default function SubmitReviewForm({
               </label>
               <p className="text-xs text-text-muted mb-1.5">
                 Provide a human-readable list of changes, bug fixes, and new
-                features (Rule D5).
+                features (Rule D3).
               </p>
               <textarea
                 value={changelog}

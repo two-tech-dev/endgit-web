@@ -109,6 +109,11 @@ const RULE_CATEGORIES = [
         title: "License required",
         text: "Include a license file so users know how the plugin may be used, shared, and modified. Open-source licenses are strongly preferred for marketplace trust.",
       },
+      {
+        id: "D5",
+        title: "Default must be English",
+        text: "It is great if your plugin supports other languages, but since English is the most common language that players in the community know, the default language must be set as English.",
+      },
     ],
   },
   {
