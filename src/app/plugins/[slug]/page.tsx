@@ -75,8 +75,7 @@ async function getPlugin(slug: string) {
   try {
     const { data } = await fetchGraphQL(
       GET_PLUGIN,
-      { slug },
-      { revalidate: 60, noAuth: true },
+      { slug }
     );
     return data?.plugin || null;
   } catch (err) {
@@ -159,12 +158,13 @@ export default async function PluginDetailPage({
   if (!plugin) return notFound();
 
   const sessionUsername = (session?.user as any)?.username;
+  const isAdmin = (session?.user as any)?.trustLevel === "ADMIN";
   const pluginAuthorUsername = plugin.author?.username;
   const isAuthor =
     !!sessionUsername &&
     !!pluginAuthorUsername &&
     sessionUsername === pluginAuthorUsername;
-  const canEdit = isAuthor;
+  const canEdit = isAuthor || isAdmin;
   const repoOwnerDetail = plugin.repoUrl?.match(/github\.com\/([^/]+)/)?.[1];
 
   const displayVersions =
