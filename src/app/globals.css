@@ -35,8 +35,10 @@
   --color-warning: #ffdb13;
 
   /* Fonts */
-  --font-sans: var(--font-inter), "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-sans:
+    var(--font-inter), "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono:
+    ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 
   /* Radii */
   --radius-xs: 4px;
@@ -47,9 +49,9 @@
 
   /* Shadows */
   --shadow-xs: none;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
-  --shadow-md: 0 8px 24px rgba(0,0,0,0.6);
-  --shadow-lg: 0 16px 48px rgba(0,0,0,0.8);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.8);
 
   /* Animations & Springs */
   --spring-duration: 300ms;
@@ -180,7 +182,7 @@
     border-radius: var(--radius-sm);
     font-weight: 500;
     font-size: 0.875rem;
-    line-height: 1.0;
+    line-height: 1;
   }
 
   .btn-primary {
@@ -240,8 +242,12 @@
   }
 
   @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
   }
 }
 

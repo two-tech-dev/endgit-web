@@ -74,7 +74,7 @@ export default function VersionSelector({
 
   return (
     <div className="flex flex-col items-end gap-1.5 w-full shrink-0">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full md:w-auto">
         <select
           value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
@@ -87,10 +87,10 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative w-full md:w-auto" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="btn btn-primary grid grid-flow-col place-items-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline cursor-pointer"
+              className="btn btn-primary w-full md:w-auto flex items-center justify-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline cursor-pointer"
             >
               <Download size={18} /> Download
             </button>
@@ -116,13 +116,13 @@ export default function VersionSelector({
         ) : (
           <a
             href={`/api/v1/download/${slug}/${selectedVersion.version}`}
-            className="btn btn-primary grid grid-flow-col place-items-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline"
+            className="btn btn-primary w-full md:w-auto flex items-center justify-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline"
           >
             <Download size={18} /> Download
           </a>
         )}
       </div>
-      <div className="version-info-text text-[11px] text-text-muted flex items-center justify-end gap-3 w-full opacity-80">
+      <div className="version-info-text text-[11px] text-text-muted flex items-center justify-between md:justify-end gap-3 w-full opacity-80 px-2 md:px-0">
         <span>
           Size:{" "}
           {selectedVersion.fileSize

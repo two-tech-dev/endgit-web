@@ -227,15 +227,18 @@ export default function HomeContent({
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <div className="grid max-w-lg grid-cols-2 gap-3 sm:flex">
-          <Link href="/dashboard/dev" className="btn btn-primary text-base px-6 py-3 rounded-full">
+        <div className="flex flex-col sm:flex-row max-w-lg gap-3">
+          <Link
+            href="/dashboard/dev"
+            className="btn btn-primary text-base px-6 py-3 rounded-full flex justify-center"
+          >
             Start Publishing
           </Link>
           <a
             href="https://github.com/two-tech-dev/endgit-cli#installation"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-secondary text-base px-6 py-3 rounded-full border border-border"
+            className="btn btn-secondary text-base px-6 py-3 rounded-full border border-border flex justify-center items-center gap-2"
           >
             <Terminal size={18} />
             Install CLI

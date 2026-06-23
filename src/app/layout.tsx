@@ -57,8 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <meta name="theme-color" content="#fdfcfc" />
-      <head>
-      </head>
+      <head></head>
       <body className={`${inter.variable} ${inter.className}`}>
         <script
           dangerouslySetInnerHTML={{
