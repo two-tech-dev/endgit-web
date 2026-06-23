@@ -68,16 +68,18 @@ export default async function PluginsPage({
         </MobileFiltersWrapper>
 
         {/* Plugin Grid */}
-        <div id="plugin-grid" className="flex min-h-0 flex-1 flex-col">
+        <div id="plugin-grid" className="flex min-h-0 flex-1 flex-col overflow-visible lg:overflow-y-auto lg:pr-2 lg:[scrollbar-width:thin]">
           <PluginCardGrid plugins={realPlugins} />
 
           {pagination.totalPages > 1 && (
-            <Suspense>
-              <PluginPagination
-                currentPage={currentPage}
-                totalPages={pagination.totalPages}
-              />
-            </Suspense>
+            <div className="mt-8 lg:mt-10 mb-6">
+              <Suspense>
+                <PluginPagination
+                  currentPage={currentPage}
+                  totalPages={pagination.totalPages}
+                />
+              </Suspense>
+            </div>
           )}
         </div>
       </div>

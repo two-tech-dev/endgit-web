@@ -219,25 +219,25 @@ export default function HomeContent({
 }: HomeContentProps) {
   return (
     <div className="container py-10 lg:py-14">
-      <div className="mb-10 lg:mb-14 max-w-2xl">
-        <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-text-primary mb-3">
+      <div className="mb-12 lg:mb-16 max-w-3xl">
+        <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black tracking-tight text-text-primary mb-4 lg:leading-[1.1]">
           Discover, build and distribute plugins for Endstone.
         </h1>
-        <p className="text-text-secondary text-base lg:text-lg mb-6">
+        <p className="text-text-secondary text-lg lg:text-xl mb-8 leading-relaxed max-w-2xl">
           The official registry for Endstone plugins. Find what you need, or
           publish your own.
         </p>
-        <div className="grid max-w-lg grid-cols-2 gap-2 sm:flex">
-          <Link href="/dashboard/dev" className="btn btn-primary text-sm px-4">
+        <div className="grid max-w-lg grid-cols-2 gap-3 sm:flex">
+          <Link href="/dashboard/dev" className="btn btn-primary text-base px-6 py-3 rounded-full">
             Start Publishing
           </Link>
           <a
             href="https://github.com/two-tech-dev/endgit-cli#installation"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-secondary text-sm px-4"
+            className="btn btn-secondary text-base px-6 py-3 rounded-full border border-border"
           >
-            <Terminal size={16} />
+            <Terminal size={18} />
             Install CLI
           </a>
         </div>

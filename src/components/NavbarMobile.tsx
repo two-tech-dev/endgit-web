@@ -2,14 +2,12 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import NavbarClient from "./NavbarClient";
-import { useTheme } from "@/components/ThemeToggle";
 
 export default function NavbarMobile() {
   const [open, setOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [dropdownTop, setDropdownTop] = useState(0);
@@ -125,23 +123,6 @@ export default function NavbarMobile() {
       >
         <div className="container grid pt-3 pb-4 gap-1">
           <div
-            className="transition-all duration-250 ease-out"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? "translateX(0)" : "translateX(-16px)",
-              transitionDelay: "250ms",
-            }}
-          >
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2 py-2.5 text-text-secondary font-medium text-base w-full text-left hover:text-text-primary transition-colors"
-            >
-              {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-              {theme === "light" ? "Dark mode" : "Light mode"}
-            </button>
-          </div>
-
-          <div
             onClick={(e) => e.stopPropagation()}
             className="pt-2 transition-all duration-250 ease-out"
             style={{
@@ -184,13 +165,6 @@ export default function NavbarMobile() {
         >
           FAQ
         </Link>
-        <button
-          onClick={toggleTheme}
-          className="grid items-center justify-center w-8 h-8 rounded-sm bg-surface-secondary text-text-secondary transition-all hover:bg-border hover:text-text-primary"
-          title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-        >
-          {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
-        </button>
         <NavbarClient />
       </nav>
 

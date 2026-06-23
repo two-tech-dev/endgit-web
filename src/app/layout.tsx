@@ -9,10 +9,12 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import NavbarMobile from "@/components/NavbarMobile";
 import Footer from "@/components/Footer";
 
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
   display: "swap",
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -56,22 +58,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <meta name="theme-color" content="#fdfcfc" />
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-            (function() {
-               try {
-                 var local = localStorage.getItem('theme');
-                 if (local === 'dark' || (local !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                   document.documentElement.setAttribute('data-theme', 'dark');
-                 }
-               } catch (e) {}
-              })();
-          `,
-          }}
-        />
       </head>
-      <body className={geistMono.className}>
+      <body className={`${inter.variable} ${inter.className}`}>
         <script
           dangerouslySetInnerHTML={{
             __html: `

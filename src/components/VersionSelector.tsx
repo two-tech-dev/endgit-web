@@ -73,12 +73,12 @@ export default function VersionSelector({
   };
 
   return (
-    <div className="grid gap-3 w-full">
-      <div className="grid gap-2.5 w-full sm:grid-flow-col">
+    <div className="flex flex-col items-end gap-1.5 w-full shrink-0">
+      <div className="flex items-center gap-2">
         <select
           value={selectedVersion.version}
           onChange={(e) => handleVersionChange(e.target.value)}
-          className="px-4 py-2.5 rounded-sm border border-border bg-surface-secondary text-text-primary text-[0.9375rem] cursor-pointer outline-none min-w-0 sm:flex-[1_1_140px]"
+          className="hidden md:block px-4 py-2.5 rounded-full border border-border bg-surface-secondary text-text-primary text-sm font-medium cursor-pointer outline-none min-w-[120px]"
         >
           {versions.map((v, i) => (
             <option key={v.version} value={v.version}>
@@ -87,28 +87,28 @@ export default function VersionSelector({
           ))}
         </select>
         {pluginType === "CPP" ? (
-          <div className="relative min-w-0" ref={dropdownRef}>
+          <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="btn btn-primary w-full grid grid-flow-col place-items-center gap-2 text-[0.9375rem] px-5 py-2.5 rounded-sm font-semibold no-underline min-w-0 cursor-pointer"
+              className="btn btn-primary grid grid-flow-col place-items-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline cursor-pointer"
             >
-              <Download size={16} /> Download
+              <Download size={18} /> Download
             </button>
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-1.5 w-full min-w-[180px] bg-surface-secondary border border-border rounded-sm shadow-xl z-50 flex flex-col p-1">
+              <div className="absolute right-0 mt-2 w-full min-w-[180px] bg-surface-secondary border border-border rounded-lg shadow-xl z-50 flex flex-col p-1.5">
                 <a
                   href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=windows`}
                   onClick={() => setIsDropdownOpen(false)}
-                  className="px-3 py-2.5 hover:bg-surface-card rounded-sm flex items-center gap-2 text-[0.9375rem] text-text-primary no-underline whitespace-nowrap transition-colors"
+                  className="px-3 py-2 hover:bg-surface-card rounded-md flex items-center gap-2 text-sm text-text-primary no-underline whitespace-nowrap transition-colors"
                 >
-                  <Download size={15} /> Windows (.dll)
+                  <Download size={16} /> Windows (.dll)
                 </a>
                 <a
                   href={`/api/v1/download/${slug}/${selectedVersion.version}?platform=linux`}
                   onClick={() => setIsDropdownOpen(false)}
-                  className="px-3 py-2.5 hover:bg-surface-card rounded-sm flex items-center gap-2 text-[0.9375rem] text-text-primary no-underline whitespace-nowrap transition-colors"
+                  className="px-3 py-2 hover:bg-surface-card rounded-md flex items-center gap-2 text-sm text-text-primary no-underline whitespace-nowrap transition-colors"
                 >
-                  <Download size={15} /> Linux (.so)
+                  <Download size={16} /> Linux (.so)
                 </a>
               </div>
             )}
@@ -116,13 +116,13 @@ export default function VersionSelector({
         ) : (
           <a
             href={`/api/v1/download/${slug}/${selectedVersion.version}`}
-            className="btn btn-primary grid grid-flow-col place-items-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 font-semibold no-underline"
+            className="btn btn-primary grid grid-flow-col place-items-center gap-2 text-sm lg:text-base px-5 lg:px-6 py-2.5 rounded-full font-semibold no-underline"
           >
-            <Download size={16} /> Download
+            <Download size={18} /> Download
           </a>
         )}
       </div>
-      <div className="version-info-text text-xs text-text-muted flex flex-wrap justify-end gap-x-3 gap-y-0.5 w-full">
+      <div className="version-info-text text-[11px] text-text-muted flex items-center justify-end gap-3 w-full opacity-80">
         <span>
           Size:{" "}
           {selectedVersion.fileSize
